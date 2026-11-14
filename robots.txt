@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://studiosb6l-web.github.io/studiosb6l/sitemap.xml
