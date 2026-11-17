@@ -17,10 +17,11 @@
 
   let saved = {};
   try { saved = JSON.parse(sessionStorage.getItem(key)) || {}; } catch {}
-  let trackIndex = Number.isInteger(saved.trackIndex) && saved.trackIndex >= 0 ? saved.trackIndex : 0;
-  let position = Number.isFinite(saved.position) && saved.position >= 0 ? saved.position : 0;
+  const fromSite = document.referrer.startsWith(location.origin + '/');
+  let trackIndex = fromSite && Number.isInteger(saved.trackIndex) && saved.trackIndex >= 0 ? saved.trackIndex : 0;
+  let position = fromSite && Number.isFinite(saved.position) && saved.position >= 0 ? saved.position : 0;
   let resume = position;
-  let shouldPlay = saved.shouldPlay !== false;
+  let shouldPlay = !fromSite || saved.shouldPlay !== false;
   let ready = false;
   let playing = false;
   let played = false;
@@ -58,7 +59,7 @@
   const embed = new URL('https://w.soundcloud.com/player/');
   embed.search = new URLSearchParams({
     url: 'https://api.soundcloud.com/playlists/2298582144', start_track: String(trackIndex),
-    auto_play: 'false', color: '#d9b978',
+    auto_play: String(shouldPlay), color: '#d9b978',
     show_artwork: 'false', hide_related: 'true', show_comments: 'false',
     show_reposts: 'false', show_teaser: 'false', single_active: 'true'
   }).toString();
@@ -139,7 +140,8 @@
     clearTimeout(fallbackTimer);
     volumeLabel.hidden = false;
     widget.getSounds(sounds => { count = sounds?.length || 0; });
-    if (shouldPlay) play();
+    widget.setVolume(Number(volume.value));
+    if (shouldPlay && !playing) widget.play();
   });
 
   widget.bind(events.PLAY, () => {
@@ -174,7 +176,7 @@
     render();
     clearTimeout(pauseTimer);
     pauseTimer = setTimeout(() => {
-      if (!playing && !pendingAdvance) {
+      if (played && !playing && !pendingAdvance) {
         shouldPlay = false;
         save();
       }
