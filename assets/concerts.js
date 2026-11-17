@@ -1,13 +1,13 @@
 (() => {
   const translations = {
-    pt: ['Concertos e bilhetes', 'Consulta a agenda de concertos em Portugal e Espanha, com datas, salas e bilheteiras oficiais.', 'Portugal', 'Espanha', 'Em breve'],
-    es: ['Conciertos y entradas', 'Consulta la agenda de conciertos en Portugal y España, con fechas, salas y taquillas oficiales.', 'Portugal', 'España', 'Próximamente'],
-    en: ['Concerts and tickets', 'Concert guide for Portugal and Spain, with dates, venues and official ticket information.', 'Portugal', 'Spain', 'Coming soon'],
-    fr: ['Concerts et billets', 'Consultez les dates, les salles et les billetteries officielles des concerts au Portugal et en Espagne.', 'Portugal', 'Espagne', 'Bientôt'],
-    de: ['Konzerte und Tickets', 'Konzertkalender für Portugal und Spanien mit Terminen, Spielstätten und offiziellen Ticketlinks.', 'Portugal', 'Spanien', 'In Kürze'],
-    ja: ['コンサートとチケット', 'ポルトガルとスペインのコンサート日程、会場、公式チケット情報をご覧ください。', 'ポルトガル', 'スペイン', '近日公開'],
-    zh: ['演出与购票', '查看葡萄牙和西班牙的音乐会日期、场馆及官方购票信息。', '葡萄牙', '西班牙', '即将推出'],
-    ar: ['الحفلات والتذاكر', 'اطّلع على مواعيد الحفلات في البرتغال وإسبانيا وقاعاتها وروابط التذاكر الرسمية.', 'البرتغال', 'إسبانيا', 'قريبًا']
+    pt: ['Concertos e bilhetes', 'Concertos, ópera e festivais em Portugal, Espanha e no resto do mundo.', 'Portugal', 'Espanha', 'Em breve'],
+    es: ['Conciertos y entradas', 'Conciertos, ópera y festivales en Portugal, España y el resto del mundo.', 'Portugal', 'España', 'Próximamente'],
+    en: ['Concerts and tickets', 'Concerts, opera and festivals in Portugal, Spain and around the world.', 'Portugal', 'Spain', 'Coming soon'],
+    fr: ['Concerts et billets', 'Concerts, opéras et festivals au Portugal, en Espagne et dans le monde.', 'Portugal', 'Espagne', 'Bientôt'],
+    de: ['Konzerte und Tickets', 'Konzerte, Oper und Festivals in Portugal, Spanien und weltweit.', 'Portugal', 'Spanien', 'In Kürze'],
+    ja: ['コンサートとチケット', 'ポルトガル、スペイン、世界各地のコンサート、オペラ、音楽フェスティバル。', 'ポルトガル', 'スペイン', '近日公開'],
+    zh: ['演出与购票', '葡萄牙、西班牙及全球各地的音乐会、歌剧和音乐节。', '葡萄牙', '西班牙', '即将推出'],
+    ar: ['الحفلات والتذاكر', 'حفلات موسيقية وأوبرا ومهرجانات في البرتغال وإسبانيا وحول العالم.', 'البرتغال', 'إسبانيا', 'قريبًا']
   };
 
   const guideActions = {
@@ -19,6 +19,7 @@
   const section = document.getElementById('concertos');
   const highlight = document.getElementById('concerts-highlight');
   const labels = ['title', 'description', 'portugal', 'spain', 'soon'];
+  const international = {"pt": "Agenda internacional", "es": "Agenda internacional", "en": "International concert guide", "fr": "Agenda international", "de": "Internationale Konzerttermine", "ja": "世界の公演情報", "zh": "国际演出指南", "ar": "دليل الحفلات الدولي"};
 
   function translate() {
     const requested = root.lang.toLowerCase().split('-')[0];
@@ -27,6 +28,7 @@
     shortcut.querySelector('span').textContent = copy[0];
 
     if (section) {
+      section.querySelector('[data-concert="international"]').textContent = international[language];
       labels.forEach((label, index) => {
         section.querySelectorAll('[data-concert="' + label + '"]').forEach(element => {
           element.textContent = copy[index];

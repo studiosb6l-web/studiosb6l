@@ -16,7 +16,9 @@ h2 { font-size: clamp(1.55rem, 3vw, 2rem); }
 .fine { color: #c7d0da; font-size: .92rem; }
 .events { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 265px), 1fr)); gap: 16px; padding: 0; margin: 26px 0; }
 .events article { height: 100%; display: flex; flex-direction: column; align-items: flex-start; padding: 20px; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; }
-.events article h2 { margin: 8px 0; }
+.events article h2, .events article h3 { margin: 8px 0; }
+.events article h3 { font-size: 1.25rem; line-height: 1.3; }
+.international-agenda section { margin-block: 32px; scroll-margin-top: 20px; }
 .events article p { margin: 0 0 12px; }
 .events article a { margin-top: auto; }
 .venue { color: #d2dbe6; font-weight: 650; }
