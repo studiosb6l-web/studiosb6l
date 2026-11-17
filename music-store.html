@@ -45,6 +45,9 @@ p{margin:8px 0;color:var(--muted)}
 .player a,.player button{margin:0 0 8px}
 .player iframe{display:block;width:100%;height:166px;border:0;border-radius:4px}
 .bundle{margin:20px 0;padding:13px 15px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.offer{margin:0 0 12px;color:var(--gold);font-size:.9rem}
+.coupon{flex-basis:100%;margin:0;color:var(--muted);font-size:.86rem}
+.coupon code{color:var(--text);padding:2px 6px;border:1px solid var(--line);border-radius:4px;font-weight:700;user-select:all}
 .terms{border-top:1px solid var(--line);margin-top:26px;padding-top:16px}
 .terms summary{cursor:pointer;color:var(--gold);padding:8px 0}
 .footer{padding:16px 0 24px;color:var(--muted);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -68,6 +71,7 @@ p{margin:8px 0;color:var(--muted)}
 <h1 data-label="title">Loja oficial de música</h1><p data-label="intro"></p>
 <section aria-labelledby="track-heading">
 <div class="catalog-head"><h2 id="track-heading" data-label="tracks"></h2><input id="search" type="search" autocomplete="off"></div>
+<p class="offer" data-label="promo"></p>
 <ul class="tracks" id="tracks"></ul><p id="empty" data-label="empty" hidden></p>
 </section>
 <div class="bundle"><div><strong data-label="bundle"></strong> <span class="price" id="bundle-price"></span></div><a class="btn" href="https://payhip.com/b/JL2Ri" data-label="buyBundle"></a></div>
@@ -85,6 +89,7 @@ p{margin:8px 0;color:var(--muted)}
 <span><span data-label="subtotal"></span> <strong id="total"></strong></span>
 </div>
 <div class="actions"><button type="button" id="clear" class="clear" data-label="clear" hidden></button><a id="checkout" class="btn primary" aria-disabled="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg><span data-label="checkout"></span></a></div>
+<p class="coupon" id="coupon" hidden><code dir="ltr">B6L11</code> <span data-label="promoCode"></span></p>
 </div>
 </aside>
 <script>
@@ -130,6 +135,62 @@ const tracks = [
     "sound": "https://soundcloud.com/banda6latinos/salve-regina-symphony-of-mercy",
     "id": "5Cx8b",
     "cover": "Salve_Regina_Symphonia_Misericordiae.png"
+  },
+  {
+    "title": "The Door I No Longer Hold",
+    "format": "WAV · 24 bit · 48 kHz · 5:11",
+    "sound": "https://soundcloud.com/banda6latinos/the-door-i-no-longer-hold",
+    "id": "d70pk",
+    "cover": "https://i1.sndcdn.com/artworks-n922tHAIz6RZBPDy-zmfSUw-t500x500.jpg"
+  },
+  {
+    "title": "Our Broken Forever",
+    "format": "WAV · 16 bit · 48 kHz · 4:52",
+    "sound": "https://soundcloud.com/banda6latinos/our-broken-forever",
+    "id": "RswtH",
+    "cover": "https://i1.sndcdn.com/artworks-k7TgaZcUuYifQH14-iwnjVA-t500x500.jpg"
+  },
+  {
+    "title": "The Confession",
+    "format": "WAV · 16 bit · 48 kHz · 5:10",
+    "sound": "https://soundcloud.com/banda6latinos/the-confession",
+    "id": "j9mxZ",
+    "cover": "https://i1.sndcdn.com/artworks-CvOOMsw0ca68Bw6e-EvQ9vQ-t500x500.jpg"
+  },
+  {
+    "title": "Ela Vem Sambar",
+    "format": "WAV · 24 bit · 48 kHz · 5:28",
+    "sound": "https://soundcloud.com/banda6latinos/ela-vem-sambar",
+    "id": "mKS3R",
+    "cover": "https://i1.sndcdn.com/artworks-WzyJylqqLjpjICLq-RYpeoQ-t500x500.jpg"
+  },
+  {
+    "title": "Titan’s Bagpipes",
+    "format": "WAV · 24 bit · 48 kHz · 3:20",
+    "sound": "https://soundcloud.com/banda6latinos/titans-bagpipes",
+    "id": "ds8FI",
+    "cover": "https://i1.sndcdn.com/artworks-jptC0W03CsRl5kis-ysAu0g-t500x500.jpg"
+  },
+  {
+    "title": "Run, Run, Little Wild One",
+    "format": "WAV · 24 bit · 48 kHz · 3:46",
+    "sound": "https://soundcloud.com/banda6latinos/b6l-run-run-little-wild-one",
+    "id": "AGTlV",
+    "cover": "https://i1.sndcdn.com/artworks-s8z94vRUdeTbR738-XbyrYQ-t500x500.jpg"
+  },
+  {
+    "title": "Dominus Regnavit",
+    "format": "WAV · 24 bit · 48 kHz · 2:47",
+    "sound": "https://soundcloud.com/banda6latinos/dominus-regnavit",
+    "id": "zx7Gn",
+    "cover": "https://i1.sndcdn.com/artworks-M9OhDbJ2VhMjHKHo-x1Qplw-t500x500.jpg"
+  },
+  {
+    "title": "Je Danse Sous la Lune",
+    "format": "WAV · 24 bit · 48 kHz · 3:50",
+    "sound": "https://soundcloud.com/banda6latinos/je-danse-sous-la-lune",
+    "id": "0FehD",
+    "cover": "https://i1.sndcdn.com/artworks-IkPIKCCihLQBkDw3-0Fijzw-t500x500.jpg"
   }
 ];
 const copy = {
@@ -157,7 +218,9 @@ const copy = {
     "enquiry": "Solicitar licenciamento",
     "delivery": "Pagamentos e entrega",
     "deliveryText": "Pague com cartão no Payhip. Os ficheiros WAV ficam disponíveis para descarregar após a confirmação do pagamento.",
-    "back": "Voltar ao site oficial"
+    "back": "Voltar ao site oficial",
+    "promo": "10% de desconto a partir de 11 faixas.",
+    "promoCode": "Introduza este código no Payhip para aplicar o desconto."
   },
   "en": {
     "title": "Official Music Store",
@@ -183,7 +246,9 @@ const copy = {
     "enquiry": "Enquire about licensing",
     "delivery": "Payment and delivery",
     "deliveryText": "Pay by card on Payhip. WAV downloads are available after payment confirmation.",
-    "back": "Back to official website"
+    "back": "Back to official website",
+    "promo": "Get 10% off when you choose 11 or more tracks.",
+    "promoCode": "Enter this code at Payhip checkout to apply the discount."
   },
   "es": {
     "title": "Tienda oficial de música",
@@ -209,7 +274,9 @@ const copy = {
     "enquiry": "Solicitar licencia",
     "delivery": "Pagos y entrega",
     "deliveryText": "Paga con tarjeta en Payhip. Descarga los archivos WAV después de confirmar el pago.",
-    "back": "Volver al sitio oficial"
+    "back": "Volver al sitio oficial",
+    "promo": "10 % de descuento a partir de 11 canciones.",
+    "promoCode": "Introduce este código al pagar en Payhip para aplicar el descuento."
   },
   "fr": {
     "title": "Boutique musicale officielle",
@@ -235,7 +302,9 @@ const copy = {
     "enquiry": "Demander une licence",
     "delivery": "Paiement et livraison",
     "deliveryText": "Payez par carte sur Payhip. Téléchargez les fichiers WAV après confirmation du paiement.",
-    "back": "Retour au site officiel"
+    "back": "Retour au site officiel",
+    "promo": "10 % de réduction dès 11 titres.",
+    "promoCode": "Saisissez ce code lors du paiement sur Payhip pour appliquer la réduction."
   },
   "de": {
     "title": "Offizieller Musikshop",
@@ -261,7 +330,9 @@ const copy = {
     "enquiry": "Lizenz anfragen",
     "delivery": "Zahlung und Lieferung",
     "deliveryText": "Zahlen Sie per Karte auf Payhip. Nach Zahlungsbestätigung stehen die WAV-Dateien zum Download bereit.",
-    "back": "Zur offiziellen Website"
+    "back": "Zur offiziellen Website",
+    "promo": "10 % Rabatt ab 11 Titeln.",
+    "promoCode": "Geben Sie diesen Code beim Bezahlen über Payhip ein."
   },
   "ja": {
     "title": "公式ミュージックストア",
@@ -287,7 +358,9 @@ const copy = {
     "enquiry": "ライセンスについて問い合わせる",
     "delivery": "お支払いとダウンロード",
     "deliveryText": "Payhipでカード決済ができます。お支払いの確認後にWAVファイルをダウンロードできます。",
-    "back": "公式サイトに戻る"
+    "back": "公式サイトに戻る",
+    "promo": "11曲以上のご購入で10%割引。",
+    "promoCode": "Payhipのお支払い画面でこのコードを入力してください。"
   },
   "zh": {
     "title": "官方音乐商店",
@@ -313,7 +386,9 @@ const copy = {
     "enquiry": "咨询授权",
     "delivery": "付款与下载",
     "deliveryText": "通过 Payhip 使用银行卡付款。付款确认后即可下载 WAV 文件。",
-    "back": "返回官方网站"
+    "back": "返回官方网站",
+    "promo": "购买 11 首或以上曲目可享九折优惠。",
+    "promoCode": "在 Payhip 结账时输入此优惠码。"
   },
   "ar": {
     "title": "متجر الموسيقى الرسمي",
@@ -339,10 +414,13 @@ const copy = {
     "enquiry": "استفسر عن الترخيص",
     "delivery": "الدفع والتنزيل",
     "deliveryText": "ادفع بالبطاقة عبر Payhip. يمكنك تنزيل ملفات WAV بعد تأكيد الدفع.",
-    "back": "العودة إلى الموقع الرسمي"
+    "back": "العودة إلى الموقع الرسمي",
+    "promo": "خصم ١٠٪ عند شراء ١١ مقطعًا أو أكثر.",
+    "promoCode": "أدخل هذا الرمز عند الدفع عبر Payhip لتطبيق الخصم."
   }
 };
 const trackPrice = 299;
+const discountTrackMinimum = 11;
 const storageKey = 'b6l-store-cart';
 const languages = {pt:'pt-PT',en:'en-IE',es:'es-ES',fr:'fr-FR',de:'de-DE',ja:'ja-JP',zh:'zh-CN',ar:'ar-SA'};
 const byId = id => document.getElementById(id);
@@ -430,6 +508,7 @@ function updateSelection() {
   byId('count').textContent = new Intl.NumberFormat(languages[language]).format(count);
   byId('total').textContent = money(count * trackPrice);
   clear.hidden = !count;
+  byId('coupon').hidden = count < discountTrackMinimum;
   checkout.setAttribute('aria-disabled', String(!count));
   if (count) checkout.href = checkoutUrl(tracks.filter(track => selected.has(track.id)).map(track => track.id));
   else checkout.removeAttribute('href');
@@ -444,7 +523,7 @@ for (const track of tracks) {
   const row = makeElement('div','track-row');
   const cover = track.cover ? makeElement('img','cover') : makeElement('span','cover-wav','WAV');
   if (track.cover) {
-    cover.src = 'assets/' + track.cover;
+    cover.src = new URL(track.cover, new URL('assets/', location.href)).href;
     cover.alt = '';
     cover.loading = 'lazy';
     cover.width = 50;
