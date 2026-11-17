@@ -24,11 +24,9 @@
   let shouldPlay = !fromSite || saved.shouldPlay !== false;
   let ready = false;
   let playing = false;
-  let played = false;
   let triedGesture = false;
   let count = 0;
   let pendingAdvance = 0;
-  let pauseTimer = 0;
   let fallbackTimer = 0;
 
   const title = container.querySelector('.b6l-opening-title');
@@ -148,9 +146,7 @@
     clearTimeout(fallbackTimer);
     clearTimeout(pendingAdvance);
     pendingAdvance = 0;
-    clearTimeout(pauseTimer);
     playing = true;
-    played = true;
     shouldPlay = true;
     if (resume > 0) widget.seekTo(resume);
     resume = 0;
@@ -174,13 +170,7 @@
   widget.bind(events.PAUSE, () => {
     playing = false;
     render();
-    clearTimeout(pauseTimer);
-    pauseTimer = setTimeout(() => {
-      if (played && !playing && !pendingAdvance) {
-        shouldPlay = false;
-        save();
-      }
-    }, 1200);
+    save();
   });
 
   widget.bind(events.FINISH, () => {
@@ -190,7 +180,6 @@
     playing = false;
     position = 0;
     clearTimeout(pendingAdvance);
-    clearTimeout(pauseTimer);
     if (!shouldPlay) return;
     pendingAdvance = setTimeout(() => {
       widget.getCurrentSoundIndex(index => {
@@ -240,7 +229,7 @@
       pause();
       return;
     }
-    if (event.isTrusted && shouldPlay && !played && !triedGesture) {
+    if (event.isTrusted && shouldPlay && !playing && !triedGesture) {
       triedGesture = true;
       if (ready) play();
     }
