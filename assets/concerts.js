@@ -10,9 +10,14 @@
     ar: ['الحفلات والتذاكر', 'نعمل على إعداد دليل للحفلات الموسيقية في البرتغال وإسبانيا.', 'البرتغال', 'إسبانيا', 'قريبًا']
   };
 
+  const guideActions = {
+    pt: 'Ver agenda', es: 'Ver agenda', en: 'View concert guide', fr: 'Voir l’agenda',
+    de: 'Zum Konzertkalender', ja: '公演情報を見る', zh: '查看演出指南', ar: 'عرض دليل الحفلات'
+  };
   const root = document.documentElement;
   const shortcut = document.querySelector('.b6l-concert-shortcut');
   const section = document.getElementById('concertos');
+  const highlight = document.getElementById('concerts-highlight');
   const labels = ['title', 'description', 'portugal', 'spain', 'soon'];
 
   function translate() {
@@ -29,6 +34,12 @@
       });
     } else {
       shortcut.href = 'music-store.html?lang=' + language + '#concertos';
+      if (highlight) {
+        highlight.querySelector('h2').textContent = copy[0];
+        highlight.querySelector('p').textContent = copy[1];
+        highlight.querySelector('a').href = shortcut.href;
+        highlight.querySelector('a span').textContent = guideActions[language];
+      }
     }
   }
 
