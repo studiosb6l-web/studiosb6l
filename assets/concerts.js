@@ -1,13 +1,13 @@
 (() => {
   const translations = {
-    pt: ['Concertos e bilhetes', 'Estamos a preparar uma agenda de concertos em Portugal e Espanha.', 'Portugal', 'Espanha', 'Em breve'],
-    es: ['Conciertos y entradas', 'Estamos preparando una agenda de conciertos en Portugal y España.', 'Portugal', 'España', 'Próximamente'],
-    en: ['Concerts and tickets', 'We’re putting together a concert guide for Portugal and Spain.', 'Portugal', 'Spain', 'Coming soon'],
-    fr: ['Concerts et billets', 'Nous préparons un agenda des concerts au Portugal et en Espagne.', 'Portugal', 'Espagne', 'Bientôt'],
-    de: ['Konzerte und Tickets', 'Wir bereiten einen Konzertkalender für Portugal und Spanien vor.', 'Portugal', 'Spanien', 'In Kürze'],
-    ja: ['コンサートとチケット', 'ポルトガルとスペインのコンサート情報を準備しています。', 'ポルトガル', 'スペイン', '近日公開'],
-    zh: ['演出与购票', '我们正在整理葡萄牙和西班牙的音乐会演出信息。', '葡萄牙', '西班牙', '即将推出'],
-    ar: ['الحفلات والتذاكر', 'نعمل على إعداد دليل للحفلات الموسيقية في البرتغال وإسبانيا.', 'البرتغال', 'إسبانيا', 'قريبًا']
+    pt: ['Concertos e bilhetes', 'Consulta a agenda de concertos em Portugal e Espanha, com datas, salas e bilheteiras oficiais.', 'Portugal', 'Espanha', 'Em breve'],
+    es: ['Conciertos y entradas', 'Consulta la agenda de conciertos en Portugal y España, con fechas, salas y taquillas oficiales.', 'Portugal', 'España', 'Próximamente'],
+    en: ['Concerts and tickets', 'Concert guide for Portugal and Spain, with dates, venues and official ticket information.', 'Portugal', 'Spain', 'Coming soon'],
+    fr: ['Concerts et billets', 'Consultez les dates, les salles et les billetteries officielles des concerts au Portugal et en Espagne.', 'Portugal', 'Espagne', 'Bientôt'],
+    de: ['Konzerte und Tickets', 'Konzertkalender für Portugal und Spanien mit Terminen, Spielstätten und offiziellen Ticketlinks.', 'Portugal', 'Spanien', 'In Kürze'],
+    ja: ['コンサートとチケット', 'ポルトガルとスペインのコンサート日程、会場、公式チケット情報をご覧ください。', 'ポルトガル', 'スペイン', '近日公開'],
+    zh: ['演出与购票', '查看葡萄牙和西班牙的音乐会日期、场馆及官方购票信息。', '葡萄牙', '西班牙', '即将推出'],
+    ar: ['الحفلات والتذاكر', 'اطّلع على مواعيد الحفلات في البرتغال وإسبانيا وقاعاتها وروابط التذاكر الرسمية.', 'البرتغال', 'إسبانيا', 'قريبًا']
   };
 
   const guideActions = {

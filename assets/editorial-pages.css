@@ -1,0 +1,33 @@
+* { box-sizing: border-box; }
+:root { color-scheme: dark; --bg: #0b111b; --panel: #111e2d; --line: #776748; --gold: #e6c789; }
+body { margin: 0; background: var(--bg); color: #f5f1e8; font: 1rem/1.6 system-ui, sans-serif; }
+a { color: var(--gold); text-underline-offset: .2em; }
+a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+.top, main { max-width: 1080px; margin-inline: auto; padding-inline: 22px; }
+.top { min-height: 66px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 28px; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.brand { font-weight: 800; letter-spacing: .15em; text-decoration: none; }
+main { padding-block: clamp(32px, 7vw, 76px); }
+.eyebrow, time { color: var(--gold); font-size: .875rem; font-weight: 700; }
+.eyebrow { letter-spacing: .1em; text-transform: uppercase; margin: 0; }
+h1, h2 { font-family: Georgia, serif; font-weight: 400; line-height: 1.12; }
+h1 { font-size: clamp(2.4rem, 6vw, 4.25rem); margin: .22em 0 .4em; }
+h2 { font-size: clamp(1.55rem, 3vw, 2rem); }
+.lead { font-size: clamp(1.05rem, 2.5vw, 1.28rem); max-width: 62ch; }
+.fine { color: #c7d0da; font-size: .92rem; }
+.events { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 265px), 1fr)); gap: 16px; padding: 0; margin: 26px 0; }
+.events article { height: 100%; display: flex; flex-direction: column; align-items: flex-start; padding: 20px; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; }
+.events article h2 { margin: 8px 0; }
+.events article p { margin: 0 0 12px; }
+.events article a { margin-top: auto; }
+.venue { color: #d2dbe6; font-weight: 650; }
+.work { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1fr); align-items: center; gap: clamp(20px, 5vw, 54px); }
+.cover { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
+.actions, .related { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; }
+.related { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 18px; }
+.button { display: inline-flex; align-items: center; min-height: 44px; padding: 7px 12px; border: 1px solid var(--gold); border-radius: 6px; font-weight: 650; text-decoration: none; }
+.primary { background: var(--gold); color: #0b111b; }
+.player { width: 100%; height: 166px; border: 0; background: var(--panel); }
+@media (max-width: 640px) {
+  .work { grid-template-columns: 1fr; }
+  .cover { max-width: 290px; }
+}

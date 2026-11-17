@@ -72,6 +72,7 @@ p{margin:8px 0;color:var(--muted)}
 #instrumentos p{margin-block:7px 16px}
 .instrument-categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:9px;margin:0;padding:0;list-style:none}
 .instrument-categories li{display:flex;align-items:center;min-height:48px;padding:10px 12px;border:1px solid var(--line);border-inline-start-color:var(--gold);border-radius:6px;background:#0e1929;color:var(--text);font-size:.92rem;font-weight:650}
+.track:target{outline:2px solid var(--gold);outline-offset:-2px}
 </style><link rel="stylesheet" href="assets/concerts.css?v=d02c3b5"><link rel="stylesheet" href="assets/beethoven-opening.css?v=beethoven-playlist-1"><script defer src="https://w.soundcloud.com/player/api.js"></script><script defer src="assets/beethoven-opening.js?v=beethoven-autoplay-4"></script></head><body>
 <header class="header"><a class="brand" data-home href="pt.html">STUDIOSB6L</a><select id="language" aria-label="Idioma"><option value="pt" lang="pt">Português</option><option value="en" lang="en">English</option><option value="es" lang="es">Español</option><option value="fr" lang="fr">Français</option><option value="de" lang="de">Deutsch</option><option value="ja" lang="ja">日本語</option><option value="zh" lang="zh">简体中文</option><option value="ar" lang="ar">العربية</option></select></header>
 <main>
@@ -80,10 +81,10 @@ p{margin:8px 0;color:var(--muted)}
 <div class="b6l-opening-anchor"><div class="b6l-opening" id="b6l-opening"><span class="b6l-opening-title" dir="ltr">Beethoven · B6L</span><a href="https://soundcloud.com/banda6latinos/sets/banda-6-latinos-beethoven" target="_blank" rel="noopener noreferrer">SoundCloud</a></div></div>
 <section id="concertos" aria-labelledby="concertos-title" tabindex="-1">
 <h2 id="concertos-title" data-concert="title">Concertos e bilhetes</h2>
-<p data-concert="description">Estamos a preparar uma agenda de concertos em Portugal e Espanha.</p>
+<p data-concert="description">Consulta a agenda de concertos em Portugal e Espanha, com datas, salas e bilheteiras oficiais.</p>
 <ul class="b6l-concert-countries">
-<li><strong data-concert="portugal">Portugal</strong><span data-concert="soon">Em breve</span></li>
-<li><strong data-concert="spain">Espanha</strong><span data-concert="soon">Em breve</span></li>
+<li><strong data-concert="portugal">Portugal</strong><a href="/concertos/lisboa/" hreflang="pt">Lisboa</a></li>
+<li><strong data-concert="spain">Espanha</strong><a href="/concertos/barcelona/" hreflang="es">Barcelona</a></li>
 </ul>
 </section>
 <section id="instrumentos" aria-labelledby="instrumentos-title" tabindex="-1">
@@ -2255,6 +2256,7 @@ function saveSelection() {
 
 for (const track of tracks) {
   const item = makeElement('li','track');
+  item.id = 'track-' + track.id;
   const row = makeElement('div','track-row');
   const cover = track.cover ? makeElement('img','cover') : makeElement('span','cover-wav','WAV');
   if (track.cover) {
@@ -2351,6 +2353,10 @@ const requested = new URLSearchParams(location.search).get('lang');
 let preferred;
 try { preferred = localStorage.getItem('b6l-language'); } catch {}
 renderLanguage(requested || preferred || 'pt');
+if (location.hash.startsWith('#track-')) {
+  const targetTrack = byId(location.hash.slice(1));
+  if (targetTrack) requestAnimationFrame(() => targetTrack.scrollIntoView({block:'center'}));
+}
 </script>
 <a class="b6l-concert-shortcut" href="#concertos"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V7a1 1 0 0 1 1-1Z"/><path d="M15 8v1m0 2v2m0 2v1"/></svg><span>Concertos e bilhetes</span></a>
-<script src="assets/concerts.js?v=d02c3b5"></script></body></html>
+<script src="assets/concerts.js?v=city-guides"></script></body></html>
