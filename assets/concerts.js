@@ -43,4 +43,25 @@
     fitAboveCart();
     new ResizeObserver(fitAboveCart).observe(cart);
   }
+
+  let scrollFrame = 0;
+
+  function moveWithPage() {
+    scrollFrame = 0;
+    const maxScroll = root.scrollHeight - window.innerHeight;
+    const offset = Math.max(0, Math.min(window.scrollY, maxScroll));
+    const progress = maxScroll > 0 ? offset / maxScroll : 0;
+    const range = Math.min(110, window.innerHeight * 0.17);
+    const lift = range * (0.55 * (1 - Math.exp(-offset / 260)) + 0.45 * progress);
+    shortcut.style.setProperty('--b6l-scroll-range', range + 'px');
+    shortcut.style.setProperty('--b6l-scroll-lift', lift.toFixed(1) + 'px');
+  }
+
+  function scheduleMovement() {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(moveWithPage);
+  }
+
+  window.addEventListener('scroll', scheduleMovement, { passive: true });
+  window.addEventListener('resize', scheduleMovement);
+  moveWithPage();
 })();
