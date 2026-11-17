@@ -28,6 +28,9 @@
   let count = 0;
   let pendingAdvance = 0;
   let fallbackTimer = 0;
+  let startupTimer = 0;
+  let startupAttempts = 0;
+  let advanced = false;
 
   const title = container.querySelector('.b6l-opening-title');
   const link = container.querySelector('a');
@@ -59,7 +62,7 @@
     url: 'https://api.soundcloud.com/playlists/2298582144', start_track: String(trackIndex),
     auto_play: String(shouldPlay), color: '#d9b978',
     show_artwork: 'false', hide_related: 'true', show_comments: 'false',
-    show_reposts: 'false', show_teaser: 'false', single_active: 'true'
+    show_reposts: 'false', show_teaser: 'false', single_active: 'false'
   }).toString();
   link.href = playlist;
   frame.src = embed.href;
@@ -121,7 +124,19 @@
     widget.play();
   }
 
+  function retryStartup() {
+    clearTimeout(startupTimer);
+    if (!shouldPlay || advanced || startupAttempts >= 2) return;
+    startupTimer = setTimeout(() => {
+      if (!shouldPlay || advanced) return;
+      startupAttempts += 1;
+      play();
+      retryStartup();
+    }, startupAttempts === 0 ? 650 : 1600);
+  }
+
   function pause() {
+    clearTimeout(startupTimer);
     shouldPlay = false;
     playing = false;
     clearTimeout(pendingAdvance);
@@ -139,7 +154,7 @@
     volumeLabel.hidden = false;
     widget.getSounds(sounds => { count = sounds?.length || 0; });
     widget.setVolume(Number(volume.value));
-    if (shouldPlay && !playing) widget.play();
+    retryStartup();
   });
 
   widget.bind(events.PLAY, () => {
@@ -164,7 +179,12 @@
   });
 
   widget.bind(events.PLAY_PROGRESS, event => {
-    if (Number.isFinite(event.currentPosition)) position = event.currentPosition;
+    if (!Number.isFinite(event.currentPosition)) return;
+    position = event.currentPosition;
+    if (!advanced && position > 0) {
+      advanced = true;
+      clearTimeout(startupTimer);
+    }
   });
 
   widget.bind(events.PAUSE, () => {
@@ -195,6 +215,7 @@
   });
 
   widget.bind(events.ERROR, () => {
+    clearTimeout(startupTimer);
     clearTimeout(pendingAdvance);
     pendingAdvance = 0;
     playing = false;
@@ -225,7 +246,7 @@
   document.addEventListener('click', event => {
     const target = event.target;
     if (container.contains(target)) return;
-    if (target.closest('#b6l-reel-open, [data-vip-listen], [data-play], [data-play-url], .track-row button[aria-expanded]')) {
+    if (target.closest('#b6l-reel-open, [data-play], [data-play-url], .track-row button[aria-expanded]')) {
       pause();
       return;
     }
