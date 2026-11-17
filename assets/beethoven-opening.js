@@ -2,17 +2,35 @@
   const container = document.getElementById('b6l-opening');
   if (!container) return;
 
-  const track = 'https://soundcloud.com/banda6latinos/the-seventh-apogee';
+  const playlist = 'https://soundcloud.com/banda6latinos/sets/banda-6-latinos-beethoven';
+  const key = 'b6l-beethoven-player';
   const labels = {
-    pt: ['Ouvir a obra de abertura', 'Pausar a música', 'Volume', 'Abrir no SoundCloud'],
-    es: ['Escuchar la obra de apertura', 'Pausar la música', 'Volumen', 'Abrir en SoundCloud'],
-    en: ['Play the opening piece', 'Pause music', 'Volume', 'Open in SoundCloud'],
-    fr: ['Écouter le morceau d’ouverture', 'Mettre en pause', 'Volume', 'Ouvrir sur SoundCloud'],
-    de: ['Eröffnungsstück anhören', 'Musik pausieren', 'Lautstärke', 'Auf SoundCloud öffnen'],
-    ja: ['オープニング曲を聴く', '音楽を一時停止', '音量', 'SoundCloudで開く'],
-    zh: ['播放开场曲', '暂停音乐', '音量', '在 SoundCloud 打开'],
-    ar: ['استمع إلى المقطوعة الافتتاحية', 'إيقاف الموسيقى مؤقتًا', 'مستوى الصوت', 'افتح على ساوند كلاود']
+    pt: ['Ouvir Beethoven', 'Pausar a música', 'Volume', 'Abrir no SoundCloud'],
+    es: ['Escuchar Beethoven', 'Pausar la música', 'Volumen', 'Abrir en SoundCloud'],
+    en: ['Play Beethoven', 'Pause music', 'Volume', 'Open in SoundCloud'],
+    fr: ['Écouter Beethoven', 'Mettre en pause', 'Volume', 'Ouvrir sur SoundCloud'],
+    de: ['Beethoven hören', 'Musik pausieren', 'Lautstärke', 'Auf SoundCloud öffnen'],
+    ja: ['ベートーヴェンを聴く', '音楽を一時停止', '音量', 'SoundCloudで開く'],
+    zh: ['播放贝多芬作品', '暂停音乐', '音量', '在 SoundCloud 打开'],
+    ar: ['استمع إلى بيتهوفن', 'إيقاف الموسيقى مؤقتًا', 'مستوى الصوت', 'افتح على ساوند كلاود']
   };
+
+  let saved = {};
+  try { saved = JSON.parse(sessionStorage.getItem(key)) || {}; } catch {}
+  let trackIndex = Number.isInteger(saved.trackIndex) && saved.trackIndex >= 0 ? saved.trackIndex : 0;
+  let position = Number.isFinite(saved.position) && saved.position >= 0 ? saved.position : 0;
+  let resume = position;
+  let shouldPlay = saved.shouldPlay !== false;
+  let ready = false;
+  let playing = false;
+  let played = false;
+  let triedGesture = false;
+  let count = 0;
+  let pendingAdvance = 0;
+  let pauseTimer = 0;
+  let fallbackTimer = 0;
+
+  const title = container.querySelector('.b6l-opening-title');
   const link = container.querySelector('a');
   const button = document.createElement('button');
   const controls = document.createElement('div');
@@ -20,12 +38,6 @@
   const volumeText = document.createElement('span');
   const volume = document.createElement('input');
   const frame = document.createElement('iframe');
-  let widget;
-  let ready = false;
-  let playing = false;
-  let hasPlayed = false;
-  let autoStart = true;
-  let fallbackTimer;
 
   button.type = 'button';
   button.hidden = true;
@@ -33,23 +45,40 @@
   volume.type = 'range';
   volume.min = '0';
   volume.max = '100';
-  volume.value = '22';
+  volume.value = Number.isFinite(saved.volume) ? String(saved.volume) : '22';
   volumeLabel.hidden = true;
   volumeLabel.append(volumeText, volume);
   controls.append(button, volumeLabel);
   container.prepend(controls);
-  frame.title = 'The Seventh Apogee — BANDA 6 LATINOS · SoundCloud';
+  frame.title = 'Beethoven · B6L — SoundCloud';
   frame.allow = 'autoplay; encrypted-media';
   frame.tabIndex = -1;
   frame.setAttribute('aria-hidden', 'true');
+
+  const embed = new URL('https://w.soundcloud.com/player/');
+  embed.search = new URLSearchParams({
+    url: 'https://api.soundcloud.com/playlists/2298582144', start_track: String(trackIndex),
+    auto_play: 'false', color: '#d9b978',
+    show_artwork: 'false', hide_related: 'true', show_comments: 'false',
+    show_reposts: 'false', show_teaser: 'false', single_active: 'true'
+  }).toString();
+  link.href = playlist;
+  frame.src = embed.href;
   container.append(frame);
 
   function render() {
-    const [play, pause, volumeName, open] = labels[document.documentElement.lang] || labels.en;
+    const language = document.documentElement.lang.toLowerCase().split('-')[0];
+    const [play, pause, volumeName, open] = labels[language] || labels.en;
     button.textContent = playing ? 'Ⅱ ' + pause : '▶ ' + play;
     button.setAttribute('aria-pressed', String(playing));
     volumeText.textContent = volumeName;
     link.textContent = open;
+  }
+
+  function save() {
+    try {
+      sessionStorage.setItem(key, JSON.stringify({ trackIndex, position, shouldPlay, volume: Number(volume.value) }));
+    } catch {}
   }
 
   function showEmbeddedPlayer() {
@@ -62,27 +91,26 @@
   const anchor = container.parentElement;
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(([entry]) => {
-      container.classList.toggle('b6l-opening-docked', hasPlayed && !entry.isIntersecting &&
-        entry.boundingClientRect.bottom < 0);
+      container.classList.toggle('b6l-opening-docked', !entry.isIntersecting && entry.boundingClientRect.bottom < 0);
     }).observe(anchor);
   }
 
-  document.getElementById('language')?.addEventListener('change', render);
+  const cart = document.getElementById('cart');
+  if (cart) {
+    const fitAboveCart = () => container.style.setProperty('--b6l-opening-cart-height', cart.offsetHeight + 'px');
+    fitAboveCart();
+    new ResizeObserver(fitAboveCart).observe(cart);
+  }
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   render();
-  const embed = new URL('https://w.soundcloud.com/player/');
-  embed.search = new URLSearchParams({
-    url: track, auto_play: 'false', color: '#d9b978', show_artwork: 'false',
-    hide_related: 'true', show_comments: 'false', show_reposts: 'false'
-  }).toString();
-  frame.src = embed.href;
 
   if (!window.SC?.Widget) {
     showEmbeddedPlayer();
     return;
   }
 
-  widget = SC.Widget(frame);
-  const events = SC.Widget.Events;
+  const widget = window.SC.Widget(frame);
+  const events = window.SC.Widget.Events;
   button.hidden = false;
   link.hidden = true;
   fallbackTimer = setTimeout(() => {
@@ -94,45 +122,131 @@
     widget.play();
   }
 
+  function pause() {
+    shouldPlay = false;
+    playing = false;
+    clearTimeout(pendingAdvance);
+    pendingAdvance = 0;
+    clearTimeout(fallbackTimer);
+    if (ready) widget.pause();
+    render();
+    save();
+  }
+
   widget.bind(events.READY, () => {
     if (ready) return;
     ready = true;
     clearTimeout(fallbackTimer);
     volumeLabel.hidden = false;
-    if (autoStart) play();
+    widget.getSounds(sounds => { count = sounds?.length || 0; });
+    if (shouldPlay) play();
   });
+
   widget.bind(events.PLAY, () => {
     clearTimeout(fallbackTimer);
+    clearTimeout(pendingAdvance);
+    pendingAdvance = 0;
+    clearTimeout(pauseTimer);
     playing = true;
-    hasPlayed = true;
+    played = true;
+    shouldPlay = true;
+    if (resume > 0) widget.seekTo(resume);
+    resume = 0;
+    widget.getCurrentSoundIndex(index => {
+      if (Number.isInteger(index) && index >= 0 && index !== trackIndex) {
+        trackIndex = index;
+        position = 0;
+      }
+      save();
+    });
+    widget.getCurrentSound(sound => {
+      if (sound?.title) title.textContent = sound.title + ' · Beethoven — B6L';
+    });
     render();
   });
-  function markPaused() {
+
+  widget.bind(events.PLAY_PROGRESS, event => {
+    if (Number.isFinite(event.currentPosition)) position = event.currentPosition;
+  });
+
+  widget.bind(events.PAUSE, () => {
     playing = false;
     render();
-  }
-  widget.bind(events.PAUSE, markPaused);
-  widget.bind(events.FINISH, markPaused);
-  widget.bind(events.ERROR, showEmbeddedPlayer);
+    clearTimeout(pauseTimer);
+    pauseTimer = setTimeout(() => {
+      if (!playing && !pendingAdvance) {
+        shouldPlay = false;
+        save();
+      }
+    }, 1200);
+  });
+
+  widget.bind(events.FINISH, () => {
+    // The playlist advances on its own when possible. Resume it if that
+    // transition stalls, and wrap from the last track to the first.
+    const finished = trackIndex;
+    playing = false;
+    position = 0;
+    clearTimeout(pendingAdvance);
+    clearTimeout(pauseTimer);
+    if (!shouldPlay) return;
+    pendingAdvance = setTimeout(() => {
+      widget.getCurrentSoundIndex(index => {
+        if (playing || !shouldPlay) return;
+        if (index === finished) {
+          if (count === 1) widget.seekTo(0);
+          else if (count > 1) widget.skip((finished + 1) % count);
+          else widget.next();
+        }
+        play();
+      });
+    }, 500);
+  });
+
+  widget.bind(events.ERROR, () => {
+    clearTimeout(pendingAdvance);
+    pendingAdvance = 0;
+    playing = false;
+    render();
+    showEmbeddedPlayer();
+  });
 
   button.addEventListener('click', () => {
-    if (playing) {
-      widget.pause();
+    if (playing || pendingAdvance) {
+      pause();
       return;
     }
+    shouldPlay = true;
+    triedGesture = true;
     if (ready) play();
     else showEmbeddedPlayer();
     clearTimeout(fallbackTimer);
     fallbackTimer = setTimeout(() => {
       if (!playing) showEmbeddedPlayer();
-    }, 1200);
+    }, 1400);
   });
-  volume.addEventListener('input', () => widget.setVolume(Number(volume.value)));
+
+  volume.addEventListener('input', () => {
+    if (ready) widget.setVolume(Number(volume.value));
+    save();
+  });
 
   document.addEventListener('click', event => {
-    if (event.target.closest('#b6l-reel-open, [data-vip-listen], [data-detail-open], [data-play], [data-play-url]')) {
-      autoStart = false;
-      if (ready) widget.pause();
+    const target = event.target;
+    if (container.contains(target)) return;
+    if (target.closest('#b6l-reel-open, [data-vip-listen], [data-play], [data-play-url], .track-row button[aria-expanded]')) {
+      pause();
+      return;
+    }
+    if (event.isTrusted && shouldPlay && !played && !triedGesture) {
+      triedGesture = true;
+      if (ready) play();
     }
   });
+
+  document.addEventListener('play', event => {
+    if (event.target instanceof HTMLMediaElement) pause();
+  }, true);
+
+  window.addEventListener('pagehide', save);
 })();

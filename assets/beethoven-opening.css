@@ -9,5 +9,5 @@
 .b6l-opening a{color:#e8cb8e;font-size:.8rem}
 .b6l-opening [hidden]{display:none!important}
 .b6l-opening iframe{position:absolute;inset-inline-start:0;bottom:0;width:100%;height:94px;border:0;clip-path:inset(50%);pointer-events:none}
-.b6l-opening-expanded iframe{position:static;width:100%;min-width:min(275px,68vw);clip-path:none;pointer-events:auto}
-.b6l-opening-docked{position:fixed;inset-inline-end:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);z-index:9;box-shadow:0 4px 24px #0008}
+.b6l-opening-expanded iframe{position:static;width:100%;min-width:min(275px,68vw);height:180px;clip-path:none;pointer-events:auto}
+.b6l-opening-docked{position:fixed;inset-inline-end:12px;bottom:calc(var(--b6l-opening-cart-height, 0px) + 12px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);z-index:9;box-shadow:0 4px 24px #0008}
