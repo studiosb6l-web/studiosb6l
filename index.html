@@ -53,6 +53,19 @@
 .b6l-shop-feature p{max-width:700px;margin:0 auto 20px;color:#cbd4df}
 .b6l-shop-feature a{display:inline-flex;align-items:center;gap:8px;background:#d6b574;color:#000;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:750}
 .b6l-shop-feature + .b6l-shop-feature{margin-block-start:-23px}
+#concerts-highlight-title {
+  color:#fff7e9;
+  font-weight:700;
+}
+@media (prefers-reduced-motion:no-preference) {
+  #concerts-highlight-title.is-in-view {
+    animation:b6l-concert-title-pulse 2.4s ease-in-out 2;
+  }
+}
+@keyframes b6l-concert-title-pulse {
+  0%,100% { color:#fff7e9; text-shadow:0 0 0 transparent; }
+  50% { color:#edc46d; text-shadow:0 0 15px #e8bc6866; }
+}
 </style></head><body>
 <header><div class="nav"><a class="brand" href="#home">STUDIOSB6L</a><nav aria-label="Main navigation"><a href="#vision" data-vip-nav-secondary>VISION</a><a href="#artist" data-vip-nav-secondary>BANDA 6 LATINOS</a><a href="#music" data-vip-nav-secondary>MUSIC</a><a href="#selected-works" id="selected-nav">WORKS</a><a href="#catalogue" id="catalog-nav">CATÁLOGO</a><a href="#stage" data-vip-nav-secondary>OPERA & THEATRE</a><a href="#listen" data-vip-nav-secondary>LISTEN</a><a href="#founder">FOUNDER</a><a href="#licensing" id="sync-nav">SYNC LICENSING</a><a href="#industry" data-vip-nav-secondary id="industry-nav">FOR PRODUCERS</a><a href="#festivals" data-vip-nav-secondary id="festival-nav">FILMFREEWAY</a><a href="#contact">CONTACT</a></nav><label for="language" style="font-size:.75rem;color:#d9b978">LANG <select class="lang-picker" id="language" aria-label="Choose website language"><option value="es">🇪🇸 ES</option><option value="en">🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="de">🇩🇪 DE</option><option value="pt">🇵🇹 PT</option><option value="ja">🇯🇵 日本語</option><option value="zh">🇨🇳 简体中文</option><option value="ar">🇸🇦 العربية</option></select></label></div></header>
 <main><section class="hero" id="home"><div class="wrap"><div class="eyebrow">Independent music · Cinematic storytelling</div><h1>Close your eyes.
@@ -80,6 +93,16 @@ Feel the magic happen.</h1><p class="lead">Original compositions, orchestral emo
   <p>We’re putting together a concert guide for Portugal and Spain.</p>
   <a href="music-store.html?lang=en#concertos"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V7a1 1 0 0 1 1-1Z"/><path d="M15 8v1m0 2v2m0 2v1"/></svg><span>View concert guide</span></a>
 </aside>
+<script>
+(() => {
+  const title = document.getElementById('concerts-highlight-title');
+  if (typeof IntersectionObserver !== 'function') return;
+  const observer = new IntersectionObserver(([entry]) => {
+    title.classList.toggle('is-in-view', entry.intersectionRatio >= 0.35);
+  }, { threshold: 0.35 });
+  observer.observe(title);
+})();
+</script>
 <section class="section" id="behind-the-scenes" aria-labelledby="bts-title">
   <div class="wrap b6l-bts-grid">
     <video controls playsinline preload="none" poster="STUDIOSB6L_The_Golden_Spotlight%281%29.png" aria-labelledby="bts-title" aria-describedby="bts-description">
