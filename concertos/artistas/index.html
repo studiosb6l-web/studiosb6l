@@ -28,10 +28,20 @@
 @keyframes b6l-counter-travel{from{top:14vh}to{top:calc(86vh - 100px)}}
 @media(max-width:700px){#b6l-artist-counter{right:6px;min-width:88px;padding:8px 6px;opacity:.9}#b6l-artist-counter strong{font-size:1.2rem}#b6l-artist-counter span{font-size:.59rem}@keyframes b6l-counter-travel{from{top:18vh}to{top:calc(85vh - 80px)}}}
 @media(prefers-reduced-motion:reduce){#b6l-artist-counter{animation:none;top:auto;bottom:12px}}
+
+/* Dois contadores reais em movimento sincronizado e sem sobreposição */
+#b6l-floating-counters{position:fixed;right:10px;top:14vh;z-index:30;display:flex;flex-direction:column;gap:9px;animation:b6l-counter-travel 24s ease-in-out infinite alternate;max-width:132px}
+#b6l-floating-counters #b6l-artist-counter,#b6l-band-counter{position:static;animation:none;box-sizing:border-box;display:block;width:100%;min-width:0;padding:10px 9px;border:1px solid #d8bd85;border-radius:12px;background:rgba(13,27,45,.95);box-shadow:0 8px 24px #0008;text-align:center;text-decoration:none;color:#f8e7b9}
+#b6l-band-counter{border-color:#85bed4;background:rgba(12,35,53,.95)}
+#b6l-band-counter strong{display:block;color:#fff;font:700 1.7rem/1.2 Georgia,serif}#b6l-band-counter span{display:block;font:600 .7rem/1.3 system-ui,sans-serif;letter-spacing:.03em;text-transform:uppercase}
+#b6l-floating-counters #b6l-artist-counter strong{font-size:1.7rem}
+#b6l-floating-counters #b6l-artist-counter span{font-size:.7rem}
+@media(max-width:700px){#b6l-floating-counters{right:5px;max-width:92px;gap:5px}#b6l-floating-counters #b6l-artist-counter,#b6l-band-counter{padding:7px 4px}#b6l-floating-counters #b6l-artist-counter strong,#b6l-band-counter strong{font-size:1.1rem}#b6l-floating-counters #b6l-artist-counter span,#b6l-band-counter span{font-size:.55rem}}
+@media(prefers-reduced-motion:reduce){#b6l-floating-counters{animation:none;top:auto;bottom:12px}}
 </style>
 </head>
 <body>
-<a id="b6l-artist-counter" href="#artists-grid-container" aria-label="Total de artistas no diretório STUDIOSB6L"><strong id="b6l-artist-counter-number">4.500</strong><span id="b6l-counter-label">Artistas na plataforma</span></a>
+<div id="b6l-floating-counters"><a id="b6l-artist-counter" href="#artists-grid-container" aria-label="Total de artistas no diretório STUDIOSB6L"><strong id="b6l-artist-counter-number">4.500</strong><span id="b6l-counter-label">Artistas na plataforma</span></a><a id="b6l-band-counter" href="#b6l-band-directory" aria-label="Total de bandas na plataforma"><strong id="b6l-band-counter-number">500</strong><span id="b6l-band-counter-label">Bandas na plataforma</span></a></div>
     <header>
         <div>
             <div class="eyebrow" data-i18n="eyebrow">Música ao Vivo • Artistas</div>
@@ -46,7 +56,7 @@
             <input type="search" id="search-artist-input" placeholder="Pesquisar artista..." style="flex: 1; min-width: 250px;">
         <select id="artist-country"><option value="" data-i18n="allCountries">Todos os países</option><option value="US">Estados Unidos</option><option value="BR">Brasil</option><option value="PT">Portugal</option><option value="ES">Espanha</option><option value="GB">Reino Unido</option><option value="IT">Itália</option><option value="DE">Alemanha</option><option value="FR">França</option><option value="BE">Bélgica</option><option value="JP">Japão</option><option value="CN">China</option><option value="KR">Coreia do Sul</option></select><button id="search-global" type="button" data-i18n="search">Pesquisar globalmente</button></div><p class="directory-status" id="directory-status" aria-live="polite">Artistas em destaque</p>
 
-        <ul class="cards" id="artists-grid-container">
+        <section id="b6l-band-directory" style="padding:12px 0"><h2>Bandas e grupos musicais internacionais</h2><p>Explora bandas e grupos registados no diretório STUDIOSB6L. A inclusão não representa parceria com os artistas.</p><button id="b6l-show-bands" type="button">Ver apenas bandas</button><button id="b6l-show-all" type="button">Ver todos os artistas</button></section><ul class="cards" id="artists-grid-container">
             <li class="card"><div class="card-content"><strong>BTS</strong><small>Coreia do Sul · K-Pop</small></div></li><li class="card"><div class="card-content"><strong>Dimash Qudaibergen</strong><small>Cazaquistão · Crossover vocal</small></div></li><li class="card"><div class="card-content"><strong>Ana Castela</strong><small>Brasil · Sertanejo</small></div></li>
         </ul>
 <section id="artist-profile" hidden style="background:#17263b;border:1px solid #d8bd85;border-radius:12px;padding:22px;margin:22px 0"><button id="close-profile" type="button">Voltar aos artistas</button><h2 id="profile-name"></h2><p id="profile-details"></p><p id="profile-description"></p><a href="/concertos/">Consultar concertos na STUDIOSB6L</a></section><div class="pagination"><button id="artist-prev" disabled>Anterior</button><span id="artist-page"></span><button id="artist-next" disabled>Seguinte</button></div><p><a href="/artistas/">És artista ou promotor? Solicita um perfil na STUDIOSB6L.</a></p>
@@ -137,9 +147,9 @@
           profile.hidden=false;profile.scrollIntoView({behavior:"smooth",block:"start"});
         }
         document.getElementById("close-profile").addEventListener("click",()=>{document.getElementById("artist-profile").hidden=true;document.getElementById("artists-grid-container").scrollIntoView({behavior:"smooth"})});
-        let localCatalog=null;
+        let localCatalog=null;let bandsOnly=false;
         fetch("/concertos/artistas/catalogo.json").then(r=>r.ok?r.json():null).then(data=>{
-          if(Array.isArray(data)&&data.length>0){localCatalog=data;globalMode=true;searchLocal(true);}
+          if(Array.isArray(data)&&data.length>0){localCatalog=data;globalMode=true;searchLocal(true);document.getElementById("b6l-artist-counter-number").textContent=new Intl.NumberFormat("pt-PT").format(data.length);document.getElementById("b6l-band-counter-number").textContent=new Intl.NumberFormat("pt-PT").format(data.filter(x=>x.kind==="band").length);}
         }).catch(()=>{});
         // Retrieve photographs by verified Wikidata identity (P18), never by name alone.
         const wikidataPhotoCache=new Map();
@@ -175,7 +185,7 @@
         function searchLocal(reset){
           if(reset)offset=0;
           const term=artistInput.value.trim().toLowerCase(),country=countryInput.value;
-          const matches=localCatalog.filter(a=>(!term||(a.name+" "+a.country).toLowerCase().includes(term))&&(!country||(a.country||"").toLowerCase().includes((countryNames[country]||country).toLowerCase())));
+          const matches=localCatalog.filter(a=>(!bandsOnly||a.kind==="band")&&(!term||(a.name+" "+a.country).toLowerCase().includes(term))&&(!country||(a.country||"").toLowerCase().includes((countryNames[country]||country).toLowerCase())));
           total=matches.length;
           const container=document.getElementById("artists-grid-container");container.replaceChildren();
           const visible=matches.slice(offset,offset+pageSize);
@@ -228,6 +238,8 @@
             if(!data.artists?.length)status.textContent="Nenhum artista encontrado. Experimenta outra pesquisa.";
           }catch(err){if(err.name==="AbortError")return;status.textContent="Não foi possível consultar a base internacional agora. Os artistas em destaque continuam disponíveis. "+err.message;prev.disabled=next.disabled=true;}
         }
+        document.getElementById("b6l-show-bands").addEventListener("click",()=>{bandsOnly=true;if(localCatalog)searchLocal(true);document.getElementById("artists-grid-container").scrollIntoView({behavior:"smooth"});});
+        document.getElementById("b6l-show-all").addEventListener("click",()=>{bandsOnly=false;if(localCatalog)searchLocal(true);});
         document.getElementById("search-global").addEventListener("click",()=>searchDirectory(true));
         artistInput.addEventListener("keydown",e=>{if(e.key==="Enter")searchDirectory(true)});
         countryInput.addEventListener("change",()=>searchDirectory(true));
