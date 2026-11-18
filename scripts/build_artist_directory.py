@@ -10,7 +10,7 @@ QUERY='''SELECT ?artist ?artistLabel WHERE {
   ?artist wdt:P31 wd:Q215380 .
   ?artist rdfs:label ?artistLabel .
   FILTER(LANG(?artistLabel)="en")
-} ORDER BY ?artist'''
+}'''
 def fetch(offset,limit=100):
     query=QUERY+" LIMIT "+str(limit)+" OFFSET "+str(offset)
     url="https://query.wikidata.org/sparql?"+urllib.parse.urlencode({"query":query,"format":"json"})
@@ -102,7 +102,7 @@ def main():
     checkpoint=ROOT/"artist-import-checkpoint.json"
     records=json.loads(checkpoint.read_text(encoding="utf-8")) if checkpoint.exists() else []
     seen={r["qid"] for r in records}
-    next_offset=0  # Query explicitly selects musical groups (Q215380), not solo musicians
+    next_offset=0  # Group-only Wikidata query; avoid expensive global ORDER BY
     for offset in range(0,50000,100):
         if len(records)>=TARGET:break
         if offset<next_offset:continue
