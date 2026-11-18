@@ -131,7 +131,7 @@
         document.getElementById("close-profile").addEventListener("click",()=>{document.getElementById("artist-profile").hidden=true;document.getElementById("artists-grid-container").scrollIntoView({behavior:"smooth"})});
         let localCatalog=null;
         fetch("/concertos/artistas/catalogo.json").then(r=>r.ok?r.json():null).then(data=>{
-          if(Array.isArray(data)&&data.length>=10000){localCatalog=data;status.textContent=data.length.toLocaleString("pt-PT")+" perfis STUDIOSB6L disponíveis";}
+          if(Array.isArray(data)&&data.length>0){localCatalog=data;globalMode=true;searchLocal(true);}
         }).catch(()=>{});
         function searchLocal(reset){
           if(reset)offset=0;
