@@ -155,7 +155,7 @@
         const artistInput=document.getElementById("search-artist-input");
         const countryInput=document.getElementById("artist-country");
         const status=document.getElementById("directory-status");
-        const prev=document.getElementById("artist-prev"),next=document.getElementById("artist-next"),pageLabel=document.getElementById("artist-page");
+        let prev=document.getElementById("artist-prev"),next=document.getElementById("artist-next");const pageLabel=document.getElementById("artist-page");
         const pageSize=50; let offset=0, total=0, lastQuery="", controller=null;
         const countryNames={US:"Estados Unidos",BR:"Brasil",PT:"Portugal",ES:"Espanha",GB:"Reino Unido",IT:"Itália",DE:"Alemanha",FR:"França",BE:"Bélgica",JP:"Japão",CN:"China",KR:"Coreia do Sul"};
         async function searchDirectory(reset=true){
@@ -216,11 +216,7 @@
         next.replaceWith(nextCopy);prev.replaceWith(prevCopy);
         nextCopy.addEventListener("click",()=>{if(globalMode){offset+=pageSize;originalSearch(false)}else{featuredPage++;renderFeatured()}});
         prevCopy.addEventListener("click",()=>{if(globalMode){offset=Math.max(0,offset-pageSize);originalSearch(false)}else{featuredPage--;renderFeatured()}});
-        // As referências apontam para os botões originais; sincronizar estados nos novos botões.
-        const syncButtons=()=>{nextCopy.disabled=next.disabled;prevCopy.disabled=prev.disabled;};
-        const observer=new MutationObserver(syncButtons);
-        observer.observe(next,{attributes:true,attributeFilter:["disabled"]});
-        observer.observe(prev,{attributes:true,attributeFilter:["disabled"]});
+        next=nextCopy;prev=prevCopy;
         artistInput.addEventListener("input",()=>{if(!globalMode){featuredPage=0;renderFeatured()}});
         countryInput.addEventListener("change",()=>{if(!globalMode){featuredPage=0;renderFeatured()}});
         renderFeatured();
