@@ -1,0 +1,22 @@
+name: Weekly international SEO content audit
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 8 * * 1'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit page metadata and structured data
+        run: python scripts/seo_content_audit.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: international-seo-content-audit
+          path: seo-content-audit.json
+          retention-days: 60
