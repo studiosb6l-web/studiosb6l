@@ -19,7 +19,10 @@ for path in ['/','/robots.txt','/sitemap.xml','/sitemap-artistas.xml','/concerto
             root=ET.fromstring(body)
             urls=root.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')
             add('XML sitemap '+path,len(urls)>0,f'{len(urls)} discoverable URLs')
-        if path in ('/instrumentos/','/parceiros-awin/','/music-store.html'):\n            add('Canonical '+path,bool(re.search(r'<link[^>]+rel=[\"\\\']canonical[\"\\\']',body,re.I)),'Canonical on commerce page')\n            add('Title '+path,bool(re.search(r'<title>[^<]+</title>',body,re.I)),'Page title present')\n        if path=='/robots.txt':
+        if path in ('/instrumentos/','/parceiros-awin/','/music-store.html'):
+            add('Canonical '+path,bool(re.search(r'<link[^>]+rel=[\"\\\']canonical[\"\\\']',body,re.I)),'Canonical on commerce page')
+            add('Title '+path,bool(re.search(r'<title>[^<]+</title>',body,re.I)),'Page title present')
+        if path=='/robots.txt':
             add('Robots lists both sitemaps',all(x in body for x in ['sitemap.xml','sitemap-artistas.xml']),'Robots sitemap declarations')
         if path=='/':
             add('Homepage canonical',bool(re.search(r'rel=["\\\']canonical["\\\']',body,re.I)),'Canonical present')
@@ -32,6 +35,7 @@ try:
 except Exception as exc:
     add('Local catalog',False,str(exc))
 report={'checked_at_utc':datetime.now(timezone.utc).isoformat(),'site':BASE,'scope':'technical crawl readiness only; not actual Google/Bing indexed counts or organic visits','checks':checks,'passed':sum(x['ok'] for x in checks),'total':len(checks)}
-Path('seo-health-report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\\n',encoding='utf-8')
+Path('seo-health-report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\
+',encoding='utf-8')
 print(json.dumps(report,indent=2,ensure_ascii=False))
 if any(not x['ok'] for x in checks):raise SystemExit('SEO readiness check failed; review report')
