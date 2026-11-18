@@ -89,8 +89,8 @@ p{margin:8px 0;color:var(--muted)}
 </ul>
 </section>
 <section id="instrumentos" aria-labelledby="instrumentos-title" tabindex="-1">
-<div class="instrument-head"><h2 id="instrumentos-title" data-instrument="0">Instrumentos e equipamento musical</h2><span class="instrument-status" data-instrument="2">Em breve</span></div>
-<p data-instrument="1">Estamos a preparar uma seleção de instrumentos e equipamento para músicos e estúdios.</p>
+<div class="instrument-head"><h2 id="instrumentos-title" data-instrument="0">Instrumentos e equipamento musical</h2><span class="instrument-status">Gear4music ES</span></div>
+<p data-instrument="1">Consulta o guia e vê os produtos disponíveis na Gear4music Espanha.</p>
 <ul class="instrument-categories">
 <li><a href="/instrumentos/#teclas" hreflang="pt" data-instrument="3">Pianos e teclados</a></li>
 <li><a href="/instrumentos/#guitarras" hreflang="pt" data-instrument="4">Guitarras e baixos</a></li>
@@ -2308,14 +2308,14 @@ search.addEventListener('input', () => {
 });
 
 const instrumentCopy = {
-  pt: ["Instrumentos e equipamento musical","Estamos a preparar uma seleção de instrumentos e equipamento para músicos e estúdios.","Em breve","Pianos e teclados","Guitarras e baixos","Bateria e percussão","Estúdio e som"],
-  es: ["Instrumentos y equipo musical","Estamos preparando una selección de instrumentos y equipo para músicos y estudios.","Próximamente","Pianos y teclados","Guitarras y bajos","Baterías y percusión","Estudio y sonido"],
-  en: ["Musical instruments and gear","We’re putting together a selection of instruments and equipment for musicians and studios.","Coming soon","Pianos and keyboards","Guitars and basses","Drums and percussion","Studio and audio"],
-  fr: ["Instruments et matériel de musique","Nous préparons une sélection d’instruments et de matériel pour les musiciens et les studios.","Bientôt","Pianos et claviers","Guitares et basses","Batteries et percussions","Studio et son"],
-  de: ["Musikinstrumente und Equipment","Wir stellen eine Auswahl an Instrumenten und Equipment für Musiker und Studios zusammen.","In Kürze","Klaviere und Keyboards","Gitarren und Bässe","Schlagzeug und Percussion","Studio und Audio"],
-  ja: ["楽器と音楽機材","ミュージシャンやスタジオ向けの楽器と機材を選定しています。","近日公開","ピアノとキーボード","ギターとベース","ドラムと打楽器","スタジオ・音響機材"],
-  zh: ["乐器与音乐设备","我们正在为音乐人和录音室精选乐器与设备。","即将推出","钢琴与键盘","吉他与贝斯","鼓与打击乐器","录音与音响设备"],
-  ar: ["الآلات والمعدات الموسيقية","نعمل على إعداد مجموعة مختارة من الآلات والمعدات للموسيقيين والاستوديوهات.","قريبًا","البيانو وآلات المفاتيح","الغيتار والغيتار الجهير","الطبول وآلات الإيقاع","معدات الاستوديو والصوت"]
+  pt: ["Instrumentos e equipamento musical","Consulta o guia e vê os produtos disponíveis na Gear4music Espanha.","","Pianos e teclados","Guitarras e baixos","Bateria e percussão","Estúdio e som"],
+  es: ["Instrumentos y equipo musical","Consulta la guía y explora el catálogo de Gear4music España.","","Pianos y teclados","Guitarras y bajos","Baterías y percusión","Estudio y sonido"],
+  en: ["Musical instruments and gear","Read the guide and browse the Gear4music Spain catalogue.","","Pianos and keyboards","Guitars and basses","Drums and percussion","Studio and audio"],
+  fr: ["Instruments et matériel de musique","Consultez le guide et explorez le catalogue de Gear4music Espagne.","","Pianos et claviers","Guitares et basses","Batteries et percussions","Studio et son"],
+  de: ["Musikinstrumente und Equipment","Lies den Ratgeber und entdecke das Sortiment von Gear4music Spanien.","","Klaviere und Keyboards","Gitarren und Bässe","Schlagzeug und Percussion","Studio und Audio"],
+  ja: ["楽器と音楽機材","選び方のガイドとGear4musicスペインのカタログをご覧ください。","","ピアノとキーボード","ギターとベース","ドラムと打楽器","スタジオ・音響機材"],
+  zh: ["乐器与音乐设备","查看选购指南与 Gear4music 西班牙站的商品目录。","","钢琴与键盘","吉他与贝斯","鼓与打击乐器","录音与音响设备"],
+  ar: ["الآلات والمعدات الموسيقية","اطّلع على دليل الاختيار وتصفّح كتالوج Gear4music إسبانيا.","","البيانو وآلات المفاتيح","الغيتار والغيتار الجهير","الطبول وآلات الإيقاع","معدات الاستوديو والصوت"]
 };
 function renderLanguage(next) {
   language = Object.hasOwn(copy,next) ? next : 'pt';
