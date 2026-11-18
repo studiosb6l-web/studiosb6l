@@ -31,8 +31,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A -- artist-import-checkpoint.json artist-import-offset.txt concertos/artistas sitemap-artistas.xml
           if git diff --cached --quiet; then
-            echo "No new verified artist changes to publish"
-            exit 0
+            echo "::error::No new artist data or profiles were generated; target has not been reached."
+            exit 1
           fi
           git commit -m "Save verified artist import progress and generated profiles"
           for attempt in 1 2 3; do
