@@ -8,13 +8,13 @@
     <style>
         :root { color-scheme: dark; }
         body { margin: 0; background: #0b121e; color: #f6f0e5; font: 16px/1.6 system-ui, sans-serif; }
-        header, footer { width: 1160px; margin: auto; padding: 22px; display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid #39465a; flex-wrap: wrap; }
+        header, footer { max-width: 1160px; width: 100%; box-sizing: border-box; margin: auto; padding: 22px; display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid #39465a; flex-wrap: wrap; }
         .brand { font-weight: 800; letter-spacing: .14em; text-decoration: none; color: inherit; font: normal clamp(2.1rem, 5vw, 4rem)/1.2 Georgia, serif; }
-        .eyebrow { font-size: .79rem; letter-spacing: .18em; color: #4c58a; text-transform: uppercase; }
+        .eyebrow { font-size: .79rem; letter-spacing: .18em; color: #d8bd85; text-transform: uppercase; }
         .tools { display: flex; gap: 12px; flex-wrap: wrap; margin: 25px; }
         input, select { padding: 12px; background: #16253b; color: #fff; border: 1px solid #02728b; border-radius: 8px; font: inherit; max-width: 100%; }
         .cards { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 18px; }
-        .card { border: 1px solid #485a70; border-radius: 10px; overflow: hidden; background: #142135; card-a { display: block; text-decoration: none; color: inherit; }
+        .card { border: 1px solid #485a70; border-radius: 10px; overflow: hidden; background: #142135; } .card a { display:block; text-decoration:none; color:inherit; }
         .photo { width: 100%; aspect-ratio: 4/3; background: linear-gradient(140deg, #233e5c, #111b20); }
         .card-content { padding: 15px; }
         .card strong { display: block; font-size: 1.1rem; }
@@ -39,7 +39,7 @@
         </div>
 
         <ul class="cards" id="artists-grid-container">
-            <!-- Os artistas serão carregados dinamicamente -->
+            <li class="card"><div class="card-content"><strong>BTS</strong><small>Coreia do Sul · K-Pop</small></div></li><li class="card"><div class="card-content"><strong>Dimash Qudaibergen</strong><small>Cazaquistão · Crossover vocal</small></div></li><li class="card"><div class="card-content"><strong>Ana Castela</strong><small>Brasil · Sertanejo</small></div></li>
         </ul>
     </main>
     <footer>
@@ -62,7 +62,15 @@
             { name: "Taylor Swift", country: "EUA", genre: "Pop / Americana", image: "taylorswift.jpg" },
             { name: "Bad Bunny", country: "Porto Rico", genre: "Urban / Latin", image: "badbunny.jpg" },
             { name: "Hans Zimmer", country: "Alemanha", genre: "Cinematic Score", image: "hanszimmer.jpg" },
-            { name: "Gilberto Gil", country: "Brasil", genre: "MPB / Lenda Global", image: "gilbertogil.jpg" }
+            { name: "Gilberto Gil", country: "Brasil", genre: "MPB / Lenda Global", image: "gilbertogil.jpg" },
+            { name: "Andrea Bocelli", country: "Itália", genre: "Tenor / Ópera" },
+            { name: "Jonas Kaufmann", country: "Alemanha", genre: "Tenor / Ópera" },
+            { name: "Lisette Oropesa", country: "Estados Unidos", genre: "Soprano / Ópera" },
+            { name: "Renée Fleming", country: "Estados Unidos", genre: "Soprano / Ópera" },
+            { name: "Pretty Yende", country: "África do Sul", genre: "Soprano / Ópera" },
+            { name: "Sonya Yoncheva", country: "Bulgária", genre: "Soprano / Ópera" },
+            { name: "Juan Diego Flórez", country: "Peru", genre: "Tenor / Ópera" },
+            { name: "Elīna Garanča", country: "Letónia", genre: "Mezzo-soprano / Ópera" }
         ];
 
         function renderGrid(list) {
@@ -76,7 +84,7 @@
                     <div class="card-content">
                         <strong>${artist.name}</strong>
                         <small>${artist.country} • ${artist.genre}</small>
-                        <span>Ver página do artista ›</span>
+                        <span>Artista em diretório · agenda sujeita a confirmação oficial</span>
                     </div>
                 `;
                 container.appendChild(li);
