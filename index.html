@@ -76,6 +76,26 @@
   <a class="header-promoters" href="/colaborar/?tipo=promotor">Só para Promotores</a>
   <a class="header-business" href="/colaborar/?tipo=empresa">Só para Empresas</a>
 </nav>
+<div class="b6l-artist-discovery">
+ <a href="/concertos/artistas/" class="b6l-artist-discovery-link" aria-label="Explorar diretório internacional de artistas na STUDIOSB6L">
+  <span class="b6l-artist-discovery-icon" aria-hidden="true">✦</span>
+  <span class="b6l-artist-discovery-copy"><strong id="b6l-artist-banner-title">DESCUBRA ARTISTAS DE TODO O MUNDO</strong><small id="b6l-artist-banner-subtitle">Explore o diretório internacional de artistas na nossa plataforma</small></span>
+  <span class="b6l-artist-discovery-action" id="b6l-artist-banner-action">EXPLORAR ARTISTAS ›</span>
+ </a>
+</div>
+<style>
+.b6l-artist-discovery{padding:10px 14px 16px;max-width:1200px;margin:0 auto;box-sizing:border-box}
+.b6l-artist-discovery-link{display:flex;align-items:center;gap:15px;min-height:76px;padding:12px 22px;border:2px solid #f2cf78;border-radius:14px;background:linear-gradient(110deg,#39250c,#795315 45%,#191b35 100%);color:#fff6d9;text-decoration:none;box-shadow:0 0 18px #d6a94365,inset 0 0 22px #e9c06b25;transition:transform .2s,box-shadow .2s;animation:b6l-artist-glow 3s ease-in-out infinite}
+.b6l-artist-discovery-link:hover,.b6l-artist-discovery-link:focus-visible{transform:translateY(-2px);box-shadow:0 0 32px #e9bf70a6}
+.b6l-artist-discovery-icon{font-size:2.1rem;color:#ffe4a1}
+.b6l-artist-discovery-copy{display:flex;flex:1;flex-direction:column;gap:3px;min-width:0}
+.b6l-artist-discovery-copy strong{font-size:clamp(.9rem,2.7vw,1.3rem);letter-spacing:.065em;line-height:1.35}
+.b6l-artist-discovery-copy small{font-size:clamp(.75rem,2vw,.95rem);color:#fff0c7;line-height:1.4}
+.b6l-artist-discovery-action{border:1px solid #f4d38d;border-radius:8px;padding:10px 13px;white-space:nowrap;font-size:.8rem;font-weight:800;letter-spacing:.04em}
+@keyframes b6l-artist-glow{0%,100%{box-shadow:0 0 12px #d6a94345}50%{box-shadow:0 0 28px #e9bf708c}}
+@media(max-width:650px){.b6l-artist-discovery-link{padding:13px;gap:10px;flex-wrap:wrap}.b6l-artist-discovery-icon{font-size:1.6rem}.b6l-artist-discovery-action{width:100%;text-align:center;box-sizing:border-box}}
+@media(prefers-reduced-motion:reduce){.b6l-artist-discovery-link{animation:none}}
+</style>
 </header>
 <main><section class="hero" id="home"><div class="wrap"><div class="eyebrow">Independent music · Cinematic storytelling</div><h1>Close your eyes.
 Immerse yourself in our music.
