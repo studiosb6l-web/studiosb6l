@@ -21,7 +21,7 @@
         .card small { display: block; color: #8ec9d6; margin: 4px 0 12px; }
         .card span { color: #4ec58a; font-size: .85rem; }
         footer { border-top: 1px solid #39465a; color: #bec9d6; font-size: .84rem; }
-    </style>
+    .directory-status{margin:12px 25px;color:#e8d1a1}.tools select{min-width:180px}.card{min-height:110px}.card a{color:#e8d1a1;text-decoration:underline}.pagination{display:flex;gap:12px;align-items:center;justify-content:center;margin:25px 0}.pagination button{background:#d8bd85;color:#101b2c;border:0;border-radius:7px;padding:11px 17px;cursor:pointer}.pagination button:disabled{opacity:.4;cursor:default}.card .card-content{overflow-wrap:anywhere}@media(max-width:700px){main{padding:14px!important}.tools{margin:16px 0}header,footer{padding:15px}} </style>
 </head>
 <body>
     <header>
@@ -34,13 +34,14 @@
         <h1 style="font-size: 2.4rem; margin-bottom: 8px;">Artistas Internacionais e Brasileiros</h1>
         <p style="color: #bec9d6; margin-bottom: 25px;">Explore as páginas dos artistas. Diretório global otimizado sob a visão Som 2030.</p>
         
-        <div class="tools">
+        <p>Diretório internacional em expansão. Pesquisa artistas reais na base pública MusicBrainz. A presença no diretório não significa parceria com a STUDIOSB6L nem confirma concertos ou bilhetes.</p><div class="tools">
             <input type="search" id="search-artist-input" placeholder="Pesquisar artista..." style="flex: 1; min-width: 250px;">
-        </div>
+        <select id="artist-country"><option value="">Todos os países</option><option value="US">Estados Unidos</option><option value="BR">Brasil</option><option value="PT">Portugal</option><option value="ES">Espanha</option><option value="GB">Reino Unido</option><option value="IT">Itália</option><option value="DE">Alemanha</option><option value="FR">França</option><option value="BE">Bélgica</option><option value="JP">Japão</option><option value="CN">China</option><option value="KR">Coreia do Sul</option></select><button id="search-global" type="button">Pesquisar globalmente</button></div><p class="directory-status" id="directory-status" aria-live="polite">Artistas em destaque</p>
 
         <ul class="cards" id="artists-grid-container">
             <li class="card"><div class="card-content"><strong>BTS</strong><small>Coreia do Sul · K-Pop</small></div></li><li class="card"><div class="card-content"><strong>Dimash Qudaibergen</strong><small>Cazaquistão · Crossover vocal</small></div></li><li class="card"><div class="card-content"><strong>Ana Castela</strong><small>Brasil · Sertanejo</small></div></li>
         </ul>
+<div class="pagination"><button id="artist-prev" disabled>Anterior</button><span id="artist-page"></span><button id="artist-next" disabled>Seguinte</button></div><p><a href="/artistas/">És artista ou promotor? Solicita um perfil na STUDIOSB6L.</a></p>
     </main>
     <footer>
         <div>© 2026 STUDIOS B6L & BANDA 6 LATINOS. Todos os Direitos Reservados.</div>
@@ -91,7 +92,48 @@
             });
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
+        // MusicBrainz: pesquisa pública de artistas reais, com paginação e sem inventar registos.
+        const artistInput=document.getElementById("search-artist-input");
+        const countryInput=document.getElementById("artist-country");
+        const status=document.getElementById("directory-status");
+        const prev=document.getElementById("artist-prev"),next=document.getElementById("artist-next"),pageLabel=document.getElementById("artist-page");
+        const pageSize=50; let offset=0, total=0, lastQuery="", controller=null;
+        const countryNames={US:"Estados Unidos",BR:"Brasil",PT:"Portugal",ES:"Espanha",GB:"Reino Unido",IT:"Itália",DE:"Alemanha",FR:"França",BE:"Bélgica",JP:"Japão",CN:"China",KR:"Coreia do Sul"};
+        async function searchDirectory(reset=true){
+          const term=artistInput.value.trim(), country=countryInput.value;
+          if(reset)offset=0;
+          if(controller)controller.abort();
+          controller=new AbortController();
+          const query=[term ? 'artist:"'+term.replace(/["\\]/g," ").slice(0,90)+'"' : 'type:person',country?'country:'+country:''].filter(Boolean).join(' AND ');
+          lastQuery=query;status.textContent="A pesquisar artistas na base internacional…";next.disabled=prev.disabled=true;
+          try{
+            const url="https://musicbrainz.org/ws/2/artist/?query="+encodeURIComponent(query)+"&fmt=json&limit="+pageSize+"&offset="+offset;
+            const response=await fetch(url,{signal:controller.signal,headers:{Accept:"application/json"}});
+            if(!response.ok)throw Error("Serviço temporariamente indisponível ("+response.status+")");
+            const data=await response.json();total=Number(data.count)||0;
+            const container=document.getElementById("artists-grid-container");container.replaceChildren();
+            for(const artist of (data.artists||[])){
+              const li=document.createElement("li");li.className="card";
+              const box=document.createElement("div");box.className="card-content";
+              const name=document.createElement("strong");name.textContent=artist.name||"Artista";
+              const detail=document.createElement("small");detail.textContent=(countryNames[artist.country]||artist.country||artist.area?.name||"Internacional")+" · "+(artist.type||"Artista");
+              const link=document.createElement("a");link.href="https://musicbrainz.org/artist/"+encodeURIComponent(artist.id);link.target="_blank";link.rel="noopener noreferrer";link.textContent="Ver ficha pública do artista";
+              box.append(name,detail,link);li.append(box);container.append(li);
+            }
+            status.textContent=total.toLocaleString("pt-PT")+" resultados na base MusicBrainz · "+(data.artists||[]).length+" nesta página";
+            pageLabel.textContent="Página "+(Math.floor(offset/pageSize)+1);
+            prev.disabled=offset===0;next.disabled=offset+pageSize>=total;
+            if(!data.artists?.length)status.textContent="Nenhum artista encontrado. Experimenta outra pesquisa.";
+          }catch(err){if(err.name==="AbortError")return;status.textContent="Não foi possível consultar a base internacional agora. Os artistas em destaque continuam disponíveis. "+err.message;prev.disabled=next.disabled=true;}
+        }
+        document.getElementById("search-global").addEventListener("click",()=>searchDirectory(true));
+        artistInput.addEventListener("keydown",e=>{if(e.key==="Enter")searchDirectory(true)});
+        countryInput.addEventListener("change",()=>searchDirectory(true));
+        next.addEventListener("click",()=>{offset+=pageSize;searchDirectory(false)});
+        prev.addEventListener("click",()=>{offset=Math.max(0,offset-pageSize);searchDirectory(false)});
+        renderGrid(massiveDatabase);
+        status.textContent=massiveDatabase.length+" artistas em destaque · pesquisa global disponível";
+                document.addEventListener("DOMContentLoaded", () => {
             renderGrid(massiveDatabase);
             const searchInput = document.getElementById("search-artist-input");
             searchInput.addEventListener("input", (e) => {
