@@ -1,7 +1,7 @@
 /* STUDIOSB6L — vídeos oficiais e revisão individual do catálogo. */
 (function(){
 "use strict";
-const curated={"Andrea Bocelli":["Ng7JKZQXnWw"],"Metallica":["tAGnKpE4NCI"],"Queen":["fJ9rUzIMcZQ"],"Nirvana":["hTWKbfoikeg"],"Michael Jackson":["sOnqjkJTMaA"],"Rick Astley":["dQw4w9WgXcQ"],"PSY":["9bZkp7q19f0"],"Adele":["YQHsXMglC9A"],"Coldplay":["dvgZkm1xWPE"],"Lady Gaga":["qrO4YZeyl0I"],"Ed Sheeran":["JGwWNGJdvx8"],"Taylor Swift":["e-ORhEE9VVg"],"BTS":["gdZLi9oWNZg"],"BLACKPINK":["IHNzOHi8sJs"],"Shakira":["pRpeEdMmmQ0"]};
+const curated={"Andrea Bocelli":["Ng7JKZQXnWw"],"Metallica":["tAGnKpE4NCI"],"Queen":["fJ9rUzIMcZQ"],"Nirvana":["hTWKbfoikeg"],"Michael Jackson":["sOnqjkJTMaA"],"Rick Astley":["dQw4w9WgXcQ"],"PSY":["9bZkp7q19f0"],"Adele":["YQHsXMglC9A"],"Coldplay":["dvgZkm1xWPE"],"Lady Gaga":["qrO4YZeyl0I"],"Ed Sheeran":["JGwWNGJdvx8"],"Taylor Swift":["e-ORhEE9VVg"],"BTS":["gdZLi9oWNZg"],"BLACKPINK":["IHNzOHi8sJs"],"Shakira":["pRpeEdMmmQ0"],"Linkin Park":["eVTXPUF4Oz4"],"Guns N’ Roses":["1w7OgIMMRc4"],"Guns N' Roses":["1w7OgIMMRc4"],"U2":["ftjEcrrf7r0"],"The Beatles":["A_MjCqQoLLA"],"AC/DC":["v2AC41dglnM"],"Bon Jovi":["lDK9QqIzhwk"],"Imagine Dragons":["ktvTqknDobU"],"Radiohead":["XFkzRNyygfk"],"The Weeknd":["4NRXx6U8ABQ"]};
 function parseId(value){
  try{
   const url=new URL(value);
