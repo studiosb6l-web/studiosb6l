@@ -156,7 +156,7 @@
         const countryInput=document.getElementById("artist-country");
         const status=document.getElementById("directory-status");
         let prev=document.getElementById("artist-prev"),next=document.getElementById("artist-next");const pageLabel=document.getElementById("artist-page");
-        const pageSize=50; let offset=0, total=0, lastQuery="", controller=null;
+        const pageSize=20; let offset=0, total=0, lastQuery="", controller=null;
         const countryNames={US:"Estados Unidos",BR:"Brasil",PT:"Portugal",ES:"Espanha",GB:"Reino Unido",IT:"Itália",DE:"Alemanha",FR:"França",BE:"Bélgica",JP:"Japão",CN:"China",KR:"Coreia do Sul"};
         async function searchDirectory(reset=true){
           if(localCatalog){searchLocal(reset);return;}
@@ -192,7 +192,7 @@
         next.addEventListener("click",()=>{offset+=pageSize;searchDirectory(false)});
         prev.addEventListener("click",()=>{offset=Math.max(0,offset-pageSize);searchDirectory(false)});
         // Paginação funcional também para a lista de destaque, sem depender de serviços externos.
-        const featuredPageSize=12;
+        const featuredPageSize=20;
         let featuredPage=0;
         function renderFeatured(){
           const term=artistInput.value.trim().toLocaleLowerCase("pt-PT");
