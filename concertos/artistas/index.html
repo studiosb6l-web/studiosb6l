@@ -88,7 +88,7 @@
                         <a href="#artist-profile" class="local-profile">Ver perfil na STUDIOSB6L</a>
                     </div>
                 `;
-                const local=li.querySelector(".local-profile");if(local)local.addEventListener("click",()=>showProfile(artist));container.appendChild(li);
+                const local=li.querySelector(".local-profile");if(local){const slugMap={"Andrea Bocelli":"andrea-bocelli","Jonas Kaufmann":"jonas-kaufmann","Lisette Oropesa":"lisette-oropesa","Renée Fleming":"renee-fleming","Pretty Yende":"pretty-yende","Sonya Yoncheva":"sonya-yoncheva","Juan Diego Flórez":"juan-diego-florez","Elīna Garanča":"elina-garanca"};if(slugMap[artist.name]){local.href="/concertos/artistas/"+slugMap[artist.name]+"/";}else{local.addEventListener("click",()=>showProfile(artist));}}container.appendChild(li);
             });
         }
 
