@@ -4,10 +4,10 @@ import json, os, re, time, html, urllib.parse, urllib.request, unicodedata
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/"concertos"/"artistas"
-TARGET=7785
+TARGET=8285
 HEADERS={"User-Agent":"STUDIOSB6L-ArtistDirectory/1.0 (https://www.studiosb6l.com/)","Accept":"application/sparql-results+json"}
 QUERY='''SELECT ?artist ?artistLabel WHERE {
-  ?artist wdt:P106 wd:Q639669 .
+  ?artist wdt:P31 wd:Q215380 .
   ?artist rdfs:label ?artistLabel .
   FILTER(LANG(?artistLabel)="en")
 }'''
@@ -30,7 +30,7 @@ def page(record):
     name=html.escape(record["name"]); country=html.escape(record["country"])
     url="https://www.studiosb6l.com/concertos/artistas/"+record["slug"]+"/"
     desc=f"Perfil editorial de {record['name']} no diretório internacional STUDIOSB6L. Descobre artistas e concertos."
-    ld=json.dumps({"@context":"https://schema.org","@type":"ProfilePage","url":url,"name":record["name"]+" — STUDIOSB6L","mainEntity":{"@type":"Person","name":record["name"],"identifier":record["qid"]}},ensure_ascii=False).replace("<","\\u003c")
+    ld=json.dumps({"@context":"https://schema.org","@type":"ProfilePage","url":url,"name":record["name"]+" — STUDIOSB6L","mainEntity":{"@type":("MusicGroup" if record.get("kind")=="band" else "Person"),"name":record["name"],"identifier":record["qid"]}},ensure_ascii=False).replace("<","\\u003c")
     return f'''<!doctype html><html lang="pt"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{name} | Artistas — STUDIOSB6L</title><meta name="description" content="{html.escape(desc,quote=True)}"><link rel="canonical" href="{url}"><meta name="robots" content="index,follow"><style>body{{margin:0;background:#0b121e;color:#f6f0e5;font:17px/1.7 system-ui,sans-serif}}header,main,footer{{max-width:1000px;margin:auto;padding:22px}}header{{border-bottom:1px solid #ad925e}}a{{color:#e8c98b}}h1{{font:clamp(2rem,6vw,4rem) Georgia,serif}}section{{background:#15243a;border:1px solid #44536c;border-radius:12px;padding:24px;margin:22px 0}}.tag{{color:#d8bd85;letter-spacing:.12em;text-transform:uppercase}}.links a{{display:inline-block;padding:12px 16px;border:1px solid #ad925e;border-radius:8px;margin:5px;text-decoration:none}}</style><script type="application/ld+json">{ld}</script></head><body><header><a href="/">STUDIOS B6L</a> · <a href="/concertos/artistas/">Artistas internacionais</a></header><main><p class="tag">Diretório editorial internacional</p><h1>{name}</h1><p>{country} · Artista musical</p><section><h2>Quem é {name}?</h2><p>Conhece a atividade musical, os géneros, os instrumentos e as fontes biográficas disponíveis sobre {name}. Os dados desta página são associados ao registo público individual do artista e atualizados a partir das fontes identificadas abaixo.</p><p><small>Ficha editorial independente: não representa uma conta oficial, uma colaboração ou um vínculo comercial com o artista.</small></p></section><section id="verified-details"><h2>Informações verificadas sobre {name}</h2><p id="artist-summary">A consultar dados públicos disponíveis para este artista.</p><div id="artist-facts"></div><div id="artist-image"></div><p id="artist-sources"></p></section><script>
 (async function(){{
  const qid={json.dumps(record["qid"])};
@@ -119,7 +119,7 @@ def main():
             if not re.fullmatch("Q[0-9]+",qid) or not name or qid in seen:continue
             seen.add(qid)
             country=row.get("countryLabel",{}).get("value","Internacional")
-            records.append({"qid":qid,"name":name,"country":country,"slug":slug(name,qid)})
+            records.append({"qid":qid,"name":name,"country":country,"slug":slug(name,qid),"kind":"band"})
             if len(records)>=TARGET:break
         if True:
             checkpoint.write_text(json.dumps(records,ensure_ascii=False),encoding="utf-8")
