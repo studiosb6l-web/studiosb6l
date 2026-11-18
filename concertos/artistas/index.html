@@ -67,7 +67,7 @@
         <section id="b6l-band-directory" style="padding:12px 0"><h2>Bandas e grupos musicais internacionais</h2><p>Explora bandas e grupos registados no diretório STUDIOSB6L. A inclusão não representa parceria com os artistas.</p><button id="b6l-show-bands" type="button">Ver apenas bandas</button><button id="b6l-show-all" type="button">Ver todos os artistas</button></section><ul class="cards" id="artists-grid-container">
             <li class="card"><div class="card-content"><strong>BTS</strong><small>Coreia do Sul · K-Pop</small></div></li><li class="card"><div class="card-content"><strong>Dimash Qudaibergen</strong><small>Cazaquistão · Crossover vocal</small></div></li><li class="card"><div class="card-content"><strong>Ana Castela</strong><small>Brasil · Sertanejo</small></div></li>
         </ul>
-<section id="artist-profile" hidden style="background:#17263b;border:1px solid #d8bd85;border-radius:12px;padding:22px;margin:22px 0"><button id="close-profile" type="button">Voltar aos artistas</button><h2 id="profile-name"></h2><p id="profile-details"></p><p id="profile-description"></p><a href="/concertos/">Consultar concertos na STUDIOSB6L</a></section><div class="pagination"><button id="artist-prev" disabled>Anterior</button><span id="artist-page"></span><button id="artist-next" disabled>Seguinte</button></div><p><a href="/artistas/">És artista ou promotor? Solicita um perfil na STUDIOSB6L.</a></p>
+<section id="artist-profile" hidden style="background:#17263b;border:1px solid #d8bd85;border-radius:12px;padding:22px;margin:22px 0"><button id="close-profile" type="button">Voltar aos artistas</button><h2 id="profile-name"></h2><p id="profile-details"></p><p id="profile-description"></p><a href="/concertos/">Consultar concertos na STUDIOSB6L</a><div data-b6l-video-discovery id="b6l-directory-videos"></div></section><div class="pagination"><button id="artist-prev" disabled>Anterior</button><span id="artist-page"></span><button id="artist-next" disabled>Seguinte</button></div><p><a href="/artistas/">És artista ou promotor? Solicita um perfil na STUDIOSB6L.</a></p>
     </main>
     <footer>
         <div>© 2026 STUDIOS B6L & BANDA 6 LATINOS. Todos os Direitos Reservados.</div>
@@ -152,7 +152,7 @@
           document.getElementById("profile-name").textContent=artist.name||"Artista";
           document.getElementById("profile-details").textContent=[artist.country||artist.area?.name||"Internacional",artist.genre||artist.type||"Artista"].join(" · ");
           document.getElementById("profile-description").textContent="Perfil informativo integrado na STUDIOSB6L. Dados de artistas internacionais podem provir da MusicBrainz. A inclusão não significa representação ou parceria. Concertos e bilhetes sujeitos a confirmação oficial.";
-          profile.hidden=false;profile.scrollIntoView({behavior:"smooth",block:"start"});
+          const videoRoot=document.getElementById("b6l-directory-videos");if(videoRoot){videoRoot.dataset.artistName=artist.name||"";videoRoot.replaceChildren();if(window.B6LVideoDiscovery)window.B6LVideoDiscovery(videoRoot);}profile.hidden=false;profile.scrollIntoView({behavior:"smooth",block:"start"});
         }
         document.getElementById("close-profile").addEventListener("click",()=>{document.getElementById("artist-profile").hidden=true;document.getElementById("artists-grid-container").scrollIntoView({behavior:"smooth"})});
         let localCatalog=null;let bandsOnly=false;
@@ -306,5 +306,5 @@ const select=document.getElementById("b6l-directory-lang");
 function apply(lang){const t=translations[lang]||translations.pt;document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-i18n]").forEach(el=>{const i=keys.indexOf(el.dataset.i18n);if(i>=0)el.textContent=t[i]});document.getElementById("b6l-counter-label").textContent=t[6];document.getElementById("search-artist-input").placeholder=t[8];select.value=lang;try{localStorage.setItem("b6l-language",lang)}catch(e){}}
 let lang="pt";try{lang=localStorage.getItem("b6l-language")||navigator.language.slice(0,2)}catch(e){lang=navigator.language.slice(0,2)}apply(translations[lang]?lang:"en");select.addEventListener("change",()=>apply(select.value));
 })();
-</script></body>
+</script><script defer src="/concertos/artistas/video-discovery.js"></script></body>
 </html>
