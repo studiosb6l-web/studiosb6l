@@ -7,7 +7,7 @@ DEST=ROOT/"concertos"/"artistas"
 TARGET=7785
 HEADERS={"User-Agent":"STUDIOSB6L-ArtistDirectory/1.0 (https://www.studiosb6l.com/)","Accept":"application/sparql-results+json"}
 QUERY='''SELECT ?artist ?artistLabel WHERE {
-  ?artist wdt:P106 wd:Q177220 .
+  ?artist wdt:P106 wd:Q639669 .
   ?artist rdfs:label ?artistLabel .
   FILTER(LANG(?artistLabel)="en")
 }'''
@@ -102,7 +102,7 @@ def main():
     checkpoint=ROOT/"artist-import-checkpoint.json"
     records=json.loads(checkpoint.read_text(encoding="utf-8")) if checkpoint.exists() else []
     seen={r["qid"] for r in records}
-    next_offset=int((ROOT/"artist-import-offset.txt").read_text()) if (ROOT/"artist-import-offset.txt").exists() else 0
+    next_offset=0  # New verified occupation source: musician (Q639669), start from its first page
     for offset in range(0,50000,100):
         if len(records)>=TARGET:break
         if offset<next_offset:continue
