@@ -93,7 +93,19 @@
   }
 }</script>
 <script defer src="/assets/analytics-consent.js"></script>
-</head>
+<style>
+.agenda-tools{border:1px solid #a98b55;border-radius:10px;padding:18px;margin:26px 0;background:#142236}
+.agenda-tools label{display:block;font-size:.86rem;margin:0 0 8px;color:#e7cc95}
+.agenda-tools input,.agenda-tools select{width:100%;padding:12px;background:#0b1525;color:#fff;border:1px solid #718099;border-radius:6px;font:inherit}
+.agenda-filter-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.artist-directory{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;list-style:none;padding:0}
+.artist-directory li{background:#142236;border:1px solid #526078;border-radius:8px;padding:17px}
+.artist-directory strong{display:block;font-size:1.12rem;margin-bottom:7px}
+.artist-directory small{display:block;color:#c3cfdd;margin-bottom:12px}
+.artist-directory a{display:inline-block;border:1px solid #d8bd85;border-radius:5px;padding:8px 12px;text-decoration:none;color:#e8d1a1}
+.agenda-empty{padding:15px;border:1px dashed #9d8a66}
+@media(max-width:650px){.agenda-filter-grid{grid-template-columns:1fr}}
+</style></head>
 <body>
 <header class="top"><a class="brand" href="/">STUDIOS B6L</a><nav aria-label="Navegação"><a href="/music-store.html?lang=pt#concertos">Concertos e bilhetes</a></nav></header>
 <main class="international-agenda">
@@ -108,11 +120,28 @@
 <a href="#japao">Japão</a>
 <a href="#china">China</a>
 <a href="#coreia-do-sul">Coreia do Sul</a>
-<a href="#ar-livre">Ao ar livre</a>
+<a href="#ar-livre">Ao ar livre</a><a href="#artistas">Artistas em digressão</a><a href="#pesquisar">Pesquisar eventos</a>
 <a href="/concertos/lisboa/">Lisboa</a>
 <a href="/concertos/barcelona/">Barcelona</a>
 </nav>
-<section id="ar-livre" aria-labelledby="ar-livre-title">
+<section id="artistas" aria-labelledby="artistas-title">
+<p class="eyebrow">Artistas em destaque · Agenda de digressões</p>
+<h2 id="artistas-title">Próximos concertos por artista</h2>
+<p>Encontra artistas com atuações anunciadas nesta agenda. Consulta a página oficial de cada espetáculo para verificar bilhetes e disponibilidade.</p>
+<ul class="artist-directory">
+<li><strong>Bon Jovi</strong><small>24 junho 2027 · BST Hyde Park · Londres, Inglaterra</small><a href="https://www.bst-hydepark.com/events/bon-jovi-thurs-24-june/" rel="noopener" data-analytics-event="concert_organizer_click">Ver concerto e bilhetes</a></li>
+<li><strong>The B-52s</strong><small>2–4 julho 2027 · Hollywood Bowl · Los Angeles, EUA</small><a href="https://www.hollywoodbowl.com/events/instances/46526cx7/2027-07-02/july-fourth-fireworks-spectacular-with-the-b-52s" rel="noopener" data-analytics-event="concert_organizer_click">Ver concerto e bilhetes</a></li>
+</ul>
+<p class="fine">Os links apresentados são de organizadores oficiais; não são identificados como links de afiliado até existir uma parceria aprovada e um URL de acompanhamento válido.</p>
+</section>
+<section class="agenda-tools" id="pesquisar" aria-label="Pesquisar eventos">
+<h2>Pesquisar concertos e espetáculos</h2>
+<div class="agenda-filter-grid">
+<div><label for="agenda-q">Artista, obra, cidade ou sala</label><input id="agenda-q" type="search" placeholder="Ex.: Bon Jovi, Mozart, Londres"></div>
+<div><label for="agenda-country">País</label><select id="agenda-country"><option value="">Todos os países</option><option value="estados-unidos">Estados Unidos</option><option value="brasil">Brasil</option><option value="belgica">Bélgica</option><option value="inglaterra">Inglaterra</option><option value="japao">Japão</option><option value="china">China</option><option value="coreia-do-sul">Coreia do Sul</option></select></div>
+<div><label for="agenda-kind">Tipo</label><select id="agenda-kind"><option value="">Todos os estilos</option><option value="ópera">Ópera</option><option value="ar livre">Ao ar livre</option><option value="sinfónico">Sinfónico</option></select></div>
+</div><p id="agenda-count" aria-live="polite"></p><p id="agenda-empty" class="agenda-empty" hidden>Não foram encontrados eventos para esta pesquisa. Experimenta outro termo ou país.</p>
+</section><section id="ar-livre" aria-labelledby="ar-livre-title">
 <h2 id="ar-livre-title">Música ao ar livre</h2>
 <ul><li><a href="#estados-unidos">The B-52s e Los Angeles Philharmonic</a> · Hollywood Bowl · Los Angeles</li><li><a href="#brasil">Lollapalooza Brasil 2027</a> · Autódromo de Interlagos · São Paulo</li><li><a href="#inglaterra">Bon Jovi — BST Hyde Park</a> · Hyde Park · Londres</li></ul>
 </section>
@@ -200,5 +229,12 @@
 <a href="/newsletter.html">Newsletter STUDIOS B6L</a>
 </nav>
 </main>
-</body>
+<script>
+(function(){
+const q=document.getElementById('agenda-q'),country=document.getElementById('agenda-country'),kind=document.getElementById('agenda-kind'),count=document.getElementById('agenda-count'),empty=document.getElementById('agenda-empty');
+const cards=[...document.querySelectorAll('ul.events > li')];
+function filter(){let shown=0;const term=q.value.trim().toLocaleLowerCase('pt');for(const card of cards){const txt=card.textContent.toLocaleLowerCase('pt'),section=card.closest('section');const ok=(!term||txt.includes(term))&&(!country.value||section.id===country.value)&&(!kind.value||txt.includes(kind.value));card.hidden=!ok;if(ok)shown++;}for(const section of document.querySelectorAll('section:has(> ul.events)')){section.hidden=![...section.querySelectorAll('ul.events > li')].some(x=>!x.hidden);}count.textContent=shown+' eventos encontrados';empty.hidden=shown!==0;}
+[q,country,kind].forEach(el=>el.addEventListener(el===q?'input':'change',filter));filter();
+})();
+</script></body>
 </html>
