@@ -133,20 +133,54 @@
         fetch("/concertos/artistas/catalogo.json").then(r=>r.ok?r.json():null).then(data=>{
           if(Array.isArray(data)&&data.length>0){localCatalog=data;globalMode=true;searchLocal(true);}
         }).catch(()=>{});
+        // Retrieve photographs by verified Wikidata identity (P18), never by name alone.
+        const wikidataPhotoCache=new Map();
+        async function loadVerifiedPhotos(artists, cards){
+          const pending=artists.filter(a=>a.qid&&!wikidataPhotoCache.has(a.qid)).map(a=>a.qid);
+          if(pending.length){
+            try{
+              const api="https://www.wikidata.org/w/api.php?action=wbgetentities&ids="+encodeURIComponent(pending.join("|"))+"&props=claims&format=json&origin=*";
+              const response=await fetch(api);
+              if(response.ok){
+                const data=await response.json();
+                pending.forEach(qid=>{
+                  const filename=data.entities?.[qid]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
+                  wikidataPhotoCache.set(qid,typeof filename==="string"&&filename?filename:null);
+                });
+              }
+            }catch(e){console.warn("Fotografias Wikidata temporariamente indisponíveis",e);}
+          }
+          artists.forEach((artist,i)=>{
+            const filename=wikidataPhotoCache.get(artist.qid);
+            if(!filename||!cards[i]?.isConnected)return;
+            const holder=cards[i].querySelector(".photo");
+            if(!holder)return;
+            const image=document.createElement("img");
+            image.alt="Fotografia de "+artist.name+" (Wikimedia Commons)";
+            image.loading="lazy";image.decoding="async";image.referrerPolicy="no-referrer";
+            image.style.cssText="width:100%;height:100%;object-fit:cover;display:block";
+            image.onerror=()=>{image.remove();holder.textContent="♫";};
+            image.src="https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(filename)+"?width=360";
+            holder.replaceChildren(image);
+          });
+        }
         function searchLocal(reset){
           if(reset)offset=0;
           const term=artistInput.value.trim().toLowerCase(),country=countryInput.value;
           const matches=localCatalog.filter(a=>(!term||(a.name+" "+a.country).toLowerCase().includes(term))&&(!country||(a.country||"").toLowerCase().includes((countryNames[country]||country).toLowerCase())));
           total=matches.length;
           const container=document.getElementById("artists-grid-container");container.replaceChildren();
-          matches.slice(offset,offset+pageSize).forEach(a=>{
+          const visible=matches.slice(offset,offset+pageSize);
+          const cards=[];
+          visible.forEach(a=>{
             const li=document.createElement("li");li.className="card";
             const box=document.createElement("div");box.className="card-content";
             const name=document.createElement("strong");name.textContent=a.name;
             const detail=document.createElement("small");detail.textContent=a.country||"Internacional";
             const link=document.createElement("a");link.href="/concertos/artistas/"+encodeURIComponent(a.slug)+"/";link.textContent="Ver perfil na STUDIOSB6L";
-            box.append(name,detail,link);li.append(photoElement(a),box);container.append(li);
+            box.append(name,detail,link);li.append(photoElement(a.qid?{...a,imageUrl:null}:a),box);container.append(li);cards.push(li);
           });
+          loadVerifiedPhotos(visible,cards);
           status.textContent=total.toLocaleString("pt-PT")+" perfis encontrados na STUDIOSB6L";
           pageLabel.textContent="Página "+(Math.floor(offset/pageSize)+1);
           prev.disabled=offset===0;next.disabled=offset+pageSize>=total;
