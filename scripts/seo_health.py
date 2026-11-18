@@ -11,7 +11,7 @@ def fetch(path):
     req=urllib.request.Request(BASE+path,headers={'User-Agent':'STUDIOSB6L-SEO-Audit/1.0'})
     with urllib.request.urlopen(req,timeout=20) as response:
         return response.status,response.read(12000000).decode('utf-8','replace')
-for path in ['/','/robots.txt','/sitemap.xml','/sitemap-artistas.xml','/concertos/artistas/']:
+for path in ['/','/robots.txt','/sitemap.xml','/sitemap-artistas.xml','/concertos/artistas/','/instrumentos/','/parceiros-awin/','/music-store.html']:
     try:
         status,body=fetch(path)
         add('HTTP '+path,status==200,f'Status {status}, {len(body)} characters')
@@ -19,7 +19,7 @@ for path in ['/','/robots.txt','/sitemap.xml','/sitemap-artistas.xml','/concerto
             root=ET.fromstring(body)
             urls=root.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}loc')
             add('XML sitemap '+path,len(urls)>0,f'{len(urls)} discoverable URLs')
-        if path=='/robots.txt':
+        if path in ('/instrumentos/','/parceiros-awin/','/music-store.html'):\n            add('Canonical '+path,bool(re.search(r'<link[^>]+rel=[\"\\\']canonical[\"\\\']',body,re.I)),'Canonical on commerce page')\n            add('Title '+path,bool(re.search(r'<title>[^<]+</title>',body,re.I)),'Page title present')\n        if path=='/robots.txt':
             add('Robots lists both sitemaps',all(x in body for x in ['sitemap.xml','sitemap-artistas.xml']),'Robots sitemap declarations')
         if path=='/':
             add('Homepage canonical',bool(re.search(r'rel=["\\\']canonical["\\\']',body,re.I)),'Canonical present')
