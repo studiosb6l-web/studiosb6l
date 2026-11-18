@@ -34,6 +34,9 @@ for p in ROOT.rglob('*.html'):
   if not getattr(page,field).strip():totals[key]+=1;flags.append(key)
  if not page.structured:totals['without_schema']+=1;flags.append('without_schema')
  if flags:issues.append({'file':str(p.relative_to(ROOT)),'issues':flags})
-report={'scope':'local technical/content SEO audit, not search ranking or indexed count','totals':totals,'sample_issues':issues[:100],'issue_count':len(issues)}
+# Generate an actionable priority list; do not auto-invent translations or metadata.
+priority={'missing_titles':100,'missing_descriptions':90,'missing_canonical':85,'missing_lang':75,'without_schema':35}
+ranked=sorted(({'file':i['file'],'issues':i.get('issues',[]),'priority_score':sum(priority.get(f,0) for f in i.get('issues',[]))} for i in issues if i.get('issues')),key=lambda i:(-i['priority_score'],i['file']))
+report={'scope':'local technical/content SEO audit, not search ranking or indexed count','totals':totals,'sample_issues':issues[:100],'issue_count':len(issues),'priority_actions':ranked[:200],'recommended_actions':{'missing_titles':'Write unique accurate page titles','missing_descriptions':'Write useful page-specific summaries','missing_canonical':'Add self-referencing canonical URLs','missing_lang':'Declare the actual source language','without_schema':'Add only factually supported schema.org structured data'}}
 (ROOT/'seo-content-audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(json.dumps({'totals':totals,'issue_count':len(issues)},ensure_ascii=False))
