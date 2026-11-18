@@ -6,6 +6,8 @@ on:
     paths:
       - '*.html'
       - 'concertos/**/*.html'
+      - 'instrumentos/**/*.html'
+      - 'parceiros-awin/**/*.html'
       - 'artistas/**/*.html'
       - 'obras/**/*.html'
       - 'en/**/*.html'
