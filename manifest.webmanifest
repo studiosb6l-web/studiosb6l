@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "B6L — Music, Artists & Concerts",
+  "short_name": "B6L",
+  "description": "International music, artists, concerts and professional opportunities — STUDIOSB6L.",
+  "start_url": "/?source=app",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a1019",
+  "theme_color": "#0a1019",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/b6l-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
