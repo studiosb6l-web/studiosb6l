@@ -35,7 +35,7 @@ jobs:
               seen.add(slug)
               if not Path('concertos/artistas',slug,'index.html').is_file(): continue
               urls.append('<url><loc>https://www.studiosb6l.com/concertos/artistas/'+escape(slug)+'/</loc></url>')
-          output='<?xml version="1.0" encoding="UTF-8"?>\\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n'+'\\n'.join(urls)+'\\n</urlset>\\n'
+          output='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+'\n'.join(urls)+'\n</urlset>\n'
           Path('sitemap-artistas.xml').write_text(output,encoding='utf-8')
           print('Indexed profile URLs in sitemap:',len(urls))
           PY
