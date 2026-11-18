@@ -4,15 +4,13 @@ import json, os, re, time, html, urllib.parse, urllib.request, unicodedata
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/"concertos"/"artistas"
-TARGET=10000
+TARGET=1000
 HEADERS={"User-Agent":"STUDIOSB6L-ArtistDirectory/1.0 (https://www.studiosb6l.com/)","Accept":"application/sparql-results+json"}
-QUERY='''SELECT DISTINCT ?artist ?artistLabel ?countryLabel WHERE {
-  VALUES ?profession { wd:Q177220 wd:Q639669 wd:Q49757 wd:Q36834 }
-  ?artist wdt:P106 ?profession .
+QUERY='''SELECT ?artist ?artistLabel WHERE {
+  ?artist wdt:P106 wd:Q177220 .
   ?artist rdfs:label ?artistLabel .
   FILTER(LANG(?artistLabel)="en")
-  OPTIONAL { ?artist wdt:P27 ?country . ?country rdfs:label ?countryLabel . FILTER(LANG(?countryLabel)="en") }
-} ORDER BY ?artist'''
+}'''
 def fetch(offset,limit=100):
     query=QUERY+" LIMIT "+str(limit)+" OFFSET "+str(offset)
     url="https://query.wikidata.org/sparql?"+urllib.parse.urlencode({"query":query,"format":"json"})
@@ -39,7 +37,7 @@ def main():
     records=json.loads(checkpoint.read_text(encoding="utf-8")) if checkpoint.exists() else []
     seen={r["qid"] for r in records}
     next_offset=int((ROOT/"artist-import-offset.txt").read_text()) if (ROOT/"artist-import-offset.txt").exists() else 0
-    for offset in range(0,100000,100):
+    for offset in range(0,5000,100):
         if len(records)>=TARGET:break
         if offset<next_offset:continue
         batch=fetch(offset,100)
@@ -53,7 +51,7 @@ def main():
             country=row.get("countryLabel",{}).get("value","Internacional")
             records.append({"qid":qid,"name":name,"country":country,"slug":slug(name,qid)})
             if len(records)>=TARGET:break
-        if len(records)//1000 > (len(records)-len(batch))//1000 or len(records)>=TARGET:
+        if True:
             checkpoint.write_text(json.dumps(records,ensure_ascii=False),encoding="utf-8")
             print("Saved checkpoint:",len(records),"artists",flush=True)
         (ROOT/"artist-import-offset.txt").write_text(str(offset+100))
