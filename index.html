@@ -66,12 +66,13 @@
   0%,100% { color:#fff7e9; text-shadow:0 0 0 transparent; }
   50% { color:#edc46d; text-shadow:0 0 15px #e8bc6866; }
 }
-</style><link rel="stylesheet" href="assets/header-shortcuts.css"></head><body>
+</style><link rel="stylesheet" href="assets/header-shortcuts.css"><style>.header-shortcuts .header-artists{background:#d7b56f;color:#091421;border:1px solid #f4d58a;border-radius:5px;font-weight:800;animation:b6l-artists-attention 2.4s ease-in-out infinite;box-shadow:0 0 0 0 #d7b56f66}@keyframes b6l-artists-attention{0%,100%{background:#d7b56f;box-shadow:0 0 0 0 #d7b56f66}50%{background:#fff0b6;box-shadow:0 0 0 5px #d7b56f22}}@media(prefers-reduced-motion:reduce){.header-shortcuts .header-artists{animation:none}}</style></head><body>
 <header><div class="nav"><a class="brand" href="#home">STUDIOSB6L</a><nav aria-label="Main navigation"><a href="#vision" data-vip-nav-secondary>VISION</a><a href="#artist" data-vip-nav-secondary>BANDA 6 LATINOS</a><a href="#music" data-vip-nav-secondary>MUSIC</a><a href="#selected-works" id="selected-nav">WORKS</a><a href="#catalogue" id="catalog-nav">CATÁLOGO</a><a href="#stage" data-vip-nav-secondary>OPERA & THEATRE</a><a href="#listen" data-vip-nav-secondary>LISTEN</a><a href="#founder">FOUNDER</a><a href="#licensing" id="sync-nav">SYNC LICENSING</a><a href="#industry" data-vip-nav-secondary id="industry-nav">FOR PRODUCERS</a><a href="#festivals" data-vip-nav-secondary id="festival-nav">FILMFREEWAY</a><a href="#contact">CONTACT</a></nav><label for="language" style="font-size:.75rem;color:#d9b978">LANG <select class="lang-picker" id="language" aria-label="Choose website language"><option value="es">🇪🇸 ES</option><option value="en">🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="de">🇩🇪 DE</option><option value="pt">🇵🇹 PT</option><option value="ja">🇯🇵 日本語</option><option value="zh">🇨🇳 简体中文</option><option value="ar">🇸🇦 العربية</option><option value="ru">🇷🇺 RU</option><option value="uk">🇺🇦 UK</option></select></label></div>
 <nav class="header-shortcuts" aria-label="Shop and support">
   <a href="music-store.html?lang=en#concertos">Concert tickets</a>
   <a href="music-store.html?lang=en#instrumentos">Musical instruments</a>
   <a class="header-support" href="support.html?lang=en">Support the project</a>
+  <a class="header-artists" href="/artistas/" aria-label="Artists and promoters — join STUDIOSB6L">Só para Artistas</a>
 </nav>
 </header>
 <main><section class="hero" id="home"><div class="wrap"><div class="eyebrow">Independent music · Cinematic storytelling</div><h1>Close your eyes.
@@ -142,42 +143,49 @@ const headerShortcutLabels = {
     "Loja e apoios",
     "Bilhetes para concertos",
     "Instrumentos musicais",
-    "Apoiar o projeto"
+    "Apoiar o projeto",
+    "Só para Artistas"
   ],
   "en": [
     "Shop and support",
     "Concert tickets",
     "Musical instruments",
-    "Support the project"
+    "Support the project",
+    "For Artists"
   ],
   "es": [
     "Tienda y apoyo",
     "Entradas para conciertos",
     "Instrumentos musicales",
-    "Apoyar el proyecto"
+    "Apoyar el proyecto",
+    "Solo para Artistas"
   ],
   "fr": [
     "Boutique et soutien",
     "Billets de concert",
     "Instruments de musique",
-    "Soutenir le projet"
+    "Soutenir le projet",
+    "Espace Artistes"
   ],
   "de": [
     "Shop und Unterstützung",
     "Konzerttickets",
     "Musikinstrumente",
-    "Projekt unterstützen"
+    "Projekt unterstützen",
+    "Für Künstler"
   ]
 };
 const headerShortcuts = document.querySelector('.header-shortcuts');
 
 function translateHeaderShortcuts(lang) {
+  const additional={ja:'アーティスト向け',zh:'艺术家专区',ar:'للفنانين',ru:'Для артистов',uk:'Для артистів'};
   const [name, ...labels] = headerShortcutLabels[lang] || headerShortcutLabels.en;
+  labels[3]=additional[lang]||labels[3];
   headerShortcuts.setAttribute('aria-label', name);
   Array.from(headerShortcuts.children).forEach((link, index) => {
     const destination = new URL(link.href);
-    destination.searchParams.set('lang', lang);
-    link.href = destination.pathname + destination.search + destination.hash;
+    if (!link.classList.contains('header-artists')) destination.searchParams.set('lang', lang);
+    link.href = link.classList.contains('header-artists') ? '/artistas/'+(lang==='pt'?'':lang+'/') : destination.pathname + destination.search + destination.hash;
     link.textContent = labels[index];
   });
 }
