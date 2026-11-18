@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+
+# Main pages and localized landing pages
 Sitemap: https://www.studiosb6l.com/sitemap.xml
+# Individual artist and band profiles, generated from verified catalog
+Sitemap: https://www.studiosb6l.com/sitemap-artistas.xml
