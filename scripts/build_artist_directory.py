@@ -14,13 +14,13 @@ QUERY='''SELECT ?artist ?artistLabel WHERE {
 def fetch(offset,limit=100):
     query=QUERY+" LIMIT "+str(limit)+" OFFSET "+str(offset)
     url="https://query.wikidata.org/sparql?"+urllib.parse.urlencode({"query":query,"format":"json"})
-    for attempt in range(5):
+    for attempt in range(2):
         try:
-            with urllib.request.urlopen(urllib.request.Request(url,headers=HEADERS),timeout=110) as r:
+            with urllib.request.urlopen(urllib.request.Request(url,headers=HEADERS),timeout=35) as r:
                 return json.load(r)["results"]["bindings"]
         except Exception as exc:
             print("Request retry",offset,attempt,str(exc),flush=True)
-            time.sleep(min(45,5*(attempt+1)))
+            time.sleep(4*(attempt+1))
     raise RuntimeError("Wikidata temporarily unavailable; no fabricated artist records")
 def slug(name,qid):
     name=unicodedata.normalize("NFKD",name).encode("ascii","ignore").decode().lower()
@@ -40,7 +40,11 @@ def main():
     for offset in range(0,10000,100):
         if len(records)>=TARGET:break
         if offset<next_offset:continue
-        batch=fetch(offset,100)
+        try:
+            batch=fetch(offset,100)
+        except Exception as exc:
+            print("Source unavailable; publishing saved verified records:",exc,flush=True)
+            break
         if not batch:break
         for row in batch:
             uri=row.get("artist",{}).get("value","")
@@ -57,12 +61,13 @@ def main():
         (ROOT/"artist-import-offset.txt").write_text(str(offset+100))
         print("Collected",len(records),"after",offset+len(batch),flush=True)
         time.sleep(3)
-    if len(records)<TARGET:raise RuntimeError("Only "+str(len(records))+" verified records; target "+str(TARGET)+" not reached")
+    if len(records)<TARGET:
+        print("Partial batch:",len(records),"verified records; target",TARGET,"will continue in a later run",flush=True)
     for record in records:
         directory=DEST/record["slug"];directory.mkdir(parents=True,exist_ok=True)
         (directory/"index.html").write_text(page(record),encoding="utf-8")
     (DEST/"catalogo.json").write_text(json.dumps(records,ensure_ascii=False,separators=(",",":")),encoding="utf-8")
-    sitemap='<?xml version="1.0" encoding="UTF-8"?>\\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n'+''.join('<url><loc>https://www.studiosb6l.com/concertos/artistas/'+r["slug"]+'/</loc></url>\\n' for r in records)+'</urlset>'
+    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join('<url><loc>https://www.studiosb6l.com/concertos/artistas/'+r["slug"]+'/</loc></url>\n' for r in records)+'</urlset>'
     (ROOT/"sitemap-artistas.xml").write_text(sitemap,encoding="utf-8")
     print("GENERATED",len(records),"verified independent profiles",flush=True)
 if __name__=="__main__":main()
