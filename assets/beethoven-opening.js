@@ -61,7 +61,7 @@
   head.className = 'b6l-premium-head';
   const cover = document.createElement('img');
   cover.className = 'b6l-premium-cover';
-  cover.src = 'assets/Before_Forever.png';
+  cover.style.display = 'none';
   cover.alt = 'BANDA 6 LATINOS';
   const identity = document.createElement('div');
   identity.innerHTML = '<div class="b6l-premium-brand">STUDIOSB6L</div><div class="b6l-premium-sub">BANDA 6 LATINOS · BEETHOVEN</div>';
@@ -211,6 +211,8 @@
     });
     widget.getCurrentSound(sound => {
       if (sound?.title) title.textContent = sound.title + ' · Beethoven — B6L';
+      if (sound?.artwork_url) { cover.src = sound.artwork_url.replace('-large','-t300x300'); cover.style.display='block'; }
+      else cover.style.display='none';
     });
     render();
   });
