@@ -1,0 +1,43 @@
+name: Notify search engines via IndexNow
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '*.html'
+      - 'concertos/**/*.html'
+      - 'artistas/**/*.html'
+      - 'obras/**/*.html'
+      - 'en/**/*.html'
+      - 'es/**/*.html'
+      - 'fr/**/*.html'
+      - 'de/**/*.html'
+      - 'pt/**/*.html'
+      - 'ja/**/*.html'
+      - 'zh/**/*.html'
+      - 'ar/**/*.html'
+      - 'ru/**/*.html'
+      - 'uk/**/*.html'
+permissions:
+  contents: read
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Wait for GitHub Pages deployment
+        run: sleep 90
+      - name: Notify only changed HTML URLs
+        env:
+          CHANGED_FILES: ${{ github.event_name == 'workflow_dispatch' && 'index.html' || '' }}
+        run: |
+          if [ -z "$CHANGED_FILES" ]; then
+            CHANGED_FILES="$(git diff --name-only HEAD^ HEAD -- '*.html' '**/*.html')"
+            export CHANGED_FILES
+          fi
+          python scripts/indexnow_submit.py
