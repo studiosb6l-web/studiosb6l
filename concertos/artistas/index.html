@@ -41,7 +41,7 @@
         <ul class="cards" id="artists-grid-container">
             <li class="card"><div class="card-content"><strong>BTS</strong><small>Coreia do Sul · K-Pop</small></div></li><li class="card"><div class="card-content"><strong>Dimash Qudaibergen</strong><small>Cazaquistão · Crossover vocal</small></div></li><li class="card"><div class="card-content"><strong>Ana Castela</strong><small>Brasil · Sertanejo</small></div></li>
         </ul>
-<div class="pagination"><button id="artist-prev" disabled>Anterior</button><span id="artist-page"></span><button id="artist-next" disabled>Seguinte</button></div><p><a href="/artistas/">És artista ou promotor? Solicita um perfil na STUDIOSB6L.</a></p>
+<section id="artist-profile" hidden style="background:#17263b;border:1px solid #d8bd85;border-radius:12px;padding:22px;margin:22px 0"><button id="close-profile" type="button">Voltar aos artistas</button><h2 id="profile-name"></h2><p id="profile-details"></p><p id="profile-description"></p><a href="/concertos/">Consultar concertos na STUDIOSB6L</a></section><div class="pagination"><button id="artist-prev" disabled>Anterior</button><span id="artist-page"></span><button id="artist-next" disabled>Seguinte</button></div><p><a href="/artistas/">És artista ou promotor? Solicita um perfil na STUDIOSB6L.</a></p>
     </main>
     <footer>
         <div>© 2026 STUDIOS B6L & BANDA 6 LATINOS. Todos os Direitos Reservados.</div>
@@ -85,13 +85,21 @@
                     <div class="card-content">
                         <strong>${artist.name}</strong>
                         <small>${artist.country} • ${artist.genre}</small>
-                        <span>Artista em diretório · agenda sujeita a confirmação oficial</span>
+                        <a href="#artist-profile" class="local-profile">Ver perfil na STUDIOSB6L</a>
                     </div>
                 `;
-                container.appendChild(li);
+                const local=li.querySelector(".local-profile");if(local)local.addEventListener("click",()=>showProfile(artist));container.appendChild(li);
             });
         }
 
+        function showProfile(artist){
+          const profile=document.getElementById("artist-profile");
+          document.getElementById("profile-name").textContent=artist.name||"Artista";
+          document.getElementById("profile-details").textContent=[artist.country||artist.area?.name||"Internacional",artist.genre||artist.type||"Artista"].join(" · ");
+          document.getElementById("profile-description").textContent="Perfil informativo integrado na STUDIOSB6L. Dados de artistas internacionais podem provir da MusicBrainz. A inclusão não significa representação ou parceria. Concertos e bilhetes sujeitos a confirmação oficial.";
+          profile.hidden=false;profile.scrollIntoView({behavior:"smooth",block:"start"});
+        }
+        document.getElementById("close-profile").addEventListener("click",()=>{document.getElementById("artist-profile").hidden=true;document.getElementById("artists-grid-container").scrollIntoView({behavior:"smooth"})});
         // MusicBrainz: pesquisa pública de artistas reais, com paginação e sem inventar registos.
         const artistInput=document.getElementById("search-artist-input");
         const countryInput=document.getElementById("artist-country");
@@ -117,7 +125,7 @@
               const box=document.createElement("div");box.className="card-content";
               const name=document.createElement("strong");name.textContent=artist.name||"Artista";
               const detail=document.createElement("small");detail.textContent=(countryNames[artist.country]||artist.country||artist.area?.name||"Internacional")+" · "+(artist.type||"Artista");
-              const link=document.createElement("a");link.href="https://musicbrainz.org/artist/"+encodeURIComponent(artist.id);link.target="_blank";link.rel="noopener noreferrer";link.textContent="Ver ficha pública do artista";
+              const link=document.createElement("a");link.href="#artist-profile";link.textContent="Ver perfil na STUDIOSB6L";link.addEventListener("click",()=>showProfile(artist));
               box.append(name,detail,link);li.append(box);container.append(li);
             }
             status.textContent=total.toLocaleString("pt-PT")+" resultados na base MusicBrainz · "+(data.artists||[]).length+" nesta página";
