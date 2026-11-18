@@ -4,7 +4,7 @@ import json, os, re, time, html, urllib.parse, urllib.request, unicodedata
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/"concertos"/"artistas"
-TARGET=7552
+TARGET=7052
 HEADERS={"User-Agent":"STUDIOSB6L-ArtistDirectory/1.0 (https://www.studiosb6l.com/)","Accept":"application/sparql-results+json"}
 QUERY='''SELECT ?artist ?artistLabel WHERE {
   ?artist wdt:P106 wd:Q177220 .
@@ -103,7 +103,7 @@ def main():
     records=json.loads(checkpoint.read_text(encoding="utf-8")) if checkpoint.exists() else []
     seen={r["qid"] for r in records}
     next_offset=int((ROOT/"artist-import-offset.txt").read_text()) if (ROOT/"artist-import-offset.txt").exists() else 0
-    for offset in range(0,10000,100):
+    for offset in range(0,50000,100):
         if len(records)>=TARGET:break
         if offset<next_offset:continue
         try:
