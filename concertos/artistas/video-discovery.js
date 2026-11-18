@@ -20,6 +20,10 @@ function render(root){
  root.replaceChildren();
  const h=document.createElement("h2");h.textContent="Vídeos e atuações — "+name;root.append(h);
  const desc=document.createElement("p");desc.textContent="Vídeos incorporados do YouTube, quando disponíveis e permitidos pelo titular. Diretório editorial independente; a inclusão não representa parceria.";root.append(desc);
+ const musicTitle=document.createElement("h3");musicTitle.textContent="Ouvir música aqui";root.append(musicTitle);
+ const musicNote=document.createElement("p");musicNote.textContent="Reprodução oficial incorporada, quando disponível. O áudio e os anúncios internos pertencem ao respetivo serviço e titulares.";root.append(musicNote);
+ const musicArea=document.createElement("div");root.append(musicArea);
+ const videoTitle=document.createElement("h3");videoTitle.textContent="Ver vídeos aqui";root.append(videoTitle);
  const videoArea=document.createElement("div");root.append(videoArea);
  function addVideo(id){
   const frame=document.createElement("iframe");frame.src="https://www.youtube-nocookie.com/embed/"+id;
@@ -30,6 +34,18 @@ function render(root){
   videoArea.append(frame);
  }
  const ids=(root.dataset.videoIds||curated[name]||[]).toString().split(",").map(s=>s.trim()).filter(s=>/^[\w-]{11}$/.test(s));
+ if(ids.length){
+  const audio=document.createElement("iframe");
+  audio.src="https://www.youtube-nocookie.com/embed/"+ids[0];
+  audio.title="Ouvir música de "+name+" — reprodutor oficial";
+  audio.loading="lazy";audio.allowFullscreen=true;
+  audio.allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share";
+  audio.referrerPolicy="strict-origin-when-cross-origin";
+  audio.style.cssText="display:block;width:100%;max-width:760px;aspect-ratio:16/9;border:0;border-radius:10px;margin:12px 0";
+  musicArea.append(audio);
+ }else{
+  const msg=document.createElement("p");msg.textContent="Música incorporada ainda não verificada para este artista.";musicArea.append(msg);
+ }
  ids.slice(0,3).forEach(addVideo);
  if(!ids.length){
   const pending=document.createElement("p");pending.textContent="Vídeo incorporado ainda não disponível para este artista. Podes visualizar um vídeo aqui introduzindo uma ligação válida.";root.append(pending);
