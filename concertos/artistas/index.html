@@ -31,20 +31,20 @@
 </style>
 </head>
 <body>
-<a id="b6l-artist-counter" href="#artists-grid-container" aria-label="Total de artistas no diretório STUDIOSB6L"><strong id="b6l-artist-counter-number">4.500</strong><span>Artistas na<br>plataforma</span></a>
+<a id="b6l-artist-counter" href="#artists-grid-container" aria-label="Total de artistas no diretório STUDIOSB6L"><strong id="b6l-artist-counter-number">4.500</strong><span id="b6l-counter-label">Artistas na plataforma</span></a>
     <header>
         <div>
-            <div class="eyebrow">Música ao Vivo • Artistas</div>
+            <div class="eyebrow" data-i18n="eyebrow">Música ao Vivo • Artistas</div>
             <a href="/concertos/" class="brand">STUDIOS B6L</a>
         </div>
     </header>
     <main style="max-width: 1160px; margin: auto; padding: 22px;">
-        <h1 style="font-size: 2.4rem; margin-bottom: 8px;">Artistas Internacionais e Brasileiros</h1>
-        <p style="color: #bec9d6; margin-bottom: 25px;">Explore as páginas dos artistas. Diretório global otimizado sob a visão Som 2030.</p>
+        <h1 style="font-size: 2.4rem; margin-bottom: 8px;" data-i18n="heading">Artistas Internacionais e Brasileiros</h1>
+        <p style="color: #bec9d6; margin-bottom: 25px;"><span data-i18n="intro">Explore as páginas dos artistas. Diretório global otimizado sob a visão Som 2030.</span></p>
         
-        <p>Diretório internacional em expansão. Pesquisa artistas reais na base pública MusicBrainz. A presença no diretório não significa parceria com a STUDIOSB6L nem confirma concertos ou bilhetes.</p><div class="tools">
+        <p data-i18n="disclaimer">Diretório internacional em expansão. Pesquisa artistas reais na base pública MusicBrainz. A presença no diretório não significa parceria com a STUDIOSB6L nem confirma concertos ou bilhetes.</p><div class="tools"><label for="b6l-directory-lang" data-i18n="languageLabel">Idioma</label><select id="b6l-directory-lang" aria-label="Idioma / Language"><option value="pt">Português</option><option value="es">Español</option><option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="ja">日本語</option><option value="zh">中文</option><option value="ar">العربية</option></select>
             <input type="search" id="search-artist-input" placeholder="Pesquisar artista..." style="flex: 1; min-width: 250px;">
-        <select id="artist-country"><option value="">Todos os países</option><option value="US">Estados Unidos</option><option value="BR">Brasil</option><option value="PT">Portugal</option><option value="ES">Espanha</option><option value="GB">Reino Unido</option><option value="IT">Itália</option><option value="DE">Alemanha</option><option value="FR">França</option><option value="BE">Bélgica</option><option value="JP">Japão</option><option value="CN">China</option><option value="KR">Coreia do Sul</option></select><button id="search-global" type="button">Pesquisar globalmente</button></div><p class="directory-status" id="directory-status" aria-live="polite">Artistas em destaque</p>
+        <select id="artist-country"><option value="" data-i18n="allCountries">Todos os países</option><option value="US">Estados Unidos</option><option value="BR">Brasil</option><option value="PT">Portugal</option><option value="ES">Espanha</option><option value="GB">Reino Unido</option><option value="IT">Itália</option><option value="DE">Alemanha</option><option value="FR">França</option><option value="BE">Bélgica</option><option value="JP">Japão</option><option value="CN">China</option><option value="KR">Coreia do Sul</option></select><button id="search-global" type="button" data-i18n="search">Pesquisar globalmente</button></div><p class="directory-status" id="directory-status" aria-live="polite">Artistas em destaque</p>
 
         <ul class="cards" id="artists-grid-container">
             <li class="card"><div class="card-content"><strong>BTS</strong><small>Coreia do Sul · K-Pop</small></div></li><li class="card"><div class="card-content"><strong>Dimash Qudaibergen</strong><small>Cazaquistão · Crossover vocal</small></div></li><li class="card"><div class="card-content"><strong>Ana Castela</strong><small>Brasil · Sertanejo</small></div></li>
@@ -267,5 +267,22 @@
 /* O número é lido do catálogo publicado, não de resultados externos. */
 fetch("/concertos/artistas/catalogo.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("catálogo");return r.json()}).then(data=>{if(Array.isArray(data)){document.getElementById("b6l-artist-counter-number").textContent=new Intl.NumberFormat("pt-PT").format(data.length)}}).catch(()=>{});
 </script>
-</body>
+<script>
+(function(){
+const translations={
+pt:["Música ao Vivo • Artistas","Artistas Internacionais e Brasileiros","Explore os perfis de artistas na STUDIOSB6L.","Diretório independente em expansão. A presença de um artista não significa parceria nem confirma concertos ou bilhetes.","Pesquisar globalmente","Todos os países","Artistas na plataforma","Idioma","Pesquisar artista..."],
+es:["Música en vivo • Artistas","Artistas internacionales y brasileños","Explora los perfiles de artistas en STUDIOSB6L.","Directorio independiente en expansión. La inclusión de un artista no implica colaboración ni confirma conciertos o entradas.","Buscar globalmente","Todos los países","Artistas en la plataforma","Idioma","Buscar artista..."],
+en:["Live Music • Artists","International and Brazilian Artists","Explore artist profiles on STUDIOSB6L.","Growing independent directory. Listing an artist does not imply a partnership or confirm concerts or tickets.","Search worldwide","All countries","Artists on the platform","Language","Search artist..."],
+fr:["Musique live • Artistes","Artistes internationaux et brésiliens","Découvrez les profils d'artistes sur STUDIOSB6L.","Annuaire indépendant en développement. La présence d'un artiste n'implique aucun partenariat et ne confirme ni concerts ni billets.","Recherche mondiale","Tous les pays","Artistes sur la plateforme","Langue","Rechercher un artiste..."],
+de:["Livemusik • Künstler","Internationale und brasilianische Künstler","Entdecken Sie Künstlerprofile auf STUDIOSB6L.","Unabhängiges Verzeichnis im Aufbau. Ein Eintrag bedeutet keine Partnerschaft und bestätigt weder Konzerte noch Tickets.","Weltweit suchen","Alle Länder","Künstler auf der Plattform","Sprache","Künstler suchen..."],
+ja:["ライブ音楽・アーティスト","世界とブラジルのアーティスト","STUDIOSB6Lでアーティストのプロフィールをご覧ください。","独立したアーティスト名鑑です。掲載は提携関係や公演・チケットの確定を意味しません。","世界中を検索","すべての国","掲載アーティスト数","言語","アーティストを検索..."],
+zh:["现场音乐 · 艺术家","国际及巴西音乐艺术家","在STUDIOSB6L探索音乐艺术家资料。","本目录为独立资料库。收录不代表合作关系，也不表示演出或门票已获确认。","全球搜索","所有国家","平台艺术家数量","语言","搜索艺术家..."],
+ar:["الموسيقى الحية • الفنانون","فنانون عالميون وبرازيليون","اكتشف ملفات الفنانين على STUDIOSB6L.","دليل مستقل قيد التوسع. إدراج الفنان لا يعني وجود شراكة ولا يؤكد الحفلات أو التذاكر.","بحث عالمي","جميع البلدان","الفنانون على المنصة","اللغة","ابحث عن فنان..."]
+};
+const keys=["eyebrow","heading","intro","disclaimer","search","allCountries","counter","languageLabel","placeholder"];
+const select=document.getElementById("b6l-directory-lang");
+function apply(lang){const t=translations[lang]||translations.pt;document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";document.querySelectorAll("[data-i18n]").forEach(el=>{const i=keys.indexOf(el.dataset.i18n);if(i>=0)el.textContent=t[i]});document.getElementById("b6l-counter-label").textContent=t[6];document.getElementById("search-artist-input").placeholder=t[8];select.value=lang;try{localStorage.setItem("b6l-language",lang)}catch(e){}}
+let lang="pt";try{lang=localStorage.getItem("b6l-language")||navigator.language.slice(0,2)}catch(e){lang=navigator.language.slice(0,2)}apply(translations[lang]?lang:"pt");select.addEventListener("change",()=>apply(select.value));
+})();
+</script></body>
 </html>
