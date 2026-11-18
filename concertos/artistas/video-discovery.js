@@ -1,7 +1,7 @@
 /* STUDIOSB6L — descoberta de vídeos oficiais, sem reprodução automática nem anúncios sobre o player. */
 (function(){
   "use strict";
-  const root=document.querySelector("[data-b6l-video-discovery]");
+  function render(root){
   if(!root)return;
   const name=(root.dataset.artistName||document.querySelector("h1")?.textContent||"").trim();
   if(!name)return;
