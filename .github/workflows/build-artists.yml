@@ -23,7 +23,6 @@ jobs:
           python-version: '3.12'
       - name: Build verified artist directory
         run: python scripts/build_artist_directory.py
-        continue-on-error: true
       - name: Commit checkpoint and generated profiles together
         shell: bash
         run: |
