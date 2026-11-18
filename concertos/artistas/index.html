@@ -100,6 +100,28 @@
           profile.hidden=false;profile.scrollIntoView({behavior:"smooth",block:"start"});
         }
         document.getElementById("close-profile").addEventListener("click",()=>{document.getElementById("artist-profile").hidden=true;document.getElementById("artists-grid-container").scrollIntoView({behavior:"smooth"})});
+        let localCatalog=null;
+        fetch("/concertos/artistas/catalogo.json").then(r=>r.ok?r.json():null).then(data=>{
+          if(Array.isArray(data)&&data.length>=10000){localCatalog=data;status.textContent=data.length.toLocaleString("pt-PT")+" perfis STUDIOSB6L disponíveis";}
+        }).catch(()=>{});
+        function searchLocal(reset){
+          if(reset)offset=0;
+          const term=artistInput.value.trim().toLowerCase(),country=countryInput.value;
+          const matches=localCatalog.filter(a=>(!term||(a.name+" "+a.country).toLowerCase().includes(term))&&(!country||(a.country||"").toLowerCase().includes((countryNames[country]||country).toLowerCase())));
+          total=matches.length;
+          const container=document.getElementById("artists-grid-container");container.replaceChildren();
+          matches.slice(offset,offset+pageSize).forEach(a=>{
+            const li=document.createElement("li");li.className="card";
+            const box=document.createElement("div");box.className="card-content";
+            const name=document.createElement("strong");name.textContent=a.name;
+            const detail=document.createElement("small");detail.textContent=a.country||"Internacional";
+            const link=document.createElement("a");link.href="/concertos/artistas/"+encodeURIComponent(a.slug)+"/";link.textContent="Ver perfil na STUDIOSB6L";
+            box.append(name,detail,link);li.append(box);container.append(li);
+          });
+          status.textContent=total.toLocaleString("pt-PT")+" perfis encontrados na STUDIOSB6L";
+          pageLabel.textContent="Página "+(Math.floor(offset/pageSize)+1);
+          prev.disabled=offset===0;next.disabled=offset+pageSize>=total;
+        }
         // MusicBrainz: pesquisa pública de artistas reais, com paginação e sem inventar registos.
         const artistInput=document.getElementById("search-artist-input");
         const countryInput=document.getElementById("artist-country");
@@ -108,6 +130,7 @@
         const pageSize=50; let offset=0, total=0, lastQuery="", controller=null;
         const countryNames={US:"Estados Unidos",BR:"Brasil",PT:"Portugal",ES:"Espanha",GB:"Reino Unido",IT:"Itália",DE:"Alemanha",FR:"França",BE:"Bélgica",JP:"Japão",CN:"China",KR:"Coreia do Sul"};
         async function searchDirectory(reset=true){
+          if(localCatalog){searchLocal(reset);return;}
           const term=artistInput.value.trim(), country=countryInput.value;
           if(reset)offset=0;
           if(controller)controller.abort();
