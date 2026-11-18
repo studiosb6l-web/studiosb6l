@@ -32,6 +32,10 @@
   let startupAttempts = 0;
   let advanced = false;
 
+  // Keep the original minimal player, regardless of previously cached premium styles.
+  const compactStyle = document.createElement('style');
+  compactStyle.textContent = `#b6l-opening,#b6l-opening.b6l-premium{box-sizing:border-box!important;width:max-content!important;max-width:calc(100vw - 32px)!important;min-height:0!important;padding:8px 11px!important;border-radius:11px!important;display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:7px!important;background:#101e2e!important;border:1px solid #bda16b!important;box-shadow:0 3px 12px #0004!important}#b6l-opening .b6l-opening-controls{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:nowrap!important}#b6l-opening .b6l-opening-controls button{white-space:nowrap!important;font-size:12px!important;padding:6px 9px!important}#b6l-opening .b6l-opening-controls label{display:flex!important;align-items:center!important;gap:5px!important;font-size:11px!important}#b6l-opening .b6l-opening-controls input{width:64px!important;max-width:64px!important}#b6l-opening .b6l-opening-title,#b6l-opening .b6l-premium-head,#b6l-opening .b6l-premium-extras,#b6l-opening .b6l-premium-list{display:none!important}#b6l-opening iframe{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}#b6l-opening a[hidden]{display:none!important}@media(max-width:480px){#b6l-opening,#b6l-opening.b6l-premium{max-width:calc(100vw - 24px)!important;padding:7px!important}}`;
+  document.head.append(compactStyle);
   const title = container.querySelector('.b6l-opening-title');
   const link = container.querySelector('a');
   const button = document.createElement('button');
