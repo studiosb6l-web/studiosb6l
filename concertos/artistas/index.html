@@ -191,21 +191,39 @@
         countryInput.addEventListener("change",()=>searchDirectory(true));
         next.addEventListener("click",()=>{offset+=pageSize;searchDirectory(false)});
         prev.addEventListener("click",()=>{offset=Math.max(0,offset-pageSize);searchDirectory(false)});
-        renderGrid(massiveDatabase);
-        status.textContent=massiveDatabase.length+" artistas em destaque · pesquisa global disponível";
-                document.addEventListener("DOMContentLoaded", () => {
-            renderGrid(massiveDatabase);
-            const searchInput = document.getElementById("search-artist-input");
-            searchInput.addEventListener("input", (e) => {
-                const term = e.target.value.toLowerCase();
-                const filtered = massiveDatabase.filter(a => 
-                    a.name.toLowerCase().includes(term) || 
-                    a.genre.toLowerCase().includes(term) || 
-                    a.country.toLowerCase().includes(term)
-                );
-                renderGrid(filtered);
-            });
-        });
+        // Paginação funcional também para a lista de destaque, sem depender de serviços externos.
+        const featuredPageSize=12;
+        let featuredPage=0;
+        function renderFeatured(){
+          const term=artistInput.value.trim().toLocaleLowerCase("pt-PT");
+          const country=countryInput.value;
+          const featured=massiveDatabase.filter(a=>(!term||(a.name+" "+a.genre+" "+a.country).toLocaleLowerCase("pt-PT").includes(term))&&(!country||(a.country||"").toLocaleLowerCase("pt-PT").includes((countryNames[country]||country).toLocaleLowerCase("pt-PT"))));
+          const pages=Math.max(1,Math.ceil(featured.length/featuredPageSize));
+          featuredPage=Math.max(0,Math.min(featuredPage,pages-1));
+          renderGrid(featured.slice(featuredPage*featuredPageSize,(featuredPage+1)*featuredPageSize));
+          pageLabel.textContent="Página "+(featuredPage+1)+" de "+pages;
+          prev.disabled=featuredPage===0;next.disabled=featuredPage>=pages-1;
+          status.textContent=featured.length+" artistas em destaque · pesquisa global disponível";
+        }
+        // Em modo destaque, os botões navegam localmente. Com catálogo, navegam no catálogo.
+        const originalSearch=searchDirectory;
+        let globalMode=false;
+        const globalButton=document.getElementById("search-global");
+        const globalButtonCopy=globalButton.cloneNode(true);
+        globalButton.replaceWith(globalButtonCopy);
+        globalButtonCopy.addEventListener("click",()=>{globalMode=true;originalSearch(true)});
+        const nextCopy=next.cloneNode(true),prevCopy=prev.cloneNode(true);
+        next.replaceWith(nextCopy);prev.replaceWith(prevCopy);
+        nextCopy.addEventListener("click",()=>{if(globalMode){offset+=pageSize;originalSearch(false)}else{featuredPage++;renderFeatured()}});
+        prevCopy.addEventListener("click",()=>{if(globalMode){offset=Math.max(0,offset-pageSize);originalSearch(false)}else{featuredPage--;renderFeatured()}});
+        // As referências apontam para os botões originais; sincronizar estados nos novos botões.
+        const syncButtons=()=>{nextCopy.disabled=next.disabled;prevCopy.disabled=prev.disabled;};
+        const observer=new MutationObserver(syncButtons);
+        observer.observe(next,{attributes:true,attributeFilter:["disabled"]});
+        observer.observe(prev,{attributes:true,attributeFilter:["disabled"]});
+        artistInput.addEventListener("input",()=>{if(!globalMode){featuredPage=0;renderFeatured()}});
+        countryInput.addEventListener("change",()=>{if(!globalMode){featuredPage=0;renderFeatured()}});
+        renderFeatured();
     </script>
 </body>
 </html>
