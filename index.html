@@ -76,6 +76,22 @@
   <a class="header-promoters" href="/colaborar/?tipo=promotor">Só para Promotores</a>
   <a class="header-business" href="/colaborar/?tipo=empresa">Só para Empresas</a>
 </nav>
+<div class="b6l-distributor-discovery">
+ <a href="/distribuidores/" class="b6l-distributor-discovery-link" aria-label="Explorar distribuidores musicais internacionais">
+  <span aria-hidden="true">◈</span><span><strong>DISTRIBUIDORES MUSICAIS INTERNACIONAIS</strong><small>Empresas, editoras e distribuição musical</small></span><b>EXPLORAR ›</b>
+ </a>
+</div>
+<style>
+.b6l-distributor-discovery{max-width:1200px;margin:0 auto;padding:0 14px 10px;box-sizing:border-box}
+.b6l-distributor-discovery-link{display:flex;align-items:center;gap:12px;width:50%;min-height:58px;padding:9px 15px;box-sizing:border-box;border:1.5px solid #8bc9dd;border-radius:12px;background:linear-gradient(110deg,#0e354c,#17516a,#17213a);color:#e8f9ff;text-decoration:none;box-shadow:0 0 15px #4cb7d250;animation:b6l-distributor-glow 3s ease-in-out infinite}
+.b6l-distributor-discovery-link>span:nth-child(2){display:flex;flex-direction:column;flex:1;min-width:0}
+.b6l-distributor-discovery-link strong{font-size:clamp(.72rem,1.6vw,.95rem);line-height:1.3}
+.b6l-distributor-discovery-link small{font-size:.72rem;opacity:.85}
+.b6l-distributor-discovery-link b{font-size:.7rem;white-space:nowrap}
+@keyframes b6l-distributor-glow{50%{box-shadow:0 0 24px #4cb7d2a0}}
+@media(max-width:650px){.b6l-distributor-discovery-link{width:100%;flex-wrap:wrap}.b6l-distributor-discovery-link b{font-size:.66rem}}
+@media(prefers-reduced-motion:reduce){.b6l-distributor-discovery-link{animation:none}}
+</style>
 <div class="b6l-artist-discovery">
  <a href="/concertos/artistas/" class="b6l-artist-discovery-link" aria-label="Explorar diretório internacional de artistas na STUDIOSB6L">
   <span class="b6l-artist-discovery-icon" aria-hidden="true">✦</span>
