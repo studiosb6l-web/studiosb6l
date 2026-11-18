@@ -21,9 +21,17 @@
         .card small { display: block; color: #8ec9d6; margin: 4px 0 12px; }
         .card span { color: #4ec58a; font-size: .85rem; }
         footer { border-top: 1px solid #39465a; color: #bec9d6; font-size: .84rem; }
-    .directory-status{margin:12px 25px;color:#e8d1a1}.tools select{min-width:180px}.card{min-height:110px}.card a{color:#e8d1a1;text-decoration:underline}.pagination{display:flex;gap:12px;align-items:center;justify-content:center;margin:25px 0}.pagination button{background:#d8bd85;color:#101b2c;border:0;border-radius:7px;padding:11px 17px;cursor:pointer}.pagination button:disabled{opacity:.4;cursor:default}.card .card-content{overflow-wrap:anywhere}@media(max-width:700px){main{padding:14px!important}.tools{margin:16px 0}header,footer{padding:15px}} </style>
+    .directory-status{margin:12px 25px;color:#e8d1a1}.tools select{min-width:180px}.card{min-height:110px}.card a{color:#e8d1a1;text-decoration:underline}.pagination{display:flex;gap:12px;align-items:center;justify-content:center;margin:25px 0}.pagination button{background:#d8bd85;color:#101b2c;border:0;border-radius:7px;padding:11px 17px;cursor:pointer}.pagination button:disabled{opacity:.4;cursor:default}.card .card-content{overflow-wrap:anywhere}@media(max-width:700px){main{padding:14px!important}.tools{margin:16px 0}header,footer{padding:15px}} 
+/* Contador flutuante, sem bloquear a navegação */
+#b6l-artist-counter{position:fixed;right:12px;top:14vh;z-index:30;display:block;box-sizing:border-box;min-width:126px;padding:12px 14px;border:1px solid #d8bd85;border-radius:13px;background:rgba(13,27,45,.94);box-shadow:0 8px 28px #0008;color:#f8e7b9;text-align:center;text-decoration:none;animation:b6l-counter-travel 24s ease-in-out infinite alternate;pointer-events:auto}
+#b6l-artist-counter strong{display:block;font:700 1.8rem/1.2 Georgia,serif;color:#fff}#b6l-artist-counter span{display:block;font:600 .73rem/1.3 system-ui,sans-serif;letter-spacing:.05em;text-transform:uppercase}
+@keyframes b6l-counter-travel{from{top:14vh}to{top:calc(86vh - 100px)}}
+@media(max-width:700px){#b6l-artist-counter{right:6px;min-width:88px;padding:8px 6px;opacity:.9}#b6l-artist-counter strong{font-size:1.2rem}#b6l-artist-counter span{font-size:.59rem}@keyframes b6l-counter-travel{from{top:18vh}to{top:calc(85vh - 80px)}}}
+@media(prefers-reduced-motion:reduce){#b6l-artist-counter{animation:none;top:auto;bottom:12px}}
+</style>
 </head>
 <body>
+<a id="b6l-artist-counter" href="#artists-grid-container" aria-label="Total de artistas no diretório STUDIOSB6L"><strong id="b6l-artist-counter-number">4.500</strong><span>Artistas na<br>plataforma</span></a>
     <header>
         <div>
             <div class="eyebrow">Música ao Vivo • Artistas</div>
@@ -255,5 +263,9 @@
         countryInput.addEventListener("change",()=>{if(!globalMode){featuredPage=0;renderFeatured()}});
         renderFeatured();
     </script>
+<script>
+/* O número é lido do catálogo publicado, não de resultados externos. */
+fetch("/concertos/artistas/catalogo.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("catálogo");return r.json()}).then(data=>{if(Array.isArray(data)){document.getElementById("b6l-artist-counter-number").textContent=new Intl.NumberFormat("pt-PT").format(data.length)}}).catch(()=>{});
+</script>
 </body>
 </html>
