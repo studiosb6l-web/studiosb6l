@@ -1,7 +1,7 @@
 /* STUDIOSB6L — vídeos oficiais e revisão individual do catálogo. */
 (function(){
 "use strict";
-const curated={"Andrea Bocelli":["Ng7JKZQXnWw"],"Metallica":["tAGnKpE4NCI"]};
+const curated={"Andrea Bocelli":["Ng7JKZQXnWw"],"Metallica":["tAGnKpE4NCI"],"Queen":["fJ9rUzIMcZQ"],"Nirvana":["hTWKbfoikeg"],"Michael Jackson":["sOnqjkJTMaA"],"Rick Astley":["dQw4w9WgXcQ"],"PSY":["9bZkp7q19f0"],"Adele":["YQHsXMglC9A"],"Coldplay":["dvgZkm1xWPE"],"Lady Gaga":["qrO4YZeyl0I"],"Ed Sheeran":["JGwWNGJdvx8"],"Taylor Swift":["e-ORhEE9VVg"],"BTS":["gdZLi9oWNZg"],"BLACKPINK":["IHNzOHi8sJs"],"Shakira":["pRpeEdMmmQ0"]};
 function parseId(value){
  try{
   const url=new URL(value);
