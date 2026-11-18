@@ -1,0 +1,54 @@
+name: Publish artist sitemap
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'concertos/artistas/catalogo.json'
+      - '.github/workflows/publish-artist-sitemap.yml'
+permissions:
+  contents: write
+concurrency:
+  group: studiosb6l-artist-sitemap
+  cancel-in-progress: false
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate sitemap from actual published catalog
+        run: |
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          from xml.sax.saxutils import escape
+          catalog=json.loads(Path('concertos/artistas/catalogo.json').read_text(encoding='utf-8'))
+          seen=set()
+          urls=[]
+          for artist in catalog:
+              slug=artist.get('slug','')
+              if not re.fullmatch(r'[a-zA-Z0-9_-]+',slug) or slug in seen: continue
+              seen.add(slug)
+              if not Path('concertos/artistas',slug,'index.html').is_file(): continue
+              urls.append('<url><loc>https://www.studiosb6l.com/concertos/artistas/'+escape(slug)+'/</loc></url>')
+          output='<?xml version="1.0" encoding="UTF-8"?>\\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n'+'\\n'.join(urls)+'\\n</urlset>\\n'
+          Path('sitemap-artistas.xml').write_text(output,encoding='utf-8')
+          print('Indexed profile URLs in sitemap:',len(urls))
+          PY
+      - name: Commit sitemap
+        run: |
+          git config user.name 'STUDIOSB6L Sitemap Bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add sitemap-artistas.xml
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Refresh sitemap for verified artist profiles'
+          for i in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1
