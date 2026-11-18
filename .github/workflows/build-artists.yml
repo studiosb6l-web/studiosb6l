@@ -5,6 +5,9 @@ on:
     paths:
       - 'scripts/build_artist_directory.py'
       - '.github/workflows/build-artists.yml'
+concurrency:
+  group: studiosb6l-artist-directory-build
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:
