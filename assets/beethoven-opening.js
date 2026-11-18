@@ -52,6 +52,34 @@
   volumeLabel.append(volumeText, volume);
   controls.append(button, volumeLabel);
   container.prepend(controls);
+  // Premium compact player: keep the original SoundCloud widget and playback logic.
+  const premiumStyle = document.createElement('style');
+  premiumStyle.textContent = `#b6l-opening.b6l-premium{position:relative;background:linear-gradient(125deg,#071426,#12243a 70%,#08101d);border:1px solid #c7a45d;border-radius:17px;box-shadow:0 8px 32px #0008,0 0 14px #c7a45d33;padding:14px;color:#f6ecd5;max-width:740px;width:100%;box-sizing:border-box}#b6l-opening.b6l-premium .b6l-opening-controls{display:flex;flex-wrap:wrap;align-items:center;gap:9px}#b6l-opening.b6l-premium .b6l-opening-title{display:block;margin:9px 0 6px;font-weight:600;color:#f2d8a3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#b6l-opening.b6l-premium .b6l-premium-head{display:flex;gap:12px;align-items:center}#b6l-opening.b6l-premium .b6l-premium-cover{width:62px;height:62px;border-radius:9px;object-fit:cover;border:1px solid #c7a45d;flex-shrink:0}#b6l-opening.b6l-premium .b6l-premium-brand{font:600 16px Georgia,serif;letter-spacing:2px;color:#e9c67e}#b6l-opening.b6l-premium .b6l-premium-sub{font-size:11px;letter-spacing:1.4px;color:#d4c6ac}#b6l-opening.b6l-premium .b6l-premium-extras{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:9px}#b6l-opening.b6l-premium .b6l-premium-extras button{border:1px solid #c7a45d;background:#111f30;color:#f5dfae;border-radius:8px;padding:7px 10px;cursor:pointer}#b6l-opening.b6l-premium .b6l-premium-progress{flex:1;min-width:100px;accent-color:#e8bf6b}#b6l-opening.b6l-premium .b6l-premium-time{font-size:11px;color:#ddd}#b6l-opening.b6l-premium .b6l-premium-list{margin-top:9px;max-height:190px;overflow:auto;border-top:1px solid #a7895144;padding-top:8px}#b6l-opening.b6l-premium .b6l-premium-list button{display:block;width:100%;text-align:left;background:transparent;border:0;color:#f0e3cc;padding:9px;cursor:pointer;border-radius:6px}#b6l-opening.b6l-premium .b6l-premium-list button:hover,#b6l-opening.b6l-premium .b6l-premium-list button[aria-current=true]{background:#a98a5033}#b6l-opening.b6l-premium .b6l-opening-controls button{border-radius:9px;background:#e4bf78;color:#142033;font-weight:700}#b6l-opening.b6l-premium .b6l-opening-controls input{accent-color:#e4bf78}@media(max-width:500px){#b6l-opening.b6l-premium{padding:10px;max-width:calc(100vw - 24px)}#b6l-opening.b6l-premium .b6l-premium-cover{width:46px;height:46px}#b6l-opening.b6l-premium .b6l-premium-brand{font-size:13px}#b6l-opening.b6l-premium .b6l-premium-extras button{padding:6px 8px}}`;
+  document.head.append(premiumStyle);
+  container.classList.add('b6l-premium');
+  const head = document.createElement('div');
+  head.className = 'b6l-premium-head';
+  const cover = document.createElement('img');
+  cover.className = 'b6l-premium-cover';
+  cover.src = 'assets/Before_Forever.png';
+  cover.alt = 'BANDA 6 LATINOS';
+  const identity = document.createElement('div');
+  identity.innerHTML = '<div class="b6l-premium-brand">STUDIOSB6L</div><div class="b6l-premium-sub">BANDA 6 LATINOS · BEETHOVEN</div>';
+  head.append(cover, identity);
+  container.prepend(head);
+  const extras = document.createElement('div');
+  extras.className = 'b6l-premium-extras';
+  const prev = document.createElement('button'); prev.type='button'; prev.textContent='⏮'; prev.title='Previous track';
+  const next = document.createElement('button'); next.type='button'; next.textContent='⏭'; next.title='Next track';
+  const progress = document.createElement('input'); progress.type='range'; progress.min='0'; progress.max='1000'; progress.value='0'; progress.className='b6l-premium-progress'; progress.setAttribute('aria-label','Track progress');
+  const time = document.createElement('span'); time.className='b6l-premium-time'; time.textContent='0:00';
+  const listToggle = document.createElement('button'); listToggle.type='button'; listToggle.textContent='♫ Playlist ▾'; listToggle.setAttribute('aria-expanded','false');
+  const list = document.createElement('div'); list.className='b6l-premium-list'; list.hidden=true;
+  extras.append(prev,next,progress,time,listToggle);
+  container.append(extras,list);
+  const formatTime = ms => {const s=Math.floor(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+  listToggle.addEventListener('click',()=>{list.hidden=!list.hidden;listToggle.setAttribute('aria-expanded',String(!list.hidden));listToggle.textContent=list.hidden?'♫ Playlist ▾':'♫ Playlist ▴'});
+
   frame.title = 'Beethoven · B6L — SoundCloud';
   frame.allow = 'autoplay; encrypted-media';
   frame.tabIndex = -1;
@@ -152,7 +180,16 @@
     ready = true;
     clearTimeout(fallbackTimer);
     volumeLabel.hidden = false;
-    widget.getSounds(sounds => { count = sounds?.length || 0; });
+    widget.getSounds(sounds => {
+      count = sounds?.length || 0;
+      list.replaceChildren();
+      (sounds || []).forEach((sound,i)=>{
+        const item=document.createElement('button'); item.type='button';
+        item.textContent=(i+1)+'. '+(sound.title||'B6L Track '+(i+1));
+        item.addEventListener('click',()=>{widget.skip(i);play();list.hidden=true;listToggle.setAttribute('aria-expanded','false');listToggle.textContent='♫ Playlist ▾'});
+        list.append(item);
+      });
+    });
     widget.setVolume(Number(volume.value));
     retryStartup();
   });
@@ -181,6 +218,8 @@
   widget.bind(events.PLAY_PROGRESS, event => {
     if (!Number.isFinite(event.currentPosition)) return;
     position = event.currentPosition;
+    if(Number.isFinite(event.relativePosition))progress.value=String(Math.round(event.relativePosition*1000));
+    time.textContent=formatTime(position);
     if (!advanced && position > 0) {
       advanced = true;
       clearTimeout(startupTimer);
@@ -237,6 +276,10 @@
       if (!playing) showEmbeddedPlayer();
     }, 1400);
   });
+
+  prev.addEventListener('click',()=>{if(ready){widget.prev();play()}});
+  next.addEventListener('click',()=>{if(ready){widget.next();play()}});
+  progress.addEventListener('change',()=>{if(ready)widget.getCurrentSound(sound=>{const duration=sound?.duration||0;if(duration>0)widget.seekTo(duration*Number(progress.value)/1000)})});
 
   volume.addEventListener('input', () => {
     if (ready) widget.setVolume(Number(volume.value));
