@@ -1,0 +1,42 @@
+name: YouTube video candidate validation
+on:
+  workflow_dispatch:
+    inputs:
+      start_index:
+        description: "First catalog position (zero based)"
+        required: true
+        default: "0"
+      batch_size:
+        description: "Artists to scan (maximum 100)"
+        required: true
+        default: "50"
+permissions:
+  contents: write
+concurrency:
+  group: youtube-catalog-enrichment
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate candidates via YouTube Data API
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          START_INDEX: ${{ inputs.start_index }}
+          BATCH_SIZE: ${{ inputs.batch_size }}
+        run: |
+          test -n "$YOUTUBE_API_KEY" || { echo "Set YOUTUBE_API_KEY repository secret"; exit 1; }
+          python3 scripts/validate_youtube_videos.py
+      - name: Commit candidate review data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add concertos/artistas/videos-validados.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Add YouTube API candidate videos for manual review"
+            git push
+          fi
