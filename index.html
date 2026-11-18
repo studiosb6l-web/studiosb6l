@@ -66,7 +66,46 @@
   0%,100% { color:#fff7e9; text-shadow:0 0 0 transparent; }
   50% { color:#edc46d; text-shadow:0 0 15px #e8bc6866; }
 }
-</style><link rel="stylesheet" href="assets/header-shortcuts.css"><style>.header-shortcuts .header-artists{background:#d7b56f;color:#091421;border:1px solid #f4d58a;border-radius:5px;font-weight:800;animation:b6l-artists-attention 2.4s ease-in-out infinite;box-shadow:0 0 0 0 #d7b56f66}@keyframes b6l-artists-attention{0%,100%{background:#d7b56f;box-shadow:0 0 0 0 #d7b56f66}50%{background:#fff0b6;box-shadow:0 0 0 5px #d7b56f22}}@media(prefers-reduced-motion:reduce){.header-shortcuts .header-artists{animation:none}}</style><style>.header-shortcuts .header-promoters,.header-shortcuts .header-business{background:#d7b56f;color:#091421;border:1px solid #f4d58a;border-radius:5px;font-weight:800;animation:b6l-artists-attention 2.4s ease-in-out infinite}.header-shortcuts .header-promoters{animation-delay:.7s}.header-shortcuts .header-business{animation-delay:1.4s}@media(prefers-reduced-motion:reduce){.header-shortcuts .header-promoters,.header-shortcuts .header-business{animation:none}}#promoters-highlight,#business-highlight{margin-top:12px}</style></head><body>
+</style><link rel="stylesheet" href="assets/header-shortcuts.css"><style>.header-shortcuts .header-artists{background:#d7b56f;color:#091421;border:1px solid #f4d58a;border-radius:5px;font-weight:800;animation:b6l-artists-attention 2.4s ease-in-out infinite;box-shadow:0 0 0 0 #d7b56f66}@keyframes b6l-artists-attention{0%,100%{background:#d7b56f;box-shadow:0 0 0 0 #d7b56f66}50%{background:#fff0b6;box-shadow:0 0 0 5px #d7b56f22}}@media(prefers-reduced-motion:reduce){.header-shortcuts .header-artists{animation:none}}</style><style>.header-shortcuts .header-promoters,.header-shortcuts .header-business{background:#d7b56f;color:#091421;border:1px solid #f4d58a;border-radius:5px;font-weight:800;animation:b6l-artists-attention 2.4s ease-in-out infinite}.header-shortcuts .header-promoters{animation-delay:.7s}.header-shortcuts .header-business{animation-delay:1.4s}@media(prefers-reduced-motion:reduce){.header-shortcuts .header-promoters,.header-shortcuts .header-business{animation:none}}#promoters-highlight,#business-highlight{margin-top:12px}</style><style id="b6l-mobile-layout-fix">
+@media (max-width: 767px) {
+ html,body{max-width:100%;overflow-x:clip}
+ header{position:relative!important;top:auto!important;z-index:2!important}
+ header .nav{padding:12px 14px!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:10px!important}
+ header .nav .brand{display:block;font-size:1.1rem;line-height:1.35}
+ header .nav nav[aria-label="Main navigation"]{display:flex!important;flex-wrap:wrap!important;gap:8px 14px!important;align-items:center!important;max-width:100%;overflow:visible!important}
+ header .nav nav[aria-label="Main navigation"] a{font-size:.72rem!important;line-height:1.5!important;letter-spacing:.035em!important}
+ header .nav label[for="language"]{display:flex!important;align-items:center;gap:10px;max-width:100%}
+ header .nav .lang-picker{max-width:180px}
+ nav.header-shortcuts{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;padding:8px 14px 12px!important;max-width:100%!important;box-sizing:border-box}
+ nav.header-shortcuts a{min-width:0!important;width:100%!important;min-height:43px!important;padding:9px 8px!important;font-size:.82rem!important;overflow-wrap:anywhere;line-height:1.3!important}
+ nav.header-shortcuts .header-support{grid-column:1/-1;justify-self:stretch!important}
+ .b6l-distributor-discovery,.b6l-artist-discovery{padding:6px 14px 12px!important;max-width:100%!important}
+ .b6l-distributor-discovery-link{width:100%!important;min-height:64px!important;gap:8px!important;padding:11px 12px!important}
+ .b6l-distributor-discovery-link strong{font-size:.76rem!important;overflow-wrap:anywhere}
+ .b6l-distributor-discovery-link small{font-size:.68rem!important}
+ .b6l-distributor-discovery-link b{font-size:.65rem!important}
+ .b6l-artist-discovery-link{width:100%!important;max-width:100%!important;box-sizing:border-box!important;padding:15px!important;gap:10px!important}
+ .b6l-artist-discovery-copy{min-width:0!important}
+ .b6l-artist-discovery-copy strong{font-size:clamp(.95rem,4.2vw,1.3rem)!important;line-height:1.35!important;overflow-wrap:anywhere}
+ .b6l-artist-discovery-copy small{font-size:.8rem!important;line-height:1.4!important}
+ .b6l-artist-discovery-action{max-width:100%!important;min-height:42px!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:.82rem!important}
+ main .hero{min-height:0!important}
+ main .hero .wrap{padding-top:28px!important;padding-bottom:30px!important}
+ main .hero h1{font-size:clamp(1.65rem,7vw,2.4rem)!important;line-height:1.2!important}
+ main .hero .lead{font-size:.95rem!important}
+ .hero-pro-actions{display:flex!important;flex-wrap:wrap!important;gap:8px!important}
+ .hero-pro-actions .cta{max-width:100%;box-sizing:border-box}
+ .b6l-concert-shortcut,.b6l-connect-link{position:static!important;inset:auto!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;transform:none!important;animation:none!important;z-index:auto!important;display:flex!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;width:calc(100% - 28px)!important;max-width:480px!important;min-height:44px!important;margin:12px auto!important;padding:10px 14px!important;text-align:center!important;box-shadow:none!important}
+ .b6l-connect-link{border-radius:9px!important}
+ body:has(.b6l-opening-docked) .b6l-concert-shortcut{top:auto!important;bottom:auto!important}
+}
+@media (max-width: 390px) {
+ nav.header-shortcuts{grid-template-columns:1fr!important}
+ nav.header-shortcuts .header-support{grid-column:auto}
+ .b6l-distributor-discovery-link{flex-wrap:wrap}
+ .b6l-distributor-discovery-link b{margin-left:auto}
+}
+</style></head><body>
 <header><div class="nav"><a class="brand" href="#home">STUDIOSB6L</a><nav aria-label="Main navigation"><a href="#vision" data-vip-nav-secondary>VISION</a><a href="#artist" data-vip-nav-secondary>BANDA 6 LATINOS</a><a href="#music" data-vip-nav-secondary>MUSIC</a><a href="#selected-works" id="selected-nav">WORKS</a><a href="#catalogue" id="catalog-nav">CATÁLOGO</a><a href="#stage" data-vip-nav-secondary>OPERA & THEATRE</a><a href="#listen" data-vip-nav-secondary>LISTEN</a><a href="#founder">FOUNDER</a><a href="#licensing" id="sync-nav">SYNC LICENSING</a><a href="#industry" data-vip-nav-secondary id="industry-nav">FOR PRODUCERS</a><a href="#festivals" data-vip-nav-secondary id="festival-nav">FILMFREEWAY</a><a href="#contact">CONTACT</a></nav><label for="language" style="font-size:.75rem;color:#d9b978">LANG <select class="lang-picker" id="language" aria-label="Choose website language"><option value="es">🇪🇸 ES</option><option value="en">🇬🇧 EN</option><option value="fr">🇫🇷 FR</option><option value="de">🇩🇪 DE</option><option value="pt">🇵🇹 PT</option><option value="ja">🇯🇵 日本語</option><option value="zh">🇨🇳 简体中文</option><option value="ar">🇸🇦 العربية</option><option value="ru">🇷🇺 RU</option><option value="uk">🇺🇦 UK</option></select></label></div>
 <nav class="header-shortcuts" aria-label="Shop and support">
   <a href="music-store.html?lang=en#concertos">Concert tickets</a>
