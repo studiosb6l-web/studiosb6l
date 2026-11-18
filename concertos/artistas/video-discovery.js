@@ -1,7 +1,7 @@
 /* STUDIOSB6L — vídeos oficiais e revisão individual do catálogo. */
 (function(){
 "use strict";
-const curated={"Andrea Bocelli":["Ng7JKZQXnWw"],"Metallica":["tAGnKpE4NCI"],"Queen":["fJ9rUzIMcZQ"],"Nirvana":["hTWKbfoikeg"],"Michael Jackson":["sOnqjkJTMaA"],"Rick Astley":["dQw4w9WgXcQ"],"PSY":["9bZkp7q19f0"],"Adele":["YQHsXMglC9A"],"Coldplay":["dvgZkm1xWPE"],"Lady Gaga":["qrO4YZeyl0I"],"Ed Sheeran":["JGwWNGJdvx8"],"Taylor Swift":["e-ORhEE9VVg"],"BTS":["gdZLi9oWNZg"],"BLACKPINK":["IHNzOHi8sJs"],"Shakira":["pRpeEdMmmQ0"],"Linkin Park":["eVTXPUF4Oz4"],"Guns N’ Roses":["1w7OgIMMRc4"],"Guns N' Roses":["1w7OgIMMRc4"],"U2":["ftjEcrrf7r0"],"The Beatles":["A_MjCqQoLLA"],"AC/DC":["v2AC41dglnM"],"Bon Jovi":["lDK9QqIzhwk"],"Imagine Dragons":["ktvTqknDobU"],"Radiohead":["XFkzRNyygfk"],"The Weeknd":["4NRXx6U8ABQ"]};
+const curated={"Andrea Bocelli":["Ng7JKZQXnWw"],"Metallica":["tAGnKpE4NCI"],"Queen":["fJ9rUzIMcZQ"],"Nirvana":["hTWKbfoikeg"],"Michael Jackson":["sOnqjkJTMaA"],"Rick Astley":["dQw4w9WgXcQ"],"PSY":["9bZkp7q19f0"],"Adele":["YQHsXMglC9A"],"Coldplay":["dvgZkm1xWPE"],"Lady Gaga":["qrO4YZeyl0I"],"Ed Sheeran":["JGwWNGJdvx8"],"Taylor Swift":["e-ORhEE9VVg"],"BTS":["gdZLi9oWNZg"],"BLACKPINK":["IHNzOHi8sJs"],"Shakira":["pRpeEdMmmQ0"],"Linkin Park":["eVTXPUF4Oz4"],"Guns N’ Roses":["1w7OgIMMRc4"],"Guns N' Roses":["1w7OgIMMRc4"],"U2":["ftjEcrrf7r0"],"The Beatles":["A_MjCqQoLLA"],"AC/DC":["v2AC41dglnM"],"Bon Jovi":["lDK9QqIzhwk"],"Imagine Dragons":["ktvTqknDobU"],"Radiohead":["XFkzRNyygfk"],"The Weeknd":["4NRXx6U8ABQ"],"Luis Fonsi":["kJQP7kiw5Fk"],"Dua Lipa":["k2qgadSvNyU"],"Bruno Mars":["OPf0YbXqDm0"],"Billie Eilish":["DyDfgMOUjCI"],"Katy Perry":["CevxZvSJLk8"],"Maroon 5":["aJOTlE1K90k"],"Justin Bieber":["kffacxfA7G4"],"Eminem":["YVkUvmDQ3HY"],"Rihanna":["lWA2pjMjpBs"],"Sia":["2vjPBrBU-TM"]};
 function parseId(value){
  try{
   const url=new URL(value);
@@ -21,7 +21,7 @@ function render(root){
  const h=document.createElement("h2");h.textContent="Vídeos e atuações — "+name;root.append(h);
  const desc=document.createElement("p");desc.textContent="Vídeos incorporados do YouTube, quando disponíveis e permitidos pelo titular. Diretório editorial independente; a inclusão não representa parceria.";root.append(desc);
  const musicTitle=document.createElement("h3");musicTitle.textContent="Ouvir música aqui";root.append(musicTitle);
- const musicNote=document.createElement("p");musicNote.textContent="Reprodução oficial incorporada, quando disponível. O áudio e os anúncios internos pertencem ao respetivo serviço e titulares.";root.append(musicNote);
+ const musicNote=document.createElement("p");musicNote.textContent="Vídeo musical incorporado, quando disponível. A reprodução e a publicidade interna pertencem ao YouTube e aos titulares. A publicidade própria da STUDIOSB6L é separada.";root.append(musicNote);
  const musicArea=document.createElement("div");root.append(musicArea);
  const videoTitle=document.createElement("h3");videoTitle.textContent="Ver vídeos aqui";root.append(videoTitle);
  const videoArea=document.createElement("div");root.append(videoArea);
@@ -46,7 +46,7 @@ function render(root){
  }else{
   const msg=document.createElement("p");msg.textContent="Música incorporada ainda não verificada para este artista.";musicArea.append(msg);
  }
- ids.slice(0,3).forEach(addVideo);
+ ids.slice(1,3).forEach(addVideo);
  if(!ids.length){
   const pending=document.createElement("p");pending.textContent="Vídeo incorporado ainda não disponível para este artista. Podes visualizar um vídeo aqui introduzindo uma ligação válida.";root.append(pending);
  }
