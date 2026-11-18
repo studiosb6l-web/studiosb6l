@@ -31,8 +31,19 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A -- artist-import-checkpoint.json artist-import-offset.txt concertos/artistas sitemap-artistas.xml
           if git diff --cached --quiet; then
-            echo "::error::No new artist data or profiles were generated; target has not been reached."
-            exit 1
+            python - <<'PY'
+          import json, re
+          from pathlib import Path
+          source = Path("scripts/build_artist_directory.py").read_text(encoding="utf-8")
+          target = int(re.search(r"^TARGET=(\d+)", source, re.M).group(1))
+          catalog = Path("concertos/artistas/catalogo.json")
+          count = len(json.loads(catalog.read_text(encoding="utf-8"))) if catalog.exists() else 0
+          print(f"Directory records: {count}; target: {target}")
+          if count < target:
+              raise SystemExit("Target not reached and no new records were generated")
+          print("Directory already up to date; no new commit needed")
+          PY
+            exit 0
           fi
           git commit -m "Save verified artist import progress and generated profiles"
           for attempt in 1 2 3; do
