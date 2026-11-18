@@ -4,7 +4,7 @@ import json, os, re, time, html, urllib.parse, urllib.request, unicodedata
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/"concertos"/"artistas"
-TARGET=9785
+TARGET=10109
 HEADERS={"User-Agent":"STUDIOSB6L-ArtistDirectory/1.0 (https://www.studiosb6l.com/)","Accept":"application/sparql-results+json"}
 QUERY='''SELECT ?artist ?artistLabel WHERE {
   ?artist wdt:P31 wd:Q215380 .
@@ -100,7 +100,11 @@ def page(record):
 </script></main><footer>© STUDIOSB6L · Diretório editorial independente · Dados de identificação: Wikidata (CC0)</footer></body></html>'''
 def main():
     checkpoint=ROOT/"artist-import-checkpoint.json"
-    records=json.loads(checkpoint.read_text(encoding="utf-8")) if checkpoint.exists() else []
+    catalog=DEST/"catalogo.json"
+    source=checkpoint if checkpoint.exists() and checkpoint.stat().st_size else catalog
+    records=json.loads(source.read_text(encoding="utf-8")) if source.exists() and source.stat().st_size else []
+    if len(records) < 9785:
+        raise RuntimeError("Existing catalog missing or incomplete; refusing to overwrite verified profiles")
     seen={r["qid"] for r in records}
     next_offset=0  # Group-only Wikidata query; avoid expensive global ORDER BY
     for offset in range(0,50000,100):
