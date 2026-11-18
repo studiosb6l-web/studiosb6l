@@ -4,7 +4,7 @@ import json, os, re, time, html, urllib.parse, urllib.request, unicodedata
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/"concertos"/"artistas"
-TARGET=8285
+TARGET=8785
 HEADERS={"User-Agent":"STUDIOSB6L-ArtistDirectory/1.0 (https://www.studiosb6l.com/)","Accept":"application/sparql-results+json"}
 QUERY='''SELECT ?artist ?artistLabel WHERE {
   ?artist wdt:P31 wd:Q215380 .
