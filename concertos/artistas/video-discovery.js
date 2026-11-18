@@ -32,13 +32,9 @@ function render(root){
  const ids=(root.dataset.videoIds||curated[name]||[]).toString().split(",").map(s=>s.trim()).filter(s=>/^[\w-]{11}$/.test(s));
  ids.slice(0,3).forEach(addVideo);
  if(!ids.length){
-  const pending=document.createElement("p");pending.textContent="Vídeo oficial ainda por confirmar. Podes pesquisar e experimentar um vídeo nesta página.";root.append(pending);
+  const pending=document.createElement("p");pending.textContent="Vídeo incorporado ainda não disponível para este artista. Podes visualizar um vídeo aqui introduzindo uma ligação válida.";root.append(pending);
  }
- const search=document.createElement("a");
- search.href="https://www.youtube.com/results?search_query="+encodeURIComponent(name+" official music video");
- search.target="_blank";search.rel="noopener noreferrer";search.textContent="Pesquisar vídeo oficial no YouTube";
- search.style.cssText="display:inline-block;margin:8px 0;color:#e8d1a1";root.append(search);
- const label=document.createElement("label");label.textContent="Verificar um vídeo: cola aqui a ligação do YouTube";label.style.cssText="display:block;margin:12px 0 5px";root.append(label);
+ const label=document.createElement("label");label.textContent="Ver vídeo nesta página: cola a ligação do vídeo";label.style.cssText="display:block;margin:12px 0 5px";root.append(label);
  const input=document.createElement("input");input.type="url";input.placeholder="https://www.youtube.com/watch?v=...";
  input.style.cssText="width:min(100%,520px);box-sizing:border-box;padding:10px;background:#101d2c;color:#fff;border:1px solid #d8bd85;border-radius:6px";label.append(input);
  const button=document.createElement("button");button.type="button";button.textContent="Ver vídeo nesta página";
