@@ -4,7 +4,7 @@ import json, os, re, time, html, urllib.parse, urllib.request, unicodedata
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/"concertos"/"artistas"
-TARGET=1000
+TARGET=2000
 HEADERS={"User-Agent":"STUDIOSB6L-ArtistDirectory/1.0 (https://www.studiosb6l.com/)","Accept":"application/sparql-results+json"}
 QUERY='''SELECT ?artist ?artistLabel WHERE {
   ?artist wdt:P106 wd:Q177220 .
@@ -37,7 +37,7 @@ def main():
     records=json.loads(checkpoint.read_text(encoding="utf-8")) if checkpoint.exists() else []
     seen={r["qid"] for r in records}
     next_offset=int((ROOT/"artist-import-offset.txt").read_text()) if (ROOT/"artist-import-offset.txt").exists() else 0
-    for offset in range(0,5000,100):
+    for offset in range(0,10000,100):
         if len(records)>=TARGET:break
         if offset<next_offset:continue
         batch=fetch(offset,100)
@@ -57,7 +57,7 @@ def main():
         (ROOT/"artist-import-offset.txt").write_text(str(offset+100))
         print("Collected",len(records),"after",offset+len(batch),flush=True)
         time.sleep(3)
-    if len(records)<TARGET:raise RuntimeError("Only "+str(len(records))+" verified records; refusing to claim 10,000")
+    if len(records)<TARGET:raise RuntimeError("Only "+str(len(records))+" verified records; target "+str(TARGET)+" not reached")
     for record in records:
         directory=DEST/record["slug"];directory.mkdir(parents=True,exist_ok=True)
         (directory/"index.html").write_text(page(record),encoding="utf-8")
