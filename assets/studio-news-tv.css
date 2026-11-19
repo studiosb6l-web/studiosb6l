@@ -47,3 +47,7 @@
 #b6l-studio-news.b6l-tv-floating .b6l-tv-actions{padding:2px!important}
 #b6l-studio-news.b6l-tv-floating .b6l-tv-screen p{font-size:10px!important;line-height:1.2!important}
 @media(max-width:650px){#b6l-studio-news.b6l-tv-floating{bottom:76px!important;right:8px!important;width:min(330px,calc(100vw - 16px))!important;max-height:32vh!important}#b6l-studio-news.b6l-tv-floating .b6l-tv-top button{font-size:9px!important}}
+
+/* Fixed top docking under site navigation, instead of floating at bottom. */
+#b6l-studio-news.b6l-tv-floating{top:72px!important;bottom:auto!important;max-height:38vh!important;overflow:auto!important}
+@media(max-width:650px){#b6l-studio-news.b6l-tv-floating{top:62px!important;bottom:auto!important;max-height:36vh!important}}
