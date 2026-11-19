@@ -1,0 +1,18 @@
+/* STUDIOSB6L: mobile presentation keeps desktop visual identity without horizontal overflow. */
+@media(max-width:767px){
+ html{max-width:100%;overflow-x:clip}
+ body{max-width:100%;overflow-x:clip}
+ main,section,article,.wrap,.container{min-width:0}
+ img,video,canvas,svg{max-width:100%;height:auto}
+ iframe{max-width:100%}
+ table{max-width:100%}
+ pre,code{overflow-wrap:anywhere}
+ .b6l-tv-grid{width:100%}
+ .b6l-tv-screen iframe{height:100%;max-width:100%}
+ input,select,textarea{max-width:100%;box-sizing:border-box}
+}
+@media(max-width:480px){
+ .cards,.artist-grid,.artists-grid{min-width:0}
+ .cards .card,.artist-grid>*,.artists-grid>*{min-width:0}
+ .cards .photo{max-width:100%;object-fit:cover}
+}
