@@ -36,12 +36,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  function improve(){
   const section=document.getElementById('artist-discovery');
   if(!section)return;
-  const external=[...section.querySelectorAll('a[href]')].filter(a=>{
-   try{const u=new URL(a.href);return /(^|\\.)youtube\\.com$/.test(u.hostname)&&u.pathname==='/results'}catch(e){return false}
+  // Remove outbound YouTube search actions; verified videos appear only in the on-page player.
+  [...section.querySelectorAll('a[href]')].forEach(a=>{
+   try {
+    const u=new URL(a.href,location.href);
+    if((u.hostname==='youtube.com'||u.hostname.endsWith('.youtube.com')||u.hostname==='youtu.be') && (u.pathname==='/results'||u.pathname==='/search')){
+     a.remove();
+    }
+   }catch(e){}
   });
-  external.forEach(a=>{a.href='#b6l-video-hub';a.removeAttribute('target');a.removeAttribute('rel');a.addEventListener('click',()=>{const hub=document.getElementById('b6l-video-hub');if(hub)hub.scrollIntoView({behavior:'smooth',block:'start'})})});
+  const links=section.querySelector('.links');
+  if(links && !links.querySelector('a'))links.hidden=true;
   const paragraphs=[...section.querySelectorAll('p')];
-  if(paragraphs[0])paragraphs[0].textContent='Explora entrevistas, atuações e documentários disponíveis no reprodutor desta página. Apenas vídeos identificados e autorizados para incorporação são apresentados.';
+  if(paragraphs[0])paragraphs[0].textContent='Vídeos oficiais disponíveis são reproduzidos nesta página quando a incorporação está verificada. Consulta também a discografia e os concertos na STUDIOSB6L.';
   section.style.overflowWrap='anywhere';
   const css=document.createElement('style');css.textContent='html,body{max-width:100%;overflow-x:hidden}main,main section{box-sizing:border-box;min-width:0;max-width:100%}main p,main li,main h1,main h2{overflow-wrap:anywhere}main .links{display:flex;flex-wrap:wrap;gap:8px}main .links a{max-width:100%;box-sizing:border-box;white-space:normal}#b6l-video-hub iframe{max-width:100%}@media(max-width:600px){main,header,footer{padding:14px!important}main section{padding:16px!important;margin:14px 0!important}main h2{font-size:clamp(1.3rem,5vw,1.8rem)}main .links a{margin:0}}';document.head.append(css);
  }
