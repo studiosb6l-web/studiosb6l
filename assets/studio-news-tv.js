@@ -21,6 +21,7 @@ window.addEventListener('scroll',updateDock,{passive:true});
 window.addEventListener('resize',updateDock,{passive:true});
 root.querySelector('[data-hide-all]').addEventListener('click',()=>{floating=false;root.classList.remove('b6l-tv-floating')});
 restore.addEventListener('click',updateDock);
+const channelLabel=node('div','b6l-tv-channel-label','CANAL DE TV · STUDIOS B6L');channelLabel.setAttribute('aria-label','Canal de TV STUDIOS B6L');root.append(channelLabel);
 const panels={};
 for(const c of categories){
  const card=node('article','b6l-tv');const top=node('div','b6l-tv-top');top.append(node('span','',c.name));
