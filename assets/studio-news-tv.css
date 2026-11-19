@@ -19,3 +19,9 @@
  #b6l-studio-news .b6l-tv-top button{font-size:9px;padding:4px}
  #b6l-studio-news .b6l-tv-meta{font-size:9px}
 }
+
+/* Seamless single panoramic screen: no central divider, no two-card outlines. */
+#b6l-studio-news .b6l-tv-grid{gap:0!important;background:#080e19;border:1px solid #b99a61;box-shadow:0 12px 30px #0008;overflow:hidden}
+#b6l-studio-news .b6l-tv,#b6l-studio-news .b6l-tv:first-child,#b6l-studio-news .b6l-tv:last-child{border:0!important;border-radius:0!important;box-shadow:none!important;background:#080e19}
+#b6l-studio-news .b6l-tv-screen{border:0!important;border-radius:0!important;background:#04070c}
+@media(max-width:650px){#b6l-studio-news .b6l-tv-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
