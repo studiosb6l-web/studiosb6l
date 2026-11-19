@@ -20,11 +20,11 @@ function init(){
  fetch('/assets/artist-videos.json',{cache:'force-cache'}).then(r=>r.ok?r.json():{}).then(registry=>{
   const videos=Array.isArray(registry[slug])?registry[slug]:[];
   const valid=videos.filter(v=>v&&/^[A-Za-z0-9_-]{11}$/.test(v.id)&&v.verified===true).slice(0,12);
-  if(!valid.length)return;fallback.hidden=true;
+  if(!valid.length){section.hidden=true;const discovery=document.getElementById('artist-discovery');if(discovery){discovery.querySelectorAll('a[href="#b6l-video-hub"]').forEach(a=>a.remove());const p=discovery.querySelector('p');if(p)p.textContent='Os vídeos incorporados deste artista ainda estão em verificação. Continua a explorar a discografia, os concertos e outros artistas na STUDIOSB6L.';}return;}fallback.hidden=true;
   valid.forEach(v=>{const card=document.createElement('article');const heading=document.createElement('h3');heading.textContent=String(v.title||'Vídeo oficial');card.append(heading);
    const frame=document.createElement('iframe');frame.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v.id);frame.title=heading.textContent;frame.loading='lazy';frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';frame.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:10px;background:#091321';card.append(frame);
    const credit=document.createElement('p');credit.style.cssText='font-size:.85rem';credit.textContent='Vídeo no YouTube · '+String(v.channel||'canal identificado');card.append(credit);gallery.append(card)});
- }).catch(()=>{});
+ }).catch(()=>{section.hidden=true;document.querySelectorAll('#artist-discovery a[href="#b6l-video-hub"]').forEach(a=>a.remove());});
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
