@@ -2,6 +2,25 @@
   const container = document.getElementById('b6l-opening');
   if (!container) return;
 
+  // Keep the radio directly below the left TV, not floating over content.
+  const tvSection = document.getElementById('b6l-studio-news');
+  if (tvSection) {
+    const radioDock = document.createElement('div');
+    radioDock.id = 'b6l-radio-under-tv';
+    radioDock.setAttribute('aria-label', 'STUDIOSB6L Radio');
+    radioDock.style.cssText = 'display:flex;justify-content:flex-start;align-items:center;width:100%;padding:10px 0 5px;position:relative;z-index:2';
+    const tvGrid = tvSection.querySelector('.b6l-tv-grid');
+    if (tvGrid) tvGrid.insertAdjacentElement('afterend', radioDock);
+    else tvSection.append(radioDock);
+    radioDock.append(container);
+    const radioCSS = document.createElement('style');
+    radioCSS.textContent = '#b6l-radio-under-tv #b6l-opening{position:relative!important;inset:auto!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;transform:none!important;z-index:2!important;max-width:min(100%,430px)!important;justify-content:center!important}#b6l-radio-under-tv #b6l-opening.b6l-opening-docked{position:relative!important;inset:auto!important;transform:none!important}#b6l-radio-under-tv .b6l-opening-controls{flex-wrap:wrap!important;justify-content:center!important}#b6l-radio-under-tv .b6l-radio-label{display:block!important;text-align:center!important;width:100%;font-size:12px;font-weight:800;letter-spacing:.16em;color:#e9c784;margin-bottom:3px}@media(max-width:650px){#b6l-radio-under-tv{justify-content:flex-start!important;padding-left:8px!important}}';
+    document.head.append(radioCSS);
+    const label = document.createElement('strong');
+    label.className = 'b6l-radio-label';
+    label.textContent = 'RADIO';
+    container.prepend(label);
+  }
   const playlist = 'https://soundcloud.com/banda6latinos/sets/banda-6-latinos-beethoven';
   const key = 'b6l-beethoven-player';
   const labels = {
