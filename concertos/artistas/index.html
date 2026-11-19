@@ -58,7 +58,9 @@
 .card .card-content small{margin:6px 0 12px}
 .card .local-profile,.card .card-content>a{display:inline-block;color:#e8d1a1;line-height:1.4}
 @media(max-width:700px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card .card-content{padding:11px}.card .card-content strong{font-size:.92rem}.card .card-content small{font-size:.76rem}.card .card-content>a{font-size:.8rem}.tools input{min-width:0!important;width:100%}#b6l-floating-counters{max-width:76px;opacity:.78;pointer-events:none}#b6l-floating-counters a{pointer-events:auto}}
-@media(max-width:360px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
+/* Quatro perfis por linha no telemóvel, sem ampliar fotografias */
+@media(max-width:700px){.cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.card .card-content{padding:5px}.card .card-content strong{font-size:clamp(9px,2.4vw,12px);line-height:1.25;overflow-wrap:anywhere}.card .card-content small{font-size:clamp(8px,2vw,10px);line-height:1.2;margin:3px 0}.card .card-content>a{font-size:10px;overflow-wrap:anywhere}.card .photo{width:100%;aspect-ratio:4/3;object-fit:cover}.card{min-width:0}.cards>li{min-width:0}}
+@media(max-width:360px){.cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}}
 </style>
 </head>
 <body>
