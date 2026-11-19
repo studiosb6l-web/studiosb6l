@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19T07:29:48.640028+00:00",
+  "updated": "2026-11-19T09:06:57.586002+00:00",
   "channels": {
     "disney": [
       {
@@ -99,6 +99,103 @@
         "url": "https://www.youtube.com/watch?v=xP609YALh3E"
       }
     ],
-    "warner": []
+    "warner": [
+      {
+        "youtubeId": "zQu3_wkIKC4",
+        "title": "Robert Pattinson is Scytale in Dune: Part Three, only in theaters and IMAX December 18. #DuneMovie",
+        "source": "Warner Bros.",
+        "published": "2026-11-18T18:00:18Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=zQu3_wkIKC4"
+      },
+      {
+        "youtubeId": "OAUnScp6fYA",
+        "title": "ONE. MONTH. LEFT. #DuneMovie",
+        "source": "Warner Bros.",
+        "published": "2026-11-18T17:00:23Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=OAUnScp6fYA"
+      },
+      {
+        "youtubeId": "rw7sMwwnNuk",
+        "title": "Each step brings us closer to the end.",
+        "source": "Warner Bros.",
+        "published": "2026-11-17T19:00:19Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=rw7sMwwnNuk"
+      },
+      {
+        "youtubeId": "d6Yq6ZUGKWI",
+        "title": "One last time. Zendaya returns as Chani in Dune: Part Three, only in theaters and IMAX December 18",
+        "source": "Warner Bros.",
+        "published": "2026-11-17T18:00:02Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=d6Yq6ZUGKWI"
+      },
+      {
+        "youtubeId": "V7f0cMdPdCQ",
+        "title": "Close enough to touch. Watch the new trailer for #RemainMovie - only in theaters February 5.",
+        "source": "Warner Bros.",
+        "published": "2026-11-16T23:00:05Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=V7f0cMdPdCQ"
+      },
+      {
+        "youtubeId": "dhaxs70WObw",
+        "title": "Remain Movie | Love and Fear",
+        "source": "Warner Bros.",
+        "published": "2026-11-16T21:00:14Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=dhaxs70WObw"
+      },
+      {
+        "youtubeId": "Fso81Ypg9T4",
+        "title": "Remain | Official Trailer",
+        "source": "Warner Bros.",
+        "published": "2026-11-16T20:00:07Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=Fso81Ypg9T4"
+      },
+      {
+        "youtubeId": "hAsobRSRCLc",
+        "title": "It’s all led to the best day ever! 🎉#TheCatInTheHat - now playing only in theaters",
+        "source": "Warner Bros.",
+        "published": "2026-11-15T18:00:06Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=hAsobRSRCLc"
+      },
+      {
+        "youtubeId": "ySBhKFPISgw",
+        "title": "It's FINALLY time for some fun. 😌 #TheCatInTheHat - now playing only in theaters",
+        "source": "Warner Bros.",
+        "published": "2026-11-14T18:00:39Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=ySBhKFPISgw"
+      },
+      {
+        "youtubeId": "lq41T5cRE38",
+        "title": "Why yes, yes we do. #TheCatInTheHat - now playing only in theaters",
+        "source": "Warner Bros.",
+        "published": "2026-11-13T17:00:31Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=lq41T5cRE38"
+      },
+      {
+        "youtubeId": "gpTe10B-xOk",
+        "title": "Nowhere but up from here! #TheCatInTheHat - now playing only in theaters",
+        "source": "Warner Bros.",
+        "published": "2026-11-12T18:00:04Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=gpTe10B-xOk"
+      },
+      {
+        "youtubeId": "5VV6NXIrCBE",
+        "title": "Have you checked for Thing 2 in theaters yet? #TheCatInTheHat - now playing only in theater",
+        "source": "Warner Bros.",
+        "published": "2026-11-12T17:00:10Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=5VV6NXIrCBE"
+      }
+    ]
   }
 }
