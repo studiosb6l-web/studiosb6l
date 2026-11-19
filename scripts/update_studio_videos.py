@@ -13,7 +13,7 @@ OUT=pathlib.Path("assets/studio-videos.json")
 key=os.getenv("YOUTUBE_API_KEY","").strip()
 channels={
  "disney":[("Disney","Disney"),("WaltDisneyStudios","Walt Disney Studios")],
- "warner":[("WarnerBrosPictures","Warner Bros. Pictures"),("warnerbros","Warner Bros.")]
+ "warner":[("UCjmJDM5pRKbUlVIzDYYWb6g","Warner Bros."),("UCU09q55eK-7tVcaYxuH2AfQ","Warner Bros. Pictures")]
 }
 def api(endpoint,params):
  url="https://www.googleapis.com/youtube/v3/"+endpoint+"?"+urllib.parse.urlencode(dict(params,key=key))
