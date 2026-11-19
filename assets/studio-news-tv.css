@@ -25,3 +25,12 @@
 #b6l-studio-news .b6l-tv,#b6l-studio-news .b6l-tv:first-child,#b6l-studio-news .b6l-tv:last-child{border:0!important;border-radius:0!important;box-shadow:none!important;background:#080e19}
 #b6l-studio-news .b6l-tv-screen{border:0!important;border-radius:0!important;background:#04070c}
 @media(max-width:650px){#b6l-studio-news .b6l-tv-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+
+/* Version 3: visually one uninterrupted display, no card gutters or internal frames */
+#b6l-studio-news .b6l-tv-grid{padding:0!important;gap:0!important;border-radius:12px!important}
+#b6l-studio-news .b6l-tv,#b6l-studio-news .b6l-tv:first-child,#b6l-studio-news .b6l-tv:last-child{padding:0!important;margin:0!important;background:#04070c!important}
+#b6l-studio-news .b6l-tv-screen{width:100%;aspect-ratio:16/9!important;min-height:0!important;padding:8px!important}
+#b6l-studio-news .b6l-tv-top{margin:0!important;padding:5px 7px!important;background:#04070c!important}
+#b6l-studio-news .b6l-tv-meta{margin:0!important;padding:4px 7px!important;background:#04070c!important}
+#b6l-studio-news .b6l-tv-actions{margin:0!important;padding:4px 7px!important;background:#04070c!important}
+@media(max-width:650px){#b6l-studio-news .b6l-tv-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
