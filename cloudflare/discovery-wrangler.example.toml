@@ -1,0 +1,12 @@
+name = "studiosb6l-discovery"
+main = "discovery-worker.js"
+compatibility_date = "2026-11-19"
+# D1 database_id must be taken from Cloudflare; do not invent it.
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "YOUR_EXISTING_D1_NAME"
+# database_id = "YOUR_REAL_DATABASE_ID"
+# [vars]
+# ALLOWED_FEED_HOSTS = "approved-source.example"
+[triggers]
+crons = ["0 */6 * * *"]
