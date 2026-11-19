@@ -13,6 +13,20 @@ function parseId(value){
  }catch(e){}
  return null;
 }
+// Coordinate embedded YouTube players and the site radio. Browsers may block autoplay.
+const players=new Set();let active=null;
+const command=(frame,func)=>{try{frame.contentWindow?.postMessage(JSON.stringify({event:'command',func,args:[]}), 'https://www.youtube-nocookie.com')}catch(_){}};
+window.B6LVideoAudio={
+ register(frame){players.add(frame);frame.addEventListener('load',()=>{try{frame.contentWindow?.postMessage(JSON.stringify({event:'listening',id:1}),'https://www.youtube-nocookie.com')}catch(_){}})},
+};
+window.addEventListener('message',event=>{
+ if(!['https://www.youtube-nocookie.com','https://www.youtube.com'].includes(event.origin))return;
+ const frame=[...players].find(f=>f.contentWindow===event.source);if(!frame)return;
+ let msg=event.data;try{if(typeof msg==='string')msg=JSON.parse(msg)}catch{return}
+ if(msg?.event!=='onStateChange')return;
+ if(msg.info===1){active=frame;players.forEach(f=>{if(f!==frame)command(f,'pauseVideo')});window.dispatchEvent(new CustomEvent('b6l-tv-audio',{detail:{active:true}}))}
+ if((msg.info===2||msg.info===0)&&active===frame){active=null;window.dispatchEvent(new CustomEvent('b6l-tv-audio',{detail:{active:false}}))}
+});
 function render(root){
  if(!root)return;
  const name=(root.dataset.artistName||document.querySelector("h1")?.textContent||"").trim();
@@ -26,23 +40,23 @@ function render(root){
  const videoTitle=document.createElement("h3");videoTitle.textContent="Ver vídeos aqui";root.append(videoTitle);
  const videoArea=document.createElement("div");root.append(videoArea);
  function addVideo(id){
-  const frame=document.createElement("iframe");frame.src="https://www.youtube-nocookie.com/embed/"+id;
+  const frame=document.createElement("iframe");frame.src="https://www.youtube-nocookie.com/embed/"+id+"?enablejsapi=1&origin="+encodeURIComponent(location.origin);
   frame.title="Vídeo de "+name;frame.loading="lazy";frame.allowFullscreen=true;
   frame.referrerPolicy="strict-origin-when-cross-origin";
   frame.allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share";
   frame.style.cssText="display:block;width:100%;max-width:760px;aspect-ratio:16/9;border:0;border-radius:10px;margin:14px 0";
-  videoArea.append(frame);
+  videoArea.append(frame);window.B6LVideoAudio?.register(frame);
  }
  const ids=(root.dataset.videoIds||curated[name]||[]).toString().split(",").map(s=>s.trim()).filter(s=>/^[\w-]{11}$/.test(s));
  if(ids.length){
   const audio=document.createElement("iframe");
-  audio.src="https://www.youtube-nocookie.com/embed/"+ids[0];
+  audio.src="https://www.youtube-nocookie.com/embed/"+ids[0]+"?enablejsapi=1&origin="+encodeURIComponent(location.origin);
   audio.title="Ouvir música de "+name+" — reprodutor oficial";
   audio.loading="lazy";audio.allowFullscreen=true;
   audio.allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share";
   audio.referrerPolicy="strict-origin-when-cross-origin";
   audio.style.cssText="display:block;width:100%;max-width:760px;aspect-ratio:16/9;border:0;border-radius:10px;margin:12px 0";
-  musicArea.append(audio);
+  musicArea.append(audio);window.B6LVideoAudio?.register(audio);
  }else{
   const msg=document.createElement("p");msg.textContent="Música incorporada ainda não verificada para este artista.";musicArea.append(msg);
  }
