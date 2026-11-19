@@ -6,13 +6,14 @@ import json
 import os
 import pathlib
 import urllib.parse
+import urllib.error
 import urllib.request
 
 OUT=pathlib.Path("assets/studio-videos.json")
 key=os.getenv("YOUTUBE_API_KEY","").strip()
 channels={
  "disney":[("Disney","Disney"),("WaltDisneyStudios","Walt Disney Studios")],
- "warner":[("UCjmJDM5pRKbUlVIzDYYWb6g","Warner Bros."),("UCU09q55eK-7tVcaYxuH2AfQ","Warner Bros. Pictures Official")]
+ "warner":[("WarnerBrosPictures","Warner Bros. Pictures"),("warnerbros","Warner Bros.")]
 }
 def api(endpoint,params):
  url="https://www.googleapis.com/youtube/v3/"+endpoint+"?"+urllib.parse.urlencode(dict(params,key=key))
@@ -48,8 +49,16 @@ for group,handles in channels.items():
     entries.append({"youtubeId":video["id"],"title":sn.get("title","")[:180],
       "source":label,"published":sn.get("publishedAt",""),"videoVerified":True,
       "url":"https://www.youtube.com/watch?v="+video["id"]})
+  except urllib.error.HTTPError as exc:
+   try:
+    detail=json.loads(exc.read().decode("utf-8","replace")).get("error",{})
+    reason="; ".join(e.get("reason","") for e in detail.get("errors",[]))
+    message=detail.get("message","")
+   except (ValueError,UnicodeError):
+    reason,message="",""
+   print(f"{group} {handle} fetch failed: HTTP {exc.code}; reason={reason}; message={message[:250]}")
   except Exception as exc:
-   print(group,handle,"fetch failed:",type(exc).__name__)
+   print(group,handle,"fetch failed:",type(exc).__name__,str(exc)[:250])
  entries.sort(key=lambda x:x["published"],reverse=True)
  unique={x["youtubeId"]:x for x in entries}
  output["channels"][group]=list(unique.values())[:20] or previous.get(group,[])
