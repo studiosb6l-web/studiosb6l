@@ -9,6 +9,18 @@ function show(){root.hidden=false;restore.classList.remove('is-visible');try{loc
 root.querySelector('[data-hide-all]').addEventListener('click',hide);restore.addEventListener('click',show);
 try{if(localStorage.getItem(storageKey)==='1')hide()}catch(e){}
 function node(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt)e.textContent=txt;return e}
+// Keep the two-screen TV visible as a compact, dismissible mini-player while scrolling.
+const anchorNode=document.createElement('div');anchorNode.id='b6l-tv-anchor';root.parentNode.insertBefore(anchorNode,root);
+let floating=false;
+function updateDock(){
+ const shouldFloat=!root.hidden&&anchorNode.getBoundingClientRect().top < -80;
+ if(shouldFloat===floating)return;
+ floating=shouldFloat;root.classList.toggle('b6l-tv-floating',floating);
+}
+window.addEventListener('scroll',updateDock,{passive:true});
+window.addEventListener('resize',updateDock,{passive:true});
+root.querySelector('[data-hide-all]').addEventListener('click',()=>{floating=false;root.classList.remove('b6l-tv-floating')});
+restore.addEventListener('click',updateDock);
 const panels={};
 for(const c of categories){
  const card=node('article','b6l-tv');const top=node('div','b6l-tv-top');top.append(node('span','',c.name));
@@ -59,6 +71,6 @@ async function refresh(){
   latestItems=news.items||[];latestVideos=video;draw(latestItems,latestVideos);
  }catch(e){}
 }
-refresh();setInterval(refresh,300000);
+refresh();updateDock();setInterval(refresh,300000);
 setInterval(()=>draw(latestItems,latestVideos),10000);
 })();
