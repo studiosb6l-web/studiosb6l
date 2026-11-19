@@ -58,3 +58,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',improve);else improve();
 })();
+
+/* Shared AdSense loader for artist and band profiles. Google controls ad serving. */
+(function(){
+ const publisher='ca-pub-2903725969225481';
+ function init(){
+  if(document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]'))return;
+  const meta=document.createElement('meta');meta.name='google-adsense-account';meta.content=publisher;document.head.append(meta);
+  const script=document.createElement('script');script.async=true;script.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='+publisher;script.crossOrigin='anonymous';document.head.append(script);
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
