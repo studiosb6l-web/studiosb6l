@@ -1,7 +1,23 @@
 {
-  "updated": "2026-11-19T16:45:02.118906+00:00",
+  "updated": "2026-11-19T17:41:45.011643+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "t9B-NRvnokk",
+        "title": "Talent Announcement | The Wonderful World of Disney: Holiday Spectacular",
+        "source": "Disney",
+        "published": "2026-11-19T17:03:15Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=t9B-NRvnokk"
+      },
+      {
+        "youtubeId": "e67Qtn_3hkc",
+        "title": "Ice Age: Boiling Point | Official Trailer | In Theaters February 5, 2027",
+        "source": "Disney",
+        "published": "2026-11-19T17:00:11Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=e67Qtn_3hkc"
+      },
       {
         "youtubeId": "9gdKV8NAvYk",
         "title": "Happy Birthday Mickey Mouse 🎂🎉",
@@ -81,25 +97,17 @@
         "published": "2026-11-16T21:27:08Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=H_cMBWV9iuU"
-      },
-      {
-        "youtubeId": "RtuH5BHNVAM",
-        "title": "Diznijev kratki praznični film: Nevidljivi konj",
-        "source": "Disney",
-        "published": "2026-11-16T21:27:04Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=RtuH5BHNVAM"
-      },
-      {
-        "youtubeId": "xP609YALh3E",
-        "title": "Disney sviatočný krátky film: Neviditeľný kôň",
-        "source": "Disney",
-        "published": "2026-11-16T21:27:01Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=xP609YALh3E"
       }
     ],
     "warner": [
+      {
+        "youtubeId": "wz1mkkDn95U",
+        "title": "Let the energy in. Have you seen the trailer for #RemainMovie yet? Only in theaters February 5.",
+        "source": "Warner Bros.",
+        "published": "2026-11-19T17:30:22Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=wz1mkkDn95U"
+      },
       {
         "youtubeId": "zQu3_wkIKC4",
         "title": "Robert Pattinson is Scytale in Dune: Part Three, only in theaters and IMAX December 18. #DuneMovie",
@@ -187,14 +195,6 @@
         "published": "2026-11-12T18:00:04Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=gpTe10B-xOk"
-      },
-      {
-        "youtubeId": "5VV6NXIrCBE",
-        "title": "Have you checked for Thing 2 in theaters yet? #TheCatInTheHat - now playing only in theater",
-        "source": "Warner Bros.",
-        "published": "2026-11-12T17:00:10Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=5VV6NXIrCBE"
       }
     ]
   }
