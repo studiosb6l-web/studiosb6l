@@ -117,6 +117,8 @@ p{margin:8px 0;color:var(--muted)}
 <span><span data-label="selected"></span> <strong id="count">0</strong></span>
 <span><span data-label="subtotal"></span> <strong id="total"></strong></span>
 </div>
+<div id="b6l-cart-items" aria-live="polite" style="width:100%;display:flex;flex-direction:column;gap:6px"></div>
+<p id="b6l-payhip-notice" style="font-size:12px;color:#e8c88e;margin:4px 0 7px">O pagamento abre no Payhip. Antes de pagar, confirme também os produtos no carrinho do Payhip: artigos adicionados anteriormente podem continuar lá.</p>
 <div class="actions"><button type="button" id="clear" class="clear" data-label="clear" hidden></button><a id="checkout" class="btn primary" aria-disabled="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg><span data-label="checkout"></span></a></div>
 <p class="coupon" id="coupon" hidden><code dir="ltr">B6L11</code> <span data-label="promoCode"></span></p>
 </div>
@@ -2241,6 +2243,40 @@ function updateSelection() {
     row.add.setAttribute('aria-label', row.add.textContent + ' · ' + titles.get(id));
     row.add.setAttribute('aria-pressed', String(added));
   }
+  const itemBox = byId('b6l-cart-items');
+  itemBox.replaceChildren();
+  const cartLabels = {
+    pt:['Retirar','Rever o carrinho antes de pagar'],
+    en:['Remove','Review your cart before paying'],
+    es:['Quitar','Revisa el carrito antes de pagar'],
+    fr:['Retirer','Vérifiez le panier avant de payer'],
+    de:['Entfernen','Warenkorb vor Zahlung prüfen'],
+    ja:['削除','支払い前にカートを確認'],
+    zh:['移除','付款前检查购物车'],
+    ar:['إزالة','راجع السلة قبل الدفع']
+  };
+  const [removeLabel,reviewLabel]=cartLabels[language]||cartLabels.en;
+  for(const track of tracks.filter(track=>selected.has(track.id))){
+    const line=makeElement('div','b6l-cart-line');
+    line.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:6px 9px;border:1px solid #8e7955;border-radius:7px';
+    const name=makeElement('span','',track.title+' · '+money(trackPrice));
+    const remove=makeButton('btn');
+    remove.textContent='✕ '+removeLabel;
+    remove.setAttribute('aria-label',removeLabel+' '+track.title);
+    remove.addEventListener('click',()=>{selected.delete(track.id);saveSelection()});
+    line.append(name,remove);itemBox.append(line);
+  }
+  const notice=byId('b6l-payhip-notice');
+  notice.textContent=reviewLabel+' — Payhip: '+({
+    pt:'o carrinho externo pode conter artigos de visitas anteriores. Remova-os no Payhip antes de confirmar o pagamento.',
+    en:'the external cart may contain items from earlier visits. Remove them on Payhip before paying.',
+    es:'el carrito externo puede conservar artículos anteriores. Quítalos en Payhip antes de pagar.',
+    fr:'le panier externe peut conserver des articles précédents. Retirez-les sur Payhip avant de payer.',
+    de:'der externe Warenkorb kann frühere Artikel enthalten. Entfernen Sie diese bei Payhip vor dem Bezahlen.',
+    ja:'Payhip側のカートに以前の商品が残る場合があります。決済前に削除してください。',
+    zh:'Payhip购物车可能保留此前的商品，请付款前删除。',
+    ar:'قد تحتفظ سلة Payhip بمنتجات سابقة. احذفها قبل الدفع.'
+  }[language]||'Review existing items on Payhip before paying.');
   const count = selected.size;
   byId('count').textContent = new Intl.NumberFormat(languages[language]).format(count);
   byId('total').textContent = money(count * trackPrice);
