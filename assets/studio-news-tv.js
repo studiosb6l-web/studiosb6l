@@ -51,27 +51,26 @@ function draw(items,videos){
   const article=items.find(x=>Array.isArray(x.categories)&&x.categories.includes(c.key)&&x.title&&x.url);
   const clip=clips[0];
   const showNews=false; // Video channels must never be interrupted by text news.
-  const signature=showNews?'news:'+article.url:clip?'video:'+clip.youtubeId:c.key==='warner'?'warner:official-uploads':article?'news:'+article.url:'empty';
+  const signature=clip?'video:'+clip.youtubeId:c.key+':official-uploads';
   if(playing[c.key]===signature)continue;
   if(activeChannel===c.key)setTvAudio(null);
   playing[c.key]=signature;p.screen.replaceChildren();p.sound.hidden=true;p.sound.onclick=null;
-  const chosen=showNews?article:(clip||article);p.link.hidden=!chosen;
+  const chosen=clip||null;p.link.hidden=!chosen;
   if(chosen){p.link.href=chosen.url;p.meta.textContent=(chosen.source||c.name)+' · '+(chosen.published?new Date(chosen.published).toLocaleDateString():'');}
   else p.meta.textContent='A aguardar vídeos oficiais e notícias verificadas';
-  if(showNews){p.screen.append(node('div','b6l-tv-symbol','◉'),node('p','',article.title));p.meta.textContent='Notícias · '+(article.source||c.name)+' · regressa aos vídeos em breve';}
-  else if(clip){
+  if(clip){
    const frame=node('iframe');frame.title='Vídeo oficial '+c.name;frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
    const playlist=clips.map(x=>x.youtubeId).slice(1,15).join(',');
    const base='https://www.youtube-nocookie.com/embed/'+clip.youtubeId+'?autoplay=1&mute=1&playsinline=1&enablejsapi=1&origin='+encodeURIComponent(location.origin)+'&loop=1&playlist='+encodeURIComponent(playlist||clip.youtubeId);
    frame.src=base;p.screen.append(frame);p.sound.hidden=false;
    p.sound.textContent='Ativar som';
    p.sound.onclick=()=>setTvAudio(activeChannel===c.key?null:c.key);
-  }else if(c.key==='warner'){
+  }else if(c.key==='warner'||c.key==='disney'){
    // Fallback to the official Warner Bros. uploads playlist until API validation populates clips.
-   const frame=node('iframe');frame.title='Warner Bros. — vídeos oficiais';frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
-   frame.src='https://www.youtube-nocookie.com/embed/videoseries?list=UUjmJDM5pRKbUlVIzDYYWb6g&autoplay=1&mute=1&playsinline=1&enablejsapi=1&origin='+encodeURIComponent(location.origin);
+   const frame=node('iframe');frame.title=c.name+' — vídeos oficiais';frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
+   frame.src='https://www.youtube-nocookie.com/embed/videoseries?list='+(c.key==='warner'?'UUjmJDM5pRKbUlVIzDYYWb6g':'UU_5niPa-d35gg88HaS7RrIw')+'&autoplay=1&mute=1&playsinline=1&enablejsapi=1&origin='+encodeURIComponent(location.origin);
    p.screen.append(frame);p.sound.hidden=false;p.sound.textContent='Ativar som';p.sound.onclick=()=>setTvAudio(activeChannel===c.key?null:c.key);
-   p.meta.textContent='Canal oficial Warner Bros. · vídeos recentes';p.link.hidden=false;p.link.href='https://www.youtube.com/channel/UCjmJDM5pRKbUlVIzDYYWb6g';
+   p.meta.textContent='Canal oficial '+c.name+' · vídeos recentes';p.link.hidden=false;p.link.href=c.key==='warner'?'https://www.youtube.com/channel/UCjmJDM5pRKbUlVIzDYYWb6g':'https://www.youtube.com/@Disney';
   }else if(article){p.screen.append(node('div','b6l-tv-symbol',c.symbol),node('p','',article.title))}
   else p.screen.append(node('div','b6l-tv-symbol',c.symbol),node('p','','A aguardar vídeos oficiais disponíveis para incorporação.'));
  }
