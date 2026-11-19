@@ -1,0 +1,12 @@
+name = "studiosb6l-artist-submissions"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[[r2_buckets]]
+binding = "TRACKS"
+bucket_name = "studiosb6l-artist-tracks-private"
+
+[[kv_namespaces]]
+binding = "APPLICATIONS"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
