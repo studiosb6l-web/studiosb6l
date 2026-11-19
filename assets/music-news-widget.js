@@ -21,10 +21,10 @@ function display(item){
  const old=document.getElementById('b6l-news-alert');if(old)old.remove();
  const panel=document.createElement('aside');panel.id='b6l-news-alert';panel.setAttribute('aria-label','Notícia musical recente');
  const close=document.createElement('button');close.type='button';close.textContent='×';close.setAttribute('aria-label','Fechar notícias');close.onclick=()=>{closed=true;panel.remove();};
- const header=document.createElement('strong');header.textContent='📰 STUDIOSB6L · Notícias recentes';
+ const header=document.createElement('strong');header.textContent='📰 STUDIOSB6L · Notícias de fontes identificadas';
  const title=document.createElement('p');title.textContent=item.title;
  const source=document.createElement('small');source.textContent=item.source+' · '+new Date(item.published).toLocaleString();
- const link=document.createElement('a');link.href=item.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Consultar fonte original';
+ const verified=document.createElement('small');verified.textContent='Fonte identificada: '+item.source+' · Informação publicada pela fonte indicada';
  panel.append(close,header,title,source);
  // Only use a supplied, vetted YouTube ID. News RSS articles are not automatically videos.
  if(item.youtubeId && /^[A-Za-z0-9_-]{11}$/.test(item.youtubeId) && item.videoVerified===true){
@@ -39,7 +39,7 @@ function display(item){
   panel.append(audio);
   frame.addEventListener('pointerdown',()=>{panel.dataset.engaged='1';},{once:true});
  }
- panel.append(link);document.body.append(panel);
+ panel.append(verified);document.body.append(panel);
  setTimeout(()=>{if(panel.dataset.engaged!=='1')panel.remove();},30000);
 }
 async function refresh(){
