@@ -25,8 +25,22 @@ function display(item){
  const title=document.createElement('p');title.textContent=item.title;
  const source=document.createElement('small');source.textContent=item.source+' · '+new Date(item.published).toLocaleString();
  const link=document.createElement('a');link.href=item.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Consultar fonte original';
- panel.append(close,header,title,source,link);document.body.append(panel);
- setTimeout(()=>panel.remove(),30000);
+ panel.append(close,header,title,source);
+ // Only use a supplied, vetted YouTube ID. News RSS articles are not automatically videos.
+ if(item.youtubeId && /^[A-Za-z0-9_-]{11}$/.test(item.youtubeId) && item.videoVerified===true){
+  const frame=document.createElement('iframe');
+  frame.src='https://www.youtube-nocookie.com/embed/'+item.youtubeId+'?autoplay=1&mute=1&playsinline=1';
+  frame.title='Notícia em vídeo: '+item.title;
+  frame.loading='lazy';frame.allow='autoplay; encrypted-media; picture-in-picture';
+  frame.allowFullscreen=true;frame.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px';
+  panel.append(frame);
+  const audio=document.createElement('button');audio.type='button';audio.textContent='Ativar som no vídeo';audio.style.cssText='float:none;font-size:13px;border:1px solid #d8bd85;padding:7px;border-radius:6px;margin:6px 0';
+  audio.onclick=()=>{frame.src='https://www.youtube-nocookie.com/embed/'+item.youtubeId+'?autoplay=1&mute=0&playsinline=1';audio.remove();panel.dataset.engaged='1';};
+  panel.append(audio);
+  frame.addEventListener('pointerdown',()=>{panel.dataset.engaged='1';},{once:true});
+ }
+ panel.append(link);document.body.append(panel);
+ setTimeout(()=>{if(panel.dataset.engaged!=='1')panel.remove();},30000);
 }
 async function refresh(){
  try{
