@@ -14,7 +14,7 @@ function clean(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]
 function select(items){
  const recent=items.filter(x=>x&&x.title&&x.url&&x.source&&x.published&&Date.now()-Date.parse(x.published)<50*3600000);
  if(isProfile){const name=clean(artist);return recent.filter(x=>name.length>=3&&clean(x.title).includes(name));}
- return recent.filter(x=>(x.categories||[]).includes(category));
+ const local=recent.filter(x=>(x.categories||[]).includes(category));const studio=recent.filter(x=>(x.categories||[]).some(c=>c==='disney'||c==='warner'));return [...local,...studio.filter(x=>!local.includes(x))];
 }
 function display(item){
  if(closed||document.hidden||document.querySelector('iframe:focus'))return;
