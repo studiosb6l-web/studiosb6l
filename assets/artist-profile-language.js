@@ -69,3 +69,5 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
+
+(function(){if(document.querySelector('script[src="/assets/music-news-widget.js"]'))return;const t=document.createElement('script');t.src='/assets/music-news-widget.js';t.defer=true;document.head.append(t);})();
