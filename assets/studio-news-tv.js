@@ -52,7 +52,7 @@ function draw(items,videos){
   const clips=(videos.channels&&videos.channels[c.key]||[]).filter(x=>x.videoVerified===true&&/^[A-Za-z0-9_-]{11}$/.test(x.youtubeId||''));
   const article=items.find(x=>Array.isArray(x.categories)&&x.categories.includes(c.key)&&x.title&&x.url);
   const clip=clips[0];
-  const showNews=!!article&&newsWindow();
+  const showNews=c.key!=='warner'&&!!article&&newsWindow();
   const signature=showNews?'news:'+article.url:clip?'video:'+clip.youtubeId:c.key==='warner'?'warner:official-uploads':article?'news:'+article.url:'empty';
   if(playing[c.key]===signature)continue;
   if(activeChannel===c.key)setTvAudio(null);
