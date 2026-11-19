@@ -124,15 +124,16 @@
   }, 8000);
 
   function play() {
+    if (window.b6lTvAudioActive) return;
     widget.setVolume(Number(volume.value));
     widget.play();
   }
 
   function retryStartup() {
     clearTimeout(startupTimer);
-    if (!shouldPlay || advanced || startupAttempts >= 2) return;
+    if (!shouldPlay || window.b6lTvAudioActive || advanced || startupAttempts >= 2) return;
     startupTimer = setTimeout(() => {
-      if (!shouldPlay || advanced) return;
+      if (!shouldPlay || window.b6lTvAudioActive || advanced) return;
       startupAttempts += 1;
       play();
       retryStartup();
@@ -166,6 +167,7 @@
     clearTimeout(pendingAdvance);
     pendingAdvance = 0;
     playing = true;
+    if(window.b6lTvAudioActive){widget.pause();return;}
     shouldPlay = true;
     if (resume > 0) widget.seekTo(resume);
     resume = 0;
@@ -227,6 +229,13 @@
     showEmbeddedPlayer();
   });
 
+  window.addEventListener('b6l-tv-audio', event => {
+    const active=!!event.detail?.active;
+    window.b6lTvAudioActive=active;
+    if(active){if(ready)widget.pause();playing=false;render();}
+    else if(shouldPlay&&ready)play();
+  });
+
   button.addEventListener('click', () => {
     if (playing || pendingAdvance) {
       pause();
@@ -254,7 +263,7 @@
       pause();
       return;
     }
-    if (event.isTrusted && shouldPlay && !playing && !triedGesture) {
+    if (event.isTrusted && shouldPlay && !window.b6lTvAudioActive && !playing && !triedGesture) {
       triedGesture = true;
       if (ready) play();
     }
