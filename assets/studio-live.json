@@ -1,0 +1,16 @@
+{
+  "channels": {
+    "disney": {
+      "enabled": false,
+      "verified": false,
+      "youtubeId": "",
+      "expiresAt": null
+    },
+    "warner": {
+      "enabled": false,
+      "verified": false,
+      "youtubeId": "",
+      "expiresAt": null
+    }
+  }
+}
