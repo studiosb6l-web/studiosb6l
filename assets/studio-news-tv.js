@@ -53,7 +53,7 @@ function draw(items,videos){
   const article=items.find(x=>Array.isArray(x.categories)&&x.categories.includes(c.key)&&x.title&&x.url);
   const clip=clips[0];
   const showNews=!!article&&newsWindow();
-  const signature=showNews?'news:'+article.url:clip?'video:'+clip.youtubeId:article?'news:'+article.url:'empty';
+  const signature=showNews?'news:'+article.url:clip?'video:'+clip.youtubeId:c.key==='warner'?'warner:official-uploads':article?'news:'+article.url:'empty';
   if(playing[c.key]===signature)continue;
   if(activeChannel===c.key)setTvAudio(null);
   playing[c.key]=signature;p.screen.replaceChildren();p.sound.hidden=true;p.sound.onclick=null;
@@ -68,6 +68,12 @@ function draw(items,videos){
    frame.src=base;p.screen.append(frame);p.sound.hidden=false;
    p.sound.textContent='Ativar som';
    p.sound.onclick=()=>setTvAudio(activeChannel===c.key?null:c.key);
+  }else if(c.key==='warner'){
+   // Fallback to the official Warner Bros. uploads playlist until API validation populates clips.
+   const frame=node('iframe');frame.title='Warner Bros. — vídeos oficiais';frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
+   frame.src='https://www.youtube-nocookie.com/embed/videoseries?list=UUjmJDM5pRKbUlVIzDYYWb6g&autoplay=1&mute=1&playsinline=1&enablejsapi=1&origin='+encodeURIComponent(location.origin);
+   p.screen.append(frame);p.sound.hidden=false;p.sound.textContent='Ativar som';p.sound.onclick=()=>setTvAudio(activeChannel===c.key?null:c.key);
+   p.meta.textContent='Canal oficial Warner Bros. · vídeos recentes';p.link.hidden=false;p.link.href='https://www.youtube.com/channel/UCjmJDM5pRKbUlVIzDYYWb6g';
   }else if(article){p.screen.append(node('div','b6l-tv-symbol',c.symbol),node('p','',article.title))}
   else p.screen.append(node('div','b6l-tv-symbol',c.symbol),node('p','','A aguardar vídeos oficiais disponíveis para incorporação.'));
  }
