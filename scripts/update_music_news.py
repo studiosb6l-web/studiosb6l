@@ -13,6 +13,8 @@ QUERIES = [
     ("festivals", '("music festival" OR "festival de música" OR "festival cancelado") when:2d'),
     ("artists", '("music artist" OR "musician" OR "banda" OR "cantor") when:2d'),
     ("opera", '("opera house" OR "ópera" OR "orchestra") when:2d'),
+    ("disney", '("Disney" OR "Walt Disney Studios" OR "Disney Music Group") (film OR soundtrack OR music OR concert OR premiere) when:2d'),
+    ("warner", '("Warner Bros" OR "Warner Bros Discovery" OR "Warner Music") (film OR soundtrack OR music OR concert OR premiere) when:2d'),
     ("film", '("Disney music" OR "Disney soundtrack" OR "Disney concert" OR "Disney film score") when:2d'),
     ("sync", '("music synchronization licensing" OR "music supervisor" OR "sync licensing") when:2d'),
     ("industry", '("Tunage music" OR "Crucial Music licensing" OR "HEARTH Studios music") when:2d'),
