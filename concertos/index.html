@@ -289,5 +289,5 @@ const cards=[...document.querySelectorAll('ul.events > li')];
 function filter(){let shown=0;const term=q.value.trim().toLocaleLowerCase('pt');for(const card of cards){const txt=card.textContent.toLocaleLowerCase('pt'),section=card.closest('section');const ok=(!term||txt.includes(term))&&(!country.value||section.id===country.value)&&(!kind.value||txt.includes(kind.value));card.hidden=!ok;if(ok)shown++;}for(const section of document.querySelectorAll('section:has(> ul.events)')){section.hidden=![...section.querySelectorAll('ul.events > li')].some(x=>!x.hidden);}count.textContent=shown+' eventos encontrados';empty.hidden=shown!==0;}
 [q,country,kind].forEach(el=>el.addEventListener(el===q?'input':'change',filter));filter();
 })();
-</script><script src="/assets/language-navigation.js"></script></body>
+</script><script src="/assets/language-navigation.js"></script><script defer src="/assets/music-news-widget.js"></script></body>
 </html>
