@@ -21,20 +21,37 @@ for(const c of categories){
  toggle.onclick=()=>{card.hidden=true;const b=root.querySelector('[data-restore-'+c.key+']');if(b)b.hidden=false};
  const button=node('button','', 'Mostrar '+c.name);button.type='button';button.hidden=true;button.setAttribute('data-restore-'+c.key,'');button.onclick=()=>{card.hidden=false;button.hidden=true};root.querySelector('.b6l-tv-head').append(button);
 }
-function draw(items){
+const playing={};
+function draw(items,videos){
  for(const c of categories){
-  const p=panels[c.key];const item=items.find(x=>Array.isArray(x.categories)&&x.categories.includes(c.key)&&x.title&&x.url);
-  p.screen.replaceChildren();p.sound.hidden=true;p.sound.onclick=null;p.link.hidden=!item;
-  if(!item){p.screen.append(node('div','b6l-tv-symbol',c.symbol),node('p','','Sem notícias recentes verificadas.'));p.meta.textContent='A aguardar atualização das fontes';continue}
-  p.link.href=item.url;p.meta.textContent=(item.source||'Fonte pública')+' · '+new Date(item.published).toLocaleDateString();
-  if(item.videoVerified===true&&/^[\w-]{11}$/.test(item.youtubeId||'')){
-   const frame=node('iframe');frame.title='Notícia '+c.name;frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;
-   const url='https://www.youtube-nocookie.com/embed/'+item.youtubeId+'?autoplay=1&mute=1&playsinline=1';
-   frame.src=url;p.screen.append(frame);p.sound.hidden=false;
-   p.sound.onclick=()=>{frame.src='https://www.youtube-nocookie.com/embed/'+item.youtubeId+'?autoplay=1&mute=0&playsinline=1';p.sound.hidden=true};
-  }else{p.screen.append(node('div','b6l-tv-symbol',c.symbol),node('p','',item.title))}
+  const p=panels[c.key];
+  const clips=(videos.channels&&videos.channels[c.key]||[]).filter(x=>x.videoVerified===true&&/^[A-Za-z0-9_-]{11}$/.test(x.youtubeId||''));
+  const article=items.find(x=>Array.isArray(x.categories)&&x.categories.includes(c.key)&&x.title&&x.url);
+  const clip=clips[0];
+  const signature=clip?'video:'+clip.youtubeId:article?'news:'+article.url:'empty';
+  if(playing[c.key]===signature)continue;
+  playing[c.key]=signature;p.screen.replaceChildren();p.sound.hidden=true;p.sound.onclick=null;
+  const chosen=clip||article;p.link.hidden=!chosen;
+  if(chosen){p.link.href=chosen.url;p.meta.textContent=(chosen.source||c.name)+' · '+(chosen.published?new Date(chosen.published).toLocaleDateString():'');}
+  else p.meta.textContent='A aguardar vídeos oficiais e notícias verificadas';
+  if(clip){
+   const frame=node('iframe');frame.title='Vídeo oficial '+c.name;frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
+   const playlist=clips.map(x=>x.youtubeId).slice(1,15).join(',');
+   const base='https://www.youtube-nocookie.com/embed/'+clip.youtubeId+'?autoplay=1&mute=1&playsinline=1&loop=1&playlist='+encodeURIComponent(playlist||clip.youtubeId);
+   frame.src=base;p.screen.append(frame);p.sound.hidden=false;
+   p.sound.onclick=()=>{frame.src=base.replace('mute=1','mute=0');p.sound.hidden=true};
+  }else if(article){p.screen.append(node('div','b6l-tv-symbol',c.symbol),node('p','',article.title))}
+  else p.screen.append(node('div','b6l-tv-symbol',c.symbol),node('p','','A aguardar vídeos oficiais disponíveis para incorporação.'));
  }
 }
-async function refresh(){try{const r=await fetch('/assets/music-news.json',{cache:'no-store'});if(r.ok){const data=await r.json();draw(data.items||[])}}catch(e){}}
+async function refresh(){
+ try{
+  const [news,video]=await Promise.all([
+   fetch('/assets/music-news.json',{cache:'no-store'}).then(r=>r.ok?r.json():{items:[]}).catch(()=>({items:[]})),
+   fetch('/assets/studio-videos.json',{cache:'no-store'}).then(r=>r.ok?r.json():{channels:{}}).catch(()=>({channels:{}}))
+  ]);
+  draw(news.items||[],video);
+ }catch(e){}
+}
 refresh();setInterval(refresh,300000);
 })();
