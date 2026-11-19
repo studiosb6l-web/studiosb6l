@@ -48,6 +48,17 @@
 #b6l-floating-counters #b6l-artist-counter span{font-size:.7rem}
 @media(max-width:700px){#b6l-floating-counters{right:5px;max-width:92px;gap:5px}#b6l-floating-counters #b6l-artist-counter,#b6l-band-counter{padding:7px 4px}#b6l-floating-counters #b6l-artist-counter strong,#b6l-band-counter strong{font-size:1.1rem}#b6l-floating-counters #b6l-artist-counter span,#b6l-band-counter span{font-size:.55rem}}
 @media(prefers-reduced-motion:reduce){#b6l-floating-counters{animation:none;top:auto;bottom:12px}}
+
+/* B6L: cartões compactos e navegação para perfis individuais */
+.cards{grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));align-items:start;gap:18px}
+.card{min-height:0;height:auto;align-self:start;overflow:hidden}
+.card .photo{aspect-ratio:4/3;overflow:hidden}
+.card .card-content{padding:14px;overflow-wrap:break-word}
+.card .card-content strong{font-size:1rem;line-height:1.35;overflow-wrap:anywhere}
+.card .card-content small{margin:6px 0 12px}
+.card .local-profile,.card .card-content>a{display:inline-block;color:#e8d1a1;line-height:1.4}
+@media(max-width:700px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card .card-content{padding:11px}.card .card-content strong{font-size:.92rem}.card .card-content small{font-size:.76rem}.card .card-content>a{font-size:.8rem}.tools input{min-width:0!important;width:100%}#b6l-floating-counters{max-width:76px;opacity:.78;pointer-events:none}#b6l-floating-counters a{pointer-events:auto}}
+@media(max-width:360px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
 </style>
 </head>
 <body>
@@ -209,27 +220,6 @@
             box.append(name,detail,link);li.append(photoElement(a.qid?{...a,imageUrl:null}:a),box);container.append(li);cards.push(li);
           });
           loadVerifiedPhotos(visible,cards);
-          // Vídeos disponíveis para todos os artistas e bandas do catálogo, sem bloquear a navegação.
-          cards.forEach((card,i)=>{
-            const artist=visible[i];
-            const button=document.createElement("button");
-            button.type="button";button.textContent="Vídeos e atuações";
-            button.setAttribute("aria-expanded","false");
-            button.style.cssText="margin:12px 0 0;padding:9px 12px;border:1px solid #d8bd85;border-radius:7px;background:#142135;color:#f5dcaa;cursor:pointer";
-            const panel=document.createElement("div");
-            panel.hidden=true;panel.style.cssText="padding:12px;overflow-wrap:anywhere";
-            card.querySelector(".card-content")?.append(button,panel);
-            button.addEventListener("click",()=>{
-              panel.hidden=!panel.hidden;
-              button.setAttribute("aria-expanded",String(!panel.hidden));
-              if(!panel.hidden && !panel.dataset.loaded){
-                panel.dataset.loaded="1";
-                panel.dataset.b6lVideoDiscovery="";
-                panel.dataset.artistName=artist.name||"";
-                if(window.B6LVideoDiscovery)window.B6LVideoDiscovery(panel);
-              }
-            });
-          });
           status.textContent=total.toLocaleString("pt-PT")+" perfis encontrados na STUDIOSB6L";
           pageLabel.textContent="Página "+(Math.floor(offset/pageSize)+1);
           prev.disabled=offset===0;next.disabled=offset+pageSize>=total;
