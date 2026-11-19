@@ -333,10 +333,31 @@ let lang="pt";try{lang=localStorage.getItem("b6l-language")||navigator.language.
 <label>Apresentação breve <textarea id="b6l-application-bio" maxlength="1500" rows="4" style="width:100%;box-sizing:border-box;background:#16253b;color:white;border:1px solid #02728b;border-radius:8px;padding:12px"></textarea></label>
 <label style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" id="b6l-application-consent" required style="margin-top:6px"> Autorizo o envio destes dados por email à STUDIOSB6L para análise do meu contacto. Não serão publicados automaticamente.</label>
 <button type="submit" style="background:#d8bd85;color:#101b2c;border:0;border-radius:9px;padding:15px;font-weight:700;cursor:pointer">Preparar candidatura por email</button>
-<p id="b6l-application-status" role="status" aria-live="polite" style="margin:0;color:#e8d1a1">A candidatura será aberta na tua aplicação de email para confirmação do envio. A inclusão no diretório depende de aprovação.</p>
+<p id="b6l-application-status" role="status" aria-live="polite" style="margin:0;color:#e8d1a1">O registo automático será enviado para validação. A publicação depende de aprovação.</p>
 </form></section>
 <script>
-(function(){const form=document.getElementById('b6l-application-form');form.addEventListener('submit',function(e){e.preventDefault();if(!form.reportValidity())return;const val=id=>document.getElementById(id).value.trim();const type=val('b6l-application-type'),name=val('b6l-application-name');const subject='STUDIOSB6L | Candidatura '+type+' | '+name;const body=['Tipo: '+type,'Nome: '+name,'Email: '+val('b6l-application-email'),'País: '+val('b6l-application-country'),'Portefólio: '+val('b6l-application-link'),'Apresentação: '+val('b6l-application-bio')].join('\n');document.getElementById('b6l-application-status').textContent='Confirma o envio na tua aplicação de email. O pedido ainda não foi submetido automaticamente.';window.location.href='mailto:studiosb6l@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);});})();
+(function(){
+const form=document.getElementById('b6l-application-form');
+form.querySelector('button[type="submit"]').textContent='Enviar candidatura';
+form.addEventListener('submit',async function(e){
+e.preventDefault();if(!form.reportValidity())return;
+const val=id=>document.getElementById(id).value.trim();
+const payload={type:val('b6l-application-type'),name:val('b6l-application-name'),email:val('b6l-application-email'),country:val('b6l-application-country'),website:val('b6l-application-link'),biography:val('b6l-application-bio'),consent:document.getElementById('b6l-application-consent').checked};
+const status=document.getElementById('b6l-application-status'),button=form.querySelector('button[type="submit"]');
+button.disabled=true;status.textContent='A enviar candidatura…';
+try{
+const response=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/applications',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+const result=await response.json();
+if(!response.ok)throw new Error(result.error||'Não foi possível registar');
+status.textContent='Candidatura recebida. Aguarda validação e aprovação antes da publicação.';form.reset();
+}catch(error){
+status.textContent='Registo automático indisponível neste momento. Podes enviar por email. '+error.message;
+const subject='STUDIOSB6L | Candidatura '+payload.type+' | '+payload.name;
+const body=['Tipo: '+payload.type,'Nome: '+payload.name,'Email: '+payload.email,'País: '+payload.country,'Portefólio: '+payload.website,'Apresentação: '+payload.biography].join('\n');
+const link=document.createElement('a');link.href='mailto:studiosb6l@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);link.textContent='Enviar candidatura por email';link.style.color='#d8bd85';status.append(' ',link);
+}finally{button.disabled=false}
+});
+})();
 </script>
 </body>
 </html>
