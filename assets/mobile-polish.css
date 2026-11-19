@@ -16,3 +16,22 @@
  .cards .card,.artist-grid>*,.artists-grid>*{min-width:0}
  .cards .photo{max-width:100%;object-fit:cover}
 }
+
+/* Mobile TV dock: under half the previous footprint, never blocks reading. */
+@media(max-width:767px){
+ #b6l-studio-news.b6l-tv-floating{
+  position:fixed!important;top:calc(env(safe-area-inset-top,0px) + 58px)!important;
+  right:6px!important;left:auto!important;bottom:auto!important;
+  width:min(156px,42vw)!important;max-height:150px!important;
+  overflow:hidden!important;padding:3px!important;z-index:490!important;
+ }
+ #b6l-studio-news.b6l-tv-floating .b6l-tv-head{margin:0 0 2px!important;gap:2px!important}
+ #b6l-studio-news.b6l-tv-floating .b6l-tv-head h2{font-size:8px!important;line-height:1.1!important}
+ #b6l-studio-news.b6l-tv-floating button{font-size:8px!important;padding:2px 3px!important;min-height:20px!important}
+ #b6l-studio-news.b6l-tv-floating .b6l-tv-top{font-size:7px!important;padding:2px!important}
+ #b6l-studio-news.b6l-tv-floating .b6l-tv-actions{margin:0!important;padding:1px!important}
+ #b6l-studio-news.b6l-tv-floating .b6l-tv-channel-label{display:none!important}
+ #b6l-studio-news.b6l-tv-floating .b6l-tv-screen{aspect-ratio:16/9!important;padding:0!important}
+ #b6l-studio-news.b6l-tv-floating .b6l-tv-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ a[href="/instalar.html"][style*="position:fixed"]{left:6px!important;bottom:8px!important;padding:6px 8px!important;font-size:10px!important;opacity:.9}
+}
