@@ -43,8 +43,6 @@ function setTvAudio(key){
 }
 
 let latestItems=[],latestVideos={channels:{}};
-const NEWS_DURATION=120000,NEWS_CYCLE=900000;
-function newsWindow(){return Date.now()%NEWS_CYCLE<NEWS_DURATION;}
 
 function draw(items,videos){
  for(const c of categories){
@@ -52,7 +50,7 @@ function draw(items,videos){
   const clips=(videos.channels&&videos.channels[c.key]||[]).filter(x=>x.videoVerified===true&&/^[A-Za-z0-9_-]{11}$/.test(x.youtubeId||''));
   const article=items.find(x=>Array.isArray(x.categories)&&x.categories.includes(c.key)&&x.title&&x.url);
   const clip=clips[0];
-  const showNews=c.key!=='warner'&&!!article&&newsWindow();
+  const showNews=false; // Video channels must never be interrupted by text news.
   const signature=showNews?'news:'+article.url:clip?'video:'+clip.youtubeId:c.key==='warner'?'warner:official-uploads':article?'news:'+article.url:'empty';
   if(playing[c.key]===signature)continue;
   if(activeChannel===c.key)setTvAudio(null);
