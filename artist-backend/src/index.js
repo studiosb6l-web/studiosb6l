@@ -1,13 +1,13 @@
 // STUDIOSB6L artist submissions — Cloudflare Worker + private R2 + KV.
 // Bind R2 bucket as TRACKS, KV namespace as APPLICATIONS. Configure ADMIN_TOKEN secret.
 // Never make the R2 bucket public. Publish approved tracks through a separate licensed workflow.
-const JSON_HEADERS={'content-type':'application/json; charset=utf-8','cache-control':'no-store'};
+let responseOrigin='';const JSON_HEADERS={'content-type':'application/json; charset=utf-8','cache-control':'no-store'};
 const MAX=40*1024*1024,FORMATS=['audio/mpeg','audio/wav','audio/x-wav','audio/flac','audio/ogg','audio/mp4','audio/x-m4a'];
-function reply(data,status=200){return new Response(JSON.stringify(data),{status,headers:JSON_HEADERS})}
+function reply(data,status=200){return new Response(JSON.stringify(data),{status,headers:{...JSON_HEADERS,...(responseOrigin?{'access-control-allow-origin':responseOrigin,'vary':'Origin'}:{})}})}
 function clean(s,max=300){return String(s||'').trim().slice(0,max)}
 function authorized(req,env){const t=req.headers.get('authorization')||'';return !!env.ADMIN_TOKEN&&t==='Bearer '+env.ADMIN_TOKEN}
-export default {async fetch(request,env){const url=new URL(request.url);const path=url.pathname;try{
-if(path==='/api/health')return reply({ok:true,storage:!!env.TRACKS,applications:!!env.APPLICATIONS});
+export default {async fetch(request,env){const url=new URL(request.url);const path=url.pathname;const origin=request.headers.get('origin');const allowed=origin==='https://www.studiosb6l.com'||origin==='https://studiosb6l.com';if(allowed)responseOrigin=origin;if(request.method==='OPTIONS')return new Response(null,{status:allowed?204:403,headers:allowed?{'access-control-allow-origin':origin,'access-control-allow-methods':'POST,GET,PATCH,OPTIONS','access-control-allow-headers':'Content-Type,Authorization','access-control-max-age':'86400'}:{}});try{
+if(origin&&!allowed)return reply({error:'Origin not allowed'},403);if(path==='/api/health')return reply({ok:true,storage:!!env.TRACKS,applications:!!env.APPLICATIONS});
 if(path.startsWith('/api/admin/')){if(!authorized(request,env))return reply({error:'Unauthorized'},401);
 if(path==='/api/admin/applications'&&request.method==='GET'){const list=await env.APPLICATIONS.list({prefix:'application:',limit:100});const items=await Promise.all(list.keys.map(async k=>JSON.parse(await env.APPLICATIONS.get(k.name))));return reply({items})}
 const m=path.match(/^\/api\/admin\/applications\/([a-f0-9-]+)$/);
