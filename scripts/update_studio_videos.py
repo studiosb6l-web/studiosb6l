@@ -12,7 +12,7 @@ OUT=pathlib.Path("assets/studio-videos.json")
 key=os.getenv("YOUTUBE_API_KEY","").strip()
 channels={
  "disney":[("Disney","Disney"),("WaltDisneyStudios","Walt Disney Studios")],
- "warner":[("WarnerBrosPictures","Warner Bros. Pictures"),("WarnerBrosDiscovery","Warner Bros. Discovery")]
+ "warner":[("UCjmJDM5pRKbUlVIzDYYWb6g","Warner Bros."),("UCU09q55eK-7tVcaYxuH2AfQ","Warner Bros. Pictures Official")]
 }
 def api(endpoint,params):
  url="https://www.googleapis.com/youtube/v3/"+endpoint+"?"+urllib.parse.urlencode(dict(params,key=key))
@@ -22,11 +22,15 @@ if not key:
  print("YOUTUBE_API_KEY secret missing; keeping existing video catalog")
  raise SystemExit(0)
 output={"updated":dt.datetime.now(dt.timezone.utc).isoformat(),"channels":{}}
+try:
+ previous=json.loads(OUT.read_text(encoding="utf-8")).get("channels",{})
+except (OSError,ValueError):
+ previous={}
 for group,handles in channels.items():
  entries=[]
  for handle,label in handles:
   try:
-   data=api("channels",{"part":"contentDetails,snippet","forHandle":handle})
+   data=api("channels",{"part":"contentDetails,snippet",**({"id":handle} if handle.startswith("UC") and len(handle)==24 else {"forHandle":handle})})
    matches=data.get("items",[])
    if not matches:continue
    channel=matches[0]
@@ -48,7 +52,7 @@ for group,handles in channels.items():
    print(group,handle,"fetch failed:",type(exc).__name__)
  entries.sort(key=lambda x:x["published"],reverse=True)
  unique={x["youtubeId"]:x for x in entries}
- output["channels"][group]=list(unique.values())[:20]
+ output["channels"][group]=list(unique.values())[:20] or previous.get(group,[])
 if any(output["channels"].values()):
  OUT.write_text(json.dumps(output,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  print("Published official embeddable video catalog")
