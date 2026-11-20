@@ -53,3 +53,16 @@
 - Nome de utilizador reservado para a conta única de proprietário: `SAME`.
 - As duas palavras-passe devem ser escolhidas novamente pelo proprietário no fluxo de configuração segura. Não utilizar nem copiar palavras-passe partilhadas em conversas.
 - Estado: conta ainda não provisionada; não declarar login operacional até implantação e testes.
+
+## Administração central de utilizadores, mensagens e gráficos
+
+**Estado: requisitos aprovados; implementação e ativação ainda pendentes.**
+
+- Painel privado do proprietário `SAME`: lista pesquisável e paginada de utilizadores (artistas, bandas, escolas, promotores, empresas), filtros por tipo, estado e país; detalhes estritamente necessários à gestão.
+- Ações administrativas autorizadas: aprovar, rejeitar, suspender, reativar e responder a candidaturas ou pedidos de suporte, com confirmação, motivo, permissões verificadas no backend e auditoria. Não permitir editar ou ler palavras-passe, dados de cartões ou comunicações privadas fora dos canais de suporte.
+- Caixa de entrada de suporte: tickets e mensagens enviados voluntariamente à plataforma, resposta por canais oficiais, estado, prioridade e histórico; envio de email apenas por serviço autorizado e com custo previamente verificado.
+- Gráficos e indicadores por período: visitas e origens (quando consentidas), inscrições, perfis aprovados, vendas liquidadas, taxas, comissões, reembolsos, custos, margem e alertas; dados reais de APIs autorizadas, com carimbo de atualização e estados 'indisponível' quando não ligados.
+- Visão operacional: tarefas e custos dos robôs, erros de integrações, status de D1/Worker, logs de auditoria, indexação SEO e traduções.
+- Segurança: autenticação com nome de utilizador, duas novas palavras-passe e MFA; permissões por operação; rate limits; CSRF; proteção contra XSS; minimização de dados e RGPD; logs sem segredos; exportação restrita; dupla confirmação para ações destrutivas e financeiras.
+- Nunca permitir impersonação silenciosa de utilizadores, consulta indiscriminada de mensagens privadas ou alteração retroativa de transações. Suporte delegado apenas com consentimento, quando aplicável.
+- Testes de aceitação: acesso não autenticado bloqueado; contas não aprovadas não publicadas; resposta de suporte autorizada; gráficos consistentes com fontes; ações administrativas auditadas; rollback; mobile; alertas de custo; integração sem quebra de funcionalidades.
