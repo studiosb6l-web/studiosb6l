@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {proposeSolutions} from '../cloudflare/solution-proposals.mjs';
+const base={sourceAuthorized:true,public:true,status:'verified',url:'https://example.org/opportunity',title:'Music for film sync licensing',description:'Looking for producer collaboration'};
+const proposals=proposeSolutions(base);
+assert(proposals.some(x=>x.category==='licensing'));
+assert(proposals.some(x=>x.category==='collaboration'));
+assert(proposals.every(x=>x.status==='draft_review_required'&&!x.automaticallyPublished));
+assert.deepEqual(proposeSolutions({...base,sourceAuthorized:false}),[]);
+assert.deepEqual(proposeSolutions({...base,status:'pending'}),[]);
+assert.deepEqual(proposeSolutions({...base,public:false}),[]);
+console.log('Safe solution proposals passed');
