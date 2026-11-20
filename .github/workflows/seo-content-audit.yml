@@ -15,7 +15,7 @@ jobs:
           python-version: '3.12'
       - name: Audit page metadata and structured data
         run: python scripts/seo_content_audit.py
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: international-seo-content-audit
           path: seo-content-audit.json
