@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {matchOpportunity,PLANS} from '../cloudflare/music-connect-core.mjs';
+const musician={moderation:'approved',instruments:['Piano','Saxofone'],genres:['Rock'],country:'Espanha',city:'Barcelona',travel_available:false};
+const opportunity={status:'published',instrument:'piano',genre:'rock',country:'Espanha',city:'Barcelona',travel_required:false};
+assert.equal(matchOpportunity(musician,opportunity)?.score,100);
+assert.equal(matchOpportunity(musician,{...opportunity,instrument:'bateria'}),null);
+assert.equal(matchOpportunity(musician,{...opportunity,status:'draft'}),null);
+assert.equal(matchOpportunity({...musician,moderation:'pending'},opportunity),null);
+assert.equal(matchOpportunity(musician,{...opportunity,country:'Portugal',travel_required:true}),null);
+assert.equal(PLANS.pro_monthly.priceCents,499);
+assert.equal(PLANS.pro_annual.priceCents,4990);
+console.log('Music Connect matching and pricing tests passed');
