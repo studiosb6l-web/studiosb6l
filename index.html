@@ -514,4 +514,20 @@ const close=document.getElementById('b6l-eco-close');close.addEventListener('cli
 grid.querySelectorAll('.b6l-ecosystem-item').forEach((el,i)=>{el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-haspopup','dialog');const open=()=>{h.textContent=(document.getElementById('ecosystem-item-'+i)?.textContent||'STUDIOSB6L');p.textContent=entries[i]?.[0]||'';a.href=entries[i]?.[1]||'/';d.showModal()};el.addEventListener('click',open);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})});
 
 })();
-</script><script defer src="/assets/music-classifieds.js?v=1"></script></body></html>
+</script><script defer src="/assets/music-classifieds.js?v=1"></script><style id="b6l-crossing-spotlights-v3">
+/* Bright, moving theatrical beams behind the ecosystem content. */
+#founder .b6l-ecosystem{isolation:isolate;position:relative;overflow:hidden!important}
+#founder .b6l-ecosystem::before,#founder .b6l-ecosystem::after{
+ content:"";position:absolute;top:-34px;left:50%;width:185%;height:120%;
+ pointer-events:none;z-index:0;opacity:.9;transform-origin:50% 0%;
+ background:conic-gradient(from 158deg at 50% 0%,transparent 0deg,transparent 9deg,rgba(255,224,139,.04) 13deg,rgba(255,224,139,.38) 19deg,rgba(255,247,207,.64) 21deg,rgba(255,224,139,.30) 24deg,transparent 32deg);
+ filter:blur(10px) drop-shadow(0 0 16px rgba(255,195,83,.55));
+ mix-blend-mode:screen;
+}
+#founder .b6l-ecosystem::before{left:-40%;animation:b6lCrossLeft 7s ease-in-out infinite alternate}
+#founder .b6l-ecosystem::after{left:-45%;animation:b6lCrossRight 8.5s ease-in-out infinite alternate-reverse;animation-delay:-2.8s}
+#founder .b6l-ecosystem>*{position:relative;z-index:1}
+@keyframes b6lCrossLeft{0%{transform:rotate(-35deg) translateY(-10px);opacity:.65}45%{transform:rotate(10deg) translateY(25px);opacity:1}100%{transform:rotate(46deg) translateY(62px);opacity:.85}}
+@keyframes b6lCrossRight{0%{transform:scaleX(-1) rotate(-45deg) translateY(35px);opacity:.75}50%{transform:scaleX(-1) rotate(6deg) translateY(75px);opacity:1}100%{transform:scaleX(-1) rotate(38deg) translateY(12px);opacity:.75}}
+@media(prefers-reduced-motion:reduce){#founder .b6l-ecosystem::before,#founder .b6l-ecosystem::after{animation:none!important;opacity:.35}}
+</style></body></html>
