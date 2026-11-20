@@ -1,0 +1,26 @@
+name: STUDIOSB6L - Worldwide matching regression
+on:
+  schedule:
+    - cron: '27 */6 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare/music-connect-core.mjs'
+      - 'tests/music-connect.test.mjs'
+      - 'tests/worldwide-matching.test.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  match:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify matching logic and international cases
+        run: |
+          node tests/music-connect.test.mjs
+          node tests/worldwide-matching.test.mjs
