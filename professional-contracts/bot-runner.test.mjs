@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import {contractBots,botSummary} from './bots-registry.js';
 import {planBotRun,assertProductionBlocked} from './bot-runner.js';
 test('registry has unique ids and all bots disabled',()=>{
- assert.equal(contractBots.length,36);
- assert.equal(new Set(contractBots.map(b=>b.id)).size,36);
- assert.deepEqual(botSummary(),{total:36,enabled:0});
+ assert.equal(contractBots.length,37);
+ assert.equal(new Set(contractBots.map(b=>b.id)).size,37);
+ assert.deepEqual(botSummary(),{total:37,enabled:0});
 });
 test('runner requires staging and authorization',()=>{
  assert.throws(()=>planBotRun({enabledIds:['payment_signature'],context:{environment:'production',authorized:true}}));
