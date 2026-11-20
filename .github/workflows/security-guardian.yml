@@ -1,0 +1,33 @@
+name: STUDIOSB6L - Security guardian
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '18 3 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare/**'
+      - 'scripts/**'
+      - '.github/workflows/**'
+permissions:
+  contents: read
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify JS syntax in production workers and tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          find cloudflare tests -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | while IFS= read -r -d '' file; do
+            node --check "$file"
+          done
+      - name: Check for unresolved merge conflicts
+        shell: bash
+        run: |
+          if git grep -n -E '^(<<<<<<< |=======|>>>>>>> )' -- ':!*.min.js'; then
+            echo 'Merge conflict markers detected'
+            exit 1
+          fi
