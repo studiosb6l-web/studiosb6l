@@ -1,0 +1,45 @@
+name: STUDIOSB6L - Daily platform health
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate local SEO files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s robots.txt
+          test -s sitemap.xml
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          root=ET.parse('sitemap.xml').getroot()
+          assert root.tag.endswith('urlset'), 'Invalid sitemap root'
+          assert len(root)>0, 'Empty sitemap'
+          robots=Path('robots.txt').read_text()
+          assert 'Sitemap:' in robots, 'Missing sitemap declaration'
+          print(f'Sitemap valid: {len(root)} entries')
+          PY
+      - name: Check public endpoints
+        shell: bash
+        run: |
+          set -uo pipefail
+          failed=0
+          for url in \
+            'https://www.studiosb6l.com/' \
+            'https://www.studiosb6l.com/robots.txt' \
+            'https://www.studiosb6l.com/sitemap.xml' \
+            'https://www.studiosb6l.com/concertos/artistas/' \
+            'https://www.studiosb6l.com/instalar.html'; do
+            code=$(curl --location --silent --show-error --output /dev/null --max-time 25 --retry 2 --write-out '%{http_code}' "$url") || code=000
+            echo "$url HTTP $code"
+            if [[ ! "$code" =~ ^2[0-9][0-9]$ ]]; then failed=1; fi
+          done
+          exit "$failed"
