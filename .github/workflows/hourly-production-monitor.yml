@@ -1,0 +1,65 @@
+name: STUDIOSB6L - Hourly production monitor
+on:
+  schedule:
+    - cron: '41 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify live website and public assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          for path in / /concertos/artistas/ /instalar.html /robots.txt /sitemap.xml /sitemap-artistas.xml; do
+            url="https://www.studiosb6l.com${path}"
+            code=$(curl --location --silent --show-error --output /dev/null --max-time 20 --retry 2 --write-out '%{http_code}' "$url")
+            echo "$url -> $code"
+            [[ "$code" =~ ^2[0-9][0-9]$ ]] || exit 1
+          done
+      - name: Check Cloudflare Worker if production URL is configured
+        env:
+          WORKER_HEALTH_URL: ${{ vars.STUDIOSB6L_ARTISTS_HEALTH_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$WORKER_HEALTH_URL" ]; then
+            echo "::warning::Configure repository variable STUDIOSB6L_ARTISTS_HEALTH_URL with the exact deployed Worker /health URL; API is NOT verified."
+            exit 0
+          fi
+          case "$WORKER_HEALTH_URL" in
+            https://*) ;;
+            *) echo "::error::Health URL must use HTTPS"; exit 1 ;;
+          esac
+          body=$(mktemp)
+          code=$(curl --silent --show-error --max-time 20 --retry 2 --output "$body" --write-out '%{http_code}' "$WORKER_HEALTH_URL")
+          echo "Worker health HTTP $code"
+          [[ "$code" == 200 ]] || exit 1
+          python3 - "$body" <<'PY'
+          import json,sys
+          with open(sys.argv[1]) as f: data=json.load(f)
+          assert data.get('ok') is True or data.get('status') == 'online', 'Worker not healthy'
+          print('Worker health response validated; this does not prove D1 writes or marketplace payments')
+          PY
+      - name: Offline API regression tests
+        run: node tests/artists-worker.test.mjs && node tests/music-connect.test.mjs
+      - name: Open incident issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          title="STUDIOSB6L: hourly production monitor failed"
+          link="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          existing=$(gh issue list --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "STUDIOSB6L: hourly production monitor failed") | .number' | head -n1)
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "Another monitoring failure: $link"
+          else
+            gh issue create --title "$title" --body "Production monitoring detected a failure: $link. Investigate before claiming the platform is fully operational."
+          fi
