@@ -530,4 +530,19 @@ grid.querySelectorAll('.b6l-ecosystem-item').forEach((el,i)=>{el.setAttribute('r
 @keyframes b6lCrossLeft{0%{transform:rotate(-35deg) translateY(-10px);opacity:.65}45%{transform:rotate(10deg) translateY(25px);opacity:1}100%{transform:rotate(46deg) translateY(62px);opacity:.85}}
 @keyframes b6lCrossRight{0%{transform:scaleX(-1) rotate(-45deg) translateY(35px);opacity:.75}50%{transform:scaleX(-1) rotate(6deg) translateY(75px);opacity:1}100%{transform:scaleX(-1) rotate(38deg) translateY(12px);opacity:.75}}
 @media(prefers-reduced-motion:reduce){#founder .b6l-ecosystem::before,#founder .b6l-ecosystem::after{animation:none!important;opacity:.35}}
+</style><style id="b6l-home-stage-lights-v1">
+/* Two moving golden theatrical beams from opposite top corners of the viewport. */
+body::before,body::after{
+ content:"";position:fixed;top:0;width:min(78vw,850px);height:min(92vh,920px);
+ pointer-events:none;z-index:12;opacity:.68;mix-blend-mode:screen;
+ background:conic-gradient(from 0deg at 50% 0%,transparent 0deg,rgba(255,210,105,.035) 9deg,rgba(255,216,126,.18) 15deg,rgba(255,238,179,.35) 20deg,rgba(255,247,215,.46) 22deg,rgba(255,216,126,.16) 26deg,transparent 35deg);
+ filter:blur(13px) drop-shadow(0 0 16px rgba(248,185,70,.38));
+ transform-origin:50% 0%;
+}
+body::before{left:-30vw;animation:b6lHomeBeamLeft 9s ease-in-out infinite alternate}
+body::after{right:-30vw;animation:b6lHomeBeamRight 10.5s ease-in-out infinite alternate;animation-delay:-3s}
+@keyframes b6lHomeBeamLeft{0%{transform:rotate(-24deg);opacity:.45}45%{transform:rotate(25deg);opacity:.85}100%{transform:rotate(57deg);opacity:.6}}
+@keyframes b6lHomeBeamRight{0%{transform:rotate(25deg);opacity:.55}55%{transform:rotate(-27deg);opacity:.85}100%{transform:rotate(-55deg);opacity:.48}}
+@media(max-width:760px){body::before,body::after{width:120vw;height:80vh;opacity:.52;filter:blur(16px)}body::before{left:-65vw}body::after{right:-65vw}}
+@media(prefers-reduced-motion:reduce){body::before,body::after{animation:none!important;opacity:.2}}
 </style></body></html>
