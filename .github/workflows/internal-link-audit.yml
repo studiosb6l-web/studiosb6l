@@ -1,0 +1,19 @@
+name: STUDIOSB6L - Internal link guardian
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '12 4 * * *'
+permissions:
+  contents: read
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/internal-link-audit.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: internal-link-audit
+          path: internal-link-audit.json
+          retention-days: 30
