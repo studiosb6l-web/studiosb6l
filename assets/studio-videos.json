@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-20T21:24:31.588021+00:00",
+  "updated": "2026-11-20T22:15:54.871581+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "dYrsjt5Tr3Q",
+        "title": "The Untold Stories of Beauty and the Beast 🥀",
+        "source": "Disney",
+        "published": "2026-11-20T21:30:29Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=dYrsjt5Tr3Q"
+      },
       {
         "youtubeId": "t9B-NRvnokk",
         "title": "Talent Announcement | The Wonderful World of Disney: Holiday Spectacular",
@@ -89,14 +97,6 @@
         "published": "2026-11-16T21:27:11Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=TGX6pg_wHPs"
-      },
-      {
-        "youtubeId": "H_cMBWV9iuU",
-        "title": "Scurtmetraj Disney de sărbători: Calul invizibil",
-        "source": "Disney",
-        "published": "2026-11-16T21:27:08Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=H_cMBWV9iuU"
       }
     ],
     "warner": [
