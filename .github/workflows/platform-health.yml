@@ -55,6 +55,40 @@ jobs:
             if [[ ! "$code" =~ ^2[0-9][0-9]$ ]]; then failed=1; fi
           done
           exit "$failed"
+      - name: Check canonical and indexing metadata on public pages
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re
+          import urllib.request
+          from html.parser import HTMLParser
+
+          base = "https://www.studiosb6l.com"
+          paths = ["/", "/concertos/", "/concertos/artistas/"]
+          class Metadata(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.canonicals = []
+                  self.robots = []
+              def handle_starttag(self, tag, attrs):
+                  a = dict(attrs)
+                  if tag == "link" and "canonical" in a.get("rel", "").lower().split():
+                      self.canonicals.append(a.get("href", ""))
+                  if tag == "meta" and a.get("name", "").lower() == "robots":
+                      self.robots.append(a.get("content", "").lower())
+
+          for path in paths:
+              url = base + path
+              request = urllib.request.Request(url, headers={"User-Agent": "STUDIOSB6L-HealthCheck/1.0"})
+              with urllib.request.urlopen(request, timeout=25) as response:
+                  html = response.read(2_000_000).decode("utf-8", "replace")
+              parser = Metadata()
+              parser.feed(html)
+              print(f"{url}: canonical={parser.canonicals}, robots={parser.robots}")
+              assert len(parser.canonicals) == 1, f"Expected one canonical on {url}"
+              assert parser.canonicals[0] == url, f"Unexpected canonical on {url}"
+              assert not any("noindex" in value for value in parser.robots), f"Unexpected noindex on {url}"
+          PY
       - name: Open or update failure alert
         if: failure()
         env:
