@@ -47,3 +47,9 @@
 - Página /admin/ só deve apresentar conteúdo privado após validação server-side; não incorporar dados administrativos no site estático. Implementar proteção de acesso ao nível Cloudflare antes de disponibilizar qualquer rota administrativa.
 - Criar a conta de proprietário e as duas palavras-passe apenas através de configuração segura, nunca solicitar segredos no chat.
 - Critérios de aceitação: login válido, falha isolada de cada palavra-passe, MFA, bloqueio por tentativas, recuperação, logout, expiração de sessão, ausência de dados antes do login e teste de acesso direto aos endpoints.
+
+## Identificador de acesso aprovado
+
+- Nome de utilizador reservado para a conta única de proprietário: `SAME`.
+- As duas palavras-passe devem ser escolhidas novamente pelo proprietário no fluxo de configuração segura. Não utilizar nem copiar palavras-passe partilhadas em conversas.
+- Estado: conta ainda não provisionada; não declarar login operacional até implantação e testes.
