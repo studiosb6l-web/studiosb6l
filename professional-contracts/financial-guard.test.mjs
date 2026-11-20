@@ -1,0 +1,11 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {evaluateTransaction,evaluateBudget,flagRegistrationRisk,chooseLowerCostAlternative,financialSnapshot} from './financial-guard.js';
+const base={grossCents:299,processingFeeCents:40,taxCents:50,providerCostCents:20,refundReserveCents:10,chargebackReserveCents:10,otherCostCents:0,minimumMarginCents:1,providerHardCapConfirmed:true,usageMeteringConfirmed:true,atomicBudgetReservation:true};
+test('profit verified',()=>assert.equal(evaluateTransaction(base).allow,true));
+test('unknown cost fails closed',()=>assert.equal(evaluateTransaction({...base,taxCents:undefined}).allow,false));
+test('loss fails closed',()=>assert.equal(evaluateTransaction({...base,providerCostCents:300}).allow,false));
+test('hard cap missing fails closed',()=>assert.equal(evaluateTransaction({...base,providerHardCapConfirmed:false}).allow,false));
+test('budget exceeded blocked',()=>assert.equal(evaluateBudget({approvedCapCents:100,spentCents:80,reservedCents:15,nextCostCents:10,providerHardCapConfirmed:true}).allow,false));
+test('fraud risk reviewed',()=>assert.equal(flagRegistrationRisk({sameIdentityAccounts:2,failedPayments24h:0,disputes:0,verifiedIdentity:true}).review,true));
+test('cheapest safe option',()=>assert.equal(chooseLowerCostAlternative([{verified:true,hardCap:true,totalCostCents:9},{verified:true,hardCap:true,totalCostCents:3}]).totalCostCents,3));
+test('dashboard counts only settled revenue',()=>assert.equal(financialSnapshot([{revenueCents:299,costCents:30,status:'settled'},{revenueCents:299,costCents:5,status:'pending'}]).estimatedMarginCents,264));
