@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-20T22:15:54.871581+00:00",
+  "updated": "2026-11-20T23:07:29.102120+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "akF2ADZDSO0",
+        "title": "The Untold Stories of Beauty and the Beast 🥀",
+        "source": "Disney",
+        "published": "2026-11-20T22:30:10Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=akF2ADZDSO0"
+      },
       {
         "youtubeId": "dYrsjt5Tr3Q",
         "title": "The Untold Stories of Beauty and the Beast 🥀",
@@ -89,14 +97,6 @@
         "published": "2026-11-16T21:27:14Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=mG5m0Hgv0uQ"
-      },
-      {
-        "youtubeId": "TGX6pg_wHPs",
-        "title": "Рождественская короткометражка Disney: Невидимый конь",
-        "source": "Disney",
-        "published": "2026-11-16T21:27:11Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=TGX6pg_wHPs"
       }
     ],
     "warner": [
