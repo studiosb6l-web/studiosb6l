@@ -37,3 +37,13 @@
 4. Validar que nenhuma candidatura é publicada sem aprovação e nenhuma cobrança é acionada pelo painel.
 5. Confirmar monitorização, rollback, backups e recuperação; documentar evidências e responsável.
 6. Confirmar implantação e testes de produção sem transações reais de teste.
+
+## Acesso exclusivo do proprietário — requisitos aprovados
+
+- Entrada por nome de utilizador + **duas palavras-passe independentes**; nenhuma credencial ou hash deve constar em GitHub, HTML, JavaScript do navegador ou logs.
+- Validar ambas as palavras-passe **no backend**, com hashes Argon2id (ou mecanismo gerido equivalente), salts únicos, comparação segura, proteção contra força bruta, limites de tentativas e mensagens de erro genéricas.
+- Exigir também MFA resistente a phishing, preferencialmente passkey/WebAuthn, e política de recuperação de conta com verificação forte; duas palavras-passe não substituem MFA.
+- Não ativar página de login, registo ou endpoint de autenticação até existirem armazenamento seguro de segredos, sessões HttpOnly/Secure/SameSite, CSRF, autorização por operação, rate limiting e auditoria.
+- Página /admin/ só deve apresentar conteúdo privado após validação server-side; não incorporar dados administrativos no site estático. Implementar proteção de acesso ao nível Cloudflare antes de disponibilizar qualquer rota administrativa.
+- Criar a conta de proprietário e as duas palavras-passe apenas através de configuração segura, nunca solicitar segredos no chat.
+- Critérios de aceitação: login válido, falha isolada de cada palavra-passe, MFA, bloqueio por tentativas, recuperação, logout, expiração de sessão, ausência de dados antes do login e teste de acesso direto aos endpoints.
