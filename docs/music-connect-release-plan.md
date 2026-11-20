@@ -21,3 +21,12 @@
 
 ## Release policy
 Do not enable public registration or billing until security, privacy, moderation, payment and deployment checks pass. Avoid claims that the platform already provides these services.
+
+## Billing decision — Stripe + PayPal (2026-11-20)
+- Reuse the existing STUDIOSB6L music-store payment accounts where provider access and merchant configuration permit; do not modify existing music-store checkout or payouts.
+- FREE musician registration and free organization listings. PRO: EUR 4.99 monthly or EUR 49.90 annually.
+- `cloudflare/music-connect-billing.mjs` records provider/plan configuration, rejects unknown plans and requires verified paid active subscription state. Production checkout is intentionally disabled.
+- Stripe connection currently verified in **test mode only**. Existing production Stripe merchant, linked payout bank and live subscription permissions are **not verified**.
+- Existing PayPal one-time payments are user-reported; PayPal recurring subscription API credentials, webhook endpoint and merchant eligibility are **not verified**.
+- Implement two server-side provider adapters, checkout sessions/approval, signed webhook validation, idempotency, subscription lifecycle and cancellation. Never use browser redirect as proof of payment.
+- Before live billing, confirm Spanish tax registration/IVA treatment, subscription consumer disclosures, and both providers' live status. No automatic recurring charges until these checks pass.
