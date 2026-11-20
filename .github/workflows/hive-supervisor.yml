@@ -1,0 +1,41 @@
+name: STUDIOSB6L - Hive master supervisor
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7 */2 * * *'
+permissions:
+  contents: read
+  actions: read
+  issues: write
+concurrency:
+  group: hive-master-supervisor
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check automation coverage by platform area
+        run: python3 scripts/hive-supervisor.py
+      - name: Archive hive report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hive-supervisor-report
+          path: hive-supervisor-report.json
+          retention-days: 30
+      - name: Create incident alert if coverage fails
+        if: failure()
+        run: |
+          title="STUDIOSB6L: hive supervisor found inactive or missing bots"
+          link="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          existing=$(gh issue list --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "STUDIOSB6L: hive supervisor found inactive or missing bots") | .number' | head -n1)
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "Another hive supervision failure: $link"
+          else
+            gh issue create --title "$title" --body "Automation coverage requires attention: $link"
+          fi
