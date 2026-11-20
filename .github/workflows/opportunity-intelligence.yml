@@ -1,0 +1,23 @@
+name: STUDIOSB6L - Opportunity intelligence regression
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '39 */6 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare/opportunity-keywords.mjs'
+      - 'tests/opportunity-keywords.test.mjs'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test multilingual opportunity keywords and privacy gates
+        run: node tests/opportunity-keywords.test.mjs
