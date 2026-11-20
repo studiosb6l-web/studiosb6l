@@ -1,0 +1,22 @@
+name: STUDIOSB6L - Global discovery speed audit
+on:
+  schedule:
+    - cron: '13 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Measure global public discovery response times
+        run: python3 scripts/global-discovery-speed.py
+      - name: Save machine-readable report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: global-discovery-speed
+          path: global-discovery-speed.json
+          retention-days: 30
