@@ -211,6 +211,19 @@ Feel the magic happen.</h1><p class="lead">Explore original music, discover inte
 #founder .b6l-ecosystem-item{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:5px;min-width:0;min-height:76px;padding:8px 4px;border:1px solid #d8b87445;border-radius:10px;background:#ffffff08;color:#f2ede2;font-size:clamp(.65rem,.92vw,.82rem);line-height:1.2;overflow-wrap:anywhere}
 #founder .b6l-ecosystem-item>span:first-child{font-size:1.45rem}
 #founder .b6l-ecosystem-footer{text-align:center;font-size:.68rem;letter-spacing:.13em;color:#c8ad78;margin-top:14px}
+/* STUDIOSB6L editorial ecosystem refresh — responsive and translatable */
+#founder .b6l-ecosystem{position:relative;overflow:hidden;border:1px solid #c9ad725c;border-radius:22px;padding:clamp(20px,3.5vw,36px);background:radial-gradient(ellipse at 90% 0%,#30455b75,transparent 52%),linear-gradient(150deg,#17293a,#0c1522 75%);box-shadow:0 24px 60px #0007,inset 0 1px #ffffff18}
+#founder .b6l-ecosystem-title{font-family:Georgia,serif;font-size:clamp(1.2rem,2vw,1.8rem);font-weight:400;letter-spacing:.045em;text-align:left;color:#f1dbab;margin:0 0 22px;padding-bottom:15px;border-bottom:1px solid #d8b87442}
+#founder .b6l-ecosystem-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#founder .b6l-ecosystem-item{position:relative;min-height:112px;padding:18px 10px;gap:12px;border:1px solid #c8d7e52c;border-radius:13px;background:linear-gradient(145deg,#ffffff0e,#ffffff04);font-size:clamp(.75rem,1vw,.91rem);font-weight:550;line-height:1.35;color:#f4f5f7;overflow-wrap:normal;transition:transform .2s ease,border-color .2s ease,background .2s ease}
+#founder .b6l-ecosystem-item:hover{transform:translateY(-3px);border-color:#dfc58b99;background:#d5b87515}
+#founder .b6l-ecosystem-item>span:first-child{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:#d8bb7920;filter:grayscale(1);font-size:1.45rem}
+#founder .b6l-ecosystem-item:nth-child(13){border-color:#d9b97899;background:linear-gradient(140deg,#51452b66,#17283b);box-shadow:inset 0 1px #e5cb9b30}
+#founder .b6l-ecosystem-footer{margin-top:22px;padding-top:15px;border-top:1px solid #d8b87430;letter-spacing:.18em;color:#e1c78e}
+@media(max-width:900px){#founder .b6l-ecosystem-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:580px){#founder .b6l-ecosystem{padding:16px;border-radius:16px}#founder .b6l-ecosystem-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#founder .b6l-ecosystem-item{min-height:100px;padding:12px 7px;font-size:.75rem}#founder .b6l-ecosystem-title{text-align:center;font-size:1.2rem}}
+@media(prefers-reduced-motion:reduce){#founder .b6l-ecosystem-item{transition:none}#founder .b6l-ecosystem-item:hover{transform:none}}
+
 @media(max-width:760px){#founder .founder-mission-row{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:8px;align-items:start}#founder .founder-mission{padding-top:9px!important}#founder #founder-mission-quote{font-size:clamp(.82rem,2.6vw,1.15rem);line-height:1.3}#founder .founder-mission .founder-roles{font-size:clamp(.62rem,1.9vw,.82rem)}#founder .b6l-ecosystem{padding:7px;border-radius:9px}#founder .b6l-ecosystem-title{font-size:clamp(.57rem,1.9vw,.8rem);margin-bottom:7px;letter-spacing:.04em}#founder .b6l-ecosystem-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}#founder .b6l-ecosystem-item{min-height:57px;font-size:clamp(.49rem,1.5vw,.67rem);padding:4px 1px;gap:3px}#founder .b6l-ecosystem-item>span:first-child{font-size:clamp(.85rem,2.8vw,1.1rem)}#founder .b6l-ecosystem-footer{font-size:.5rem;letter-spacing:.04em;margin-top:7px}}
 </style>
 <section class="section" id="founder" aria-labelledby="founder-title">
