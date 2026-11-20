@@ -1,0 +1,5 @@
+# Membership card payment deployment checklist
+
+Current state: deliberately DISABLED checkout/fulfillment. The isolated Cloudflare Worker skeleton validates Stripe signature, amount EUR 2.99, mode and paid status; it MUST NOT be deployed as an operative membership service.
+
+Before enabling: authenticated account identity; server-generated idempotent order; D1 migration with unique user and Stripe event/session constraints; durable transaction to apply paid status once; safe recovery for Stripe retries; strict access control, CSRF/abuse limits, refund/dispute revocation, verified final VAT-inclusive price, checkout redirect URLs, proper privacy and consumer terms; live Stripe secret and webhook secret in Cloudflare secrets (never GitHub). Configure a restricted production route and confirm billing limits and zero unapproved cost. Test with Stripe test keys, including duplicate checkout, webhook replay, late/failed payments, refund, dispute and invalid signature. Only then switch to live after owner authorization. Do not expose a pay button before tests pass. Existing artists API is not modified.
