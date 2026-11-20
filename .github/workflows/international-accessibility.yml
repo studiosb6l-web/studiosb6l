@@ -1,0 +1,21 @@
+name: STUDIOSB6L - International accessibility guardian
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '24 2 * * *'
+permissions:
+  contents: read
+jobs:
+  accessibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check HTML language and image alternatives
+        run: python3 scripts/international-accessibility.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: international-accessibility
+          path: international-accessibility.json
+          retention-days: 30
