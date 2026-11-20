@@ -551,4 +551,23 @@ grid.querySelectorAll('.b6l-ecosystem-item').forEach((el,i)=>{el.setAttribute('r
 @keyframes b6lBlueCycle{0%,38%,100%{opacity:0}58%,75%{opacity:1}88%{opacity:0}}
 @media(max-width:760px){#b6l-stage-light-overlay .b6l-beam{filter:blur(5px)}}
 @media(prefers-reduced-motion:reduce){#b6l-stage-light-overlay .b6l-beam{animation:none!important;opacity:.25}}
-</style><div id="b6l-stage-light-overlay" aria-hidden="true"><div class="b6l-beam b6l-beam-left"></div><div class="b6l-beam b6l-beam-right"></div><div class="b6l-glow b6l-glow-left"></div><div class="b6l-glow b6l-glow-right"></div></div><script id="b6l-stage-light-boundary">(function(){const overlay=document.getElementById('b6l-stage-light-overlay');const videos=document.getElementById('b6l-studio-news');if(!overlay||!videos)return;let pending=false;function update(){pending=false;const top=videos.getBoundingClientRect().top;const height=Math.max(0,Math.min(window.innerHeight,top));overlay.style.setProperty('--b6l-light-height',height+'px');overlay.style.visibility=height<30?'hidden':'visible'}function schedule(){if(!pending){pending=true;requestAnimationFrame(update)}}window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});window.addEventListener('load',schedule);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule);schedule()})();</script></body></html>
+</style><div id="b6l-stage-light-overlay" aria-hidden="true"><div class="b6l-beam b6l-beam-left"></div><div class="b6l-beam b6l-beam-right"></div><div class="b6l-glow b6l-glow-left"></div><div class="b6l-glow b6l-glow-right"></div></div><script id="b6l-stage-light-boundary">(function(){const overlay=document.getElementById('b6l-stage-light-overlay');const videos=document.getElementById('b6l-studio-news');if(!overlay||!videos)return;let pending=false;function update(){pending=false;const top=videos.getBoundingClientRect().top;const height=Math.max(0,Math.min(window.innerHeight,top));overlay.style.setProperty('--b6l-light-height',height+'px');overlay.style.visibility=height<30?'hidden':'visible'}function schedule(){if(!pending){pending=true;requestAnimationFrame(update)}}window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule,{passive:true});window.addEventListener('load',schedule);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule);schedule()})();</script><style id="b6l-anchored-moving-spotlights-v5">
+/* Fixed upper fixtures, independently sweeping beams with variable reach. */
+#b6l-stage-light-overlay .b6l-beam-left{left:-10%!important;transform-origin:15% 0!important;animation:b6lFixedLeftSweep 11s ease-in-out infinite!important}
+#b6l-stage-light-overlay .b6l-beam-right{right:-10%!important;transform-origin:85% 0!important;animation:b6lFixedRightSweep 13s ease-in-out infinite!important}
+@keyframes b6lFixedLeftSweep{
+0%,100%{transform:rotate(-24deg) scaleY(.58);opacity:.7}
+20%{transform:rotate(-5deg) scaleY(.92);opacity:.9}
+40%{transform:rotate(17deg) scaleY(.68);opacity:1}
+60%{transform:rotate(33deg) scaleY(1.02);opacity:.85}
+80%{transform:rotate(4deg) scaleY(.45);opacity:.92}
+}
+@keyframes b6lFixedRightSweep{
+0%,100%{transform:rotate(25deg) scaleY(.98);opacity:.8}
+20%{transform:rotate(8deg) scaleY(.48);opacity:.95}
+40%{transform:rotate(-22deg) scaleY(1.05);opacity:.88}
+60%{transform:rotate(-34deg) scaleY(.62);opacity:1}
+80%{transform:rotate(-6deg) scaleY(.87);opacity:.8}
+}
+@media(prefers-reduced-motion:reduce){#b6l-stage-light-overlay .b6l-beam-left,#b6l-stage-light-overlay .b6l-beam-right{animation:none!important;opacity:.24!important}}
+</style></body></html>
