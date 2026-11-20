@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "04:20"
+      timezone: "Europe/Madrid"
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "chore(actions)"
