@@ -1,0 +1,12 @@
+import {strict as assert} from 'node:assert';
+import {canonicalSkill,matchAudioProfessional,rankAudioProfessionals} from '../cloudflare/audio-professional-matching.mjs';
+assert.equal(canonicalSkill('Masterização'),'mastering');
+const p={id:'a',moderation:'approved',public:true,matching_consent:true,skills:['Mistura','Masterização'],country:'Portugal',genres:['Rock'],formats:['Stereo'],available:true};
+const q={status:'verified',matching_consent:true,required_skills:['Mixing','Mastering'],country:'Portugal',remote_allowed:true,genres:['Rock'],formats:['Stereo']};
+assert.equal(matchAudioProfessional(p,q).score,100);
+assert.equal(matchAudioProfessional({...p,matching_consent:false},q),null);
+assert.equal(matchAudioProfessional(p,{...q,status:'pending'}),null);
+assert.equal(matchAudioProfessional({...p,skills:['Recording']},q),null);
+assert.equal(matchAudioProfessional({...p,remote_only:true},{...q,remote_allowed:false}),null);
+assert.equal(rankAudioProfessionals([p,{...p,id:'b',available:false}],q)[0].profileId,'a');
+console.log('Audio professional matching tests passed');
