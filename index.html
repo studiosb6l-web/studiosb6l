@@ -530,15 +530,16 @@ grid.querySelectorAll('.b6l-ecosystem-item').forEach((el,i)=>{el.setAttribute('r
 @keyframes b6lCrossLeft{0%{transform:rotate(-35deg) translateY(-10px);opacity:.65}45%{transform:rotate(10deg) translateY(25px);opacity:1}100%{transform:rotate(46deg) translateY(62px);opacity:.85}}
 @keyframes b6lCrossRight{0%{transform:scaleX(-1) rotate(-45deg) translateY(35px);opacity:.75}50%{transform:scaleX(-1) rotate(6deg) translateY(75px);opacity:1}100%{transform:scaleX(-1) rotate(38deg) translateY(12px);opacity:.75}}
 @media(prefers-reduced-motion:reduce){#founder .b6l-ecosystem::before,#founder .b6l-ecosystem::after{animation:none!important;opacity:.35}}
-</style><style id="b6l-home-stage-lights-v2">
-/* Visible sweeping light cones anchored at the upper screen corners. */
-body::before,body::after{content:"";position:fixed;top:0;height:90vh;width:95vw;pointer-events:none;z-index:1500;mix-blend-mode:screen;transform-origin:50% 0;will-change:transform;
-background:linear-gradient(90deg,transparent 1%,rgba(245,176,63,.06) 18%,rgba(255,211,108,.29) 42%,rgba(255,240,186,.53) 50%,rgba(255,211,108,.29) 58%,rgba(245,176,63,.06) 82%,transparent 99%);
-clip-path:polygon(48% 0,52% 0,96% 100%,4% 100%);filter:blur(9px)}
-body::before{left:-39vw;animation:b6lHomeSpotLeft 8s ease-in-out infinite alternate}
-body::after{right:-39vw;animation:b6lHomeSpotRight 9.5s ease-in-out infinite alternate-reverse;animation-delay:-2s}
-@keyframes b6lHomeSpotLeft{0%{transform:rotate(-30deg);opacity:.52}50%{transform:rotate(14deg);opacity:.88}100%{transform:rotate(48deg);opacity:.72}}
-@keyframes b6lHomeSpotRight{0%{transform:rotate(30deg);opacity:.55}50%{transform:rotate(-16deg);opacity:.9}100%{transform:rotate(-48deg);opacity:.7}}
-@media(max-width:760px){body::before,body::after{width:125vw;height:75vh;filter:blur(7px)}body::before{left:-58vw}body::after{right:-58vw}}
-@media(prefers-reduced-motion:reduce){body::before,body::after{animation:none!important;opacity:.22}}
-</style></body></html>
+</style><style id="b6l-home-stage-lights-v3">
+/* Dedicated overlay instead of body pseudo-elements, for reliable mobile rendering. */
+#b6l-stage-light-overlay{position:fixed!important;inset:0!important;z-index:999!important;pointer-events:none!important;overflow:hidden!important;isolation:isolate}
+#b6l-stage-light-overlay .b6l-beam{position:absolute;top:-5vh;width:110vw;height:105vh;transform-origin:50% 0;opacity:.72;will-change:transform;background:linear-gradient(90deg,transparent 0%,rgba(255,193,70,.05) 16%,rgba(255,205,91,.27) 35%,rgba(255,244,191,.53) 50%,rgba(255,205,91,.27) 65%,rgba(255,193,70,.05) 84%,transparent 100%);clip-path:polygon(49% 0%,51% 0%,100% 100%,0 100%);filter:blur(8px);mix-blend-mode:screen}
+#b6l-stage-light-overlay .b6l-beam-left{left:-42vw;animation:b6lStageLeft 7.5s ease-in-out infinite alternate}
+#b6l-stage-light-overlay .b6l-beam-right{right:-42vw;animation:b6lStageRight 8.5s ease-in-out infinite alternate-reverse}
+#b6l-stage-light-overlay .b6l-glow{position:absolute;top:-18px;width:25vw;height:90px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,245,196,.65),rgba(255,194,66,.22) 35%,transparent 72%);filter:blur(12px)}
+#b6l-stage-light-overlay .b6l-glow-left{left:0}#b6l-stage-light-overlay .b6l-glow-right{right:0}
+@keyframes b6lStageLeft{0%{transform:rotate(-27deg);opacity:.5}50%{transform:rotate(15deg);opacity:.88}100%{transform:rotate(43deg);opacity:.68}}
+@keyframes b6lStageRight{0%{transform:rotate(27deg);opacity:.55}50%{transform:rotate(-15deg);opacity:.9}100%{transform:rotate(-43deg);opacity:.7}}
+@media(max-width:760px){#b6l-stage-light-overlay .b6l-beam{width:150vw;height:92vh;filter:blur(5px)}#b6l-stage-light-overlay .b6l-beam-left{left:-65vw}#b6l-stage-light-overlay .b6l-beam-right{right:-65vw}}
+@media(prefers-reduced-motion:reduce){#b6l-stage-light-overlay .b6l-beam{animation:none!important;opacity:.22}}
+</style><div id="b6l-stage-light-overlay" aria-hidden="true"><div class="b6l-beam b6l-beam-left"></div><div class="b6l-beam b6l-beam-right"></div><div class="b6l-glow b6l-glow-left"></div><div class="b6l-glow b6l-glow-right"></div></div></body></html>
