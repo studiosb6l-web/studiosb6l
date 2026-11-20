@@ -34,6 +34,8 @@ jobs:
           assert 'Sitemap:' in robots, 'Missing sitemap declaration'
           assert 'sitemap-artistas.xml' in robots, 'Artist sitemap missing from robots.txt'
           PY
+      - name: Audit SEO sitemap quality
+        run: python3 scripts/audit-seo.py
       - name: Test artist registration Worker offline
         run: node tests/artists-worker.test.mjs
       - name: Check public endpoints
