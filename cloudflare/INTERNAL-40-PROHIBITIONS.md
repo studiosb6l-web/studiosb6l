@@ -1,4 +1,4 @@
-# STUDIOSB6L — 40 proibições internas
+# STUDIOSB6L — 60 proibições internas
 
 Política interna, não publicar na interface pública. A presença desta lista NÃO significa que todos os bloqueios estejam ativos. As regras financeiras devem ser implementadas nos serviços de pagamento, faturação e automatização antes de serem consideradas operativas. Nunca prometer risco financeiro zero.
 
@@ -48,3 +48,35 @@ Política interna, não publicar na interface pública. A presença desta lista 
 ## Critérios de ativação
 
 Cada regra exige: responsável técnico, ponto de aplicação no backend, testes de bloqueio e permissão, registo de auditoria, monitorização e verificação em produção. Custos desconhecidos: negar por defeito. Nenhuma aprovação automática de perfis. Não bloquear funções legítimas sem avaliação.
+
+## Regras adicionais 41–60 — propostas para aplicação nos serviços responsáveis
+
+| Nº | Regra | Estado |
+|---|---|---|
+| 41 | Proibir transferências financeiras automáticas não autorizadas | Pendente de implementação e testes no backend responsável |
+| 42 | Proibir criação de contas pagas por agentes de IA | Pendente de implementação e testes no backend responsável |
+| 43 | Proibir contratação automática de serviços externos | Pendente de implementação e testes no backend responsável |
+| 44 | Bloquear custos estimados acima dos limites autorizados | Pendente de implementação e testes no backend responsável |
+| 45 | Proibir alterações automáticas de contas bancárias de beneficiários | Pendente de implementação e testes no backend responsável |
+| 46 | Impedir pagamentos a artistas sem validação de titularidade e direitos | Pendente de implementação e testes no backend responsável |
+| 47 | Bloquear levantamentos suspeitos para verificação | Pendente de implementação e testes no backend responsável |
+| 48 | Impedir comissões negativas ou acima do contratado | Pendente de implementação e testes no backend responsável |
+| 49 | Proibir descontos que tornem transações deficitárias | Pendente de implementação e testes no backend responsável |
+| 50 | Impedir duplicação de pagamentos, reembolsos e transferências | Pendente de implementação e testes no backend responsável |
+| 51 | Bloquear tentativas repetidas de acesso não autorizado | Pendente de implementação e testes no backend responsável |
+| 52 | Impedir contas múltiplas usadas para manipular resultados | Pendente de implementação e testes no backend responsável |
+| 53 | Bloquear publicação de música sem validação adequada de direitos | Pendente de implementação e testes no backend responsável |
+| 54 | Impedir utilização não autorizada de identidades e marcas | Pendente de implementação e testes no backend responsável |
+| 55 | Bloquear alterações críticas por IA sem autorização | Pendente de implementação e testes no backend responsável |
+| 56 | Impedir eliminação não autorizada de bases de dados e backups | Pendente de implementação e testes no backend responsável |
+| 57 | Bloquear exportações não autorizadas de dados pessoais | Pendente de implementação e testes no backend responsável |
+| 58 | Impedir lançamento de funcionalidades com custos não avaliados | Pendente de implementação e testes no backend responsável |
+| 59 | Suspender serviços ao atingir limites financeiros aprovados, quando tecnicamente possível | Pendente de implementação e testes no backend responsável |
+| 60 | Impedir reativação de funcionalidades bloqueadas sem autorização e auditoria | Pendente de implementação e testes no backend responsável |
+
+## Mecanismos transversais
+
+- Política de negação por defeito para custos não autorizados; limites por serviço e alertas de orçamento.
+- Permissões mínimas para agentes e registo de decisões, sem contratar robôs automaticamente.
+- Suspensão de emergência de operações financeiras e automações, preservando os serviços essenciais.
+- Regras não substituem controles Stripe/PayPal, segurança de autenticação ou conformidade legal; testar em ambiente de ensaio antes da produção.
