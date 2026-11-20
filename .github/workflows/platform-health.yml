@@ -17,15 +17,21 @@ jobs:
           set -euo pipefail
           test -s robots.txt
           test -s sitemap.xml
+          test -s sitemap-artistas.xml
           python3 - <<'PY'
           import xml.etree.ElementTree as ET
           from pathlib import Path
-          root=ET.parse('sitemap.xml').getroot()
-          assert root.tag.endswith('urlset'), 'Invalid sitemap root'
-          assert len(root)>0, 'Empty sitemap'
+          for sitemap in ('sitemap.xml','sitemap-artistas.xml'):
+              root=ET.parse(sitemap).getroot()
+              assert root.tag.endswith('urlset'), f'Invalid root: {sitemap}'
+              urls=[node.text for node in root.iter() if node.tag.endswith('}loc')]
+              assert urls, f'Empty sitemap: {sitemap}'
+              assert len(urls)==len(set(urls)), f'Duplicate URLs: {sitemap}'
+              assert all(u and u.startswith('https://www.studiosb6l.com/') for u in urls), f'Invalid URL: {sitemap}'
+              print(f'{sitemap}: {len(urls)} URLs validated')
           robots=Path('robots.txt').read_text()
           assert 'Sitemap:' in robots, 'Missing sitemap declaration'
-          print(f'Sitemap valid: {len(root)} entries')
+          assert 'sitemap-artistas.xml' in robots, 'Artist sitemap missing from robots.txt'
           PY
       - name: Check public endpoints
         shell: bash
@@ -36,6 +42,7 @@ jobs:
             'https://www.studiosb6l.com/' \
             'https://www.studiosb6l.com/robots.txt' \
             'https://www.studiosb6l.com/sitemap.xml' \
+            'https://www.studiosb6l.com/sitemap-artistas.xml' \
             'https://www.studiosb6l.com/concertos/artistas/' \
             'https://www.studiosb6l.com/instalar.html'; do
             code=$(curl --location --silent --show-error --output /dev/null --max-time 25 --retry 2 --write-out '%{http_code}' "$url") || code=000
