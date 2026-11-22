@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-22T16:16:17.498270+00:00",
+  "updated": "2026-11-22T17:05:38.394524+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "wVYJrROpDgE",
+        "title": "Belle's Sacrifice | Beauty and the Beast (1991) | Official Clip",
+        "source": "Disney",
+        "published": "2026-11-22T17:00:12Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=wVYJrROpDgE"
+      },
       {
         "youtubeId": "rL2iaxNfuKs",
         "title": "Chris Sanders and Maia Kealoha on Lilo & Scratch",
@@ -89,17 +97,17 @@
         "published": "2026-11-16T21:27:21Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=7hkDl8ZfLmc"
-      },
-      {
-        "youtubeId": "8RjF2840XCQ",
-        "title": "Egy karácsonyi Disney rövidfilm: A láthatatlan ló",
-        "source": "Disney",
-        "published": "2026-11-16T21:27:17Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=8RjF2840XCQ"
       }
     ],
     "warner": [
+      {
+        "youtubeId": "KFqe2evmkz8",
+        "title": "Witness the epic conclusion.",
+        "source": "Warner Bros.",
+        "published": "2026-11-22T17:01:15Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=KFqe2evmkz8"
+      },
       {
         "youtubeId": "fLrQ63zPKdE",
         "title": "Ninety seconds on the hourglass. #DuneMovie",
@@ -187,14 +195,6 @@
         "published": "2026-11-14T18:00:39Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=ySBhKFPISgw"
-      },
-      {
-        "youtubeId": "lq41T5cRE38",
-        "title": "Why yes, yes we do. #TheCatInTheHat - now playing only in theaters",
-        "source": "Warner Bros.",
-        "published": "2026-11-13T17:00:31Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=lq41T5cRE38"
       }
     ]
   }
