@@ -1,0 +1,22 @@
+name: STUDIOSB6L - Artist intake launch gate
+on:
+  pull_request:
+    paths:
+      - 'artist-backend/**'
+      - 'assets/artist-track-submit.js'
+      - 'scripts/audit-artist-intake-readiness.py'
+      - '.github/workflows/artist-intake-launch-gate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit offline deployment prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/audit-artist-intake-readiness.py
