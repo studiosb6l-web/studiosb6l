@@ -29,3 +29,7 @@ test('public health response does not reveal database configuration',async()=>{c
 test('unsafe localhost website rejected',async()=>{const DB=mockDB();const r=await worker.fetch(request({...good,website:'http://localhost:8787'}),{DB});assert.equal(r.status,422);assert.equal(DB.calls.length,0)});
 test('website credentials rejected',async()=>{const DB=mockDB();const r=await worker.fetch(request({...good,website:'https://user:pass@example.com'}),{DB});assert.equal(r.status,422);assert.equal(DB.calls.length,0)});
 test('unsupported category rejected',async()=>{const DB=mockDB();const r=await worker.fetch(request({...good,type:'Administrador'}),{DB});assert.equal(r.status,422);assert.equal(DB.calls.length,0)});
+
+test('emergency STOP suspends registrations without writing to DB',async()=>{const DB=mockDB();const r=await worker.fetch(request(),{DB,STOP_REGISTRATIONS:'true'});assert.equal(r.status,503);assert.equal(DB.calls.length,0);assert.match((await r.json()).error,/suspended/i)});
+test('emergency STOP cannot be overridden by submitted form fields',async()=>{const DB=mockDB();const r=await worker.fetch(request({...good,STOP_REGISTRATIONS:'false'}),{DB,STOP_REGISTRATIONS:'true'});assert.equal(r.status,503);assert.equal(DB.calls.length,0)});
+test('STOP does not disclose admin controls',async()=>{const r=await worker.fetch(new Request('https://api.example.com/api/admin/stop',{method:'GET'}),{STOP_REGISTRATIONS:'true'});assert.equal(r.status,404)});
