@@ -33,3 +33,5 @@ test('unsupported category rejected',async()=>{const DB=mockDB();const r=await w
 test('emergency STOP suspends registrations without writing to DB',async()=>{const DB=mockDB();const r=await worker.fetch(request(),{DB,STOP_REGISTRATIONS:'true'});assert.equal(r.status,503);assert.equal(DB.calls.length,0);assert.match((await r.json()).error,/suspended/i)});
 test('emergency STOP cannot be overridden by submitted form fields',async()=>{const DB=mockDB();const r=await worker.fetch(request({...good,STOP_REGISTRATIONS:'false'}),{DB,STOP_REGISTRATIONS:'true'});assert.equal(r.status,503);assert.equal(DB.calls.length,0)});
 test('STOP does not disclose admin controls',async()=>{const r=await worker.fetch(new Request('https://api.example.com/api/admin/stop',{method:'GET'}),{STOP_REGISTRATIONS:'true'});assert.equal(r.status,404)});
+
+test('CORS preflight rejects unsupported paths',async()=>{const r=new Request('https://api.example.com/api/admin',{method:'OPTIONS',headers:{Origin:origin}});const out=await worker.fetch(r,{});assert.equal(out.status,404)});
