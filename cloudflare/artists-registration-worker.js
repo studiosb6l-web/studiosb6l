@@ -13,6 +13,9 @@ export default {async fetch(request,env){
   if(url.pathname==='/'&&request.method==='GET')return respond({platform:'STUDIOSB6L',service:'Artists API',status:'reachable',publication:'manual approval required'});
   if(url.pathname!=='/api/applications'||request.method!=='POST')return respond({error:'Route not found'},404);
   if(request.headers.get('Origin')!==ORIGIN)return respond({error:'Origin not allowed'},403);
+  // Emergency registration switch: set STOP_REGISTRATIONS=true in Cloudflare Worker environment.
+  // No public endpoint may change this value. Other services require their own backend gates.
+  if(env.STOP_REGISTRATIONS==='true')return respond({error:'Registrations temporarily suspended'},503);
   if(!env.DB)return respond({error:'Database unavailable'},503);
   const length=Number(request.headers.get('Content-Length'));
   if(Number.isFinite(length)&&length>12000)return respond({error:'Request too large'},413);
