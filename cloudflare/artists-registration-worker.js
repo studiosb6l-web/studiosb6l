@@ -6,7 +6,7 @@ const respond=(body,status=200)=>new Response(JSON.stringify(body),{status,heade
 const types=new Set(['Artista','Banda','Produtor ou realizador','Promotor ou sala','Empresa']);
 const safeText=(v,max)=>typeof v==='string'&&v.trim().length<=max?v.trim():null;
 const validEmail=s=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)&&s.length<=200;
-const isPrivateHost=h=>/^(localhost|127\.|0\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.|\[?::1\]?|.*\.local)$/i.test(h);
+const isPrivateHost=h=>/^(localhost|127\.|0\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.|\[?::1\]?|.*\.local)/i.test(h);
 export default {async fetch(request,env){
   const url=new URL(request.url);
   if(request.method==='OPTIONS')return request.headers.get('Origin')===ORIGIN?new Response(null,{status:204,headers:HEADERS}):respond({error:'Origin not allowed'},403);
