@@ -9,6 +9,7 @@ const checks=[
   ['logout endpoint',/\/api\/auth\/logout/.test(account)],
   ['server response checked',/response\.ok/.test(account)],
   ['login requires server-confirmed user',/path===['"]\/api\/auth\/login['"]&&\(!data\.user/.test(account)],
+  ['reject empty login identity',/Array\.isArray\(data\.user\)/.test(account)&&/data\.user\.username/.test(account)&&/data\.user\.id/.test(account)],
   ['cookie-capable request',/credentials:\s*['"]include['"]/.test(account)],
   ['no client-side localStorage auth',!/localStorage\s*\./.test(account)],
   ['clear password after confirmed login',/document\.getElementById\(['"]password['"]\)\.value=['"]['"]/.test(account)],
