@@ -20,6 +20,21 @@ if (form) {
     warnings.push('Private access form appears to be a nonfunctional demo. Do not enter real credentials.');
   }
 }
+// Report unverified backend integration without treating visual placeholders as live features.
+for (const [relative, name] of [['conta/index.html', 'Account'], ['admin/index.html', 'Administration'], ['rede/index.html', 'Opportunities network']]) {
+  const file = path.join(root, relative);
+  if (!fs.existsSync(file)) { warnings.push(name + ' page is missing: ' + relative); continue; }
+  const page = fs.readFileSync(file, 'utf8');
+  if (relative === 'conta/index.html') {
+    if (!/\/api\/auth\/login/.test(page) || !/\/api\/auth\/register/.test(page))
+      warnings.push('Account page lacks expected login or registration API calls.');
+    else warnings.push('Account page references authentication API; live sessions, CORS and RBAC remain unverified.');
+  }
+  if (relative === 'admin/index.html' && /Integração pendente|Aguardando base de dados/.test(page))
+    warnings.push('Administration dashboard contains unconnected indicators; do not present as operational.');
+  if (relative === 'rede/index.html' && /mailto:/.test(page))
+    warnings.push('Opportunities requests use email handoff; no persistent messaging verified.');
+}
 const links = [...html.matchAll(/\bhref=["'](\/[^"'?#]*)(?:[?#][^"']*)?["']/g)]
   .map(m => m[1]).filter(p => !p.startsWith('//'));
 const missing = [...new Set(links)].filter(p => {
