@@ -1,0 +1,26 @@
+// Offline security regression tests. No network calls, production writes, or paid services.
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+const source=await readFile('cloudflare/artists-registration-worker.js','utf8');
+const {default:worker}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+const endpoint='https://worker.example/api/applications';
+const origin='https://www.studiosb6l.com';
+const valid={name:'Test Artist',email:'test@example.org',type:'Artista',country:'Portugal',biography:'',website:'',consent:true};
+let writes=0;
+const db={prepare(){return {bind(){return {run:async()=>{writes++;return {success:true}}}}}}};
+const request=(body,{method='POST',from=origin,contentType='application/json'}={})=>new Request(endpoint,{method,headers:{Origin:from,'Content-Type':contentType},body:method==='POST'?(typeof body==='string'?body:JSON.stringify(body)):undefined});
+const run=(body,options={},environment={DB:db})=>worker.fetch(request(body,options),environment);
+assert.equal((await run(valid,{from:'https://evil.example'})).status,403);
+assert.equal((await run(valid,{contentType:'text/plain'})).status,415);
+assert.equal((await run('{broken')).status,400);
+assert.equal((await run({...valid,honeypot:'bot'})).status,422);
+assert.equal((await run({...valid,website:'http://127.0.0.1/private'})).status,422);
+assert.equal((await run({...valid,consent:false})).status,422);
+assert.equal((await run(valid,{},{})).status,503);
+assert.equal(writes,0,'invalid requests must not write to D1');
+assert.equal((await run(valid)).status,201);
+assert.equal(writes,1);
+const duplicate={prepare(){return {bind(){return {run:async()=>{throw Error('UNIQUE constraint failed: artists.email')}}}}}};
+assert.equal((await run(valid,{}, {DB:duplicate})).status,409);
+assert.equal(writes,1);
+console.log('Artist registration safety regression tests passed');
