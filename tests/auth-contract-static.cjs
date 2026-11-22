@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 // Offline contract checks only: no requests, credentials, charges or deployments.
 const fs=require('node:fs');
-const assert=require('node:assert/strict');
 const account=fs.readFileSync('conta/index.html','utf8');
 const admin=fs.readFileSync('admin/index.html','utf8');
 const checks=[
@@ -12,6 +11,8 @@ const checks=[
   ['login requires server-confirmed user',/path===['"]\/api\/auth\/login['"]&&\(!data\.user/.test(account)],
   ['cookie-capable request',/credentials:\s*['"]include['"]/.test(account)],
   ['no client-side localStorage auth',!/localStorage\s*\./.test(account)],
+  ['clear password after confirmed login',/document\.getElementById\(['"]password['"]\)\.value=['"]['"]/.test(account)],
+  ['clear identity on confirmed logout',/document\.getElementById\(['"]who['"]\)\.textContent=['"]['"]/.test(account)],
   ['admin placeholder clearly marked',/Integração pendente|Aguardando base de dados/.test(admin)],
 ];
 let failed=0;
