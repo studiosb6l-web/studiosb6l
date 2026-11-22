@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-22T17:47:09.834129+00:00",
+  "updated": "2026-11-22T18:26:57.321901+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "zM4ubThhrnM",
+        "title": "Beauty and the Beast: Creating Belle | Notes on a Scene",
+        "source": "Disney",
+        "published": "2026-11-22T18:00:39Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=zM4ubThhrnM"
+      },
       {
         "youtubeId": "wVYJrROpDgE",
         "title": "Belle's Sacrifice | Beauty and the Beast (1991) | Official Clip",
@@ -89,14 +97,6 @@
         "published": "2026-11-16T21:27:24Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=zjbUzrdUjhA"
-      },
-      {
-        "youtubeId": "7hkDl8ZfLmc",
-        "title": "Disney sváteční krátký film: Neviditelný kůň",
-        "source": "Disney",
-        "published": "2026-11-16T21:27:21Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=7hkDl8ZfLmc"
       }
     ],
     "warner": [
