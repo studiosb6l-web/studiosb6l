@@ -11,6 +11,9 @@ on:
       - 'cloudflare/artists-registration-worker.js'
       - 'tests/artists-registration-worker.test.mjs'
       - '.github/workflows/artists-api-tests.yml'
+concurrency:
+  group: artists-security-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -30,4 +33,4 @@ jobs:
         run: |
           count=$(grep -c "^test(" tests/artists-registration-worker.test.mjs)
           echo "Registered tests: $count"
-          test "$count" -ge 22
+          test "$count" -ge 23
