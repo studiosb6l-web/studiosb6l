@@ -23,7 +23,7 @@ for path in ['/','/robots.txt','/sitemap.xml','/sitemap-artistas.xml','/concerto
             add('Canonical '+path,bool(re.search(r'<link[^>]+rel=[\"\\\']canonical[\"\\\']',body,re.I)),'Canonical on commerce page')
             add('Title '+path,bool(re.search(r'<title>[^<]+</title>',body,re.I)),'Page title present')
         if path=='/robots.txt':
-            add('Robots lists primary sitemap',bool(re.search(r'^Sitemap:\\s*https://www\\.studiosb6l\\.com/sitemap\\.xml\\s*
+            add('Robots lists primary sitemap', 'Sitemap: https://www.studiosb6l.com/sitemap.xml' in body, 'Artist sitemap withheld pending provenance and consent checks')
         if path=='/':
             add('Homepage canonical',bool(re.search(r'rel=["\\\']canonical["\\\']',body,re.I)),'Canonical present')
     except Exception as exc:
