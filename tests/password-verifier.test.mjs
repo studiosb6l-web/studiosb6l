@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {hashPassword,verifyPassword} from '../cloudflare/password-verifier.mjs';
+const password='Correct-Horse-Example-2026!';
+test('password hash has salt and expected algorithm metadata',async()=>{const v=await hashPassword(password);assert.match(v,/^pbkdf2-sha256\$310000\$[0-9a-f]{32}\$[0-9a-f]{64}$/)});
+test('correct password verifies',async()=>{const v=await hashPassword(password);assert.equal(await verifyPassword(password,v),true)});
+test('wrong password denied',async()=>{const v=await hashPassword(password);assert.equal(await verifyPassword('Incorrect-Horse-2026!',v),false)});
+test('different salts produce different hashes',async()=>{const a=await hashPassword(password),b=await hashPassword(password);assert.notEqual(a,b)});
+test('weak password refused',async()=>{await assert.rejects(hashPassword('12345678'))});
+test('malformed verifier denied',async()=>{assert.equal(await verifyPassword(password,'not-a-verifier'),false)});
