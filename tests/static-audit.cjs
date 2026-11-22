@@ -22,7 +22,19 @@ if (form) {
 }
 const links = [...html.matchAll(/\bhref=["'](\/[^"'?#]*)(?:[?#][^"']*)?["']/g)]
   .map(m => m[1]).filter(p => !p.startsWith('//'));
-const missing = [...new Set(links)].filter(p => p !== '/' && !fs.existsSync(path.join(root, decodeURIComponent(p).replace(/^\//, ''))));
+const missing = [...new Set(links)].filter(p => {
+  if (p === '/') return false;
+  let decoded;
+  try { decoded = decodeURIComponent(p); }
+  catch { warnings.push('Malformed URL encoding in local link: ' + p); return false; }
+  const relative = decoded.replace(/^\/+/, '');
+  const target = path.resolve(root, relative);
+  if (target !== root && !target.startsWith(root + path.sep)) {
+    warnings.push('Local link escapes repository root: ' + p);
+    return false;
+  }
+  return !fs.existsSync(target);
+});
 if (missing.length) warnings.push('Unresolved local links (may be dynamic routes): ' + missing.slice(0, 30).join(', '));
 console.log('STUDIOSB6L static audit (read-only)');
 console.log('Checked homepage, private login demo, viewport and ' + links.length + ' root-relative links.');
