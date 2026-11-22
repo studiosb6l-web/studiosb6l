@@ -13,4 +13,6 @@ jobs:
         with:
           node-version: '22'
       - name: Static read-only checks
-        run: node tests/static-audit.cjs
+        run: |
+          node tests/static-audit.cjs
+          node tests/auth-contract-static.cjs
