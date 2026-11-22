@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {login} from '../cloudflare/login-worker.mjs';
+import {hashPassword} from '../cloudflare/password-verifier.mjs';
+const password='Safe-Example-Password-2026!';
+const origin='https://www.studiosb6l.com';
+const request=(data={email:'artist@example.com',password},headers={})=>new Request('https://api.example.test/api/auth/login',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json',...headers},body:JSON.stringify(data)});
+const account=async(role='artist')=>({id:'u1',role,password_hash:await hashPassword(password),verified:1,disabled:0});
+function database(user){const writes=[];return {writes,prepare(sql){return {bind(...args){return {first:async()=>user,run:async()=>{writes.push({sql,args})}}}}}}}
+const enabled=db=>({DB:db,LOGIN_ENABLED:'true',RATE_LIMIT_VERIFIED:'true'});
+test('login disabled by default',async()=>{const r=await login(request(),{DB:database(await account())});assert.equal(r.status,503)});
+test('login requires verified edge rate limiting',async()=>{const r=await login(request(),{DB:database(await account()),LOGIN_ENABLED:'true'});assert.equal(r.status,503)});
+test('valid artist credentials create short session',async()=>{const db=database(await account());const r=await login(request(),enabled(db));assert.equal(r.status,200);const body=await r.json();assert.match(body.token,/^[A-Za-z0-9_-]{43}$/);assert.equal(body.role,'artist');assert.equal(db.writes.length,1);assert.match(db.writes[0].args[0],/^[a-f0-9]{64}$/);assert.equal(db.writes[0].args[1],'u1')});
+test('owner login blocked pending verified MFA',async()=>{const db=database(await account('owner'));const r=await login(request(),enabled(db));assert.equal(r.status,403);assert.equal(db.writes.length,0)});
+test('client MFA flag cannot bypass owner challenge',async()=>{const db=database(await account('owner'));const r=await login(request({email:'artist@example.com',password,mfaVerified:true}),enabled(db));assert.equal(r.status,403);assert.equal(db.writes.length,0)});
+test('incorrect password rejected without session',async()=>{const db=database(await account());const r=await login(request({email:'artist@example.com',password:'Wrong-Password-2026!'}),enabled(db));assert.equal(r.status,401);assert.equal(db.writes.length,0)});
+test('unknown account rejected',async()=>{const db=database(null);const r=await login(request(),enabled(db));assert.equal(r.status,401);assert.equal(db.writes.length,0)});
+test('disabled account rejected',async()=>{const db=database({...await account(),disabled:1});const r=await login(request(),enabled(db));assert.equal(r.status,401);assert.equal(db.writes.length,0)});
+test('foreign origin rejected',async()=>{const db=database(await account());const r=await login(request(undefined,{Origin:'https://evil.test'}),enabled(db));assert.equal(r.status,403);assert.equal(db.writes.length,0)});
+test('missing DB fails closed',async()=>{const r=await login(request(),{LOGIN_ENABLED:'true',RATE_LIMIT_VERIFIED:'true'});assert.equal(r.status,503)});
