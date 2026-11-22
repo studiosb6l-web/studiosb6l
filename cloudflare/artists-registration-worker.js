@@ -10,7 +10,7 @@ const isPrivateHost=h=>/^(localhost|127\.|0\.|10\.|192\.168\.|169\.254\.|172\.(1
 export default {async fetch(request,env){
   const url=new URL(request.url);
   if(request.method==='OPTIONS')return request.headers.get('Origin')===ORIGIN?new Response(null,{status:204,headers:HEADERS}):respond({error:'Origin not allowed'},403);
-  if(url.pathname==='/'&&request.method==='GET')return respond({platform:'STUDIOSB6L',service:'Artists API',status:'online',database:env.DB?'configured':'missing',publication:'manual approval required'});
+  if(url.pathname==='/'&&request.method==='GET')return respond({platform:'STUDIOSB6L',service:'Artists API',status:'online',publication:'manual approval required'});
   if(url.pathname!=='/api/applications'||request.method!=='POST')return respond({error:'Route not found'},404);
   if(request.headers.get('Origin')!==ORIGIN)return respond({error:'Origin not allowed'},403);
   if(!env.DB)return respond({error:'Database unavailable'},503);
