@@ -29,8 +29,8 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "$WORKER_HEALTH_URL" ]; then
-            echo "::warning::Configure repository variable STUDIOSB6L_ARTISTS_HEALTH_URL with the exact deployed Worker /health URL; API is NOT verified."
-            exit 0
+            echo "::error::Production API health URL is not configured; backend is NOT verified."
+            exit 1
           fi
           case "$WORKER_HEALTH_URL" in
             https://*) ;;
@@ -63,3 +63,17 @@ jobs:
           else
             gh issue create --title "$title" --body "Production monitoring detected a failure: $link. Investigate before claiming the platform is fully operational."
           fi
+      - name: Resolve incident after verified recovery
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          title="STUDIOSB6L: hourly production monitor failed"
+          existing=$(gh issue list --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "STUDIOSB6L: hourly production monitor failed") | .number')
+          link="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          for number in $existing; do
+            gh issue comment "$number" --body "RECOVERED: all production monitor checks passed in $link. This verifies only the checks in this workflow, not payments or user journeys."
+            gh issue close "$number" --reason completed
+          done
