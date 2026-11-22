@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-22T19:27:36.555239+00:00",
+  "updated": "2026-11-22T20:18:16.757637+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "9aNyzylY7I0",
+        "title": "A Princess who drives her own destiny 🌹✨",
+        "source": "Disney",
+        "published": "2026-11-22T20:00:38Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=9aNyzylY7I0"
+      },
       {
         "youtubeId": "zM4ubThhrnM",
         "title": "Beauty and the Beast: Creating Belle | Notes on a Scene",
@@ -89,14 +97,6 @@
         "published": "2026-11-16T21:27:26Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=lxNVzYHs1Ig"
-      },
-      {
-        "youtubeId": "zjbUzrdUjhA",
-        "title": "Disney blagdanski kratki film: Nevidljivi kon",
-        "source": "Disney",
-        "published": "2026-11-16T21:27:24Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=zjbUzrdUjhA"
       }
     ],
     "warner": [
