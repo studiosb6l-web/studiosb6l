@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {resolveSession,requireAuthenticatedCapability} from '../cloudflare/session-guard.mjs';
+const token='A'.repeat(43);
+const request=(t=token)=>new Request('https://api.example.test/private',{headers:{Authorization:'Bearer '+t}});
+const db=(row)=>({prepare(sql){assert.match(sql,/token_hash/);return {bind(hash){assert.match(hash,/^[a-f0-9]{64}$/);return {first:async()=>row}}}}});
+const row={user_id:'u1',role:'owner',verified:1,mfa_verified:1,disabled:0,expires_at:Date.now()+60000};
+test('missing database denies session',async()=>assert.equal(await resolveSession(request(),{}),null));
+test('missing bearer token denies session',async()=>assert.equal(await resolveSession(new Request('https://api.example.test/private'),{DB:db(row)}),null));
+test('short token denies session',async()=>assert.equal(await resolveSession(request('short'),{DB:db(row)}),null));
+test('valid owner session with MFA is resolved',async()=>{const s=await resolveSession(request(),{DB:db(row)});assert.equal(s.role,'owner');assert.equal(s.mfaVerified,true)});
+test('expired token denies protected endpoint',async()=>{const x=await requireAuthenticatedCapability(request(),{DB:db({...row,expires_at:Date.now()-1})},'admin:read');assert.equal(x.response.status,403)});
+test('owner without MFA cannot access admin',async()=>{const x=await requireAuthenticatedCapability(request(),{DB:db({...row,mfa_verified:0})},'admin:read');assert.equal(x.response.status,403)});
+test('public profile cannot access emergency controls',async()=>{const x=await requireAuthenticatedCapability(request(),{DB:db({...row,role:'artist'})},'emergency:control');assert.equal(x.response.status,403)});
+test('disabled session cannot access protected endpoint',async()=>{const x=await requireAuthenticatedCapability(request(),{DB:db({...row,disabled:1})},'profile:read');assert.equal(x.response.status,403)});
+test('database failure denies access',async()=>{const DB={prepare(){throw Error('database unavailable')}};assert.equal(await resolveSession(request(),{DB}),null)});
