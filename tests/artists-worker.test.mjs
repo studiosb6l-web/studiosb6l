@@ -12,7 +12,7 @@ assert.equal(missing.status,503);
 const db={prepare(){return {bind(){return {run:async()=>({success:true})}}}}};
 const bad=await call('/api/applications','POST',{name:'X',email:'bad',consent:false},db);
 assert.equal(bad.status,422);
-const good=await call('/api/applications','POST',{name:'Test Artist',email:'test@example.org',type:'Artista',consent:true},db);
+const good=await call('/api/applications','POST',{name:'Test Artist',email:'test@example.org',type:'Artista',country:'Portugal',biography:'',website:'',consent:true},db);
 assert.equal(good.status,201);
 const unknown=await call('/not-found');
 assert.equal(unknown.status,404);
