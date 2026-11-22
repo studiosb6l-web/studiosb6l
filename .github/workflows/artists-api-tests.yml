@@ -6,10 +6,12 @@ on:
       - 'cloudflare/authorization-policy.mjs'
       - 'cloudflare/session-guard.mjs'
       - 'cloudflare/logout-worker.mjs'
+      - 'cloudflare/session-tokens.mjs'
       - 'tests/artists-registration-worker.test.mjs'
       - 'tests/authorization-policy.test.mjs'
       - 'tests/session-guard.test.mjs'
       - 'tests/logout-worker.test.mjs'
+      - 'tests/session-tokens.test.mjs'
       - '.github/workflows/artists-api-tests.yml'
   workflow_dispatch:
   pull_request:
@@ -34,7 +36,7 @@ jobs:
       - name: Validate worker JavaScript syntax
         run: node --check cloudflare/artists-registration-worker.js
       - name: Run security and authorization tests
-        run: node --test tests/artists-registration-worker.test.mjs tests/authorization-policy.test.mjs tests/session-guard.test.mjs tests/logout-worker.test.mjs
+        run: node --test tests/*.test.mjs
       - name: Verify test suite count
         run: |
           count=$(grep -c "^test(" tests/artists-registration-worker.test.mjs)
@@ -43,3 +45,4 @@ jobs:
           node --check cloudflare/authorization-policy.mjs
           node --check cloudflare/session-guard.mjs
           node --check cloudflare/logout-worker.mjs
+          node --check cloudflare/session-tokens.mjs
