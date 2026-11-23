@@ -14,6 +14,12 @@ const headers={'Content-Type':'application/json; charset=utf-8','Cache-Control':
 const reply=(status,body)=>new Response(JSON.stringify(body),{status,headers});
 export default {async fetch(request,env={}){
   const path=new URL(request.url).pathname;
+  // Preview blocks all mutations, including signed webhooks, even if a base
+  // configuration unexpectedly supplies production bindings or secrets.
+  if(env.PREVIEW_ISOLATED==='true'){
+    if(path==='/health'&&request.method==='GET')return reply(200,{ok:true,service:'studiosb6l-artists-api',environment:'preview',operationsEnabled:false});
+    return reply(503,{success:false,error:'Preview operations are disabled'});
+  }
   if(path==='/api/billing/stripe/webhook')return admissionWebhook(request,env);
   const origin=request.headers.get('Origin');
   if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
