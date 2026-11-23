@@ -1,4 +1,5 @@
 import {admissionWebhook} from './admission-billing.mjs';
+import {checkProAccess} from './pro-d1-access.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
 // Unified entry point for studiosb6l-artists-api. Deployment configuration and
 // the existing D1 binding must be verified before enabling repository builds.
@@ -19,9 +20,19 @@ export default {async fetch(request,env={}){
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});
   if(['/conta','/conta/'].includes(path)&&request.method==='GET')return accountPortal({...env,RUNTIME_READY:(await authReadiness(env)).enabled});
   if(path==='/api/auth/status'&&request.method==='GET'){
+    // Public, read-only readiness probe: never requires a client IP or consumes
+    // authentication rate-limit quota. Real login stays rate-limited and fail-closed.
+    const {enabled}=await authReadiness(env);
+    return reply(200,{success:true,enabled});
+  }
+  if(path==='/api/pro/access'&&request.method==='GET'){
     const limited=await checkAuthRate(request,env);
     if(limited)return reply(limited,{success:false,error:'Service unavailable'});
-    return reply(200,{success:true,...await authReadiness(env)});
+    const session=await resolveSession(request,env);
+    if(!session)return reply(401,{success:false,error:'Unauthorized'});
+    const capability=new URL(request.url).searchParams.get('capability');
+    const allowed=await checkProAccess({db:env.DB,session,capability});
+    return reply(200,{success:true,allowed});
   }
   if(path==='/api/auth/session'&&request.method==='GET'){
     const session=await resolveSession(request,env);

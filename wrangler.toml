@@ -12,6 +12,12 @@ binding = "DB"
 database_name = "studiosb6l-artists-db"
 database_id = "f53175d9-50a7-4b6a-a868-1b10c997efc8"
 
+# Isolated D1 binding for Cloudflare preview builds (never production DB).
+[[previews.d1_databases]]
+binding = "DB"
+database_name = "studiosb6l-artists-preview-db"
+database_id = "89908805-b194-4a1b-8250-b17090dc1499"
+
 [vars]
 LOGIN_ENABLED = "true"
 
