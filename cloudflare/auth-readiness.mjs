@@ -1,13 +1,8 @@
+import {passwordRuntimeProbe} from './password-verifier.mjs';
 // Runtime readiness uses a public, non-user canary and never changes credentials.
 let cryptoCheck;
 export function passwordRuntimeReady(){
-  if(!cryptoCheck)cryptoCheck=(async()=>{
-    try{
-      const key=await crypto.subtle.importKey('raw',new TextEncoder().encode('STUDIOSB6L public runtime canary'),'PBKDF2',false,['deriveBits']);
-      await crypto.subtle.deriveBits({name:'PBKDF2',salt:new Uint8Array(16),iterations:310000,hash:'SHA-256'},key,256);
-      return true;
-    }catch{return false;}
-  })();
+  if(!cryptoCheck)cryptoCheck=passwordRuntimeProbe().catch(()=>false);
   return cryptoCheck;
 }
 export async function authReadiness(env){
