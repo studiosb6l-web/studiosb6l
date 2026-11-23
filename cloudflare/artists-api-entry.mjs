@@ -1,4 +1,5 @@
 import {admissionWebhook} from './admission-billing.mjs';
+import {checkProAccess} from './pro-d1-access.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
 // Unified entry point for studiosb6l-artists-api. Deployment configuration and
 // the existing D1 binding must be verified before enabling repository builds.
@@ -22,6 +23,13 @@ export default {async fetch(request,env={}){
     const limited=await checkAuthRate(request,env);
     if(limited)return reply(limited,{success:false,error:'Service unavailable'});
     return reply(200,{success:true,...await authReadiness(env)});
+  }
+  if(path==='/api/pro/access'&&request.method==='GET'){
+    const session=await resolveSession(request,env);
+    if(!session)return reply(401,{success:false,error:'Unauthorized'});
+    const capability=new URL(request.url).searchParams.get('capability');
+    const allowed=await checkProAccess({db:env.DB,session,capability});
+    return reply(200,{success:true,allowed});
   }
   if(path==='/api/auth/session'&&request.method==='GET'){
     const session=await resolveSession(request,env);
