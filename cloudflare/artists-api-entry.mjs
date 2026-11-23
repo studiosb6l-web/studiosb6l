@@ -25,6 +25,8 @@ export default {async fetch(request,env={}){
     return reply(200,{success:true,...await authReadiness(env)});
   }
   if(path==='/api/pro/access'&&request.method==='GET'){
+    const limited=await checkAuthRate(request,env);
+    if(limited)return reply(limited,{success:false,error:'Service unavailable'});
     const session=await resolveSession(request,env);
     if(!session)return reply(401,{success:false,error:'Unauthorized'});
     const capability=new URL(request.url).searchParams.get('capability');
