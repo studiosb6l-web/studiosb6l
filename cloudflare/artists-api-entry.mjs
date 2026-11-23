@@ -1,3 +1,4 @@
+import {accountRegistration,registrationConfigured} from './account-registration.mjs';
 import {admissionWebhook} from './admission-billing.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
 // Unified entry point for studiosb6l-artists-api. Deployment configuration and
@@ -21,7 +22,8 @@ export default {async fetch(request,env={}){
   if(path==='/api/auth/status'&&request.method==='GET'){
     const limited=await checkAuthRate(request,env);
     if(limited)return reply(limited,{success:false,error:'Service unavailable'});
-    return reply(200,{success:true,...await authReadiness(env)});
+    const readiness=await authReadiness(env);
+    return reply(200,{success:true,...readiness,registrationEnabled:readiness.enabled&&registrationConfigured(env)});
   }
   if(path==='/api/auth/session'&&request.method==='GET'){
     const session=await resolveSession(request,env);
@@ -29,7 +31,7 @@ export default {async fetch(request,env={}){
   }
   if(path==='/health'&&request.method==='GET')return reply(200,{ok:true,service:'studiosb6l-artists-api'});
   if(path.startsWith('/api/auth/')){
-    if(!['/api/auth/login','/api/auth/logout','/api/auth/register'].includes(path))return reply(404,{error:'Not found'});
+    if(!['/api/auth/login','/api/auth/logout','/api/auth/register','/api/auth/verify-email'].includes(path))return reply(404,{error:'Not found'});
     if(request.method==='OPTIONS'){
       if(!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
       return new Response(null,{status:204,headers:{...headers,'Access-Control-Allow-Origin':authResponseOrigin(request),'Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'}});
@@ -42,8 +44,7 @@ export default {async fetch(request,env={}){
       return login(request,{...env,RATE_LIMIT_VERIFIED:'true'});
     }
     if(path==='/api/auth/logout')return logout.fetch(request,env);
-    // Account registration needs verified identity and payment provisioning.
-    return reply(503,{success:false,error:'O registo de contas ainda não está disponível.'});
+    return accountRegistration(request,env);
   }
   return applications.fetch(request,env);
 }};
