@@ -7,10 +7,10 @@ const response=(status,body)=>new Response(JSON.stringify(body),{status,headers:
 export async function register(request,env){
   if(request.method!=='POST')return response(405,{success:false,error:'Method not allowed'});
   if(!trustedAuthOrigin(request.headers.get('Origin')))return response(403,{success:false,error:'Forbidden'});
-  if(!/^application\/json(?:\s*;|$)/i.test(request.headers.get('Content-Type')||''))return response(415,{success:false,error:'JSON required'});
   // Fail closed: the operator must confirm that verified email delivery,
   // migrations and billing reconciliation are available before public rollout.
   if(env.REGISTRATION_ENABLED!=='true'||env.EMAIL_VERIFICATION_READY!=='true'||env.BILLING_RECONCILIATION_READY!=='true'||!env.DB)return response(503,{success:false,error:'Inscrições temporariamente indisponíveis'});
+  if(!/^application\/json(?:\s*;|$)/i.test(request.headers.get('Content-Type')||''))return response(415,{success:false,error:'JSON required'});
   const length=Number(request.headers.get('Content-Length'));
   if(Number.isFinite(length)&&length>2048)return response(413,{success:false,error:'Too large'});
   let raw;try{raw=await request.text()}catch{return response(400,{success:false,error:'Invalid request'});}
