@@ -9,4 +9,9 @@ test('limiter failure blocks before database access',async()=>{let touched=false
 test('rate-limited requests return 429 before database access',async()=>{let touched=false;const r=await worker.fetch(request(),{LOGIN_ENABLED:'true',DB:{prepare(){touched=true;}},AUTH_RATE_LIMIT:{limit:async()=>({success:false})}});assert.equal(r.status,429);assert.equal(touched,false)});
 test('rate keys use the Cloudflare client address',async()=>{let key;assert.equal(await checkAuthRate(request(),{AUTH_RATE_LIMIT:{limit:async data=>{key=data.key;return {success:true}}}}),null);assert.equal(key,'auth:192.0.2.1')});
 test('requests without a trusted edge address fail closed',async()=>{assert.equal(await checkAuthRate(new Request(origin),{AUTH_RATE_LIMIT:{limit:async()=>({success:true})}}),503)});
-test('node readiness checks actual crypto and limiter bindings',async()=>{const r=await authReadiness({LOGIN_ENABLED:'true',DB:{},AUTH_RATE_LIMIT:{limit(){}}});assert.equal(r.enabled,true);assert.equal(r.passwordRuntimeSupported,true);assert.equal((await authReadiness({LOGIN_ENABLED:'true',DB:{}})).enabled,false)});
+test('node readiness checks actual crypto and limiter bindings',async()=>{const r=await authReadiness({LOGIN_ENABLED:'true',DB:{prepare(){}},AUTH_RATE_LIMIT:{limit(){}}});assert.equal(r.enabled,true);assert.equal(r.passwordRuntimeSupported,true);assert.equal((await authReadiness({LOGIN_ENABLED:'true',DB:{}})).enabled,false)});
+
+test('auth readiness rejects a truthy but unusable D1 binding',async()=>{
+ const result=await authReadiness({LOGIN_ENABLED:'true',DB:{},AUTH_RATE_LIMIT:{limit(){}}});
+ assert.equal(result.enabled,false);
+});
