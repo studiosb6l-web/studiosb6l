@@ -1,3 +1,4 @@
+import {emailConfigured,reserveEmail,sendVerificationEmail} from './registration-email.mjs';
 import {trustedAuthOrigin,authResponseOrigin} from './auth-origins.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
 import {hashPassword,verifyPassword} from './password-verifier.mjs';
@@ -7,7 +8,12 @@ const accepted={success:true,message:'Se o pedido puder ser aceite, receberás u
 function paymentLink(env){
  try{const u=new URL(env.STRIPE_ADMISSION_PAYMENT_LINK_URL);return u.protocol==='https:'&&u.hostname==='buy.stripe.com'&&!u.username&&!u.password&&!u.search&&!u.hash&&/^\/[A-Za-z0-9_]+$/.test(u.pathname)?u:null;}catch{return null;}
 }
-export function registrationConfigured(env){return env?.REGISTRATION_ENABLED==='true'&&!!env.DB&&typeof env.EMAIL_SERVICE?.fetch==='function'&&!!env.STRIPE_ADMISSION_WEBHOOK_SECRET&&/^plink_[A-Za-z0-9]+$/.test(env.STRIPE_ADMISSION_PAYMENT_LINK_ID||'')&&!!paymentLink(env);}
+async function admissionReference(id,secret){
+ const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);
+ const bytes=new Uint8Array(await crypto.subtle.sign('HMAC',key,new TextEncoder().encode('studiosb6l-admission-v1:'+id)));
+ return btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+export function registrationConfigured(env){return typeof env?.ADMISSION_REFERENCE_SECRET==='string'&&env.ADMISSION_REFERENCE_SECRET.length>=32&&env?.REGISTRATION_ENABLED==='true'&&!!env.DB&&emailConfigured(env)&&!!env.STRIPE_ADMISSION_WEBHOOK_SECRET&&/^plink_[A-Za-z0-9]+$/.test(env.STRIPE_ADMISSION_PAYMENT_LINK_ID||'')&&!!paymentLink(env);}
 async function readJson(request){
  if(!/^application\/json(?:\s*;|$)/i.test(request.headers.get('Content-Type')||''))return {status:415};
  const reader=request.body?.getReader();if(!reader)return {status:400};
@@ -38,7 +44,7 @@ export async function accountRegistration(request,env={}){
     env.DB.prepare('UPDATE account_onboarding SET email_verified_at=COALESCE(email_verified_at,?) WHERE account_id=? AND EXISTS(SELECT 1 FROM account_email_verifications WHERE token_hash=? AND consumed_at=?)').bind(now,token.account_id,hash,now)
    ]);
    if(Number(results[0]?.meta?.changes)!==1)return reply(400,{success:false,error:'Invalid or expired verification'});
-   const url=paymentLink(env);url.searchParams.set('client_reference_id',data.token);
+   const url=paymentLink(env);url.searchParams.set('client_reference_id',await admissionReference(token.account_id,env.ADMISSION_REFERENCE_SECRET));
    return reply(200,{success:true,emailVerified:true,checkoutUrl:url.href,amount:299,currency:'eur'});
   }catch{return reply(503,{success:false,error:'Verification unavailable'});}
  }
@@ -48,26 +54,35 @@ export async function accountRegistration(request,env={}){
  try{
   // Generic responses prevent disclosing which email addresses have accounts.
   const existing=await env.DB.prepare('SELECT a.id,a.password_hash,a.verified,a.disabled,o.email_verified_at,o.paid_at FROM accounts a LEFT JOIN account_onboarding o ON o.account_id=a.id WHERE a.email=? LIMIT 1').bind(email).first();
-  if(existing&&(existing.verified!==0||existing.disabled!==0||existing.email_verified_at!==null||existing.paid_at!==null||!await verifyPassword(data.password,existing.password_hash)))return reply(202,accepted);
+  if(existing&&(existing.verified!==0||existing.disabled!==0||existing.paid_at!==null||!await verifyPassword(data.password,existing.password_hash)))return reply(202,accepted);
   const id=existing?.id||crypto.randomUUID(),{token,hash}=await createSessionToken(),now=Date.now();
+  const reference=await admissionReference(id,env.ADMISSION_REFERENCE_SECRET),referenceHash=await hashSessionToken(reference);
+  let reservation;
   if(existing){
+   const lock=await env.DB.prepare('SELECT available_after FROM account_email_send_locks WHERE account_id=?').bind(id).first();
+   if(lock&&lock.available_after>now)return reply(202,accepted);
+   reservation=await reserveEmail(env,id,now);
+   if(!reservation.allowed)return reply(202,accepted);
    await env.DB.batch([
     env.DB.prepare('DELETE FROM account_email_verifications WHERE account_id=?').bind(id),
-    env.DB.prepare('UPDATE account_onboarding SET checkout_reference_hash=? WHERE account_id=? AND email_verified_at IS NULL AND paid_at IS NULL').bind(hash,id),
+    env.DB.prepare('UPDATE account_onboarding SET checkout_reference_hash=? WHERE account_id=? AND paid_at IS NULL').bind(referenceHash,id),
     env.DB.prepare('INSERT INTO account_email_verifications(token_hash,account_id,expires_at,terms_accepted_at) VALUES(?,?,?,?)').bind(hash,id,now+30*60*1000,now)
    ]);
   }else{
    const passwordHash=await hashPassword(data.password);
    await env.DB.batch([
     env.DB.prepare('INSERT INTO accounts(id,email,role,password_hash,verified,disabled,created_at) VALUES(?,?,?,?,0,0,?)').bind(id,email,data.role,passwordHash,now),
-    env.DB.prepare('INSERT INTO account_onboarding(account_id,checkout_reference_hash) VALUES(?,?)').bind(id,hash),
+    env.DB.prepare('INSERT INTO account_onboarding(account_id,checkout_reference_hash) VALUES(?,?)').bind(id,referenceHash),
     env.DB.prepare('INSERT INTO account_email_verifications(token_hash,account_id,expires_at,terms_accepted_at) VALUES(?,?,?,?)').bind(hash,id,now+30*60*1000,now)
    ]);
   }
-  // A private service binding delivers transactional email. It must be configured
-  // and verified separately; no paid email provider is created by this module.
-  const delivery=await env.EMAIL_SERVICE.fetch(new Request('https://email.internal/verification',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:email,verificationUrl:'https://www.studiosb6l.com/conta/#verify='+token,expiresInMinutes:30})}));
-  if(!delivery.ok)return reply(503,{success:false,error:'Email delivery unavailable'});
+  reservation=reservation||await reserveEmail(env,id,now);
+  if(!reservation.allowed)return reply(503,{success:false,error:'Email temporarily unavailable'});
+  const delivered=await sendVerificationEmail(env,{to:email,verificationUrl:'https://www.studiosb6l.com/conta/#verify='+token});
+  if(!delivered){
+   await env.DB.prepare('DELETE FROM account_email_send_locks WHERE account_id=? AND available_after=?').bind(id,reservation.until).run();
+   return reply(503,{success:false,error:'Email delivery unavailable'});
+  }
   return reply(202,accepted);
  }catch(error){if(/UNIQUE constraint failed/i.test(String(error)))return reply(202,accepted);return reply(503,{success:false,error:'Registration unavailable'});}
 }

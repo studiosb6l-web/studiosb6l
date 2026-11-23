@@ -11,26 +11,31 @@
 ## Implemented locally, not deployed
 
 - Rate-limited, origin-checked registration with bounded JSON body, permitted ordinary roles, explicit consent, password hashing, and inactive accounts.
-- Hashed email tokens with 30-minute validity and single-use confirmation; a private email service binding must be configured before registration can be enabled.
+- Hashed email tokens with 30-minute validity and single-use confirmation; an optional private email service binding or the implemented Brevo adapter must be configured before registration can be enabled.
 - Verification returns a configured Stripe Payment Link with client_reference_id matching the existing signed-webhook activation ledger. Neither registration nor email verification grants access.
 - Pending accounts can request another confirmation with the same credentials after email delivery failure; duplicate email addresses receive generic responses without overwriting credentials.
 - Additive migration 004_account_email_verifications.sql, not applied anywhere.
 - Account page registration form stays hidden unless the production API explicitly confirms registration readiness. Confirmation removes the token from the address bar and requires a deliberate click before contacting the backend. No browser return URL grants access.
+- Abandoned checkout recovery uses a new email confirmation after password verification, retaining a stable HMAC-derived payment reference. Preserve ADMISSION_REFERENCE_SECRET; rotating it without a ledger migration could break pending payments.
+- Brevo adapter implements the documented transactional endpoint with a verified sender, server-side API key, fixed endpoint, bounded timeout and no redirects. It only treats HTTP 201 with messageId as provider acceptance; this is not proof of inbox delivery.
+- Additive migration 005_registration_email_budget.sql provides an atomic daily attempt cap and per-account send lock. No more than one successful send reservation per account per minute. EMAIL_BUDGET_VERIFIED, EMAIL_FREE_DAILY_QUOTA and EMAIL_DAILY_BUDGET are mandatory; the local cap cannot exceed floor(free quota × 0.7). Failed/uncertain provider calls consume local budget conservatively. Provider-wide usage, any other senders, timezone/reset alignment and actual free-tier headroom still require verification; this application ledger does not certify the whole provider account.
 - Monthly subscriptions remain unimplemented and disabled. Admission is a one-time EUR 2.99, independent of music downloads. Do not create an unspecified recurring plan.
 
 ## Validation
 
-132 offline tests passed, including registration → email confirmation → signed simulated paid event → successful login with Secure/HttpOnly/Strict cookie. Tests also cover forged/expired tokens, duplicate emails, email failure retry, privilege escalation, rate limiting and oversized input. Simulated Stripe events do not prove production payment readiness. Wrangler dry-run compiled without uploading. JS syntax and git diff checks passed.
+140 offline tests passed, including registration → email confirmation → signed simulated paid event → successful login with Secure/HttpOnly/Strict cookie. Tests also cover forged/expired tokens, duplicate emails, email failure retry, privilege escalation, rate limiting and oversized input. Simulated Stripe events do not prove production payment readiness. Wrangler dry-run compiled without uploading. JS syntax and git diff checks passed.
 
 ## Required before enabling
 
 1. Resolve Cloudflare access and inspect actual build failure, routing, quotas and deployment settings.
 2. Review and apply the additive schema to the verified database after backup; preserve existing accounts and sessions.
-3. Configure and verify transactional email delivery, including sender identity and available free quota. No email provider has been provisioned.
-4. Verify the payment recipient and one-time admission product/price; configure matching payment URL, Payment Link ID and signed webhook secret on the correct live account. No live Payment Link was created.
+3. Configure and verify transactional email delivery, including verified sender identity, available free quota, existing use by newsletters/other services and aligned reset windows. No email provider has been provisioned; no API key has been obtained. Configure REGISTRATION_EMAIL_PROVIDER=brevo, BREVO_API_KEY, REGISTRATION_FROM_EMAIL and BREVO_SENDER_VERIFIED=true only after verification. Set the reviewed daily budget explicitly.
+4. Verify the payment recipient and one-time admission product/price; configure a dedicated stable ADMISSION_REFERENCE_SECRET (at least 32 characters), matching payment URL, Payment Link ID and signed webhook secret on the correct live account. No live Payment Link was created.
 5. Review published privacy/access/refund conditions against the actual product before accepting payments for platform access.
 6. Enable only after sandbox and production readiness checks; verify registration email delivery and activation without charging users for unavailable service. Never claim the monthly subscription is active.
 
 ## Rollback
 
 Changes are isolated on feat/verified-account-registration. Production remains unchanged by this registration work. Registration defaults off; unset REGISTRATION_ENABLED to prevent new onboarding. Existing webhook refund/revocation handling remains in place. No migration rollback or destructive production operation was executed.
+
+Implementation reference: https://developers.brevo.com/reference/send-transac-email (checked 2026-11-23). Local tests mock every email request; no real email was sent.
