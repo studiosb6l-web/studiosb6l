@@ -3,6 +3,7 @@
 name = "studiosb6l-artists-api"
 main = "cloudflare/artists-api-entry.mjs"
 compatibility_date = "2026-11-19"
+compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 keep_vars = true
 
