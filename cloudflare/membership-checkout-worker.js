@@ -30,7 +30,7 @@ export default {async fetch(request,env){
   let body;try{body=await request.json()}catch{return json({error:'Invalid JSON'},400)}
   if(!body||typeof body!=='object'||Array.isArray(body))return json({error:'Invalid payload'},400);
   const email=typeof body.email==='string'?body.email.trim().toLowerCase():'';
-  if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||email.length>200||body.acceptTerms!==true)return json({error:'Email and terms required'},422);
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>200||body.acceptTerms!==true)return json({error:'Email and terms required'},422);
   // Account creation and identity verification MUST be added before production:
   // An email alone is not authenticated account identity; do not grant access from this endpoint.
   return json({error:'Authenticated membership identity not yet integrated; checkout disabled'},503);
