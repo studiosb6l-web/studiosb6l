@@ -6,7 +6,7 @@ const json=(v,status=200)=>new Response(JSON.stringify(v),{status,headers:{'cont
 const encoder=new TextEncoder();
 const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 async function verifyStripeSignature(payload,signature,secret){
- const parts=Object.fromEntries((signature||'').split(',').map(p=>p.split('=',2)));
+ const parts=Object.fromEntries((signature||'').split(',').map(p=>p.trim().split('=',2)));
  const timestamp=Number(parts.t);
  if(!Number.isSafeInteger(timestamp)||Math.abs(Date.now()/1000-timestamp)>300||!parts.v1)return false;
  const key=await crypto.subtle.importKey('raw',encoder.encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);
@@ -28,6 +28,7 @@ export default {async fetch(request,env){
   if(request.headers.get('origin')!==ORIGIN)return json({error:'Invalid origin'},403);
   if(Number(request.headers.get('content-length')||0)>4096)return json({error:'Payload too large'},413);
   let body;try{body=await request.json()}catch{return json({error:'Invalid JSON'},400)}
+  if(!body||typeof body!=='object'||Array.isArray(body))return json({error:'Invalid payload'},400);
   const email=typeof body.email==='string'?body.email.trim().toLowerCase():'';
   if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||email.length>200||body.acceptTerms!==true)return json({error:'Email and terms required'},422);
   // Account creation and identity verification MUST be added before production:
