@@ -8,7 +8,7 @@ export function passwordRuntimeReady(){
 export async function authReadiness(env){
   const rateLimitBound=typeof env?.AUTH_RATE_LIMIT?.limit==='function';
   const passwordRuntimeSupported=await passwordRuntimeReady();
-  const enabled=env?.LOGIN_ENABLED==='true'&&!!env?.DB&&rateLimitBound&&passwordRuntimeSupported;
+  const enabled=env?.LOGIN_ENABLED==='true'&&typeof env?.DB?.prepare==='function'&&rateLimitBound&&passwordRuntimeSupported;
   return {enabled,rateLimitBound,passwordRuntimeSupported};
 }
 export async function checkAuthRate(request,env){
