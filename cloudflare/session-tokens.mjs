@@ -17,3 +17,20 @@ export async function hashSessionToken(token){
 }
 // Login service must enforce rate limits, password verification, MFA, rotation,
 // secure delivery, short expiry, account-level revocation and D1 transaction safety.
+
+export const SESSION_COOKIE='__Host-b6l_session';
+export function sessionCookie(token,maxAge=1800){
+  if(!/^[A-Za-z0-9_-]{43}$/.test(token))throw Error('Invalid session token');
+  return `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${maxAge}`;
+}
+export const clearSessionCookie=()=>`${SESSION_COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0`;
+export function requestSessionToken(request){
+  const authorization=request.headers.get('Authorization');
+  // Retain existing server/API bearer clients; malformed headers never fall back.
+  if(authorization!==null)return /^Bearer ([A-Za-z0-9_-]{43})$/.exec(authorization)?.[1]||null;
+  if(!['GET','HEAD','OPTIONS'].includes(request.method)&&request.headers.get('Origin')!=='https://www.studiosb6l.com')return null;
+  const values=(request.headers.get('Cookie')||'').split(';').map(x=>x.trim()).filter(x=>x.startsWith(SESSION_COOKIE+'='));
+  if(values.length!==1)return null;
+  const token=values[0].slice(SESSION_COOKIE.length+1);
+  return /^[A-Za-z0-9_-]{43}$/.test(token)?token:null;
+}

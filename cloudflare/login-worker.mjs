@@ -1,9 +1,11 @@
 // STUDIOSB6L login backend. Requires D1 migrations, owner MFA provider and edge rate limits.
+// Browser deployment requires /api/auth/* on the official origin (or a same-site API host).
+// The current workers.dev frontend URL is cross-site and cannot use this Strict cookie.
 // NOT DEPLOYED. Owner accounts are fail-closed until MFA has been verified by a trusted provider.
 import {verifyPassword} from './password-verifier.mjs';
-import {createSessionToken} from './session-tokens.mjs';
+import {createSessionToken,sessionCookie} from './session-tokens.mjs';
 const ORIGIN='https://www.studiosb6l.com';
-const reply=(status,body)=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin'}});
+const reply=(status,body,headers={})=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin','Access-Control-Allow-Credentials':'true',...headers}});
 const emailPattern=/^[^\s@]{1,100}@[^\s@]{1,100}\.[^\s@]{2,50}$/;
 export async function login(request,env){
   if(request.method!=='POST'||new URL(request.url).pathname!=='/api/auth/login')return reply(404,{error:'Not found'});
@@ -29,7 +31,7 @@ export async function login(request,env){
     const {token,hash}=await createSessionToken();
     const expiry=Date.now()+30*60*1000;
     await env.DB.prepare('INSERT INTO sessions (token_hash,user_id,role,verified,mfa_verified,disabled,expires_at) VALUES (?,?,?,?,?,?,?)').bind(hash,account.id,account.role,1,0,0,expiry).run();
-    return reply(200,{token,expiresAt:expiry,role:account.role});
+    return reply(200,{success:true,user:{id:account.id,role:account.role},expiresAt:expiry},{'Set-Cookie':sessionCookie(token)});
   }catch{return reply(503,{error:'Login unavailable'})}
 }
 export default {fetch:login};
