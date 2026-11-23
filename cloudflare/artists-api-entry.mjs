@@ -1,4 +1,5 @@
 import {admissionWebhook} from './admission-billing.mjs';
+import {register} from './account-registration.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
 // Unified entry point for studiosb6l-artists-api. Deployment configuration and
 // the existing D1 binding must be verified before enabling repository builds.
@@ -42,8 +43,7 @@ export default {async fetch(request,env={}){
       return login(request,{...env,RATE_LIMIT_VERIFIED:'true'});
     }
     if(path==='/api/auth/logout')return logout.fetch(request,env);
-    // Account registration needs verified identity and payment provisioning.
-    return reply(503,{success:false,error:'O registo de contas ainda não está disponível.'});
+    return register(request,env);
   }
   return applications.fetch(request,env);
 }};
