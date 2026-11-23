@@ -2,20 +2,11 @@ name: STUDIOSB6L API security tests
 on:
   push:
     paths:
-      - 'cloudflare/artists-registration-worker.js'
-      - 'cloudflare/authorization-policy.mjs'
-      - 'cloudflare/session-guard.mjs'
-      - 'cloudflare/logout-worker.mjs'
-      - 'cloudflare/session-tokens.mjs'
-      - 'cloudflare/password-verifier.mjs'
-      - 'cloudflare/login-worker.mjs'
-      - 'tests/artists-registration-worker.test.mjs'
-      - 'tests/authorization-policy.test.mjs'
-      - 'tests/session-guard.test.mjs'
-      - 'tests/logout-worker.test.mjs'
-      - 'tests/session-tokens.test.mjs'
-      - 'tests/password-verifier.test.mjs'
-      - 'tests/login-worker.test.mjs'
+      - 'cloudflare/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'wrangler.toml'
       - '.github/workflows/artists-api-tests.yml'
   workflow_dispatch:
   pull_request:
@@ -37,6 +28,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install locked runtime dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Validate worker JavaScript syntax
         run: node --check cloudflare/artists-registration-worker.js
       - name: Run security and authorization tests
