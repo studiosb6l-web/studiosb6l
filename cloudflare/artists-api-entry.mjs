@@ -20,9 +20,10 @@ export default {async fetch(request,env={}){
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});
   if(['/conta','/conta/'].includes(path)&&request.method==='GET')return accountPortal({...env,RUNTIME_READY:(await authReadiness(env)).enabled});
   if(path==='/api/auth/status'&&request.method==='GET'){
-    const limited=await checkAuthRate(request,env);
-    if(limited)return reply(limited,{success:false,error:'Service unavailable'});
-    return reply(200,{success:true,...await authReadiness(env)});
+    // Public, read-only readiness probe: never requires a client IP or consumes
+    // authentication rate-limit quota. Real login stays rate-limited and fail-closed.
+    const {enabled}=await authReadiness(env);
+    return reply(200,{success:true,enabled});
   }
   if(path==='/api/pro/access'&&request.method==='GET'){
     const limited=await checkAuthRate(request,env);
