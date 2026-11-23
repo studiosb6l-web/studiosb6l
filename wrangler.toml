@@ -1,0 +1,16 @@
+# Deployment target confirmed from the owner's Cloudflare dashboard.
+# Do not enable Builds until schema, routing and edge limits are verified.
+name = "studiosb6l-artists-api"
+main = "cloudflare/artists-api-entry.mjs"
+compatibility_date = "2026-11-19"
+workers_dev = true
+keep_vars = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "studiosb6l-artists-db"
+database_id = "f53175d9-50a7-4b6a-a868-1b10c997efc8"
+
+# No migrations, schedules, paid resources or custom routes are applied here.
+# LOGIN_ENABLED and RATE_LIMIT_VERIFIED remain fail-closed unless explicitly
+# configured after their deployment prerequisites have been verified.
