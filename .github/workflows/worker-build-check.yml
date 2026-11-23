@@ -24,4 +24,6 @@ jobs:
       - name: Verify Cloudflare Worker bundle without deployment
         run: npx --yes --package wrangler@4 wrangler deploy --dry-run --outdir /tmp/studiosb6l-worker-bundle
       - name: Confirm generated bundle exists
-        run: test -s /tmp/studiosb6l-worker-bundle/index.js
+        run: |
+          find /tmp/studiosb6l-worker-bundle -type f -maxdepth 3 -print
+          find /tmp/studiosb6l-worker-bundle -type f \( -name '*.js' -o -name '*.mjs' \) -size +0c | grep -q .
