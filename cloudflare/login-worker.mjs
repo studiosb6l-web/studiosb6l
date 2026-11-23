@@ -1,15 +1,16 @@
 // STUDIOSB6L login backend. Requires D1 migrations, owner MFA provider and edge rate limits.
-// Browser deployment requires /api/auth/* on the official origin (or a same-site API host).
-// The current workers.dev frontend URL is cross-site and cannot use this Strict cookie.
-// NOT DEPLOYED. Owner accounts are fail-closed until MFA has been verified by a trusted provider.
+// The account portal runs on the same origin as the API to retain Strict cookies.
+// Owner accounts are fail-closed until MFA has been verified by a trusted provider.
+import {trustedAuthOrigin,authResponseOrigin} from './auth-origins.mjs';
 import {verifyPassword} from './password-verifier.mjs';
 import {createSessionToken,sessionCookie} from './session-tokens.mjs';
 const ORIGIN='https://www.studiosb6l.com';
-const reply=(status,body,headers={})=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin','Access-Control-Allow-Credentials':'true',...headers}});
+const baseReply=(status,body,headers={})=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin','Access-Control-Allow-Credentials':'true',...headers}});
 const emailPattern=/^[^\s@]{1,100}@[^\s@]{1,100}\.[^\s@]{2,50}$/;
 export async function login(request,env){
+  const reply=(status,body,headers={})=>baseReply(status,body,{...headers,'Access-Control-Allow-Origin':authResponseOrigin(request)});
   if(request.method!=='POST'||new URL(request.url).pathname!=='/api/auth/login')return reply(404,{error:'Not found'});
-  if(request.headers.get('Origin')!==ORIGIN)return reply(403,{error:'Forbidden'});
+  if(!trustedAuthOrigin(request.headers.get('Origin')))return reply(403,{error:'Forbidden'});
   if(!/^application\/json(?:\s*;|$)/i.test(request.headers.get('Content-Type')||''))return reply(415,{error:'JSON required'});
   if(!env?.DB||env.LOGIN_ENABLED!=='true'||env.RATE_LIMIT_VERIFIED!=='true')return reply(503,{error:'Login unavailable'});
   const len=Number(request.headers.get('Content-Length'));if(Number.isFinite(len)&&len>2048)return reply(413,{error:'Too large'});

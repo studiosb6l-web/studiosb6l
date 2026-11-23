@@ -1,3 +1,4 @@
+import {trustedAuthOrigin} from './auth-origins.mjs';
 // STUDIOSB6L — cryptographically secure opaque session token helper.
 // Backend only. Do not expose token hashes or log plaintext tokens.
 const alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
@@ -28,7 +29,7 @@ export function requestSessionToken(request){
   const authorization=request.headers.get('Authorization');
   // Retain existing server/API bearer clients; malformed headers never fall back.
   if(authorization!==null)return /^Bearer ([A-Za-z0-9_-]{43})$/.exec(authorization)?.[1]||null;
-  if(!['GET','HEAD','OPTIONS'].includes(request.method)&&request.headers.get('Origin')!=='https://www.studiosb6l.com')return null;
+  if(!['GET','HEAD','OPTIONS'].includes(request.method)&&!trustedAuthOrigin(request.headers.get('Origin')))return null;
   const values=(request.headers.get('Cookie')||'').split(';').map(x=>x.trim()).filter(x=>x.startsWith(SESSION_COOKIE+'='));
   if(values.length!==1)return null;
   const token=values[0].slice(SESSION_COOKIE.length+1);

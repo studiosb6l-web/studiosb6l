@@ -1,5 +1,8 @@
 // Unified entry point for studiosb6l-artists-api. Deployment configuration and
 // the existing D1 binding must be verified before enabling repository builds.
+import {trustedAuthOrigin,authResponseOrigin} from './auth-origins.mjs';
+import {accountPortal} from './account-portal.mjs';
+import {resolveSession} from './session-guard.mjs';
 import {login} from './login-worker.mjs';
 import logout from './logout-worker.mjs';
 import applications from './artists-registration-worker.js';
@@ -9,14 +12,19 @@ const reply=(status,body)=>new Response(JSON.stringify(body),{status,headers});
 export default {async fetch(request,env={}){
   const path=new URL(request.url).pathname;
   const origin=request.headers.get('Origin');
-  if(origin&&origin!==ORIGIN)return reply(403,{error:'Forbidden'});
+  if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});
+  if(['/conta','/conta/'].includes(path)&&request.method==='GET')return accountPortal(env);
+  if(path==='/api/auth/session'&&request.method==='GET'){
+    const session=await resolveSession(request,env);
+    return session?reply(200,{success:true,user:{id:session.userId,role:session.role}}):reply(401,{success:false,error:'Unauthorized'});
+  }
   if(path==='/health'&&request.method==='GET')return reply(200,{ok:true,service:'studiosb6l-artists-api'});
   if(path.startsWith('/api/auth/')){
     if(!['/api/auth/login','/api/auth/logout','/api/auth/register'].includes(path))return reply(404,{error:'Not found'});
     if(request.method==='OPTIONS'){
-      if(origin!==ORIGIN)return reply(403,{error:'Forbidden'});
-      return new Response(null,{status:204,headers:{...headers,'Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'}});
+      if(!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
+      return new Response(null,{status:204,headers:{...headers,'Access-Control-Allow-Origin':authResponseOrigin(request),'Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'}});
     }
     if(request.method!=='POST')return reply(405,{error:'Method not allowed'});
     if(path==='/api/auth/login')return login(request,env);
