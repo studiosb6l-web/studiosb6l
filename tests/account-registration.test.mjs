@@ -21,7 +21,7 @@ test('registration does not accept GET',async()=>{
   assert.equal(r.status,405);
 });
 test('registration rejects non-JSON',async()=>{
-  const r=await register(new Request(endpoint,{method:'POST',headers:{Origin:'https://www.studiosb6l.com','Content-Type':'text/plain'},body:'hello'}),{});
+  const r=await register(new Request(endpoint,{method:'POST',headers:{Origin:'https://www.studiosb6l.com','Content-Type':'text/plain'},body:'hello'}),{REGISTRATION_ENABLED:'true',EMAIL_VERIFICATION_READY:'true',BILLING_RECONCILIATION_READY:'true',DB:{}});
   assert.equal(r.status,415);
 });
 test('registration never activates a pending account without email and billing readiness',async()=>{
