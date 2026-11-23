@@ -20,8 +20,8 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - 'cloudflare/artists-registration-worker.js'
-      - 'tests/artists-registration-worker.test.mjs'
+      - 'cloudflare/**'
+      - 'tests/**'
       - '.github/workflows/artists-api-tests.yml'
 concurrency:
   group: artists-security-${{ github.ref }}
@@ -41,11 +41,11 @@ jobs:
         run: node --check cloudflare/artists-registration-worker.js
       - name: Run security and authorization tests
         run: node --test tests/*.test.mjs
-      - name: Verify test suite count
+      - name: Verify test suite coverage and module syntax
         run: |
-          count=$(grep -c "^test(" tests/artists-registration-worker.test.mjs)
-          echo "Registered tests: $count"
-          test "$count" -ge 23
+          count=$(grep -hEc '^test\(' tests/*.test.mjs | awk '{s+=$1} END {print s+0}')
+          echo "Registered tests across modules: $count"
+          test "$count" -ge 65
           node --check cloudflare/authorization-policy.mjs
           node --check cloudflare/session-guard.mjs
           node --check cloudflare/logout-worker.mjs
