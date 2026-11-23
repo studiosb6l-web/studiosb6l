@@ -1,0 +1,18 @@
+name: STUDIOSB6L manual static safety audit
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static read-only checks
+        run: |
+          node tests/static-audit.cjs
+          node tests/auth-contract-static.cjs
