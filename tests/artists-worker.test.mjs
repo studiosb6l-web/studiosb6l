@@ -6,7 +6,10 @@ const {default: worker} = await import('data:text/javascript;base64,'+Buffer.fro
 const origin='https://www.studiosb6l.com';
 const call=(path,method='GET',body,db)=>worker.fetch(new Request('https://worker.example'+path,{method,headers:method==='POST'?{'Origin':origin,'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined}),{DB:db});
 const health=await call('/');
-assert.equal((await health.json()).database,'missing');
+assert.equal(health.status,200);
+const publicHealth=await health.json();
+assert.equal(publicHealth.status,'reachable');
+assert.equal(publicHealth.database,undefined);
 const missing=await call('/api/applications','POST',{});
 assert.equal(missing.status,503);
 const db={prepare(){return {bind(){return {run:async()=>({success:true})}}}}};

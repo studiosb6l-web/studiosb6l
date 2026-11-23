@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import worker from '../cloudflare/artists-api-entry.mjs';
+const origin='https://www.studiosb6l.com';
+const call=(path,env={},method='GET',requestOrigin=origin)=>worker.fetch(new Request('https://www.studiosb6l.com'+path,{method,headers:{Origin:requestOrigin}}),env);
+test('router exposes health without database details',async()=>{const r=await call('/health');assert.equal(r.status,200);assert.deepEqual(await r.json(),{ok:true,service:'studiosb6l-artists-api'})});
+test('service STOP blocks health and authentication',async()=>{for(const p of ['/health','/api/auth/login','/api/applications'])assert.equal((await call(p,{STOP_SERVICE:'true'})).status,503)});
+test('foreign origins cannot reach the router',async()=>{assert.equal((await call('/health',{},'GET','https://evil.test')).status,403)});
+test('account registration explicitly remains unavailable',async()=>{const r=await call('/api/auth/register',{},'POST');assert.equal(r.status,503);assert.equal((await r.json()).success,false)});
+test('login preflight allows credentialed official requests',async()=>{const r=await call('/api/auth/login',{},'OPTIONS');assert.equal(r.status,204);assert.equal(r.headers.get('Access-Control-Allow-Credentials'),'true')});
+test('auth routes use POST and unknown routes fail',async()=>{assert.equal((await call('/api/auth/login')).status,405);assert.equal((await call('/api/auth/unknown')).status,404)});
+test('root retains the applications service response',async()=>{const r=await call('/');assert.equal(r.status,200);assert.equal((await r.json()).publication,'manual approval required')});
