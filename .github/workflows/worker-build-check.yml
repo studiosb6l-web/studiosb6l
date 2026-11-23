@@ -1,0 +1,27 @@
+name: STUDIOSB6L Worker build verification
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'cloudflare/**'
+      - 'wrangler.toml'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/worker-build-check.yml'
+permissions:
+  contents: read
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install locked application dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Verify Cloudflare Worker bundle without deployment
+        run: npx --yes --package wrangler@4 wrangler deploy --dry-run --outdir /tmp/studiosb6l-worker-bundle
+      - name: Confirm generated bundle exists
+        run: test -s /tmp/studiosb6l-worker-bundle/index.js
