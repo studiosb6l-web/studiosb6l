@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-23T19:42:37.190600+00:00",
+  "updated": "2026-11-23T20:32:24.407456+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "zGzpe3vVIGQ",
+        "title": "Celebrating 35 years of Belle 🌹✨",
+        "source": "Disney",
+        "published": "2026-11-23T20:00:31Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=zGzpe3vVIGQ"
+      },
       {
         "youtubeId": "9aNyzylY7I0",
         "title": "A Princess who drives her own destiny 🌹✨",
@@ -89,14 +97,6 @@
         "published": "2026-11-18T17:14:30Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=2c0QckgIRZs"
-      },
-      {
-        "youtubeId": "lxNVzYHs1Ig",
-        "title": "Кратък празничен филм на Disney: \"Невидимото конче\"",
-        "source": "Disney",
-        "published": "2026-11-16T21:27:26Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=lxNVzYHs1Ig"
       }
     ],
     "warner": [
