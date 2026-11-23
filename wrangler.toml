@@ -11,6 +11,14 @@ binding = "DB"
 database_name = "studiosb6l-artists-db"
 database_id = "f53175d9-50a7-4b6a-a868-1b10c997efc8"
 
+[vars]
+LOGIN_ENABLED = "true"
+
+[[ratelimits]]
+name = "AUTH_RATE_LIMIT"
+namespace_id = "2026112301"
+simple = { limit = 10, period = 60 }
+
 # No migrations, schedules, paid resources or custom routes are applied here.
-# LOGIN_ENABLED and RATE_LIMIT_VERIFIED remain fail-closed unless explicitly
-# configured after their deployment prerequisites have been verified.
+# Login additionally requires runtime crypto readiness and a functioning limiter.
+# Owner accounts remain blocked pending separately verified administrative MFA.

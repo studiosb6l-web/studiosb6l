@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import worker from '../cloudflare/artists-api-entry.mjs';
+import {authReadiness,checkAuthRate} from '../cloudflare/auth-readiness.mjs';
+const origin='https://studiosb6l-artists-api.studiosb6l.workers.dev';
+const request=()=>new Request(origin+'/api/auth/login',{method:'POST',headers:{Origin:origin,'CF-Connecting-IP':'192.0.2.1','Content-Type':'application/json'},body:'{}'});
+test('a configuration flag alone never enables public login',async()=>{const r=await worker.fetch(request(),{LOGIN_ENABLED:'true',RATE_LIMIT_VERIFIED:'true',DB:{}});assert.equal(r.status,503)});
+test('limiter failure blocks before database access',async()=>{let touched=false;const r=await worker.fetch(request(),{LOGIN_ENABLED:'true',DB:{prepare(){touched=true;}},AUTH_RATE_LIMIT:{limit:async()=>{throw Error('down')}}});assert.equal(r.status,503);assert.equal(touched,false)});
+test('rate-limited requests return 429 before database access',async()=>{let touched=false;const r=await worker.fetch(request(),{LOGIN_ENABLED:'true',DB:{prepare(){touched=true;}},AUTH_RATE_LIMIT:{limit:async()=>({success:false})}});assert.equal(r.status,429);assert.equal(touched,false)});
+test('rate keys use the Cloudflare client address',async()=>{let key;assert.equal(await checkAuthRate(request(),{AUTH_RATE_LIMIT:{limit:async data=>{key=data.key;return {success:true}}}}),null);assert.equal(key,'auth:192.0.2.1')});
+test('requests without a trusted edge address fail closed',async()=>{assert.equal(await checkAuthRate(new Request(origin),{AUTH_RATE_LIMIT:{limit:async()=>({success:true})}}),503)});
+test('node readiness checks actual crypto and limiter bindings',async()=>{const r=await authReadiness({LOGIN_ENABLED:'true',DB:{},AUTH_RATE_LIMIT:{limit(){}}});assert.equal(r.enabled,true);assert.equal(r.passwordRuntimeSupported,true);assert.equal((await authReadiness({LOGIN_ENABLED:'true',DB:{}})).enabled,false)});
