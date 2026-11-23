@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import api from '../cloudflare/artists-api-entry.mjs';
 test('PRO access route rejects unauthenticated requests',async()=>{
-  const response=await api.fetch(new Request('https://www.studiosb6l.com/api/pro/access?capability=opportunities:alerts'),{});
+  const response=await api.fetch(new Request('https://www.studiosb6l.com/api/pro/access?capability=opportunities:alerts',{headers:{'CF-Connecting-IP':'192.0.2.1'}}),{AUTH_RATE_LIMIT:{limit:async()=>({success:true})}});
   assert.equal(response.status,401);
   assert.equal((await response.json()).success,false);
 });
@@ -13,4 +13,13 @@ test('PRO access route rejects foreign origin before querying account data',asyn
 test('STOP_SERVICE blocks PRO access route',async()=>{
   const response=await api.fetch(new Request('https://www.studiosb6l.com/api/pro/access'),{STOP_SERVICE:'true'});
   assert.equal(response.status,503);
+});
+
+test('PRO access route fails closed without rate limit binding',async()=>{
+  const response=await api.fetch(new Request('https://www.studiosb6l.com/api/pro/access'),{});
+  assert.equal(response.status,503);
+});
+test('PRO access route blocks excessive requests',async()=>{
+  const response=await api.fetch(new Request('https://www.studiosb6l.com/api/pro/access',{headers:{'CF-Connecting-IP':'192.0.2.1'}}),{AUTH_RATE_LIMIT:{limit:async()=>({success:false})}});
+  assert.equal(response.status,429);
 });
