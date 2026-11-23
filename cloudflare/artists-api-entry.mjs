@@ -1,3 +1,4 @@
+import {admissionWebhook} from './admission-billing.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
 // Unified entry point for studiosb6l-artists-api. Deployment configuration and
 // the existing D1 binding must be verified before enabling repository builds.
@@ -12,6 +13,7 @@ const headers={'Content-Type':'application/json; charset=utf-8','Cache-Control':
 const reply=(status,body)=>new Response(JSON.stringify(body),{status,headers});
 export default {async fetch(request,env={}){
   const path=new URL(request.url).pathname;
+  if(path==='/api/billing/stripe/webhook')return admissionWebhook(request,env);
   const origin=request.headers.get('Origin');
   if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});
