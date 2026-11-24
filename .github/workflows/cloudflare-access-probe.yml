@@ -61,13 +61,16 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'## Current API publication readiness\n\n'+JSON.stringify(report,null,2)+'\n\nNo migrations, credential changes, emails, payments or deployments executed.\n');
           console.log(JSON.stringify(report));
           JS
-      - name: Verify one registration email to the owner's confirmed mailbox alias
+      - name: Inspect exact registration schema metadata without reading account records
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           node --input-type=module - <<'JS'
-          import {randomBytes} from 'node:crypto';
-          const response=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/auth/register',{method:'POST',redirect:'error',signal:AbortSignal.timeout(20000),headers:{'Content-Type':'application/json','Origin':'https://www.studiosb6l.com'},body:JSON.stringify({email:'studiosb6l+activation20261124@gmail.com',password:randomBytes(32).toString('base64url'),role:'artist',acceptTerms:true})});
-          if(response.status!==202){const result=await response.json().catch(()=>({}));console.log(JSON.stringify({registrationSmokeStatus:response.status,error:result.error||'Unavailable'}));throw Error('Registration email smoke failed');}
-          console.log('Registration request accepted. Inactive test account only; no payment or access granted. Mailbox delivery must be checked separately.');
+          const sql="SELECT name,sql FROM sqlite_master WHERE type='table' AND name IN ('accounts','account_onboarding','account_email_verifications','registration_email_budget','account_email_send_locks')";
+          const r=await fetch('https://api.cloudflare.com/client/v4/accounts/8ada1c4a636906c35b369d4d682f6d4e/d1/database/f53175d9-50a7-4b6a-a868-1b10c997efc8/query',{method:'POST',redirect:'error',headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({sql,params:[]}),signal:AbortSignal.timeout(15000)});
+          const d=await r.json();
+          if(!r.ok||d.success!==true)throw Error('Schema metadata unavailable');
+          console.log(JSON.stringify(d.result.map(x=>x.results)));
           JS
       - name: Preserve non-secret publication prerequisites
         uses: actions/upload-artifact@v4
