@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24T21:37:20.275532+00:00",
+  "updated": "2026-11-24T22:39:03.117738+00:00",
   "channels": {
     "disney": [
       {
@@ -101,6 +101,22 @@
     ],
     "warner": [
       {
+        "youtubeId": "LW4spUIxgBk",
+        "title": "Dune: Part Three | \"Family\" | Get Tickets Now",
+        "source": "Warner Bros.",
+        "published": "2026-11-24T22:36:48Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=LW4spUIxgBk"
+      },
+      {
+        "youtubeId": "zxPUnKQVgdY",
+        "title": "More than just desert legend.",
+        "source": "Warner Bros.",
+        "published": "2026-11-24T22:00:02Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=zxPUnKQVgdY"
+      },
+      {
         "youtubeId": "7edyjGfZ6rY",
         "title": "Fight like an Atreides. Get tickets now for Dune: Part Three only in theaters and IMAX December 18.",
         "source": "Warner Bros.",
@@ -179,22 +195,6 @@
         "published": "2026-11-17T18:00:02Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=d6Yq6ZUGKWI"
-      },
-      {
-        "youtubeId": "V7f0cMdPdCQ",
-        "title": "Close enough to touch. Watch the new trailer for #RemainMovie - only in theaters February 5.",
-        "source": "Warner Bros.",
-        "published": "2026-11-16T23:00:05Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=V7f0cMdPdCQ"
-      },
-      {
-        "youtubeId": "dhaxs70WObw",
-        "title": "Remain Movie | Love and Fear",
-        "source": "Warner Bros.",
-        "published": "2026-11-16T21:00:14Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=dhaxs70WObw"
       }
     ]
   }
