@@ -23,11 +23,36 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: node scripts/cloudflare-api-access.mjs
+      - name: Inspect readiness without revealing configuration values
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs';
+          const account='8ada1c4a636906c35b369d4d682f6d4e',database='f53175d9-50a7-4b6a-a868-1b10c997efc8';
+          const headers={Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'};
+          const settingsResponse=await fetch('https://api.cloudflare.com/client/v4/accounts/'+account+'/workers/scripts/studiosb6l-artists-api/settings',{headers,redirect:'error',signal:AbortSignal.timeout(15000)});
+          if(!settingsResponse.ok)throw Error('Cannot inspect Worker settings: HTTP '+settingsResponse.status);
+          const settings=await settingsResponse.json();
+          if(settings.success!==true)throw Error('Worker settings were not confirmed');
+          const bindings=settings.result.bindings||[];
+          const presence=Object.fromEntries(['BREVO_API_KEY','REGISTRATION_FROM_EMAIL','EMAIL_SERVICE','PAYHIP_WEBHOOK_API_KEY','PAYHIP_ADMISSION_PRODUCT_KEY','PAYHIP_ADMISSION_CHECKOUT_URL','ADMISSION_REFERENCE_SECRET','AUTH_RATE_LIMIT'].map(name=>[name,bindings.some(b=>b.name===name)]));
+          const enabled=Object.fromEntries(['LOGIN_ENABLED','REGISTRATION_ENABLED','PAYHIP_ACTIVATION_VERIFIED','EMAIL_BUDGET_VERIFIED','BREVO_SENDER_VERIFIED','STOP_SERVICE'].map(name=>[name,bindings.some(b=>b.name===name&&b.type==='plain_text'&&b.text==='true')]));
+          const names=['accounts','sessions','account_onboarding','account_email_verifications','registration_email_budget','account_email_send_locks','payhip_admission_payments','payhip_admission_refunds'];
+          const r=await fetch('https://api.cloudflare.com/client/v4/accounts/'+account+'/d1/database/'+database+'/query',{method:'POST',headers,redirect:'error',signal:AbortSignal.timeout(15000),body:JSON.stringify({sql:"SELECT name FROM sqlite_master WHERE type='table' AND name IN ("+names.map(()=>'?').join(',')+")",params:names})});
+          let schema={readable:false,httpStatus:r.status};
+          if(r.ok){const data=await r.json();if(data.success===true){const found=data.result?.[0]?.results||[];schema={readable:true,tables:Object.fromEntries(names.map(name=>[name,found.some(x=>x.name===name)]))};}}
+          const report={present:presence,enabled,schema};
+          fs.writeFileSync('.wrangler/access-check/readiness.json',JSON.stringify(report,null,2));
+          const summary=['## Production prerequisites (presence only; no secret values)','',...Object.entries(presence).map(([k,v])=>k+': '+(v?'present':'missing')),'',...Object.entries(enabled).map(([k,v])=>k+': '+v),'','Schema read permission: '+schema.readable+' (HTTP '+r.status+')'];
+          if(schema.tables)summary.push(...Object.entries(schema.tables).map(([k,v])=>'Table '+k+': '+(v?'present':'missing')));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary.join('\n')+'\n');
+          JS
       - name: Preserve non-secret target and rollback identifiers
         uses: actions/upload-artifact@v4
         with:
           name: cloudflare-access-verification
-          path: .wrangler/access-check/target.json
+          path: .wrangler/access-check/*.json
           if-no-files-found: error
           retention-days: 7
       - name: Report verified access without publishing
