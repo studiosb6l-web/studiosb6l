@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-24T19:47:08.369798+00:00",
+  "updated": "2026-11-24T20:38:38.358635+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "PmNkepu1Nnk",
+        "title": "Disney Stars Share​ Holiday Memories | Make the Holidays Magic",
+        "source": "Disney",
+        "published": "2026-11-24T20:00:28Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=PmNkepu1Nnk"
+      },
       {
         "youtubeId": "cEmwsKR1Jvo",
         "title": "It's a holly, jolly blowout for the holidays. ✨",
@@ -89,17 +97,25 @@
         "published": "2026-11-18T22:00:23Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=9gdKV8NAvYk"
-      },
-      {
-        "youtubeId": "FSMTbuAG5dI",
-        "title": "Recreating the sounds of a Mickey Mouse Cartoon! 🚂🔊",
-        "source": "Disney",
-        "published": "2026-11-18T19:53:47Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=FSMTbuAG5dI"
       }
     ],
     "warner": [
+      {
+        "youtubeId": "7edyjGfZ6rY",
+        "title": "Fight like an Atreides. Get tickets now for Dune: Part Three only in theaters and IMAX December 18.",
+        "source": "Warner Bros.",
+        "published": "2026-11-24T20:15:23Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=7edyjGfZ6rY"
+      },
+      {
+        "youtubeId": "mFcGbHcfG3s",
+        "title": "Legends and children’s stories. Get tickets now for Dune: Part Three only in theaters December 18.",
+        "source": "Warner Bros.",
+        "published": "2026-11-24T20:00:21Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=mFcGbHcfG3s"
+      },
       {
         "youtubeId": "tTw-wx34b6Q",
         "title": "Collaboration On Set of Digger",
@@ -179,22 +195,6 @@
         "published": "2026-11-16T21:00:14Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=dhaxs70WObw"
-      },
-      {
-        "youtubeId": "Fso81Ypg9T4",
-        "title": "Remain | Official Trailer",
-        "source": "Warner Bros.",
-        "published": "2026-11-16T20:00:07Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=Fso81Ypg9T4"
-      },
-      {
-        "youtubeId": "hAsobRSRCLc",
-        "title": "It’s all led to the best day ever! 🎉#TheCatInTheHat - now playing only in theaters",
-        "source": "Warner Bros.",
-        "published": "2026-11-15T18:00:06Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=hAsobRSRCLc"
       }
     ]
   }
