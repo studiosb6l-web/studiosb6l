@@ -61,36 +61,21 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'## Current API publication readiness\n\n'+JSON.stringify(report,null,2)+'\n\nNo migrations, credential changes, emails, payments or deployments executed.\n');
           console.log(JSON.stringify(report));
           JS
-      - name: Test production email verification and checkout without payment
+      - name: Inspect anonymous registration state metadata for affected provider
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           node --input-type=module - <<'JS'
-          import fs from 'node:fs';
-          import {randomBytes,createHash} from 'node:crypto';
-          const usage=JSON.parse(fs.readFileSync('.wrangler/access-check/publication-readiness.json','utf8')).quotas;
-          if(!usage.workers.available||!usage.d1.available||usage.workers.requests+1000>70000||usage.d1.rowsRead+1000>3500000||usage.d1.rowsWritten+1000>70000)throw Error('Current quota headroom unavailable');
-          const base='https://api.cloudflare.com/client/v4/accounts/8ada1c4a636906c35b369d4d682f6d4e/d1/database/f53175d9-50a7-4b6a-a868-1b10c997efc8/query';
-          async function sql(query,params=[]){const r=await fetch(base,{method:'POST',redirect:'error',headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({sql:query,params}),signal:AbortSignal.timeout(15000)});const d=await r.json();if(!r.ok||d.success!==true||d.result?.some(x=>x.success===false))throw Error('Test fixture database operation failed');return d.result[0].results;}
-          const select="SELECT a.id,a.verified,o.email_verified_at,o.paid_at FROM accounts a JOIN account_onboarding o ON o.account_id=a.id WHERE a.email=? AND a.role='artist' AND a.disabled=0";
-          const email='studiosb6l+activation20261124d@gmail.com';
-          const rows=await sql(select,[email]);
-          if(rows.length!==1||rows[0].verified!==0||rows[0].paid_at!==null)throw Error('Expected inactive, unpaid test fixture unavailable');
-          const token=randomBytes(32).toString('base64url'),hash=createHash('sha256').update(token).digest('hex'),now=Date.now();
-          await sql('INSERT INTO account_email_verifications(token_hash,account_id,expires_at,terms_accepted_at) VALUES(?,?,?,?)',[hash,rows[0].id,now+300000,now]);
-          async function verify(){const r=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/auth/verify-email',{method:'POST',redirect:'error',headers:{Origin:'https://www.studiosb6l.com','Content-Type':'application/json'},body:JSON.stringify({token}),signal:AbortSignal.timeout(15000)});return {status:r.status,data:await r.json()};}
-          const first=await verify();
-          if(first.status!==200||first.data.emailVerified!==true||first.data.checkoutUrl!=='https://payhip.com/b/UJ0tF'||first.data.amount!==299||first.data.currency!=='eur')throw Error('Production email-verification/checkout contract failed');
-          const replay=await verify();if(replay.status!==400)throw Error('Verification token was reusable');
-          const after=await sql(select,[email]);if(after[0].verified!==0||after[0].paid_at!==null||!after[0].email_verified_at)throw Error('Email confirmation incorrectly granted paid access');
-          const report={emailVerification:true,checkoutContract:true,replayRejected:true,noPaidAccessGranted:true,realPaymentExecuted:false,method:'controlled token for the agent-created fixture whose real email delivery was verified; no user token was read'};
-          fs.writeFileSync('.wrangler/access-check/checkout-verification.json',JSON.stringify(report,null,2));
-          console.log(JSON.stringify(report));
+          const sql="SELECT a.verified,a.disabled,a.role,CASE WHEN o.account_id IS NULL THEN 0 ELSE 1 END AS onboarding_present,CASE WHEN o.email_verified_at IS NULL THEN 0 ELSE 1 END AS email_confirmed,CASE WHEN o.paid_at IS NULL THEN 0 ELSE 1 END AS paid,CASE WHEN o.revoked_at IS NULL THEN 0 ELSE 1 END AS revoked,(SELECT COUNT(*) FROM account_email_verifications v WHERE v.account_id=a.id) AS verification_tokens,(SELECT COUNT(*) FROM account_email_verifications v WHERE v.account_id=a.id AND v.consumed_at IS NULL AND v.expires_at>?) AS valid_tokens,COALESCE((SELECT available_after FROM account_email_send_locks l WHERE l.account_id=a.id),0)>? AS resend_throttled FROM accounts a LEFT JOIN account_onboarding o ON o.account_id=a.id WHERE a.email LIKE '%@yahoo.com' LIMIT 2";
+          const r=await fetch('https://api.cloudflare.com/client/v4/accounts/8ada1c4a636906c35b369d4d682f6d4e/d1/database/f53175d9-50a7-4b6a-a868-1b10c997efc8/query',{method:'POST',redirect:'error',headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({sql,params:[Date.now(),Date.now()]}),signal:AbortSignal.timeout(15000)});
+          const d=await r.json();if(!r.ok||d.success!==true)throw Error('Read-only registration state audit unavailable');
+          const rows=d.result[0].results;
+          console.log(JSON.stringify({matchingDomainRows:rows.length,unambiguous:rows.length===1,registrationState:rows.length===1?rows[0]:null,personalAddressesRead:false,passwordsRead:false,changesExecuted:false}));
           JS
       - name: Preserve non-secret publication prerequisites
         uses: actions/upload-artifact@v4
         with:
           name: publication-readiness
-          path: .wrangler/access-check/*.json
+          path: .wrangler/access-check/publication-readiness.json
           if-no-files-found: error
           retention-days: 7
