@@ -82,5 +82,5 @@ export async function accountRegistration(request,env={}){
    return reply(503,{success:false,error:'Email delivery unavailable'});
   }
   return reply(202,accepted);
- }catch(error){if(/UNIQUE constraint failed/i.test(String(error)))return reply(202,accepted);return reply(503,{success:false,error:'Registration unavailable'});}
+ }catch(error){const emailFailure=/^Email provider (invalid-header|timeout|transport)$/.exec(error?.message||'');if(emailFailure)return reply(503,{success:false,error:'Email delivery unavailable',code:emailFailure[1]});if(/UNIQUE constraint failed/i.test(String(error)))return reply(202,accepted);return reply(503,{success:false,error:'Registration unavailable'});}
 }
