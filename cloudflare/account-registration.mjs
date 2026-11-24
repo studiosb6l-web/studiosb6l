@@ -1,3 +1,4 @@
+import {payhipConfigured,payhipCheckout} from './payhip-admission.mjs';
 import {emailConfigured,reserveEmail,sendVerificationEmail} from './registration-email.mjs';
 import {trustedAuthOrigin,authResponseOrigin} from './auth-origins.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
@@ -5,15 +6,12 @@ import {hashPassword,verifyPassword} from './password-verifier.mjs';
 import {createSessionToken,hashSessionToken} from './session-tokens.mjs';
 const roles=new Set(['artist','producer','promoter','venue','company','student']);
 const accepted={success:true,message:'Se o pedido puder ser aceite, receberás um email para continuar.'};
-function paymentLink(env){
- try{const u=new URL(env.STRIPE_ADMISSION_PAYMENT_LINK_URL);return u.protocol==='https:'&&u.hostname==='buy.stripe.com'&&!u.username&&!u.password&&!u.search&&!u.hash&&/^\/[A-Za-z0-9_]+$/.test(u.pathname)?u:null;}catch{return null;}
-}
 async function admissionReference(id,secret){
  const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(secret),{name:'HMAC',hash:'SHA-256'},false,['sign']);
  const bytes=new Uint8Array(await crypto.subtle.sign('HMAC',key,new TextEncoder().encode('studiosb6l-admission-v1:'+id)));
  return btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
-export function registrationConfigured(env){return typeof env?.ADMISSION_REFERENCE_SECRET==='string'&&env.ADMISSION_REFERENCE_SECRET.length>=32&&env?.REGISTRATION_ENABLED==='true'&&!!env.DB&&emailConfigured(env)&&!!env.STRIPE_ADMISSION_WEBHOOK_SECRET&&/^plink_[A-Za-z0-9]+$/.test(env.STRIPE_ADMISSION_PAYMENT_LINK_ID||'')&&!!paymentLink(env);}
+export function registrationConfigured(env){return typeof env?.ADMISSION_REFERENCE_SECRET==='string'&&env.ADMISSION_REFERENCE_SECRET.length>=32&&env?.REGISTRATION_ENABLED==='true'&&!!env.DB&&emailConfigured(env)&&payhipConfigured(env);}
 async function readJson(request){
  if(!/^application\/json(?:\s*;|$)/i.test(request.headers.get('Content-Type')||''))return {status:415};
  const reader=request.body?.getReader();if(!reader)return {status:400};
@@ -44,8 +42,8 @@ export async function accountRegistration(request,env={}){
     env.DB.prepare('UPDATE account_onboarding SET email_verified_at=COALESCE(email_verified_at,?) WHERE account_id=? AND EXISTS(SELECT 1 FROM account_email_verifications WHERE token_hash=? AND consumed_at=?)').bind(now,token.account_id,hash,now)
    ]);
    if(Number(results[0]?.meta?.changes)!==1)return reply(400,{success:false,error:'Invalid or expired verification'});
-   const url=paymentLink(env);url.searchParams.set('client_reference_id',await admissionReference(token.account_id,env.ADMISSION_REFERENCE_SECRET));
-   return reply(200,{success:true,emailVerified:true,checkoutUrl:url.href,amount:299,currency:'eur'});
+   const url=payhipCheckout(env);
+   return reply(200,{success:true,emailVerified:true,checkoutUrl:url.href,amount:299,currency:'eur',paymentProvider:'payhip',sameEmailRequired:true});
   }catch{return reply(503,{success:false,error:'Verification unavailable'});}
  }
  if(path!=='/api/auth/register')return reply(404,{success:false,error:'Not found'});
