@@ -1,3 +1,4 @@
+import {notifyIncident} from './incident-alerts.mjs';
 // Payhip is the checkout provider; PayPal is configured within the store.
 // Contract: https://help.payhip.com/article/115-webhooks
 // Payhip's signature is SHA256(API key), a reusable bearer credential, NOT
@@ -27,7 +28,10 @@ export async function payhipWebhook(request,env={}){
  if(!['paid','refunded'].includes(event.type))return reply(200,{received:true});
  if(typeof event.id!=='string'||! /^[A-Za-z0-9_-]{1,128}$/.test(event.id))return reply(400,{error:'Invalid transaction'});
  const item=event.items?.[0];
- if(!Array.isArray(event.items)||event.items.length!==1||item?.product_key!==env.PAYHIP_ADMISSION_PRODUCT_KEY||String(item.quantity)!=='1'||event.currency!=='EUR'||event.price!==299||event.is_gift===true)return reply(200,{received:true});
+ if(!Array.isArray(event.items)||event.items.length!==1||item?.product_key!==env.PAYHIP_ADMISSION_PRODUCT_KEY||String(item.quantity)!=='1'||event.currency!=='EUR'||event.price!==299||event.is_gift===true){
+  if(event.items?.some(i=>i.product_key===env.PAYHIP_ADMISSION_PRODUCT_KEY))await notifyIncident(env,'payment-review');
+  return reply(200,{received:true});
+ }
  const db=env.DB,now=Date.now();
  try{
   if(event.type==='refunded'){
@@ -51,6 +55,11 @@ export async function payhipWebhook(request,env={}){
    db.prepare('UPDATE account_onboarding SET paid_at=COALESCE(paid_at,?) WHERE account_id IN (SELECT account_id FROM payhip_admission_payments WHERE transaction_id=? AND revoked_at IS NULL) AND email_verified_at IS NOT NULL AND revoked_at IS NULL').bind(now,event.id),
    db.prepare("UPDATE accounts SET verified=1 WHERE disabled=0 AND role IN ('artist','producer','promoter','venue','company','student') AND id IN (SELECT o.account_id FROM account_onboarding o JOIN payhip_admission_payments p ON p.account_id=o.account_id WHERE p.transaction_id=? AND p.revoked_at IS NULL AND o.revoked_at IS NULL AND o.email_verified_at IS NOT NULL AND o.paid_at IS NOT NULL)").bind(event.id),
    db.prepare('UPDATE account_onboarding SET activated_at=COALESCE(activated_at,?) WHERE revoked_at IS NULL AND account_id IN (SELECT p.account_id FROM payhip_admission_payments p JOIN accounts a ON a.id=p.account_id WHERE p.transaction_id=? AND p.revoked_at IS NULL AND a.verified=1 AND a.disabled=0)').bind(now,event.id)
-  ]);return reply(200,{received:true});
+  ]);
+  if(env.INCIDENT_ALERT_TO){
+   const activated=await db.prepare('SELECT a.id FROM accounts a JOIN payhip_admission_payments p ON p.account_id=a.id JOIN account_onboarding o ON o.account_id=a.id WHERE p.transaction_id=? AND a.email=? AND a.verified=1 AND a.disabled=0 AND p.revoked_at IS NULL AND o.revoked_at IS NULL AND o.activated_at IS NOT NULL').bind(event.id,email).first();
+   if(!activated)await notifyIncident(env,'payment-not-activated');
+  }
+  return reply(200,{received:true});
  }catch{return reply(503,{error:'Payment processing unavailable'});}
 }

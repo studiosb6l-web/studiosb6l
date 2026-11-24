@@ -63,7 +63,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
           WRANGLER_SEND_METRICS: 'false'
-        run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:true --var PAYHIP_ACTIVATION_VERIFIED:true --var PAYHIP_ADMISSION_PRODUCT_KEY:UJ0tF --var PAYHIP_ADMISSION_CHECKOUT_URL:https://payhip.com/b/UJ0tF --var REGISTRATION_EMAIL_PROVIDER:brevo --var REGISTRATION_FROM_EMAIL:studiosb6l@gmail.com --var BREVO_SENDER_VERIFIED:true --var EMAIL_FREE_DAILY_QUOTA:300 --var EMAIL_DAILY_BUDGET:20 --var EMAIL_BUDGET_VERIFIED:true
+        run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:true --var PAYHIP_ACTIVATION_VERIFIED:true --var PAYHIP_ADMISSION_PRODUCT_KEY:UJ0tF --var PAYHIP_ADMISSION_CHECKOUT_URL:https://payhip.com/b/UJ0tF --var REGISTRATION_EMAIL_PROVIDER:brevo --var REGISTRATION_FROM_EMAIL:studiosb6l@gmail.com --var BREVO_SENDER_VERIFIED:true --var EMAIL_FREE_DAILY_QUOTA:300 --var EMAIL_DAILY_BUDGET:20 --var EMAIL_BUDGET_VERIFIED:true --var INCIDENT_ALERT_TO:studiosb6l@gmail.com
       - name: Verify deployed health and registration readiness
         run: |
           node --input-type=module - <<'JS'
