@@ -1,3 +1,5 @@
+import {ownerAuth} from './owner-auth.mjs';
+import {ownerPortal} from './owner-portal.mjs';
 import {supportApi} from './support-api.mjs';
 import {supportPortal} from './support-portal.mjs';
 import {queueIncident} from './incident-alerts.mjs';
@@ -23,6 +25,8 @@ async function dispatch(request,env={},ctx){
     if(path==='/health'&&request.method==='GET')return reply(200,{ok:true,service:'studiosb6l-artists-api',environment:'preview',operationsEnabled:false});
     return reply(503,{success:false,error:'Preview operations are disabled'});
   }
+  if(['/administracao','/administracao/'].includes(path)&&request.method==='GET')return ownerPortal();
+  if(path.startsWith('/api/admin/'))return ownerAuth(request,env,ctx);
   if(['/ajuda','/ajuda/'].includes(path)&&request.method==='GET')return supportPortal();
   if(path.startsWith('/api/support/'))return supportApi(request,env,ctx);
   if(path==='/api/billing/payhip/webhook')return payhipWebhook(request,env);
