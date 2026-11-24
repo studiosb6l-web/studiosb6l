@@ -7,10 +7,10 @@ import {payhipWebhook,payhipConfigured} from '../cloudflare/payhip-admission.mjs
 import router from '../cloudflare/artists-api-entry.mjs';
 const key='fixture-never-real-32-character-api-key';
 function setup({verified=true,role='artist',disabled=0}={}){
- const sql=new DatabaseSync(':memory:');for(const p of ['001_sessions','002_accounts','003_account_onboarding','006_payhip_admission'])sql.exec(readFileSync('cloudflare/migrations/'+p+'.sql','utf8'));
+ const sql=new DatabaseSync(':memory:');for(const p of ['001_sessions','002_accounts','003_account_onboarding','005_registration_email_budget','006_payhip_admission'])sql.exec(readFileSync('cloudflare/migrations/'+p+'.sql','utf8'));
  sql.prepare('INSERT INTO accounts VALUES(?,?,?,?,?,?,?)').run('u1','buyer@example.test',role,'fixture',0,disabled,1);
  sql.prepare('INSERT INTO account_onboarding(account_id,checkout_reference_hash,email_verified_at) VALUES(?,?,?)').run('u1','a'.repeat(64),verified?1:null);
- const DB={prepare(q){return {bind(...args){return {run:async()=>({meta:{changes:Number(sql.prepare(q).run(...args).changes)}})}}}},async batch(stmts){sql.exec('BEGIN');try{const out=[];for(const stmt of stmts)out.push(await stmt.run());sql.exec('COMMIT');return out;}catch(e){sql.exec('ROLLBACK');throw e;}}};
+ const DB={prepare(q){return {bind(...args){return {first:async()=>sql.prepare(q).get(...args),run:async()=>({meta:{changes:Number(sql.prepare(q).run(...args).changes)}})}}}},async batch(stmts){sql.exec('BEGIN');try{const out=[];for(const stmt of stmts)out.push(await stmt.run());sql.exec('COMMIT');return out;}catch(e){sql.exec('ROLLBACK');throw e;}}};
  return {sql,env:{DB,PAYHIP_ACTIVATION_VERIFIED:'true',PAYHIP_WEBHOOK_API_KEY:key,PAYHIP_ADMISSION_PRODUCT_KEY:'entry',PAYHIP_ADMISSION_CHECKOUT_URL:'https://payhip.com/b/entry'}};
 }
 const event=(patch={})=>({id:'order1',type:'paid',email:'buyer@example.test',currency:'EUR',price:299,items:[{product_key:'entry',quantity:'1'}],payment_type:'paypal',signature:createHash('sha256').update(key).digest('hex'),...patch});
@@ -24,3 +24,16 @@ test('refund before paid prevents subsequent activation',async()=>{const{sql,env
 test('STOP blocks new activation but continues processing refunds',async()=>{const{sql,env}=setup();assert.equal((await payhipWebhook(request(event()),{...env,STOP_SERVICE:'true'})).status,503);await payhipWebhook(request(event()),env);await payhipWebhook(request(event({type:'refunded',amount_refunded:299})),{...env,STOP_SERVICE:'true'});assert.equal(active(sql),0);});
 test('transaction cannot activate a second account on replay with another email',async()=>{const{sql,env}=setup();await payhipWebhook(request(event()),env);sql.prepare('INSERT INTO accounts VALUES(?,?,?,?,?,?,?)').run('u2','other@example.test','artist','fixture',0,0,1);sql.prepare('INSERT INTO account_onboarding(account_id,checkout_reference_hash,email_verified_at) VALUES(?,?,?)').run('u2','b'.repeat(64),1);await payhipWebhook(request(event({email:'other@example.test'})),env);assert.equal(sql.prepare("SELECT verified FROM accounts WHERE id='u2'").get().verified,0);});
 test('missing configuration, oversized bodies and isolated previews fail closed',async()=>{const{env}=setup();assert.equal((await payhipWebhook(request(event()),{...env,PAYHIP_WEBHOOK_API_KEY:''})).status,503);assert.equal((await payhipWebhook(request(event({padding:'x'.repeat(70000)})),env)).status,413);assert.equal((await router.fetch(request(event()),{...env,PREVIEW_ISOLATED:'true'})).status,503);assert.equal((await router.fetch(new Request('https://worker.example/api/billing/stripe/webhook',{method:'POST'}),env)).status,404);});
+
+test('signed payment without matching account alerts owner; valid activation and invalid signature stay silent',async()=>{
+ const original=globalThis.fetch;let sent=0;
+ globalThis.fetch=async()=>{sent++;return new Response('{}',{status:201});};
+ try{
+  for(const patch of [{email:'unknown@example.test'},{},{signature:'x'.repeat(64)}]){
+   const {env,sql}=setup();Object.assign(env,{INCIDENT_ALERT_TO:'studiosb6l@gmail.com',REGISTRATION_EMAIL_PROVIDER:'brevo',BREVO_API_KEY:'fixture-provider-key',BREVO_SENDER_VERIFIED:'true',REGISTRATION_FROM_EMAIL:'studiosb6l@gmail.com',EMAIL_BUDGET_VERIFIED:'true',EMAIL_FREE_DAILY_QUOTA:'300',EMAIL_DAILY_BUDGET:'20'});
+   const before=sent;await payhipWebhook(request(event(patch)),env);
+   assert.equal(sent-before,patch.email?1:0);
+   if(!patch.email&&!patch.signature)assert.equal(active(sql),1);
+  }
+ }finally{globalThis.fetch=original;}
+});
