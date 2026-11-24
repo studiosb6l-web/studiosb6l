@@ -58,12 +58,31 @@ jobs:
           path: .wrangler/access-check/paused-rollout.json
           retention-days: 30
           if-no-files-found: error
+      - name: Preserve D1 recovery bookmark before additive support schema
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
+          WRANGLER_SEND_METRICS: 'false'
+        run: npx --no-install wrangler d1 time-travel info DB --json > .wrangler/access-check/support-restore.json
+      - name: Save support recovery metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: support-recovery-${{ github.run_id }}
+          path: .wrangler/access-check/support-restore.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Apply additive support tables
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
+          WRANGLER_SEND_METRICS: 'false'
+        run: npx --no-install wrangler d1 execute DB --remote --file cloudflare/migrations/007_support.sql
       - name: Activate configured registration and Payhip processing
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
           WRANGLER_SEND_METRICS: 'false'
-        run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:true --var PAYHIP_ACTIVATION_VERIFIED:true --var PAYHIP_ADMISSION_PRODUCT_KEY:UJ0tF --var PAYHIP_ADMISSION_CHECKOUT_URL:https://payhip.com/b/UJ0tF --var REGISTRATION_EMAIL_PROVIDER:brevo --var REGISTRATION_FROM_EMAIL:studiosb6l@gmail.com --var BREVO_SENDER_VERIFIED:true --var EMAIL_FREE_DAILY_QUOTA:300 --var EMAIL_DAILY_BUDGET:20 --var EMAIL_BUDGET_VERIFIED:true --var INCIDENT_ALERT_TO:studiosb6l@gmail.com
+        run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:true --var PAYHIP_ACTIVATION_VERIFIED:true --var PAYHIP_ADMISSION_PRODUCT_KEY:UJ0tF --var PAYHIP_ADMISSION_CHECKOUT_URL:https://payhip.com/b/UJ0tF --var REGISTRATION_EMAIL_PROVIDER:brevo --var REGISTRATION_FROM_EMAIL:studiosb6l@gmail.com --var BREVO_SENDER_VERIFIED:true --var EMAIL_FREE_DAILY_QUOTA:300 --var EMAIL_DAILY_BUDGET:20 --var EMAIL_BUDGET_VERIFIED:true --var INCIDENT_ALERT_TO:studiosb6l@gmail.com --var SUPPORT_ENABLED:true
       - name: Verify deployed health and registration readiness
         run: |
           node --input-type=module - <<'JS'
@@ -75,6 +94,10 @@ jobs:
           const status=await s.json();
           if(!s.ok||status.registrationEnabled!==true)throw Error('Registration readiness must be enabled');
           console.log(JSON.stringify(status));
+          const support=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/ajuda/',{redirect:'error',signal:AbortSignal.timeout(15000)});
+          if(!support.ok||!(await support.text()).includes('CENTRO DE AJUDA'))throw Error('Support portal unavailable');
+          const privateTickets=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/support/tickets',{redirect:'error',signal:AbortSignal.timeout(15000)});
+          if(privateTickets.status!==401)throw Error('Unauthenticated ticket access must be blocked');
           JS
       - name: Verify webhook credential without a sale or account activation
         env:
