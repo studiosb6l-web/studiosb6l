@@ -1,3 +1,4 @@
+# Workers redirect compatibility regression is included in the selected source tests.
 name: Activate verified admission and payment processing
 on:
   push:
