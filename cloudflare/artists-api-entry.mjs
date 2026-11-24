@@ -1,4 +1,5 @@
-import {admissionWebhook} from './admission-billing.mjs';
+import {accountRegistration,registrationConfigured} from './account-registration.mjs';
+import {payhipWebhook} from './payhip-admission.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
 // Unified entry point for studiosb6l-artists-api. Deployment configuration and
 // the existing D1 binding must be verified before enabling repository builds.
@@ -13,7 +14,14 @@ const headers={'Content-Type':'application/json; charset=utf-8','Cache-Control':
 const reply=(status,body)=>new Response(JSON.stringify(body),{status,headers});
 export default {async fetch(request,env={}){
   const path=new URL(request.url).pathname;
-  if(path==='/api/billing/stripe/webhook')return admissionWebhook(request,env);
+  // Preview blocks all mutations, including signed webhooks, even if a base
+  // configuration unexpectedly supplies production bindings or secrets.
+  if(env.PREVIEW_ISOLATED==='true'){
+    if(path==='/health'&&request.method==='GET')return reply(200,{ok:true,service:'studiosb6l-artists-api',environment:'preview',operationsEnabled:false});
+    return reply(503,{success:false,error:'Preview operations are disabled'});
+  }
+  if(path==='/api/billing/payhip/webhook')return payhipWebhook(request,env);
+  if(path.startsWith('/api/billing/stripe/'))return reply(404,{error:'Not found'});
   const origin=request.headers.get('Origin');
   if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});
@@ -21,7 +29,8 @@ export default {async fetch(request,env={}){
   if(path==='/api/auth/status'&&request.method==='GET'){
     const limited=await checkAuthRate(request,env);
     if(limited)return reply(limited,{success:false,error:'Service unavailable'});
-    return reply(200,{success:true,...await authReadiness(env)});
+    const readiness=await authReadiness(env);
+    return reply(200,{success:true,...readiness,registrationEnabled:readiness.enabled&&registrationConfigured(env)});
   }
   if(path==='/api/auth/session'&&request.method==='GET'){
     const session=await resolveSession(request,env);
@@ -29,7 +38,7 @@ export default {async fetch(request,env={}){
   }
   if(path==='/health'&&request.method==='GET')return reply(200,{ok:true,service:'studiosb6l-artists-api'});
   if(path.startsWith('/api/auth/')){
-    if(!['/api/auth/login','/api/auth/logout','/api/auth/register'].includes(path))return reply(404,{error:'Not found'});
+    if(!['/api/auth/login','/api/auth/logout','/api/auth/register','/api/auth/verify-email'].includes(path))return reply(404,{error:'Not found'});
     if(request.method==='OPTIONS'){
       if(!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
       return new Response(null,{status:204,headers:{...headers,'Access-Control-Allow-Origin':authResponseOrigin(request),'Access-Control-Allow-Methods':'POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'}});
@@ -42,8 +51,7 @@ export default {async fetch(request,env={}){
       return login(request,{...env,RATE_LIMIT_VERIFIED:'true'});
     }
     if(path==='/api/auth/logout')return logout.fetch(request,env);
-    // Account registration needs verified identity and payment provisioning.
-    return reply(503,{success:false,error:'O registo de contas ainda não está disponível.'});
+    return accountRegistration(request,env);
   }
   return applications.fetch(request,env);
 }};

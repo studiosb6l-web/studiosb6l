@@ -23,3 +23,15 @@ simple = { limit = 10, period = 60 }
 # No migrations, schedules, paid resources or custom routes are applied here.
 # Login additionally requires runtime crypto readiness and a functioning limiter.
 # Owner accounts remain blocked pending separately verified administrative MFA.
+
+# Build-only Preview until an isolated test database and test secrets are verified.
+# Never copy the production DB identifier into this section.
+[previews]
+d1_databases = []
+services = []
+
+[previews.vars]
+PREVIEW_ISOLATED = "true"
+LOGIN_ENABLED = "false"
+REGISTRATION_ENABLED = "false"
+STOP_SERVICE = "true"

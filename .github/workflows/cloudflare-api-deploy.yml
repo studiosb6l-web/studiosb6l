@@ -1,0 +1,96 @@
+# Workers redirect compatibility regression is included in the selected source tests.
+name: Activate verified admission and payment processing
+on:
+  push:
+    branches: [integration/admission-20261124]
+    paths: [.github/workflows/cloudflare-api-deploy.yml, 'cloudflare/**']
+permissions:
+  contents: read
+concurrency:
+  group: studiosb6l-cloudflare-production
+  cancel-in-progress: false
+jobs:
+  publish-paused:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install locked dependencies without install scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Validate selected source
+        run: npm test
+      - name: Compile without publishing
+        env:
+          WRANGLER_SEND_METRICS: 'false'
+        run: npm run check:worker
+      - name: Check current account-wide quotas, target and previous versions
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs';
+          import {verifyCloudflareAccess} from './scripts/cloudflare-api-access.mjs';
+          const previous=await verifyCloudflareAccess();
+          if(typeof previous.productionRegistrationEnabled!=='boolean')throw Error('Previous registration state unavailable');
+          const token=process.env.CLOUDFLARE_API_TOKEN;
+          const account='8ada1c4a636906c35b369d4d682f6d4e';
+          const now=new Date(), day=now.toISOString().slice(0,10);
+          const query='query Usage($accountTag: string, $start: string, $end: string, $day: Date!) { viewer { accounts(filter: {accountTag: $accountTag}) { workersInvocationsAdaptive(limit: 1, filter: {datetime_geq: $start, datetime_leq: $end}) { sum { requests } } d1AnalyticsAdaptiveGroups(limit: 1, filter: {date_geq: $day, date_leq: $day}) { sum { rowsRead rowsWritten } } } } }';
+          const r=await fetch('https://api.cloudflare.com/client/v4/graphql',{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({query,variables:{accountTag:account,start:day+'T00:00:00Z',end:now.toISOString(),day}})});
+          const d=await r.json().catch(()=>null),a=d?.data?.viewer?.accounts;
+          if(!r.ok||d?.errors?.length||!Array.isArray(a)||a.length!==1)throw Error('Current account-wide quota measurements unavailable');
+          function total(rows,field){if(!Array.isArray(rows))throw Error('Quota dataset unavailable');let n=0;for(const row of rows){const v=row.sum?.[field];if(!Number.isSafeInteger(v)||v<0)throw Error('Invalid quota measurement');n+=v;}return n;}
+          const usage={utcDay:day,checkedAt:now.toISOString(),requests:total(a[0].workersInvocationsAdaptive,'requests'),rowsRead:total(a[0].d1AnalyticsAdaptiveGroups,'rowsRead'),rowsWritten:total(a[0].d1AnalyticsAdaptiveGroups,'rowsWritten')};
+          if(usage.requests+1000>70000||usage.rowsRead+1000>3500000||usage.rowsWritten+1000>70000)throw Error('Required seventy-percent quota margin unavailable');
+          fs.mkdirSync('.wrangler/access-check',{recursive:true});
+          fs.writeFileSync('.wrangler/access-check/paused-rollout.json',JSON.stringify({sourceCommit:process.env.GITHUB_SHA,previous,usage,scope:'Code deployment only; registration and payment activation disabled; no email, payment, migration or new resource'},null,2));
+          console.log(JSON.stringify({quotaCheckPassed:true,usage,rollbackVersions:previous.previousVersions.length}));
+          JS
+      - name: Preserve rollback and current quota evidence before publication
+        uses: actions/upload-artifact@v4
+        with:
+          name: paused-rollout-${{ github.run_id }}
+          path: .wrangler/access-check/paused-rollout.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Activate configured registration and Payhip processing
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
+          WRANGLER_SEND_METRICS: 'false'
+        run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:true --var PAYHIP_ACTIVATION_VERIFIED:true --var PAYHIP_ADMISSION_PRODUCT_KEY:UJ0tF --var PAYHIP_ADMISSION_CHECKOUT_URL:https://payhip.com/b/UJ0tF --var REGISTRATION_EMAIL_PROVIDER:brevo --var REGISTRATION_FROM_EMAIL:studiosb6l@gmail.com --var BREVO_SENDER_VERIFIED:true --var EMAIL_FREE_DAILY_QUOTA:300 --var EMAIL_DAILY_BUDGET:20 --var EMAIL_BUDGET_VERIFIED:true
+      - name: Verify deployed health and registration readiness
+        run: |
+          node --input-type=module - <<'JS'
+          const r=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/health',{redirect:'error',signal:AbortSignal.timeout(15000)});
+          const d=await r.json();
+          if(!r.ok||d.ok!==true||d.environment==='preview'||d.service!=='studiosb6l-artists-api')throw Error('Production health verification failed; inspect saved rollback artifact');
+          console.log(JSON.stringify(d));
+          const s=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/auth/status',{redirect:'error',signal:AbortSignal.timeout(15000)});
+          const status=await s.json();
+          if(!s.ok||status.registrationEnabled!==true)throw Error('Registration readiness must be enabled');
+          console.log(JSON.stringify(status));
+          JS
+      - name: Verify webhook credential without a sale or account activation
+        env:
+          PAYHIP_WEBHOOK_API_KEY: ${{ secrets.PAYHIP_WEBHOOK_API_KEY }}
+        run: |
+          node --input-type=module - <<'JS'
+          import {createHash} from 'node:crypto';
+          const endpoint='https://studiosb6l-artists-api.studiosb6l.workers.dev/api/billing/payhip/webhook';
+          const key=process.env.PAYHIP_WEBHOOK_API_KEY;
+          if(!key)throw Error('Missing stored webhook credential');
+          const event={id:'configuration-probe',type:'paid',email:'nobody@invalid.example',currency:'EUR',price:299,items:[{product_key:'not-the-admission-product',quantity:'1'}]};
+          async function check(signature,expected){const r=await fetch(endpoint,{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{'Content-Type':'application/json'},body:JSON.stringify({...event,signature})});if(r.status!==expected)throw Error('Webhook configuration probe failed: HTTP '+r.status);}
+          await check('0'.repeat(64),400);
+          await check(createHash('sha256').update(key).digest('hex'),200);
+          console.log('Stored webhook credential verified against production; invalid credential rejected. Wrong product fixture ignored; no sale or account activation.');
+          JS
+      - name: Report completed scope
+        run: |
+          echo 'Activated reviewed registration and Payhip processing. Product remains hidden until checkout checks. No real payment or paid plan. Rollback identifiers and quota measurements preserved.' >> "$GITHUB_STEP_SUMMARY"
