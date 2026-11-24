@@ -61,6 +61,14 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'## Current API publication readiness\n\n'+JSON.stringify(report,null,2)+'\n\nNo migrations, credential changes, emails, payments or deployments executed.\n');
           console.log(JSON.stringify(report));
           JS
+      - name: Verify one registration email to the owner's confirmed mailbox alias
+        run: |
+          node --input-type=module - <<'JS'
+          import {randomBytes} from 'node:crypto';
+          const response=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/auth/register',{method:'POST',redirect:'error',signal:AbortSignal.timeout(20000),headers:{'Content-Type':'application/json','Origin':'https://www.studiosb6l.com'},body:JSON.stringify({email:'studiosb6l+activation20261124@gmail.com',password:randomBytes(32).toString('base64url'),role:'artist',acceptTerms:true})});
+          if(response.status!==202){const result=await response.json().catch(()=>({}));console.log(JSON.stringify({registrationSmokeStatus:response.status,error:result.error||'Unavailable'}));throw Error('Registration email smoke failed');}
+          console.log('Registration request accepted. Inactive test account only; no payment or access granted. Mailbox delivery must be checked separately.');
+          JS
       - name: Preserve non-secret publication prerequisites
         uses: actions/upload-artifact@v4
         with:
