@@ -48,6 +48,38 @@ jobs:
           if(schema.tables)summary.push(...Object.entries(schema.tables).map(([k,v])=>'Table '+k+': '+(v?'present':'missing')));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary.join('\n')+'\n');
           JS
+      - name: Read recovery bookmark, schema metadata and daily D1 usage
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs';
+          const account='8ada1c4a636906c35b369d4d682f6d4e',database='f53175d9-50a7-4b6a-a868-1b10c997efc8';
+          const headers={Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'};
+          const base='https://api.cloudflare.com/client/v4/accounts/'+account+'/d1/database/'+database;
+          const now=new Date(),day=now.toISOString().slice(0,10);
+          async function read(url,body){
+            const r=await fetch(url,{method:body?'POST':'GET',headers,redirect:'error',signal:AbortSignal.timeout(15000),body:body?JSON.stringify(body):undefined});
+            const d=await r.json().catch(()=>null);return {status:r.status,ok:r.ok,data:d};
+          }
+          const bookmark=await read(base+'/time_travel/bookmark?timestamp='+encodeURIComponent(new Date(now.getTime()-5000).toISOString()));
+          const recovery={checkedAt:now.toISOString(),httpStatus:bookmark.status,available:bookmark.ok&&bookmark.data?.success===true&&typeof bookmark.data.result?.bookmark==='string'};
+          if(recovery.available)recovery.bookmark=bookmark.data.result.bookmark;
+          fs.writeFileSync('.wrangler/access-check/recovery.json',JSON.stringify(recovery,null,2));
+          const names=['accounts','sessions','account_onboarding','account_email_verifications','registration_email_budget','account_email_send_locks','payhip_admission_payments','payhip_admission_refunds'];
+          const schema=await read(base+'/query',{sql:"SELECT name,type,tbl_name,sql FROM sqlite_master WHERE tbl_name IN ("+names.map(()=>'?').join(',')+") AND type IN ('table','index')",params:names});
+          if(!schema.ok||schema.data?.success!==true)throw Error('Schema metadata unavailable: HTTP '+schema.status);
+          fs.writeFileSync('.wrangler/access-check/schema-metadata.json',JSON.stringify({checkedAt:now.toISOString(),objects:schema.data.result?.[0]?.results||[]},null,2));
+          const query='query DailyD1($accountTag: string!, $day: Date!) { viewer { accounts(filter: {accountTag: $accountTag}) { d1AnalyticsAdaptiveGroups(limit: 1, filter: {date_geq: $day, date_leq: $day}) { sum { rowsRead rowsWritten } } } } }';
+          const usage=await read('https://api.cloudflare.com/client/v4/graphql',{query,variables:{accountTag:account,day}});
+          const entries=usage.data?.data?.viewer?.accounts?.[0]?.d1AnalyticsAdaptiveGroups;
+          const valid=usage.ok&&!usage.data?.errors?.length&&Array.isArray(entries);
+          const report={checkedAt:now.toISOString(),utcDay:day,httpStatus:usage.status,available:valid,globalHeadroomVerified:false};
+          if(valid){report.rowsRead=entries.reduce((n,x)=>n+Number(x.sum?.rowsRead||0),0);report.rowsWritten=entries.reduce((n,x)=>n+Number(x.sum?.rowsWritten||0),0);}
+          if(usage.data?.errors?.length)report.errors=usage.data.errors.map(x=>String(x.message).slice(0,300));
+          fs.writeFileSync('.wrangler/access-check/d1-usage.json',JSON.stringify(report,null,2));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'\nRecovery bookmark available: '+recovery.available+'\nSchema metadata inspected without reading account records.\nDaily D1 usage readable: '+valid+'\nNo database writes executed.\n');
+          JS
       - name: Preserve non-secret target and rollback identifiers
         uses: actions/upload-artifact@v4
         with:
