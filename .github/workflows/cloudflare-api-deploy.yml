@@ -77,12 +77,24 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
           WRANGLER_SEND_METRICS: 'false'
         run: npx --no-install wrangler d1 execute DB --remote --file cloudflare/migrations/007_support.sql
+      - name: Preserve or create private owner MFA encryption binding
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
+          WRANGLER_SEND_METRICS: 'false'
+        run: node scripts/ensure-owner-mfa-secret.mjs
+      - name: Apply additive owner MFA tables
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
+          WRANGLER_SEND_METRICS: 'false'
+        run: npx --no-install wrangler d1 execute DB --remote --file cloudflare/migrations/008_owner_mfa.sql
       - name: Activate configured registration and Payhip processing
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
           WRANGLER_SEND_METRICS: 'false'
-        run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:true --var PAYHIP_ACTIVATION_VERIFIED:true --var PAYHIP_ADMISSION_PRODUCT_KEY:UJ0tF --var PAYHIP_ADMISSION_CHECKOUT_URL:https://payhip.com/b/UJ0tF --var REGISTRATION_EMAIL_PROVIDER:brevo --var REGISTRATION_FROM_EMAIL:studiosb6l@gmail.com --var BREVO_SENDER_VERIFIED:true --var EMAIL_FREE_DAILY_QUOTA:300 --var EMAIL_DAILY_BUDGET:20 --var EMAIL_BUDGET_VERIFIED:true --var INCIDENT_ALERT_TO:studiosb6l@gmail.com --var SUPPORT_ENABLED:true
+        run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:true --var PAYHIP_ACTIVATION_VERIFIED:true --var PAYHIP_ADMISSION_PRODUCT_KEY:UJ0tF --var PAYHIP_ADMISSION_CHECKOUT_URL:https://payhip.com/b/UJ0tF --var REGISTRATION_EMAIL_PROVIDER:brevo --var REGISTRATION_FROM_EMAIL:studiosb6l@gmail.com --var BREVO_SENDER_VERIFIED:true --var EMAIL_FREE_DAILY_QUOTA:300 --var EMAIL_DAILY_BUDGET:20 --var EMAIL_BUDGET_VERIFIED:true --var INCIDENT_ALERT_TO:studiosb6l@gmail.com --var SUPPORT_ENABLED:true --var OWNER_ADMIN_ENABLED:true --var OWNER_BOOTSTRAP_ENABLED:true --var OWNER_EMAIL:studiosb6l@gmail.com
       - name: Verify deployed health and registration readiness
         run: |
           node --input-type=module - <<'JS'
@@ -98,6 +110,11 @@ jobs:
           if(!support.ok||!(await support.text()).includes('CENTRO DE AJUDA'))throw Error('Support portal unavailable');
           const privateTickets=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/support/tickets',{redirect:'error',signal:AbortSignal.timeout(15000)});
           if(privateTickets.status!==401)throw Error('Unauthenticated ticket access must be blocked');
+          const admin=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/administracao/',{redirect:'error',signal:AbortSignal.timeout(15000)});
+          if(!admin.ok||!(await admin.text()).includes('Acesso de administrador'))throw Error('Owner portal unavailable');
+          const ownerStatus=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/admin/status',{redirect:'error',signal:AbortSignal.timeout(15000)});
+          const ownerReady=await ownerStatus.json();
+          if(!ownerStatus.ok||ownerReady.configured!==true)throw Error('Owner crypto, schema and configuration check failed');
           JS
       - name: Verify webhook credential without a sale or account activation
         env:
