@@ -18,7 +18,7 @@ export async function reserveEmail(env,id,now){
  // after an uncertain network response, which could otherwise allow overspend.
  return {allowed:results.every(r=>Number(r?.meta?.changes)===1),until};
 }
-export async function sendVerificationEmail(env,{to,verificationUrl},transport=fetch){
+export async function sendVerificationEmail(env,{to,verificationUrl},transport=(...args)=>globalThis.fetch(...args)){
  if(!emailConfigured(env))return false;
  const url=new URL(verificationUrl);
  if(url.origin!=='https://www.studiosb6l.com'||url.pathname!=='/conta/'||!/^#verify=[A-Za-z0-9_-]{43}$/.test(url.hash))return false;
