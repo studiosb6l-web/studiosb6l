@@ -1,0 +1,41 @@
+name: Verify stored Cloudflare credential
+on:
+  push:
+    branches:
+      - ops/cloudflare-access-probe-20261124
+permissions:
+  contents: read
+concurrency:
+  group: studiosb6l-cloudflare-readonly-probe
+  cancel-in-progress: false
+jobs:
+  verify-access:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify stored credential with two read-only management requests
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: node scripts/cloudflare-api-access.mjs
+      - name: Preserve non-secret target and rollback identifiers
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-access-verification
+          path: .wrangler/access-check/target.json
+          if-no-files-found: error
+          retention-days: 7
+      - name: Report verified access without publishing
+        run: |
+          {
+            echo '## Cloudflare credential verified'
+            echo 'The stored token read the approved Worker settings and deployed version identifiers.'
+            echo 'The approved D1 binding was confirmed.'
+            echo 'No code, database, secrets, payment configuration or plan was changed.'
+            echo 'No production readiness, free quota headroom or real payment was validated.'
+          } >> "$GITHUB_STEP_SUMMARY"
