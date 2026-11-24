@@ -1,4 +1,4 @@
-name: Verify stored Cloudflare credential
+name: Verify Cloudflare access and apply guarded Payhip schema
 on:
   push:
     branches:
@@ -87,12 +87,25 @@ jobs:
           path: .wrangler/access-check/*.json
           if-no-files-found: error
           retention-days: 7
+      - name: Validate reviewed migration execution guards
+        run: node --test tests/payhip-schema-migration.test.mjs
+      - name: Apply only reviewed migration 006 after recovery and quota checks
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: node scripts/apply-payhip-schema.mjs
+      - name: Preserve migration verification metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: payhip-migration-006-verification
+          path: .wrangler/access-check/payhip-migration-006.json
+          if-no-files-found: error
+          retention-days: 7
       - name: Report verified access without publishing
         run: |
           {
             echo '## Cloudflare credential verified'
             echo 'The stored token read the approved Worker settings and deployed version identifiers.'
             echo 'The approved D1 binding was confirmed.'
-            echo 'No code, database, secrets, payment configuration or plan was changed.'
+            echo 'Only reviewed Payhip schema additions were permitted after recovery and D1 quota guards; see migration artifact.'
             echo 'No production readiness, free quota headroom or real payment was validated.'
           } >> "$GITHUB_STEP_SUMMARY"
