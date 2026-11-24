@@ -1,3 +1,6 @@
+import {supportApi} from './support-api.mjs';
+import {supportPortal} from './support-portal.mjs';
+import {queueIncident} from './incident-alerts.mjs';
 import {accountRegistration,registrationConfigured} from './account-registration.mjs';
 import {payhipWebhook} from './payhip-admission.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
@@ -12,7 +15,7 @@ import applications from './artists-registration-worker.js';
 const ORIGIN='https://www.studiosb6l.com';
 const headers={'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Access-Control-Allow-Origin':ORIGIN,'Access-Control-Allow-Credentials':'true','Vary':'Origin'};
 const reply=(status,body)=>new Response(JSON.stringify(body),{status,headers});
-export default {async fetch(request,env={}){
+async function dispatch(request,env={},ctx){
   const path=new URL(request.url).pathname;
   // Preview blocks all mutations, including signed webhooks, even if a base
   // configuration unexpectedly supplies production bindings or secrets.
@@ -20,6 +23,8 @@ export default {async fetch(request,env={}){
     if(path==='/health'&&request.method==='GET')return reply(200,{ok:true,service:'studiosb6l-artists-api',environment:'preview',operationsEnabled:false});
     return reply(503,{success:false,error:'Preview operations are disabled'});
   }
+  if(['/ajuda','/ajuda/'].includes(path)&&request.method==='GET')return supportPortal();
+  if(path.startsWith('/api/support/'))return supportApi(request,env,ctx);
   if(path==='/api/billing/payhip/webhook')return payhipWebhook(request,env);
   if(path.startsWith('/api/billing/stripe/'))return reply(404,{error:'Not found'});
   const origin=request.headers.get('Origin');
@@ -54,4 +59,14 @@ export default {async fetch(request,env={}){
     return accountRegistration(request,env);
   }
   return applications.fetch(request,env);
+}
+export default {async fetch(request,env={},ctx){
+ let response;
+ try{response=await dispatch(request,env,ctx);}catch{response=reply(503,{error:'Service unavailable'});}
+ const path=new URL(request.url).pathname;
+ if(response.status>=500&&env.PREVIEW_ISOLATED!=='true'&&env.STOP_SERVICE!=='true'&&['/api/auth/login','/api/auth/register','/api/auth/verify-email','/api/billing/payhip/webhook','/api/support/tickets'].includes(path)){
+  const pending=queueIncident(env,ctx,'service-error');
+  if(!ctx?.waitUntil)await pending;
+ }
+ return response;
 }};
