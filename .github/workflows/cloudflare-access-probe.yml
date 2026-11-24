@@ -61,14 +61,14 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'## Current API publication readiness\n\n'+JSON.stringify(report,null,2)+'\n\nNo migrations, credential changes, emails, payments or deployments executed.\n');
           console.log(JSON.stringify(report));
           JS
-      - name: Inspect only test fixture progression
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      - name: Verify registration after email transport fix
         run: |
           node --input-type=module - <<'JS'
-          const r=await fetch('https://api.cloudflare.com/client/v4/accounts/8ada1c4a636906c35b369d4d682f6d4e/d1/database/f53175d9-50a7-4b6a-a868-1b10c997efc8/query',{method:'POST',redirect:'error',headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({sql:"SELECT (SELECT COUNT(*) FROM accounts WHERE email='studiosb6l+activation20261124@gmail.com') AS fixture_accounts,(SELECT COUNT(*) FROM account_onboarding WHERE account_id IN (SELECT id FROM accounts WHERE email='studiosb6l+activation20261124@gmail.com')) AS fixture_onboarding,(SELECT COUNT(*) FROM account_email_verifications WHERE account_id IN (SELECT id FROM accounts WHERE email='studiosb6l+activation20261124@gmail.com')) AS fixture_tokens,(SELECT COALESCE(SUM(used),0) FROM registration_email_budget WHERE day=date('now')) AS reserved_emails",params:[]}),signal:AbortSignal.timeout(15000)});
-          const d=await r.json();if(!r.ok||d.success!==true)throw Error('Fixture metadata unavailable');
-          console.log(JSON.stringify(d.result.map(x=>x.results)));
+          import {randomBytes} from 'node:crypto';
+          const r=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/auth/register',{method:'POST',redirect:'error',signal:AbortSignal.timeout(20000),headers:{'Content-Type':'application/json','Origin':'https://www.studiosb6l.com'},body:JSON.stringify({email:'studiosb6l+activation20261124b@gmail.com',password:randomBytes(32).toString('base64url'),role:'artist',acceptTerms:true})});
+          const d=await r.json().catch(()=>({}));
+          console.log(JSON.stringify({registrationSmokeStatus:r.status,error:d.error,code:d.code}));
+          if(r.status!==202)throw Error('Registration email check failed');
           JS
       - name: Preserve non-secret publication prerequisites
         uses: actions/upload-artifact@v4
