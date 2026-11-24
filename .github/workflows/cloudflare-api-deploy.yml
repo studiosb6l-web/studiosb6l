@@ -2,7 +2,7 @@ name: Activate verified admission and payment processing
 on:
   push:
     branches: [integration/admission-20261124]
-    paths: [.github/workflows/cloudflare-api-deploy.yml]
+    paths: [.github/workflows/cloudflare-api-deploy.yml, 'cloudflare/**']
 permissions:
   contents: read
 concurrency:
