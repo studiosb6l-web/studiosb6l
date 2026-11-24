@@ -61,15 +61,13 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'## Current API publication readiness\n\n'+JSON.stringify(report,null,2)+'\n\nNo migrations, credential changes, emails, payments or deployments executed.\n');
           console.log(JSON.stringify(report));
           JS
-      - name: Inspect exact registration schema metadata without reading account records
+      - name: Inspect only test fixture progression
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           node --input-type=module - <<'JS'
-          const sql="SELECT name,sql FROM sqlite_master WHERE type='table' AND name IN ('accounts','account_onboarding','account_email_verifications','registration_email_budget','account_email_send_locks')";
-          const r=await fetch('https://api.cloudflare.com/client/v4/accounts/8ada1c4a636906c35b369d4d682f6d4e/d1/database/f53175d9-50a7-4b6a-a868-1b10c997efc8/query',{method:'POST',redirect:'error',headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({sql,params:[]}),signal:AbortSignal.timeout(15000)});
-          const d=await r.json();
-          if(!r.ok||d.success!==true)throw Error('Schema metadata unavailable');
+          const r=await fetch('https://api.cloudflare.com/client/v4/accounts/8ada1c4a636906c35b369d4d682f6d4e/d1/database/f53175d9-50a7-4b6a-a868-1b10c997efc8/query',{method:'POST',redirect:'error',headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({sql:"SELECT (SELECT COUNT(*) FROM accounts WHERE email='studiosb6l+activation20261124@gmail.com') AS fixture_accounts,(SELECT COUNT(*) FROM account_onboarding WHERE account_id IN (SELECT id FROM accounts WHERE email='studiosb6l+activation20261124@gmail.com')) AS fixture_onboarding,(SELECT COUNT(*) FROM account_email_verifications WHERE account_id IN (SELECT id FROM accounts WHERE email='studiosb6l+activation20261124@gmail.com')) AS fixture_tokens,(SELECT COALESCE(SUM(used),0) FROM registration_email_budget WHERE day=date('now')) AS reserved_emails",params:[]}),signal:AbortSignal.timeout(15000)});
+          const d=await r.json();if(!r.ok||d.success!==true)throw Error('Fixture metadata unavailable');
           console.log(JSON.stringify(d.result.map(x=>x.results)));
           JS
       - name: Preserve non-secret publication prerequisites
