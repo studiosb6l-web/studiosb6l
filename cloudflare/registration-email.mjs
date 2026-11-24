@@ -27,7 +27,8 @@ export async function sendVerificationEmail(env,{to,verificationUrl},transport=f
  }
  const text='Confirma o teu email STUDIOSB6L:\n'+url.href+'\n\nEsta ligação expira em 30 minutos. A confirmação não efetua pagamentos nem inicia subscrições. Se não pediste esta conta, ignora esta mensagem.';
  // The URL and text contain only fixed content and a validated URL-safe token.
- const r=await transport('https://api.brevo.com/v3/smtp/email',{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:{'api-key':env.BREVO_API_KEY,'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({sender:{email:env.REGISTRATION_FROM_EMAIL,name:'STUDIOSB6L'},to:[{email:to}],subject:'Confirma o teu email · STUDIOSB6L',textContent:text,htmlContent:'<p>Confirma o teu email STUDIOSB6L.</p><p><a href="'+url.href+'">Confirmar email</a></p><p>Ligação válida durante 30 minutos. Não efetua pagamentos nem inicia subscrições.</p>'})});
+ let r;
+ try{r=await transport('https://api.brevo.com/v3/smtp/email',{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:{'api-key':env.BREVO_API_KEY.trim(),'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({sender:{email:env.REGISTRATION_FROM_EMAIL,name:'STUDIOSB6L'},to:[{email:to}],subject:'Confirma o teu email · STUDIOSB6L',textContent:text,htmlContent:'<p>Confirma o teu email STUDIOSB6L.</p><p><a href="'+url.href+'">Confirmar email</a></p><p>Ligação válida durante 30 minutos. Não efetua pagamentos nem inicia subscrições.</p>'})});}catch(error){const message=String(error?.message||'');const reason=/header/i.test(message)?'invalid-header':/timeout|abort/i.test(message)?'timeout':'transport';throw new Error('Email provider '+reason);}
  if(r.status!==201)return false;
  const data=await r.json().catch(()=>null);return typeof data?.messageId==='string'&&!!data.messageId;
 }
