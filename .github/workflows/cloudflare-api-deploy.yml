@@ -35,7 +35,7 @@ jobs:
           import fs from 'node:fs';
           import {verifyCloudflareAccess} from './scripts/cloudflare-api-access.mjs';
           const previous=await verifyCloudflareAccess();
-          if(previous.productionRegistrationEnabled)throw Error('Live registrations cannot be suspended by this rollout');
+          if(typeof previous.productionRegistrationEnabled!=='boolean')throw Error('Previous registration state unavailable');
           const token=process.env.CLOUDFLARE_API_TOKEN;
           const account='8ada1c4a636906c35b369d4d682f6d4e';
           const now=new Date(), day=now.toISOString().slice(0,10);
