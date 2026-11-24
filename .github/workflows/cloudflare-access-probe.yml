@@ -65,7 +65,7 @@ jobs:
         run: |
           node --input-type=module - <<'JS'
           import {randomBytes} from 'node:crypto';
-          const r=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/auth/register',{method:'POST',redirect:'error',signal:AbortSignal.timeout(20000),headers:{'Content-Type':'application/json','Origin':'https://www.studiosb6l.com'},body:JSON.stringify({email:'studiosb6l+activation20261124c@gmail.com',password:randomBytes(32).toString('base64url'),role:'artist',acceptTerms:true})});
+          const r=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/auth/register',{method:'POST',redirect:'error',signal:AbortSignal.timeout(20000),headers:{'Content-Type':'application/json','Origin':'https://www.studiosb6l.com'},body:JSON.stringify({email:'studiosb6l+activation20261124d@gmail.com',password:randomBytes(32).toString('base64url'),role:'artist',acceptTerms:true})});
           const d=await r.json().catch(()=>({}));
           console.log(JSON.stringify({registrationSmokeStatus:r.status,error:d.error,code:d.code}));
           if(r.status!==202)throw Error('Registration email check failed');
