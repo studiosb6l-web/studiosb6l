@@ -1,87 +1,76 @@
-name: Cloudflare API access and paused deployment
+name: Publish validated Worker with admission paused
 on:
-  workflow_dispatch:
-    inputs:
-      operation:
-        description: Verify access or publish with new registrations disabled
-        required: true
-        default: verify-access
-        type: choice
-        options:
-          - verify-access
-          - deploy-paused
-      free_quotas_verified:
-        description: Confirm current global usage and this operation remain below 70 percent of every free quota
-        required: true
-        type: boolean
-        default: false
+  push:
+    branches: [integration/admission-20261124]
+    paths: [.github/workflows/cloudflare-api-deploy.yml]
 permissions:
   contents: read
 concurrency:
   group: studiosb6l-cloudflare-production
   cancel-in-progress: false
 jobs:
-  verify-and-deploy:
+  publish-paused:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Require explicit quota verification
-        env:
-          QUOTAS_VERIFIED: ${{ inputs.free_quotas_verified }}
-        run: |
-          if [ "$QUOTAS_VERIFIED" != "true" ]; then
-            echo "Global free quotas have not been verified. No Cloudflare operation executed."
-            exit 1
-          fi
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install locked dependencies
+      - name: Install locked dependencies without install scripts
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Test selected revision
+      - name: Validate selected source
         run: npm test
       - name: Compile without publishing
         env:
           WRANGLER_SEND_METRICS: 'false'
         run: npm run check:worker
-      - name: Verify credential, fixed Worker, D1 binding and rollback versions
+      - name: Check current account-wide quotas, target and previous versions
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: node scripts/cloudflare-api-access.mjs
-      - name: Save previous version identifiers for rollback
-        uses: actions/upload-artifact@v4
-        with:
-          name: cloudflare-previous-versions-${{ github.run_id }}
-          path: .wrangler/access-check/target.json
-          retention-days: 30
-          if-no-files-found: error
-      - name: Block accidental suspension of existing live registrations
-        if: inputs.operation == 'deploy-paused'
         run: |
           node --input-type=module - <<'JS'
           import fs from 'node:fs';
-          const previous=JSON.parse(fs.readFileSync('.wrangler/access-check/target.json','utf8'));
-          if(previous.productionRegistrationEnabled)throw Error('Live registration is already enabled. This paused rollout requires a separate reviewed change.');
+          import {verifyCloudflareAccess} from './scripts/cloudflare-api-access.mjs';
+          const previous=await verifyCloudflareAccess();
+          if(previous.productionRegistrationEnabled)throw Error('Live registrations cannot be suspended by this rollout');
+          const token=process.env.CLOUDFLARE_API_TOKEN;
+          const account='8ada1c4a636906c35b369d4d682f6d4e';
+          const now=new Date(), day=now.toISOString().slice(0,10);
+          const query='query Usage($accountTag: string, $start: string, $end: string, $day: Date!) { viewer { accounts(filter: {accountTag: $accountTag}) { workersInvocationsAdaptive(limit: 1, filter: {datetime_geq: $start, datetime_leq: $end}) { sum { requests } } d1AnalyticsAdaptiveGroups(limit: 1, filter: {date_geq: $day, date_leq: $day}) { sum { rowsRead rowsWritten } } } } }';
+          const r=await fetch('https://api.cloudflare.com/client/v4/graphql',{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({query,variables:{accountTag:account,start:day+'T00:00:00Z',end:now.toISOString(),day}})});
+          const d=await r.json().catch(()=>null),a=d?.data?.viewer?.accounts;
+          if(!r.ok||d?.errors?.length||!Array.isArray(a)||a.length!==1)throw Error('Current account-wide quota measurements unavailable');
+          function total(rows,field){if(!Array.isArray(rows))throw Error('Quota dataset unavailable');let n=0;for(const row of rows){const v=row.sum?.[field];if(!Number.isSafeInteger(v)||v<0)throw Error('Invalid quota measurement');n+=v;}return n;}
+          const usage={utcDay:day,checkedAt:now.toISOString(),requests:total(a[0].workersInvocationsAdaptive,'requests'),rowsRead:total(a[0].d1AnalyticsAdaptiveGroups,'rowsRead'),rowsWritten:total(a[0].d1AnalyticsAdaptiveGroups,'rowsWritten')};
+          if(usage.requests+1000>70000||usage.rowsRead+1000>3500000||usage.rowsWritten+1000>70000)throw Error('Required seventy-percent quota margin unavailable');
+          fs.mkdirSync('.wrangler/access-check',{recursive:true});
+          fs.writeFileSync('.wrangler/access-check/paused-rollout.json',JSON.stringify({sourceCommit:process.env.GITHUB_SHA,previous,usage,scope:'Code deployment only; registration and payment activation disabled; no email, payment, migration or new resource'},null,2));
+          console.log(JSON.stringify({quotaCheckPassed:true,usage,rollbackVersions:previous.previousVersions.length}));
           JS
-      - name: Deploy with new registrations and payment activation disabled
-        if: inputs.operation == 'deploy-paused'
+      - name: Preserve rollback and current quota evidence before publication
+        uses: actions/upload-artifact@v4
+        with:
+          name: paused-rollout-${{ github.run_id }}
+          path: .wrangler/access-check/paused-rollout.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish existing Worker with admission disabled
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
           WRANGLER_SEND_METRICS: 'false'
         run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:false --var PAYHIP_ACTIVATION_VERIFIED:false
-      - name: Report actual scope
-        env:
-          REQUESTED_OPERATION: ${{ inputs.operation }}
+      - name: Verify deployed health and disabled registration
         run: |
-          {
-            echo '## Cloudflare API route'
-            echo "Requested operation: $REQUESTED_OPERATION"
-            echo 'Tests and compilation passed; target access was verified.'
-            echo 'No migrations, payment credentials, email credentials, paid plans or new resources were created.'
-            echo 'This workflow does not activate paid registrations or validate a real payment.'
-            echo 'Previous deployed version identifiers are in the rollback artifact. Database content was not exported.'
-          } >> "$GITHUB_STEP_SUMMARY"
+          node --input-type=module - <<'JS'
+          const r=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/health',{redirect:'error',signal:AbortSignal.timeout(15000)});
+          const d=await r.json();
+          if(!r.ok||d.ok!==true||d.environment==='preview'||d.registration?.enabled===true)throw Error('Production health verification failed; inspect saved rollback artifact');
+          console.log(JSON.stringify(d));
+          JS
+      - name: Report completed scope
+        run: |
+          echo 'Published reviewed Worker code. New registration and Payhip activation remain disabled. No email, payment, migration, credential changes or paid plans. Rollback identifiers and quota measurements preserved.' >> "$GITHUB_STEP_SUMMARY"
