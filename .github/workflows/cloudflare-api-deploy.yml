@@ -1,4 +1,4 @@
-name: Publish validated Worker with admission paused
+name: Activate verified admission and payment processing
 on:
   push:
     branches: [integration/admission-20261124]
@@ -57,13 +57,13 @@ jobs:
           path: .wrangler/access-check/paused-rollout.json
           retention-days: 30
           if-no-files-found: error
-      - name: Publish existing Worker with admission disabled
+      - name: Activate configured registration and Payhip processing
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
           WRANGLER_SEND_METRICS: 'false'
-        run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:false --var PAYHIP_ACTIVATION_VERIFIED:false --var PAYHIP_ADMISSION_PRODUCT_KEY:UJ0tF --var PAYHIP_ADMISSION_CHECKOUT_URL:https://payhip.com/b/UJ0tF --var REGISTRATION_EMAIL_PROVIDER:brevo --var REGISTRATION_FROM_EMAIL:studiosb6l@gmail.com --var BREVO_SENDER_VERIFIED:true --var EMAIL_FREE_DAILY_QUOTA:300 --var EMAIL_DAILY_BUDGET:20 --var EMAIL_BUDGET_VERIFIED:true
-      - name: Verify deployed health and disabled registration
+        run: npx --no-install wrangler deploy --var REGISTRATION_ENABLED:true --var PAYHIP_ACTIVATION_VERIFIED:true --var PAYHIP_ADMISSION_PRODUCT_KEY:UJ0tF --var PAYHIP_ADMISSION_CHECKOUT_URL:https://payhip.com/b/UJ0tF --var REGISTRATION_EMAIL_PROVIDER:brevo --var REGISTRATION_FROM_EMAIL:studiosb6l@gmail.com --var BREVO_SENDER_VERIFIED:true --var EMAIL_FREE_DAILY_QUOTA:300 --var EMAIL_DAILY_BUDGET:20 --var EMAIL_BUDGET_VERIFIED:true
+      - name: Verify deployed health and registration readiness
         run: |
           node --input-type=module - <<'JS'
           const r=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/health',{redirect:'error',signal:AbortSignal.timeout(15000)});
@@ -72,9 +72,24 @@ jobs:
           console.log(JSON.stringify(d));
           const s=await fetch('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/auth/status',{redirect:'error',signal:AbortSignal.timeout(15000)});
           const status=await s.json();
-          if(!s.ok||status.registrationEnabled!==false)throw Error('Registration must remain disabled');
+          if(!s.ok||status.registrationEnabled!==true)throw Error('Registration readiness must be enabled');
           console.log(JSON.stringify(status));
+          JS
+      - name: Verify webhook credential without a sale or account activation
+        env:
+          PAYHIP_WEBHOOK_API_KEY: ${{ secrets.PAYHIP_WEBHOOK_API_KEY }}
+        run: |
+          node --input-type=module - <<'JS'
+          import {createHash} from 'node:crypto';
+          const endpoint='https://studiosb6l-artists-api.studiosb6l.workers.dev/api/billing/payhip/webhook';
+          const key=process.env.PAYHIP_WEBHOOK_API_KEY;
+          if(!key)throw Error('Missing stored webhook credential');
+          const event={id:'configuration-probe',type:'paid',email:'nobody@invalid.example',currency:'EUR',price:299,items:[{product_key:'not-the-admission-product',quantity:'1'}]};
+          async function check(signature,expected){const r=await fetch(endpoint,{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{'Content-Type':'application/json'},body:JSON.stringify({...event,signature})});if(r.status!==expected)throw Error('Webhook configuration probe failed: HTTP '+r.status);}
+          await check('0'.repeat(64),400);
+          await check(createHash('sha256').update(key).digest('hex'),200);
+          console.log('Stored webhook credential verified against production; invalid credential rejected. Wrong product fixture ignored; no sale or account activation.');
           JS
       - name: Report completed scope
         run: |
-          echo 'Published reviewed Worker code. New registration and Payhip activation remain disabled. No email, payment, migration, credential changes or paid plans. Rollback identifiers and quota measurements preserved.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Activated reviewed registration and Payhip processing. Product remains hidden until checkout checks. No real payment or paid plan. Rollback identifiers and quota measurements preserved.' >> "$GITHUB_STEP_SUMMARY"
