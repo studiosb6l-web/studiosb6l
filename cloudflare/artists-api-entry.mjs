@@ -1,5 +1,5 @@
 import {accountRegistration,registrationConfigured} from './account-registration.mjs';
-import {admissionWebhook} from './admission-billing.mjs';
+import {payhipWebhook} from './payhip-admission.mjs';
 import {authReadiness,checkAuthRate} from './auth-readiness.mjs';
 // Unified entry point for studiosb6l-artists-api. Deployment configuration and
 // the existing D1 binding must be verified before enabling repository builds.
@@ -20,7 +20,8 @@ export default {async fetch(request,env={}){
     if(path==='/health'&&request.method==='GET')return reply(200,{ok:true,service:'studiosb6l-artists-api',environment:'preview',operationsEnabled:false});
     return reply(503,{success:false,error:'Preview operations are disabled'});
   }
-  if(path==='/api/billing/stripe/webhook')return admissionWebhook(request,env);
+  if(path==='/api/billing/payhip/webhook')return payhipWebhook(request,env);
+  if(path.startsWith('/api/billing/stripe/'))return reply(404,{error:'Not found'});
   const origin=request.headers.get('Origin');
   if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});

@@ -17,7 +17,7 @@ byId('registration-form').addEventListener('submit',async e=>{
 });
 byId('verify-email').addEventListener('click',async e=>{
  const button=e.target,status=byId('verification-status');button.disabled=true;
- try{if(!/^[A-Za-z0-9_-]{43}$/.test(token))throw Error('Ligação inválida ou expirada.');const d=await call('/api/auth/verify-email',{token});const url=new URL(d.checkoutUrl);if(url.protocol!=='https:'||url.hostname!=='buy.stripe.com'||url.username||url.password||d.amount!==299||d.currency!=='eur')throw Error('Não foi possível validar a ligação de pagamento.');byId('admission-checkout').href=url.href;byId('admission-checkout').hidden=false;status.textContent='Email confirmado. A conta será ativada após confirmação do pagamento.';token='';}
+ try{if(!/^[A-Za-z0-9_-]{43}$/.test(token))throw Error('Ligação inválida ou expirada.');const d=await call('/api/auth/verify-email',{token});const url=new URL(d.checkoutUrl);if(url.protocol!=='https:'||url.hostname!=='payhip.com'||!/^\/b\/[A-Za-z0-9]+$/.test(url.pathname)||url.search||url.hash||url.username||url.password||d.amount!==299||d.currency!=='eur')throw Error('Não foi possível validar a ligação de pagamento.');byId('admission-checkout').href=url.href;byId('admission-checkout').hidden=false;status.textContent='Email confirmado. Paga no Payhip com o mesmo email desta conta. A conta será ativada após confirmação do pagamento.';token='';}
  catch(error){status.textContent=error.message;button.disabled=false;}
 });
 })();
