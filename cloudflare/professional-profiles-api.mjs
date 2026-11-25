@@ -1,3 +1,4 @@
+import {selectProfessionalOpportunities} from './professional-opportunity-delivery.mjs';
 import {resolveSession} from './session-guard.mjs';
 import {authorize} from './authorization-policy.mjs';
 import {checkAuthRate} from './auth-readiness.mjs';
@@ -58,6 +59,18 @@ export async function professionalProfilesApi(request,env={},ctx){
    return reply({success:true,id,revision,status:data.publishConsent?'approved':'pending',published:data.publishConsent,message:data.publishConsent?'Ficha validada e publicada automaticamente.':'Ficha guardada em privado. Autoriza a publicação quando estiver pronta.'});
   }
 
+  if(path==='/api/profiles/opportunities'&&request.method==='GET'){
+   if(env.PROFESSIONAL_OPPORTUNITIES_ENABLED!=='true')return reply({error:'Serviço em preparação.'},503);
+   const own=await db.prepare(publicQuery+' AND p.account_id=? LIMIT 1').bind(session.userId).first();
+   const viewer=own&&decoded(own);
+   if(!viewer?.matchingConsent)return reply({success:true,items:[]});
+   const entitlement=await db.prepare('SELECT plan,provider_reference,verified_at,expires_at,revoked_at FROM professional_entitlements WHERE account_id=?').bind(session.userId).first();
+   const now=Date.now();
+   const rows=await db.prepare('SELECT data FROM verified_professional_opportunities WHERE expires_at>? ORDER BY expires_at ASC LIMIT 500').bind(now).all();
+   const records=(rows.results||[]).flatMap(row=>{try{return [JSON.parse(row.data)];}catch{return [];}});
+   const selected=selectProfessionalOpportunities(viewer,records,entitlement,now);
+   return reply({success:true,plan:effectiveProfilePlan(entitlement,now),items:selected.map(item=>{const record=records.find(r=>r.id===item.id);return {...item,title:String(record.title||'').slice(0,200)};})});
+  }
   if(path==='/api/profiles/matches'&&request.method==='GET'){
    const own=await db.prepare(publicQuery+' AND p.account_id=? LIMIT 1').bind(session.userId).first();const viewer=own&&decoded(own);
    if(!viewer?.matchingConsent)return reply({success:true,items:[],message:'Publica uma ficha aprovada e autoriza os cruzamentos para receber correspondências.'});
