@@ -1,4 +1,4 @@
-name: Validate and publish private professional inbox
+name: Publish PRO BUSINESS display name
 on:
   push:
     branches: [release/58-60-inbox-20261125]
@@ -76,23 +76,13 @@ jobs:
           path: .wrangler/professional-profiles/database-recovery.json
           retention-days: 30
           if-no-files-found: error
-      - name: Apply additive profile tables in existing database
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
-          WRANGLER_SEND_METRICS: 'false'
-        run: |
-          npx --no-install wrangler d1 execute DB --remote --file cloudflare/migrations/009_professional_profiles.sql
-          npx --no-install wrangler d1 execute DB --remote --file cloudflare/migrations/010_verified_professional_opportunities.sql
-          npx --no-install wrangler d1 execute DB --remote --file cloudflare/migrations/011_master_professional_entitlements.sql
-          npx --no-install wrangler d1 execute DB --remote --file cloudflare/migrations/012_private_inbox.sql
       - name: Publish code with existing settings and bindings
         id: publish
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
           WRANGLER_SEND_METRICS: 'false'
-        run: npx --no-install wrangler deploy --var PROFESSIONAL_PROFILES_ENABLED:true --var PRIVATE_INBOX_ENABLED:true --var PROFESSIONAL_OPPORTUNITIES_ENABLED:true
+        run: npx --no-install wrangler deploy
       - name: Verify production without registering, emailing or charging anyone
         run: |
           node --input-type=module - <<'JS'
@@ -122,5 +112,3 @@ jobs:
           const id=evidence.previous.previousVersions[0]?.id;if(!/^[a-f0-9-]{36}$/.test(id))throw Error('Rollback version missing');
           const r=spawnSync('npx',['--no-install','wrangler','rollback',id,'--yes','--message','Private inbox production smoke check failed'],{stdio:'inherit'});if(r.status!==0)throw Error('Rollback failed');
           JS
-
-# Release execution: preserve existing account admission and keep MASTER billing disabled.

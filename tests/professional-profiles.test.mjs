@@ -32,7 +32,7 @@ test('opportunity endpoint enforces auth, opt-in, feature flag and all three ser
  feed=await(await worker.fetch(req('/api/profiles/opportunities'),env)).json();assert.equal(feed.plan,'pro');assert.equal(feed.items.length,1);
  sql.prepare("UPDATE professional_entitlements SET plan='master_pro_monthly'").run();
  feed=await(await worker.fetch(req('/api/profiles/opportunities'),env)).json();assert.equal(feed.plan,'master_pro');assert.equal(feed.items.length,1);
- const page=await worker.fetch(req('/api/profiles/opportunities/page'),env);assert.equal(page.status,200);assert.match(await page.text(),/MASTER PRO/);
+ const page=await worker.fetch(req('/api/profiles/opportunities/page'),env);assert.equal(page.status,200);assert.match(await page.text(),/PRO BUSINESS/);
  sql.prepare('UPDATE professional_entitlements SET revoked_at=?').run(now);
  feed=await(await worker.fetch(req('/api/profiles/opportunities'),env)).json();assert.equal(feed.plan,'free');assert.equal(feed.items.length,0);
  await worker.fetch(req('/api/profiles/me',{profile:fixture('musician',{matchingConsent:false}),revision:1}),env);
