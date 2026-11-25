@@ -34,7 +34,10 @@ async function dispatch(request,env={},ctx){
   const origin=request.headers.get('Origin');
   if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});
-  if(['/conta','/conta/'].includes(path)&&request.method==='GET')return accountPortal({...env,RUNTIME_READY:(await authReadiness(env)).enabled});
+  if(['/conta','/conta/'].includes(path)&&request.method==='GET'){
+    const readiness=await authReadiness(env);
+    return accountPortal({...env,RUNTIME_READY:readiness.enabled,REGISTRATION_READY:readiness.enabled&&registrationConfigured(env)});
+  }
   if(path==='/api/auth/status'&&request.method==='GET'){
     const limited=await checkAuthRate(request,env);
     if(limited)return reply(limited,{success:false,error:'Service unavailable'});
