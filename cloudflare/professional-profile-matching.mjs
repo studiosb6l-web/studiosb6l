@@ -4,23 +4,25 @@ export const countryKey=value=>{const n=normalize(value);const aliases={portugal
 const list=v=>(Array.isArray(v)?v:[]).map(normalize).filter(Boolean);
 const common=(a,b)=>list(a).filter(x=>list(b).includes(x));
 export function effectiveProfilePlan(entitlement,now=Date.now()){
- return entitlement&&['pro_monthly','pro_annual'].includes(entitlement.plan)&&entitlement.verified_at>0&&entitlement.verified_at<=now&&entitlement.expires_at>now&&!entitlement.revoked_at&&entitlement.provider_reference?'pro':'free';
+ if(!entitlement||!Number.isFinite(entitlement.verified_at)||entitlement.verified_at<=0||entitlement.verified_at>now||!Number.isFinite(entitlement.expires_at)||entitlement.expires_at<=now||entitlement.revoked_at||typeof entitlement.provider_reference!=='string'||!entitlement.provider_reference.trim())return 'free';
+ if(['master_pro_monthly','master_pro_annual'].includes(entitlement.plan))return 'master_pro';
+ return ['pro_monthly','pro_annual'].includes(entitlement.plan)?'pro':'free';
 }
 export function matchProfessionalProfiles(viewer,candidate,{plan='free'}={}){
  if(!viewer||!candidate||viewer.id===candidate.id||!Object.hasOwn(SECTORS,viewer.kind)||!Object.hasOwn(SECTORS,candidate.kind)||!viewer.publishConsent||!candidate.publishConsent||!viewer.matchingConsent||!candidate.matchingConsent)return null;
  const needed=common(viewer.seeking,candidate.services),offered=common(viewer.services,candidate.seeking);if(!needed.length&&!offered.length)return null;
  const country=countryKey(viewer.country)===countryKey(candidate.country),city=country&&normalize(viewer.city)===normalize(candidate.city);
  const remote=viewer.workMode!=='onsite'&&candidate.workMode!=='onsite';
- if(plan!=='pro'&&!country)return null;if(!country&&!remote)return null;
+ if(!['pro','master_pro'].includes(plan)&&!country)return null;if(!country&&!remote)return null;
  const vi=viewer.details?.instruments||viewer.details?.disciplines,ci=candidate.details?.instruments||candidate.details?.disciplines;
  if([...needed,...offered].includes('teaching')&&list(vi).length&&list(ci).length&&!common(vi,ci).length)return null;
  let score=50+(country?15:0)+(city?10:0);const reasons=[needed.length?'Serviço procurado disponível':'Oportunidade para o teu serviço',country?'Mesmo país':'Colaboração à distância'];
- if(plan==='pro'){
+ if(['pro','master_pro'].includes(plan)){
   for(const key of ['instruments','genres','languages','formats'])if(common(viewer.details?.[key],candidate.details?.[key]).length){score+=5;reasons.push({instruments:'Instrumentos compatíveis',genres:'Géneros compatíveis',languages:'Idiomas compatíveis',formats:'Formatos compatíveis'}[key]);}
   if(candidate.available){score+=5;reasons.push('Disponibilidade indicada');}
  }
  return{score:Math.min(100,score),needed,offered,reasons};
 }
 export function rankProfessionalProfiles(viewer,candidates,{plan='free'}={}){
- return candidates.map(c=>({profile:c,match:matchProfessionalProfiles(viewer,c,{plan})})).filter(x=>x.match).sort((a,b)=>b.match.score-a.match.score||a.profile.id.localeCompare(b.profile.id)).slice(0,plan==='pro'?30:3);
+ return candidates.map(c=>({profile:c,match:matchProfessionalProfiles(viewer,c,{plan})})).filter(x=>x.match).sort((a,b)=>b.match.score-a.match.score||a.profile.id.localeCompare(b.profile.id)).slice(0,['pro','master_pro'].includes(plan)?30:3);
 }
