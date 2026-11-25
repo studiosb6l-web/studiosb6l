@@ -40,7 +40,7 @@
   let trackIndex = fromSite && Number.isInteger(saved.trackIndex) && saved.trackIndex >= 0 ? saved.trackIndex : 0;
   let position = fromSite && Number.isFinite(saved.position) && saved.position >= 0 ? saved.position : 0;
   let resume = position;
-  let shouldPlay = !fromSite || saved.shouldPlay !== false;
+  let shouldPlay = false;
   let ready = false;
   let playing = false;
   let triedGesture = false;
@@ -292,5 +292,6 @@
     if (event.target instanceof HTMLMediaElement) pause();
   }, true);
 
+  window.addEventListener('b6l-media-close', pause);
   window.addEventListener('pagehide', save);
 })();

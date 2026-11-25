@@ -35,7 +35,7 @@
         });
       });
     } else {
-      shortcut.href = 'music-store.html?lang=' + language + '#concertos';
+      shortcut.href = '/concertos/?lang=' + language;
       if (highlight) {
         highlight.querySelector('h2').textContent = copy[0];
         highlight.querySelector('p').textContent = copy[1];
