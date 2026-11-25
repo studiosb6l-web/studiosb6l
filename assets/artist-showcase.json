@@ -1,0 +1,161 @@
+{
+  "updated": "2026-11-25",
+  "artists": [
+    {
+      "id": "Q6367",
+      "name": "Ana Free",
+      "profileUrl": "/concertos/artistas/ana-free-q6367/",
+      "photoUrl": "/assets/artist-showcase/Q6367.jpg",
+      "country": {
+        "pt": "Portugal",
+        "es": "Portugal",
+        "en": "Portugal"
+      },
+      "city": {
+        "pt": "Lisboa",
+        "es": "Lisboa",
+        "en": "Lisbon"
+      },
+      "bio": {
+        "pt": "Cantora e compositora portuguesa.",
+        "es": "Cantante y compositora portuguesa.",
+        "en": "Portuguese singer and songwriter."
+      },
+      "source": "https://www.wikidata.org/wiki/Q6367",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Anafree.jpg",
+      "photoCredit": "Photographer: Joe Focuz. All rights belong to Ana Free herby released as public domain.",
+      "photoLicense": "Public domain",
+      "licenseUrl": ""
+    },
+    {
+      "id": "Q51603",
+      "name": "Lili Haydn",
+      "profileUrl": "/concertos/artistas/lili-haydn-q51603/",
+      "photoUrl": "/assets/artist-showcase/Q51603.jpg",
+      "country": {
+        "pt": "Canadá",
+        "es": "Canadá",
+        "en": "Canada"
+      },
+      "city": {
+        "pt": "Toronto",
+        "es": "Toronto",
+        "en": "Toronto"
+      },
+      "bio": {
+        "pt": "Violinista, cantora e compositora para cinema e televisão.",
+        "es": "Violinista, cantante y compositora para cine y televisión.",
+        "en": "Violinist, singer and composer for film and television."
+      },
+      "source": "https://www.wikidata.org/wiki/Q51603",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Lili_Haydn.jpg",
+      "photoCredit": "Mykal Burns!",
+      "photoLicense": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+      "id": "Q14042",
+      "name": "Willy Moon",
+      "profileUrl": "/concertos/artistas/willy-moon-q14042/",
+      "photoUrl": "/assets/artist-showcase/Q14042.jpg",
+      "country": {
+        "pt": "Nova Zelândia",
+        "es": "Nueva Zelanda",
+        "en": "New Zealand"
+      },
+      "city": {
+        "pt": "Wellington",
+        "es": "Wellington",
+        "en": "Wellington"
+      },
+      "bio": {
+        "pt": "Cantor, compositor e produtor neozelandês.",
+        "es": "Cantante, compositor y productor neozelandés.",
+        "en": "New Zealand singer, songwriter and producer."
+      },
+      "source": "https://www.wikidata.org/wiki/Q14042",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Willy_Moon_Midi_2012.jpg",
+      "photoCredit": "aarosenthal",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q48617",
+      "name": "Fritz Kalkbrenner",
+      "profileUrl": "/concertos/artistas/fritz-kalkbrenner-q48617/",
+      "photoUrl": "/assets/artist-showcase/Q48617.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany"
+      },
+      "city": {
+        "pt": "Berlim",
+        "es": "Berlín",
+        "en": "Berlin"
+      },
+      "bio": {
+        "pt": "DJ e produtor musical alemão.",
+        "es": "DJ y productor musical alemán.",
+        "en": "German DJ and record producer."
+      },
+      "source": "https://www.wikidata.org/wiki/Q48617",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:1LIVE_Krone_2014_Fritz_Kalkbrenner_(cropped).jpg",
+      "photoCredit": "Superbass",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q53198",
+      "name": "Urszula Sipińska",
+      "profileUrl": "/concertos/artistas/urszula-sipinska-q53198/",
+      "photoUrl": "/assets/artist-showcase/Q53198.jpg",
+      "country": {
+        "pt": "Polónia",
+        "es": "Polonia",
+        "en": "Poland"
+      },
+      "city": {
+        "pt": "Poznań",
+        "es": "Poznań",
+        "en": "Poznań"
+      },
+      "bio": {
+        "pt": "Cantora, compositora e pianista polaca.",
+        "es": "Cantante, compositora y pianista polaca.",
+        "en": "Polish singer-songwriter and pianist."
+      },
+      "source": "https://www.wikidata.org/wiki/Q53198",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Urszula_Sipinska.jpg",
+      "photoCredit": "Sławek",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q38983",
+      "name": "Halina Mlynkova",
+      "profileUrl": "/concertos/artistas/halina-mlynkova-q38983/",
+      "photoUrl": "/assets/artist-showcase/Q38983.jpg",
+      "country": {
+        "pt": "Polónia",
+        "es": "Polonia",
+        "en": "Poland"
+      },
+      "city": {
+        "pt": "Návsí",
+        "es": "Návsí",
+        "en": "Návsí"
+      },
+      "bio": {
+        "pt": "Cantora polaca natural de Návsí.",
+        "es": "Cantante polaca nacida en Návsí.",
+        "en": "Polish singer born in Návsí."
+      },
+      "source": "https://www.wikidata.org/wiki/Q38983",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Halina_Mlynkova_in_2016.jpg",
+      "photoCredit": "Serecki",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    }
+  ]
+}
