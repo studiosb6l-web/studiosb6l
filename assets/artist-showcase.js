@@ -74,7 +74,7 @@
   async function read(path) {
     try { const r = await fetch(path); return r.ok ? await r.json() : {}; } catch { return {}; }
   }
-  Promise.all([read('/assets/approved-marketplace.json'), read('/assets/artist-showcase.json')]).then(([approved, editorial]) => {
+  Promise.all([read('/assets/approved-marketplace.json'), read('/assets/artist-showcase.json?v=2')]).then(([approved, editorial]) => {
     const community = (Array.isArray(approved.artists) ? approved.artists : [])
       .filter(a => a?.approved === true && eligible(a)).map(a => ({...a, community:true}));
     const registered = new Set(community.map(a => String(a.name).trim().toLocaleLowerCase()));
@@ -83,7 +83,7 @@
     // Each published community profile replaces one editorial place; never limit community profiles.
     const day = Math.floor(Date.now() / 86400000);
     if (fallback.length) fallback.push(...fallback.splice(0, day % fallback.length));
-    artists = [...community, ...fallback.slice(0, Math.max(0, 6 - community.length))];
+    artists = [...community, ...fallback.slice(0, Math.max(0, 135 - community.length))];
     show(0);
     if (artists.length > 1) setInterval(() => {
       if (!paused && !hovered && !focused && !document.hidden) show(index + 1);

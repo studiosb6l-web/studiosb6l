@@ -156,6 +156,4134 @@
       "photoCredit": "Serecki",
       "photoLicense": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q750570",
+      "name": "Astrid Gloria",
+      "profileUrl": "/concertos/artistas/astrid-gloria-q750570/",
+      "photoUrl": "/assets/artist-showcase/Q750570.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Göttingen",
+        "es": "Gotinga",
+        "en": "Göttingen",
+        "fr": "Göttingen",
+        "de": "Göttingen"
+      },
+      "bio": {
+        "pt": "comediante · cantor",
+        "es": "comediante · cantante",
+        "en": "German comedian",
+        "fr": "humoriste · chanteur ou chanteuse",
+        "de": "deutsche Kabarettistin und Bühnenkünstlerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q750570",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Astrid_Gloria.jpg",
+      "photoCredit": "A.tucker",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q279243",
+      "name": "A.n.d.r.e.",
+      "profileUrl": "/concertos/artistas/a-n-d-r-e-q279243/",
+      "photoUrl": "/assets/artist-showcase/Q279243.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Wolfsburg",
+        "es": "Wolfsburgo",
+        "en": "Wolfsburg",
+        "fr": "Wolfsburg",
+        "de": "Wolfsburg"
+      },
+      "bio": {
+        "pt": "cantor alemão",
+        "es": "cantante alemán",
+        "en": "German singer",
+        "fr": "chanteur allemand",
+        "de": "deutscher Popsänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q279243",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Andre01_Foto_Edith_Held.jpg",
+      "photoCredit": "The original uploader was La68 at German Wikipedia.",
+      "photoLicense": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5"
+    },
+    {
+      "id": "Q565321",
+      "name": "Anne Gabriel",
+      "profileUrl": "/concertos/artistas/anne-gabriel-q565321/",
+      "photoUrl": "/assets/artist-showcase/Q565321.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Berlim",
+        "es": "Berlín",
+        "en": "Berlin",
+        "fr": "Berlin",
+        "de": "Berlin"
+      },
+      "bio": {
+        "pt": "cantora alemã",
+        "es": "cantante alemana",
+        "en": "German singer",
+        "fr": "chanteuse allemande",
+        "de": "deutsche Pop-Musikerin und Journalistin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q565321",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Anne_Gabriel_im_Herbst_2010.JPG",
+      "photoCredit": "Thomas (Tutti) Nitz",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q1154243",
+      "name": "The Dear & Departed",
+      "profileUrl": "/concertos/artistas/the-dear-departed-q1154243/",
+      "photoUrl": "/assets/artist-showcase/Q1154243.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Shrewsbury",
+        "es": "Shrewsbury",
+        "en": "Shrewsbury",
+        "fr": "Shrewsbury",
+        "de": "Shrewsbury"
+      },
+      "bio": {
+        "pt": "cantor britânico",
+        "es": "cantante británico",
+        "en": "British singer",
+        "fr": "musicien anglais",
+        "de": "Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q1154243",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Dear_and_departed_2010.jpg",
+      "photoCredit": "John Weiner",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q21085",
+      "name": "Alexander Knappe",
+      "profileUrl": "/concertos/artistas/alexander-knappe-q21085/",
+      "photoUrl": "/assets/artist-showcase/Q21085.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Cottbus",
+        "es": "Cottbus",
+        "en": "Cottbus",
+        "fr": "Cottbus",
+        "de": "Cottbus"
+      },
+      "bio": {
+        "pt": "cantor alemão",
+        "es": "cantante alemán",
+        "en": "German singer",
+        "fr": "chanteur allemand",
+        "de": "deutscher Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q21085",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:2018-05-20_ZDF_Fernsehgarten_Alexander_Knappe-8160.jpg",
+      "photoCredit": "Olaf Kosinsky",
+      "photoLicense": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+    },
+    {
+      "id": "Q333667",
+      "name": "Absztrakkt",
+      "profileUrl": "/concertos/artistas/absztrakkt-q333667/",
+      "photoUrl": "/assets/artist-showcase/Q333667.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Villach",
+        "es": "Villach",
+        "en": "Villach",
+        "fr": "Villach",
+        "de": "Villach"
+      },
+      "bio": {
+        "pt": "cantor alemão",
+        "es": "cantante alemán",
+        "en": "German singer",
+        "fr": "rappeur allemand",
+        "de": "deutscher Rapper"
+      },
+      "source": "https://www.wikidata.org/wiki/Q333667",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:2016_Absztrakkt_-_by_2eight_-_DSC4431.jpg",
+      "photoCredit": "Stefan Brending (2eight)",
+      "photoLicense": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+    },
+    {
+      "id": "Q340364",
+      "name": "Achim Bogdahn",
+      "profileUrl": "/concertos/artistas/achim-bogdahn-q340364/",
+      "photoUrl": "/assets/artist-showcase/Q340364.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Erlangen",
+        "es": "Erlangen",
+        "en": "Erlangen",
+        "fr": "Erlangen",
+        "de": "Erlangen"
+      },
+      "bio": {
+        "pt": "locutor de rádio · teólogo · apresentador",
+        "es": "personalidad de radio · teólogo · presentador",
+        "en": "German radio host",
+        "fr": "animateur ou animatrice de radio · théologien ou théologienne · animateur ou animatrice",
+        "de": "deutscher Radiomoderator"
+      },
+      "source": "https://www.wikidata.org/wiki/Q340364",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Heimatsound-Festival_2014_diverse_(32).jpg",
+      "photoCredit": "Ordercrazy",
+      "photoLicense": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+      "id": "Q1079341",
+      "name": "Christian Durstewitz",
+      "profileUrl": "/concertos/artistas/christian-durstewitz-q1079341/",
+      "photoUrl": "/assets/artist-showcase/Q1079341.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Fritzlar",
+        "es": "Fritzlar",
+        "en": "Fritzlar",
+        "fr": "Fritzlar",
+        "de": "Fritzlar"
+      },
+      "bio": {
+        "pt": "cantor alemão",
+        "es": "cantante alemán",
+        "en": "German singer",
+        "fr": "chanteur allemand",
+        "de": "deutscher Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q1079341",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Christian_Durstewitz.JPG",
+      "photoCredit": "Melly42",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q99129",
+      "name": "Tanja Berg",
+      "profileUrl": "/concertos/artistas/tanja-berg-q99129/",
+      "photoUrl": "/assets/artist-showcase/Q99129.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Berlim",
+        "es": "Berlín",
+        "en": "Berlin",
+        "fr": "Berlin",
+        "de": "Berlin"
+      },
+      "bio": {
+        "pt": "cantora alemã",
+        "es": "cantante alemana",
+        "en": "German singer",
+        "fr": "chanteuse allemande",
+        "de": "deutsche Schlager- und Jazzsängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q99129",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Kannenberg,_Ute_2012.jpg",
+      "photoCredit": "Ute Kannenberg",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q1009666",
+      "name": "Zita Gereben",
+      "profileUrl": "/concertos/artistas/zita-gereben-q1009666/",
+      "photoUrl": "/assets/artist-showcase/Q1009666.jpg",
+      "country": {
+        "pt": "Hungria",
+        "es": "Hungría",
+        "en": "Hungary",
+        "fr": "Hongrie",
+        "de": "Ungarn"
+      },
+      "city": {
+        "pt": "Budapeste",
+        "es": "Budapest",
+        "en": "Budapest",
+        "fr": "Budapest",
+        "de": "Budapest"
+      },
+      "bio": {
+        "pt": "cantor · músico · compositor",
+        "es": "cantante · músico · compositor",
+        "en": "Hungarian singer, musician and composer",
+        "fr": "chanteur ou chanteuse · musicien ou musicienne · compositeur ou compositrice",
+        "de": "Sänger · Musiker · Komponist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q1009666",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Gereben_Zita_2008.jpg",
+      "photoCredit": "Solymári",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q547787",
+      "name": "Lupillo Rivera",
+      "profileUrl": "/concertos/artistas/lupillo-rivera-q547787/",
+      "photoUrl": "/assets/artist-showcase/Q547787.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Long Beach",
+        "es": "Long Beach",
+        "en": "Long Beach",
+        "fr": "Long Beach",
+        "de": "Long Beach"
+      },
+      "bio": {
+        "pt": "cantor mexicano",
+        "es": "cantante mexicoestadounidense",
+        "en": "American singer-songwriter",
+        "fr": "musicien américain",
+        "de": "mexikanischer Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q547787",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Profesora_Venus_09.JPG",
+      "photoCredit": "Aida delgado",
+      "photoLicense": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+      "id": "Q750830",
+      "name": "Astrid Seriese",
+      "profileUrl": "/concertos/artistas/astrid-seriese-q750830/",
+      "photoUrl": "/assets/artist-showcase/Q750830.jpg",
+      "country": {
+        "pt": "Reino dos Países Baixos",
+        "es": "Reino de los Países Bajos",
+        "en": "Kingdom of the Netherlands",
+        "fr": "Royaume des Pays-Bas",
+        "de": "Königreich der Niederlande"
+      },
+      "city": {
+        "pt": "Haia",
+        "es": "La Haya",
+        "en": "The Hague",
+        "fr": "La Haye",
+        "de": "Den Haag"
+      },
+      "bio": {
+        "pt": "ator · cantor",
+        "es": "actor · cantante",
+        "en": "Dutch actor and singer",
+        "fr": "acteur ou actrice · chanteur ou chanteuse",
+        "de": "niederländische Jazz-Sängerin und Schauspielerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q750830",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Seriese1992.jpg",
+      "photoCredit": "Fotoburo De Boer",
+      "photoLicense": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+      "id": "Q626471",
+      "name": "MC Sniper",
+      "profileUrl": "/concertos/artistas/mc-sniper-q626471/",
+      "photoUrl": "/assets/artist-showcase/Q626471.jpg",
+      "country": {
+        "pt": "Coreia do Sul",
+        "es": "Corea del Sur",
+        "en": "South Korea",
+        "fr": "Corée du Sud",
+        "de": "Südkorea"
+      },
+      "city": {
+        "pt": "Jecheon",
+        "es": "Jecheon",
+        "en": "Jecheon",
+        "fr": "Jecheon",
+        "de": "Jecheon"
+      },
+      "bio": {
+        "pt": "cantor sul-coreano",
+        "es": "Rapero sur coreano",
+        "en": "South Korean rapper",
+        "fr": "rappeur sud-coréen",
+        "de": "südkoreanischer Rapper"
+      },
+      "source": "https://www.wikidata.org/wiki/Q626471",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Mcsniper2015.png",
+      "photoCredit": "1theK (원더케이)",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q894495",
+      "name": "Boss AC",
+      "profileUrl": "/concertos/artistas/boss-ac-q894495/",
+      "photoUrl": "/assets/artist-showcase/Q894495.jpg",
+      "country": {
+        "pt": "Portugal",
+        "es": "Portugal",
+        "en": "Portugal",
+        "fr": "Portugal",
+        "de": "Portugal"
+      },
+      "city": {
+        "pt": "Cabo Verde",
+        "es": "Cabo Verde",
+        "en": "Cape Verde",
+        "fr": "Cap-Vert",
+        "de": "Kap Verde"
+      },
+      "bio": {
+        "pt": "rapper português",
+        "es": "rapero portugués",
+        "en": "Portuguese rapper",
+        "fr": "chanteur de rap",
+        "de": "portugiesischer Rapper"
+      },
+      "source": "https://www.wikidata.org/wiki/Q894495",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:BossAC.png",
+      "photoCredit": "CanalN.tv Mirandela",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q126500",
+      "name": "Taktloss",
+      "profileUrl": "/concertos/artistas/taktloss-q126500/",
+      "photoUrl": "/assets/artist-showcase/Q126500.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Berlim",
+        "es": "Berlín",
+        "en": "Berlin",
+        "fr": "Berlin",
+        "de": "Berlin"
+      },
+      "bio": {
+        "pt": "rapper · cantor · músico",
+        "es": "rapero · cantante · músico",
+        "en": "German rap artist",
+        "fr": "rappeur allemand",
+        "de": "deutscher Rapper"
+      },
+      "source": "https://www.wikidata.org/wiki/Q126500",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Taktloss_pressefoto.jpg",
+      "photoCredit": "The original uploader was Altgolt at German Wikipedia.\n\n(Original text: Taktloss)",
+      "photoLicense": "CC BY-SA 2.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/de/deed.en"
+    },
+    {
+      "id": "Q560736",
+      "name": "GOG",
+      "profileUrl": "/concertos/artistas/gog-q560736/",
+      "photoUrl": "/assets/artist-showcase/Q560736.jpg",
+      "country": {
+        "pt": "Brasil",
+        "es": "Brasil",
+        "en": "Brazil",
+        "fr": "Brésil",
+        "de": "Brasilien"
+      },
+      "city": {
+        "pt": "Sobradinho",
+        "es": "Sobradinho",
+        "en": "Sobradinho",
+        "fr": "Sobradinho",
+        "de": "Sobradinho"
+      },
+      "bio": {
+        "pt": "cantor brasileiro",
+        "es": "cantante brasileño",
+        "en": "Brazilian singer",
+        "fr": "chanteur brésilien",
+        "de": "brasilianischer Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q560736",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:GOG_(cropped).jpg",
+      "photoCredit": "Produção Cultural no Brasil",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q96474",
+      "name": "Naima",
+      "profileUrl": "/concertos/artistas/naima-q96474/",
+      "photoUrl": "/assets/artist-showcase/Q96474.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Hamburgo",
+        "es": "Hamburgo",
+        "en": "Hamburg",
+        "fr": "Hambourg",
+        "de": "Hamburg"
+      },
+      "bio": {
+        "pt": "cantora alemã",
+        "es": "cantante alemana",
+        "en": "German singer",
+        "fr": "chanteuse allemande",
+        "de": "deutsche Sängerin und Musicaldarstellerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q96474",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Natalie_P%C3%BCtz_Italienische_Sommernacht_Bremen(2).jpeg",
+      "photoCredit": "CHR!S",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q595303",
+      "name": "Günther Neefs",
+      "profileUrl": "/concertos/artistas/gunther-neefs-q595303/",
+      "photoUrl": "/assets/artist-showcase/Q595303.jpg",
+      "country": {
+        "pt": "Bélgica",
+        "es": "Bélgica",
+        "en": "Belgium",
+        "fr": "Belgique",
+        "de": "Belgien"
+      },
+      "city": {
+        "pt": "Mechelen",
+        "es": "Malinas",
+        "en": "Mechelen",
+        "fr": "Malines",
+        "de": "Mechelen"
+      },
+      "bio": {
+        "pt": "cantor belga",
+        "es": "cantante belga",
+        "en": "Belgian singer",
+        "fr": "chanteur belge",
+        "de": "Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q595303",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Gnther-neefs-1348285023.jpg",
+      "photoCredit": "Paul Van Welden",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q141649",
+      "name": "Sarah Weeks",
+      "profileUrl": "/concertos/artistas/sarah-weeks-q141649/",
+      "photoUrl": "/assets/artist-showcase/Q141649.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Ann Arbor",
+        "es": "Ann Arbor",
+        "en": "Ann Arbor",
+        "fr": "Ann Arbor",
+        "de": "Ann Arbor"
+      },
+      "bio": {
+        "pt": "escritor · romancista · escritor de literatura infantil",
+        "es": "escritora de literatura infantil estadounidense",
+        "en": "American children's writer",
+        "fr": "auteure de littérature d'enfance américaine",
+        "de": "US-amerikanische Kinderbuchautorin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q141649",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Sarah_Weeks.JPG",
+      "photoCredit": "Jeffrey Beall",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q996887",
+      "name": "László Lugossy",
+      "profileUrl": "/concertos/artistas/laszlo-lugossy-q996887/",
+      "photoUrl": "/assets/artist-showcase/Q996887.jpg",
+      "country": {
+        "pt": "Hungria",
+        "es": "Hungría",
+        "en": "Hungary",
+        "fr": "Hongrie",
+        "de": "Ungarn"
+      },
+      "city": {
+        "pt": "Kecskemét",
+        "es": "Kecskemét",
+        "en": "Kecskemét",
+        "fr": "Kecskemét",
+        "de": "Kecskemét"
+      },
+      "bio": {
+        "pt": "ator húngaro",
+        "es": "actor húngaro",
+        "en": "Hungarian actor, performer, singer, playwriter, director born in 1947",
+        "fr": "acteur hongrois",
+        "de": "Ungarischer Schauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q996887",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:FeLugossy_L%C3%A1szl%C3%B3.jpg",
+      "photoCredit": "Lenke Szilágyi",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q530070",
+      "name": "Alejandro Parreño",
+      "profileUrl": "/concertos/artistas/alejandro-parreno-q530070/",
+      "photoUrl": "/assets/artist-showcase/Q530070.jpg",
+      "country": {
+        "pt": "Espanha",
+        "es": "España",
+        "en": "Spain",
+        "fr": "Espagne",
+        "de": "Spanien"
+      },
+      "city": {
+        "pt": "Valência",
+        "es": "Valencia",
+        "en": "Valencia",
+        "fr": "Valence",
+        "de": "Valencia"
+      },
+      "bio": {
+        "pt": "cantor · compositor",
+        "es": "cantante y compositor español",
+        "en": "Spanish singer and composer",
+        "fr": "chanteur ou chanteuse · compositeur ou compositrice",
+        "de": "Sänger · Komponist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q530070",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Alejandro_Parre%C3%B1o_-_Concierto_OT_Sant_Jordi.jpg",
+      "photoCredit": "Teodoromix",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q519965",
+      "name": "Professor Jay",
+      "profileUrl": "/concertos/artistas/professor-jay-q519965/",
+      "photoUrl": "/assets/artist-showcase/Q519965.jpg",
+      "country": {
+        "pt": "Tanzânia",
+        "es": "Tanzania",
+        "en": "Tanzania",
+        "fr": "Tanzanie",
+        "de": "Tansania"
+      },
+      "city": {
+        "pt": "Dar es Salaam",
+        "es": "Dar es-Salaam",
+        "en": "Dar es Salaam",
+        "fr": "Dar es Salam",
+        "de": "Daressalam"
+      },
+      "bio": {
+        "pt": "rapper · cantor · autor-compositor",
+        "es": "rapero · cantante · compositor de canciones",
+        "en": "Tanzanian rapper, songwriter, politician and former member of the Tanzanian parliament for Mikumi constituency.",
+        "fr": "rappeur ou rappeuse · chanteur ou chanteuse · auteur-compositeur ou autrice-compositrice",
+        "de": "Hip Hop Musiker aus Tansania"
+      },
+      "source": "https://www.wikidata.org/wiki/Q519965",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Professor-jay-songs465315764..jpg",
+      "photoCredit": "Erickmwemutsi",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q103380",
+      "name": "Anna Katharina Kränzlein",
+      "profileUrl": "/concertos/artistas/anna-katharina-kranzlein-q103380/",
+      "photoUrl": "/assets/artist-showcase/Q103380.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Fürstenfeldbruck",
+        "es": "Fürstenfeldbruck",
+        "en": "Fürstenfeldbruck",
+        "fr": "Fürstenfeldbruck",
+        "de": "Fürstenfeldbruck"
+      },
+      "bio": {
+        "pt": "cantora alemã",
+        "es": "Música alemana",
+        "en": "German violinist",
+        "fr": "violoniste allemande",
+        "de": "deutsche Violinistin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q103380",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:20150829_Wuppertal_Feuertal_Schandmaul_0046.jpg",
+      "photoCredit": "© Markus Felix (talk to me)",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q879970",
+      "name": "Ross Antony",
+      "profileUrl": "/concertos/artistas/ross-antony-q879970/",
+      "photoUrl": "/assets/artist-showcase/Q879970.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Bridgnorth",
+        "es": "Bridgnorth",
+        "en": "Bridgnorth",
+        "fr": "Bridgnorth",
+        "de": "Bridgnorth"
+      },
+      "bio": {
+        "pt": "apresentador de televisão · cantor-compositor · cantor",
+        "es": "presentador de televisión · cantautor · cantante",
+        "en": "German singer and entertainer",
+        "fr": "acteur britannique",
+        "de": "britisch-deutscher Entertainer"
+      },
+      "source": "https://www.wikidata.org/wiki/Q879970",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Ross_Antony_Das_Beste_der_Feste1.jpg",
+      "photoCredit": "CHR!S",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q525694",
+      "name": "Gitane Demone",
+      "profileUrl": "/concertos/artistas/gitane-demone-q525694/",
+      "photoUrl": "/assets/artist-showcase/Q525694.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "São Francisco",
+        "es": "San Francisco",
+        "en": "San Francisco",
+        "fr": "San Francisco",
+        "de": "San Francisco"
+      },
+      "bio": {
+        "pt": "cantora norte-americana",
+        "es": "cantante estadounidense",
+        "en": "American singer",
+        "fr": "chanteuse américaine",
+        "de": "US-amerikanische Musikerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q525694",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Gitane_Demone_Dec_2007.jpg",
+      "photoCredit": "Morven",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q95762",
+      "name": "Denyo",
+      "profileUrl": "/concertos/artistas/denyo-q95762/",
+      "photoUrl": "/assets/artist-showcase/Q95762.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Hamburgo",
+        "es": "Hamburgo",
+        "en": "Hamburg",
+        "fr": "Hambourg",
+        "de": "Hamburg"
+      },
+      "bio": {
+        "pt": "cantor · rapper · músico",
+        "es": "rapero alemán",
+        "en": "German rapper and singer",
+        "fr": "chanteur ou chanteuse · rappeur ou rappeuse · musicien ou musicienne",
+        "de": "deutscher Hip-Hop-Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q95762",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:2013-08-24_Chiemsee_Reggae_Summer_-_Beginner_5177.JPG",
+      "photoCredit": "Please attribute as: \"Wikipedia / Tobias Klenze\" (user page link optional). Remember that you must also mention the license (and link to it). So for example, if this picture is licensed under CC-BY-SA 4.0, the following is correct: Image: Wikipedia / Tobias Klenze / CC-BY-SA 4.0. The license must be a link!",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q891152",
+      "name": "Bojan Tomović",
+      "profileUrl": "/concertos/artistas/bojan-tomovic-q891152/",
+      "photoUrl": "/assets/artist-showcase/Q891152.jpg",
+      "country": {
+        "pt": "Sérvia",
+        "es": "Serbia",
+        "en": "Serbia",
+        "fr": "Serbie",
+        "de": "Serbien"
+      },
+      "city": {
+        "pt": "Sombor",
+        "es": "Sombor",
+        "en": "Sombor",
+        "fr": "Sombor",
+        "de": "Sombor"
+      },
+      "bio": {
+        "pt": "cantor",
+        "es": "cantante serbio",
+        "en": "Serbian singer",
+        "fr": "chanteur serbe",
+        "de": "serbischer Turbo-Folk-Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q891152",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Bojan_Tomovic.jpg",
+      "photoCredit": "Thompsonfreak at Croatian Wikipedia",
+      "photoLicense": "Public domain",
+      "licenseUrl": ""
+    },
+    {
+      "id": "Q24891",
+      "name": "Majid Kiani",
+      "profileUrl": "/concertos/artistas/majid-kiani-q24891/",
+      "photoUrl": "/assets/artist-showcase/Q24891.jpg",
+      "country": {
+        "pt": "Irão",
+        "es": "Irán",
+        "en": "Iran",
+        "fr": "Iran",
+        "de": "Iran"
+      },
+      "city": {
+        "pt": "Teerão",
+        "es": "Teherán",
+        "en": "Tehran",
+        "fr": "Téhéran",
+        "de": "Teheran"
+      },
+      "bio": {
+        "pt": "músico iraniano",
+        "es": "músico iraní",
+        "en": "Iranian musician and researcher",
+        "fr": "musicien iranien",
+        "de": "iranischer Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q24891",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Majid_Kiani,_photo_by_Amir_Mahdi_Moslehi,_Faculty_of_Fine_Arts,_University_of_Tehran,_February_2012.jpg",
+      "photoCredit": "AMMoslehi",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q383083",
+      "name": "Matthau Mikojan",
+      "profileUrl": "/concertos/artistas/matthau-mikojan-q383083/",
+      "photoUrl": "/assets/artist-showcase/Q383083.jpg",
+      "country": {
+        "pt": "Finlândia",
+        "es": "Finlandia",
+        "en": "Finland",
+        "fr": "Finlande",
+        "de": "Finnland"
+      },
+      "city": {
+        "pt": "Tampere",
+        "es": "Tampere",
+        "en": "Tampere",
+        "fr": "Tampere",
+        "de": "Tampere"
+      },
+      "bio": {
+        "pt": "cantor · guitarrista · autor-compositor",
+        "es": "músico finlandés",
+        "en": "Finnish musician",
+        "fr": "musicien finlandais",
+        "de": "finnischer Rockmusiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q383083",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Matthaumikojanstuttgart.JPG",
+      "photoCredit": "Shadowgirl1604",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q1156959",
+      "name": "Daddy Freddy",
+      "profileUrl": "/concertos/artistas/daddy-freddy-q1156959/",
+      "photoUrl": "/assets/artist-showcase/Q1156959.jpg",
+      "country": {
+        "pt": "Jamaica",
+        "es": "Jamaica",
+        "en": "Jamaica",
+        "fr": "Jamaïque",
+        "de": "Jamaika"
+      },
+      "city": {
+        "pt": "Kingston",
+        "es": "Kingston",
+        "en": "Kingston",
+        "fr": "Kingston",
+        "de": "Kingston"
+      },
+      "bio": {
+        "pt": "cantor jamaicano",
+        "es": "músico jamaicano",
+        "en": "Jamaican musician",
+        "fr": "musicien jamaïcain",
+        "de": "jamaikanischer Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q1156959",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Daddy_Freddy,_March_2019.jpg",
+      "photoCredit": "DON SINCLAIR REGGAE VIBES",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q103258",
+      "name": "Neelix",
+      "profileUrl": "/concertos/artistas/neelix-q103258/",
+      "photoUrl": "/assets/artist-showcase/Q103258.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Hamburgo",
+        "es": "Hamburgo",
+        "en": "Hamburg",
+        "fr": "Hambourg",
+        "de": "Hamburg"
+      },
+      "bio": {
+        "pt": "produtor(a) musical · DJ · músico",
+        "es": "productor discográfico · disc-jockey · músico",
+        "en": "German record producer and disc jockey",
+        "fr": "musicien allemand",
+        "de": "deutscher Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q103258",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Neelix_(DJ)_-_01_Jun_2007.jpg",
+      "photoCredit": "Wiska Bodo",
+      "photoLicense": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5"
+    },
+    {
+      "id": "Q101582",
+      "name": "Thommie Bayer",
+      "profileUrl": "/concertos/artistas/thommie-bayer-q101582/",
+      "photoUrl": "/assets/artist-showcase/Q101582.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Esslingen",
+        "es": "Esslingen am Neckar",
+        "en": "Esslingen am Neckar",
+        "fr": "Esslingen am Neckar",
+        "de": "Esslingen am Neckar"
+      },
+      "bio": {
+        "pt": "guionista · pintor · escritor",
+        "es": "guionista, pintor y escritor aleman",
+        "en": "writer",
+        "fr": "scénariste · artiste peintre · écrivain ou écrivaine",
+        "de": "deutscher Schriftsteller, Musiker und Maler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q101582",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Thommie_Bayer_at_Erlanger_Poetenfest_02.jpg",
+      "photoCredit": "Kritzolina",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q90771",
+      "name": "Ilka Bessin",
+      "profileUrl": "/concertos/artistas/ilka-bessin-q90771/",
+      "photoUrl": "/assets/artist-showcase/Q90771.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Luckenwalde",
+        "es": "Luckenwalde",
+        "en": "Luckenwalde",
+        "fr": "Luckenwalde",
+        "de": "Luckenwalde"
+      },
+      "bio": {
+        "pt": "ator · comediante · escritor de não ficção",
+        "es": "actriz alemana",
+        "en": "German comedian",
+        "fr": "actrice allemande",
+        "de": "deutsche Komikerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q90771",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:AV0A7530_Ilka_Bessin_(cropped).jpg",
+      "photoCredit": "9EkieraM1",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q463067",
+      "name": "Piru Sáez",
+      "profileUrl": "/concertos/artistas/piru-saez-q463067/",
+      "photoUrl": "/assets/artist-showcase/Q463067.jpg",
+      "country": {
+        "pt": "Argentina",
+        "es": "Argentina",
+        "en": "Argentina",
+        "fr": "Argentine",
+        "de": "Argentinien"
+      },
+      "city": {
+        "pt": "Mar del Plata",
+        "es": "Mar del Plata",
+        "en": "Mar del Plata",
+        "fr": "Mar del Plata",
+        "de": "Mar del Plata"
+      },
+      "bio": {
+        "pt": "ator · cantor · ator de cinema",
+        "es": "cantante y actor argentino",
+        "en": "Argentine singer-actor",
+        "fr": "acteur ou actrice · chanteur ou chanteuse · acteur ou actrice de cinéma",
+        "de": "argentinischer Schauspieler und Rocksänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q463067",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Piru_Saez_1.jpg",
+      "photoCredit": "Artezer",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q89769",
+      "name": "Marc Pircher",
+      "profileUrl": "/concertos/artistas/marc-pircher-q89769/",
+      "photoUrl": "/assets/artist-showcase/Q89769.jpg",
+      "country": {
+        "pt": "Áustria",
+        "es": "Austria",
+        "en": "Austria",
+        "fr": "Autriche",
+        "de": "Österreich"
+      },
+      "city": {
+        "pt": "Ried im Zillertal",
+        "es": "Ried im Zillertal",
+        "en": "Ried im Zillertal",
+        "fr": "Ried im Zillertal",
+        "de": "Ried im Zillertal"
+      },
+      "bio": {
+        "pt": "cantor austríaco",
+        "es": "cantante austríaco",
+        "en": "Austrian singer",
+        "fr": "chanteur autrichien",
+        "de": "österreichischer volkstümlicher Schlagermusiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q89769",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Amadeus_Austrian_Music_Award_2009,_Marc_Pircher.jpg",
+      "photoCredit": "Manfred Werner - Tsui",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q177274",
+      "name": "Yvonne Keeley",
+      "profileUrl": "/concertos/artistas/yvonne-keeley-q177274/",
+      "photoUrl": "/assets/artist-showcase/Q177274.jpg",
+      "country": {
+        "pt": "Reino dos Países Baixos",
+        "es": "Reino de los Países Bajos",
+        "en": "Kingdom of the Netherlands",
+        "fr": "Royaume des Pays-Bas",
+        "de": "Königreich der Niederlande"
+      },
+      "city": {
+        "pt": "Roterdão",
+        "es": "Róterdam",
+        "en": "Rotterdam",
+        "fr": "Rotterdam",
+        "de": "Rotterdam"
+      },
+      "bio": {
+        "pt": "cantora neerlandesa",
+        "es": "cantante neerlandesa",
+        "en": "Dutch singer (born 1952)",
+        "fr": "chanteuse néerlandaise",
+        "de": "niederländische Sängerin und Hörfunkmoderatorin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q177274",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Yvonne_keeley-1642442755.jpg",
+      "photoCredit": "Robert Hoetink",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q102197",
+      "name": "Mark Chung",
+      "profileUrl": "/concertos/artistas/mark-chung-q102197/",
+      "photoUrl": "/assets/artist-showcase/Q102197.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Leeds",
+        "es": "Leeds",
+        "en": "Leeds",
+        "fr": "Leeds",
+        "de": "Leeds"
+      },
+      "bio": {
+        "pt": "music publisher · músico",
+        "es": "músico aleman",
+        "en": "German musician",
+        "fr": "musicien allemand",
+        "de": "deutscher Musiker und Musikverleger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q102197",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Mark_Chung.jpg",
+      "photoCredit": "Christian Hufgard",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q579903",
+      "name": "Sabrina Washington",
+      "profileUrl": "/concertos/artistas/sabrina-washington-q579903/",
+      "photoUrl": "/assets/artist-showcase/Q579903.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Harlesden",
+        "es": "Harlesden",
+        "en": "Harlesden",
+        "fr": "Harlesden",
+        "de": "Harlesden"
+      },
+      "bio": {
+        "pt": "cantora británica",
+        "es": "cantante británica",
+        "en": "British singer",
+        "fr": "chanteuse britannique",
+        "de": "Sänger · Singer-Songwriter"
+      },
+      "source": "https://www.wikidata.org/wiki/Q579903",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Sabrina_Washington_2009.jpg",
+      "photoCredit": "Tee staarh",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q250790",
+      "name": "Angela Strehli",
+      "profileUrl": "/concertos/artistas/angela-strehli-q250790/",
+      "photoUrl": "/assets/artist-showcase/Q250790.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Lubbock",
+        "es": "Lubbock",
+        "en": "Lubbock",
+        "fr": "Lubbock",
+        "de": "Lubbock"
+      },
+      "bio": {
+        "pt": "músico · cantor · autor-compositor",
+        "es": "músico · cantante · compositor de canciones",
+        "en": "American electric blues singer and songwriter",
+        "fr": "chanteuse américaine",
+        "de": "US-amerikanische Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q250790",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Angela-Strehli3.jpg",
+      "photoCredit": "Ron Baker",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q87041",
+      "name": "Ingo Pohlmann",
+      "profileUrl": "/concertos/artistas/ingo-pohlmann-q87041/",
+      "photoUrl": "/assets/artist-showcase/Q87041.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Rheda-Wiedenbrück",
+        "es": "Rheda-Wiedenbrück",
+        "en": "Rheda-Wiedenbrück",
+        "fr": "Rheda-Wiedenbrück",
+        "de": "Rheda-Wiedenbrück"
+      },
+      "bio": {
+        "pt": "cantor alemão",
+        "es": "cantante alemán",
+        "en": "German pop singer",
+        "fr": "chanteur allemand",
+        "de": "deutscher Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q87041",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Ingo_Pohlmann_WadJ_2015.jpg",
+      "photoCredit": "Christallkeks",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q702670",
+      "name": "MeiMei Kuo",
+      "profileUrl": "/concertos/artistas/meimei-kuo-q702670/",
+      "photoUrl": "/assets/artist-showcase/Q702670.jpg",
+      "country": {
+        "pt": "Taiwan",
+        "es": "República de China",
+        "en": "Taiwan",
+        "fr": "Taïwan",
+        "de": "Taiwan"
+      },
+      "city": {
+        "pt": "Taipé",
+        "es": "Taipéi",
+        "en": "Taipei",
+        "fr": "Taipei",
+        "de": "Taipeh"
+      },
+      "bio": {
+        "pt": "cantora taiwanesa",
+        "es": "cantante y actriz taiwanesa",
+        "en": "Taiwanese singer",
+        "fr": "chanteuse et actrice taïwanaise",
+        "de": "taiwanische Sängerin und Schauspielerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q702670",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:2007TaipeiITMonth_ChineseGamer_HeiSeHuiMeiMei_MeiMei_Chieh-chi_Kuo.jpg",
+      "photoCredit": "Rico Shen",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    {
+      "id": "Q177384",
+      "name": "Maggie Nicols",
+      "profileUrl": "/concertos/artistas/maggie-nicols-q177384/",
+      "photoUrl": "/assets/artist-showcase/Q177384.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Edimburgo",
+        "es": "Edimburgo",
+        "en": "Edinburgh",
+        "fr": "Édimbourg",
+        "de": "Edinburgh"
+      },
+      "bio": {
+        "pt": "cantor · bailarino · músico de jazz",
+        "es": "cantante · bailarín · músico de jazz",
+        "en": "British musician and dancer",
+        "fr": "chanteuse de jazz escossaise et danseuse",
+        "de": "schottische Sängerin und Tänzerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q177384",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Maggie_Nichols.jpg",
+      "photoCredit": "Andy Newcombe Farnborough, UK",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q254848",
+      "name": "Yelle",
+      "profileUrl": "/concertos/artistas/yelle-q254848/",
+      "photoUrl": "/assets/artist-showcase/Q254848.jpg",
+      "country": {
+        "pt": "França",
+        "es": "Francia",
+        "en": "France",
+        "fr": "France",
+        "de": "Frankreich"
+      },
+      "city": {
+        "pt": "Saint-Brieuc",
+        "es": "Saint-Brieuc",
+        "en": "Saint-Brieuc",
+        "fr": "Saint-Brieuc",
+        "de": "Saint-Brieuc"
+      },
+      "bio": {
+        "pt": "cantora francesa",
+        "es": "cantante francesa",
+        "en": "French singer",
+        "fr": "chanteuse française",
+        "de": "französische Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q254848",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Yelle_-_Islington_Assembly_Hall_-_Tuesday_18th_November_2025.jpg",
+      "photoCredit": "Raph_PH",
+      "photoLicense": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+      "id": "Q69932",
+      "name": "Dr. Ring-Ding",
+      "profileUrl": "/concertos/artistas/dr-ring-ding-q69932/",
+      "photoUrl": "/assets/artist-showcase/Q69932.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Münster",
+        "es": "Münster",
+        "en": "Münster",
+        "fr": "Münster",
+        "de": "Münster"
+      },
+      "bio": {
+        "pt": "cantor alemão",
+        "es": "cantante alemán",
+        "en": "German singer",
+        "fr": "chanteur allemand",
+        "de": "deutscher Ska- und Reggae-Künstler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q69932",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:20140808-0630_PictureOn_2014-The_Busters-Richie_Alexander.JPG",
+      "photoCredit": "©Biha",
+      "photoLicense": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+    },
+    {
+      "id": "Q429735",
+      "name": "Zach Myers",
+      "profileUrl": "/concertos/artistas/zach-myers-q429735/",
+      "photoUrl": "/assets/artist-showcase/Q429735.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Memphis",
+        "es": "Memphis",
+        "en": "Memphis",
+        "fr": "Memphis",
+        "de": "Memphis"
+      },
+      "bio": {
+        "pt": "músico · guitarrista · cantor",
+        "es": "músico estadounidense",
+        "en": "American rock musician",
+        "fr": "musicien américain",
+        "de": "Musiker · Gitarrist · Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q429735",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Shinedown_-_2022156165721_2022-06-05_Rock_am_Ring_-_Sven_-_1D_X_MK_II_-_0977_-_AK8I4615_(cropped).jpg",
+      "photoCredit": "Sven Mandel",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q37448",
+      "name": "Yaghma Golrouee",
+      "profileUrl": "/concertos/artistas/yaghma-golrouee-q37448/",
+      "photoUrl": "/assets/artist-showcase/Q37448.jpg",
+      "country": {
+        "pt": "Irão",
+        "es": "Irán",
+        "en": "Iran",
+        "fr": "Iran",
+        "de": "Iran"
+      },
+      "city": {
+        "pt": "Urmia",
+        "es": "Urmía",
+        "en": "Urmia",
+        "fr": "Ourmia",
+        "de": "Urmia"
+      },
+      "bio": {
+        "pt": "autor-compositor · poeta · cantor",
+        "es": "compositor de canciones · poeta · cantante",
+        "en": "Persian songwriter, writer and poet",
+        "fr": "auteur-compositeur ou autrice-compositrice · poète ou poétesse · chanteur ou chanteuse",
+        "de": "Songschreiber · Dichter · Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q37448",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:%DB%8C%D8%BA%D9%85%D8%A7_%DA%AF%D9%84%D8%B1%D9%88%DB%8C%DB%8C.jpg",
+      "photoCredit": "روزبه جدیدالاسلام",
+      "photoLicense": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+      "id": "Q762263",
+      "name": "Jukka Ammondt",
+      "profileUrl": "/concertos/artistas/jukka-ammondt-q762263/",
+      "photoUrl": "/assets/artist-showcase/Q762263.jpg",
+      "country": {
+        "pt": "Finlândia",
+        "es": "Finlandia",
+        "en": "Finland",
+        "fr": "Finlande",
+        "de": "Finnland"
+      },
+      "city": {
+        "pt": "Tampere",
+        "es": "Tampere",
+        "en": "Tampere",
+        "fr": "Tampere",
+        "de": "Tampere"
+      },
+      "bio": {
+        "pt": "político · cantor · professor universitário",
+        "es": "político · cantante · profesor universitario",
+        "en": "Finnish literary scholar (born 1944)",
+        "fr": "personnalité politique · chanteur ou chanteuse · professeur d'université",
+        "de": "finnischer Politiker und Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q762263",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Jukka_ammondt_1.JPG",
+      "photoCredit": "Motopark",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q334814",
+      "name": "Ümit Besen",
+      "profileUrl": "/concertos/artistas/umit-besen-q334814/",
+      "photoUrl": "/assets/artist-showcase/Q334814.jpg",
+      "country": {
+        "pt": "Turquia",
+        "es": "Turquía",
+        "en": "Turkey",
+        "fr": "Turquie",
+        "de": "Türkei"
+      },
+      "city": {
+        "pt": "Osmanie",
+        "es": "Osmaniye",
+        "en": "Osmaniye",
+        "fr": "Osmaniye",
+        "de": "Osmaniye"
+      },
+      "bio": {
+        "pt": "ator · cantor",
+        "es": "cantante turco",
+        "en": "Turkish singer and actor (born 1956)",
+        "fr": "chanteur turc",
+        "de": "türkischer Schauspieler und Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q334814",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:%C3%9Cmit_Besen_(cropped).jpg",
+      "photoCredit": "Akustikhane",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q86786",
+      "name": "Monika Ivkic",
+      "profileUrl": "/concertos/artistas/monika-ivkic-q86786/",
+      "photoUrl": "/assets/artist-showcase/Q86786.jpg",
+      "country": {
+        "pt": "Áustria",
+        "es": "Austria",
+        "en": "Austria",
+        "fr": "Autriche",
+        "de": "Österreich"
+      },
+      "city": {
+        "pt": "Gradačac",
+        "es": "Gradačac",
+        "en": "Gradačac",
+        "fr": "Gradačac",
+        "de": "Gradačac"
+      },
+      "bio": {
+        "pt": "cantora austríaca",
+        "es": "cantante alemana",
+        "en": "Austrian singer",
+        "fr": "chanteuse allemande",
+        "de": "österreichische Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q86786",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Monika_ivkic.jpg",
+      "photoCredit": "Author: Igor Minic (www.mrphotography.at);",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q437748",
+      "name": "Sabrina Starke",
+      "profileUrl": "/concertos/artistas/sabrina-starke-q437748/",
+      "photoUrl": "/assets/artist-showcase/Q437748.jpg",
+      "country": {
+        "pt": "Reino dos Países Baixos",
+        "es": "Reino de los Países Bajos",
+        "en": "Kingdom of the Netherlands",
+        "fr": "Royaume des Pays-Bas",
+        "de": "Königreich der Niederlande"
+      },
+      "city": {
+        "pt": "Paramaribo",
+        "es": "Paramaribo",
+        "en": "Paramaribo",
+        "fr": "Paramaribo",
+        "de": "Paramaribo"
+      },
+      "bio": {
+        "pt": "cantora neerlandesa",
+        "es": "cantante neerlandesa",
+        "en": "Dutch singer",
+        "fr": "chanteuse néerlandaise",
+        "de": "niederländische Singer-Songwriterin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q437748",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Sabrina_Starke,_Festival_Mundial_(1).jpg",
+      "photoCredit": "Maarten van Maanen from Eindhoven, Netherlands",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q527557",
+      "name": "Rose Kemp",
+      "profileUrl": "/concertos/artistas/rose-kemp-q527557/",
+      "photoUrl": "/assets/artist-showcase/Q527557.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Carlisle",
+        "es": "Carlisle",
+        "en": "Carlisle",
+        "fr": "Carlisle",
+        "de": "Carlisle"
+      },
+      "bio": {
+        "pt": "cantor · guitarrista",
+        "es": "música británica",
+        "en": "British musician",
+        "fr": "musicienne britannique",
+        "de": "englische Sängerin und Gitarristin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q527557",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Rose_Kemp.jpg",
+      "photoCredit": "Greg Neate",
+      "photoLicense": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+      "id": "Q578207",
+      "name": "Fred Penner",
+      "profileUrl": "/concertos/artistas/fred-penner-q578207/",
+      "photoUrl": "/assets/artist-showcase/Q578207.jpg",
+      "country": {
+        "pt": "Canadá",
+        "es": "Canadá",
+        "en": "Canada",
+        "fr": "Canada",
+        "de": "Kanada"
+      },
+      "city": {
+        "pt": "Winnipeg",
+        "es": "Winnipeg",
+        "en": "Winnipeg",
+        "fr": "Winnipeg",
+        "de": "Winnipeg"
+      },
+      "bio": {
+        "pt": "cantor · apresentador de televisão · ator",
+        "es": "cantante · presentador de televisión · actor",
+        "en": "Canadian children's musician",
+        "fr": "acteur, compositeur et scénariste canadien",
+        "de": "kanadischer Fernsehmoderator und Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q578207",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:FredPenner2012.jpg",
+      "photoCredit": "pirhan from Canada",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q463493",
+      "name": "Denise Jannah",
+      "profileUrl": "/concertos/artistas/denise-jannah-q463493/",
+      "photoUrl": "/assets/artist-showcase/Q463493.jpg",
+      "country": {
+        "pt": "Reino dos Países Baixos",
+        "es": "Reino de los Países Bajos",
+        "en": "Kingdom of the Netherlands",
+        "fr": "Royaume des Pays-Bas",
+        "de": "Königreich der Niederlande"
+      },
+      "city": {
+        "pt": "Paramaribo",
+        "es": "Paramaribo",
+        "en": "Paramaribo",
+        "fr": "Paramaribo",
+        "de": "Paramaribo"
+      },
+      "bio": {
+        "pt": "cantor · músico de jazz · músico",
+        "es": "música neerlandesa",
+        "en": "Dutch musician",
+        "fr": "musicienne néerlandaise",
+        "de": "niederländische Jazz-Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q463493",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Denise_Jannah_2019_(cropped).jpg",
+      "photoCredit": "Gérard Ausems",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q537129",
+      "name": "Shannon McNally",
+      "profileUrl": "/concertos/artistas/shannon-mcnally-q537129/",
+      "photoUrl": "/assets/artist-showcase/Q537129.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Hempstead",
+        "es": "Hempstead",
+        "en": "Hempstead",
+        "fr": "Hempstead",
+        "de": "Hempstead"
+      },
+      "bio": {
+        "pt": "cantor-compositor · músico · cantor",
+        "es": "música estadounidense",
+        "en": "American musician",
+        "fr": "musicienne américaine",
+        "de": "US-amerikanische Sängerin und Musikerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q537129",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Shannon_McNally_by_Ron_Baker.jpg",
+      "photoCredit": "Ron Baker  (https://www.flickr.com/photos/kingsnake)",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q762146",
+      "name": "Ayman Alatar",
+      "profileUrl": "/concertos/artistas/ayman-alatar-q762146/",
+      "photoUrl": "/assets/artist-showcase/Q762146.jpg",
+      "country": {
+        "pt": "Líbia",
+        "es": "Libia",
+        "en": "Libya",
+        "fr": "Libye",
+        "de": "Libyen"
+      },
+      "city": {
+        "pt": "Trípoli",
+        "es": "Trípoli",
+        "en": "Tripoli",
+        "fr": "Tripoli",
+        "de": "Tripolis"
+      },
+      "bio": {
+        "pt": "cantor líbio",
+        "es": "cantante libio",
+        "en": "Libyan singer and actor",
+        "fr": "chanteur libyen",
+        "de": "arabischer Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q762146",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Ayman_Alatar_-_%D8%A3%D9%8A%D9%85%D9%86_%D8%A7%D9%84%D8%A3%D8%B9%D8%AA%D8%B1.jpg",
+      "photoCredit": "Dan Kennedy",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q714201",
+      "name": "Dan Andriano",
+      "profileUrl": "/concertos/artistas/dan-andriano-q714201/",
+      "photoUrl": "/assets/artist-showcase/Q714201.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Elgin",
+        "es": "Elgin",
+        "en": "Elgin",
+        "fr": "Elgin",
+        "de": "Elgin"
+      },
+      "bio": {
+        "pt": "cantor · bass guitarist",
+        "es": "músico estadounidense",
+        "en": "American musician",
+        "fr": "musicien américain",
+        "de": "US-amerikanischer Rockmusiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q714201",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Dan_Andriano_(cropped).JPG",
+      "photoCredit": "Matt Skiba",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    {
+      "id": "Q700153",
+      "name": "Amanda Lee",
+      "profileUrl": "/concertos/artistas/amanda-lee-q700153/",
+      "photoUrl": "/assets/artist-showcase/Q700153.jpg",
+      "country": {
+        "pt": "China",
+        "es": "República Popular China",
+        "en": "People's Republic of China",
+        "fr": "République populaire de Chine",
+        "de": "Volksrepublik China"
+      },
+      "city": {
+        "pt": "Hong Kong",
+        "es": "Hong Kong",
+        "en": "Hong Kong",
+        "fr": "Hong Kong",
+        "de": "Hongkong"
+      },
+      "bio": {
+        "pt": "ator · cantor · artista discográfico",
+        "es": "actor · cantante · artista discográfico",
+        "en": "Hong Kong pop singer and actress",
+        "fr": "acteur ou actrice · chanteur ou chanteuse · artiste d'enregistrement",
+        "de": "Schauspieler · Sänger · Aufnahmekünstler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q700153",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:AMANDA_LEE.jpg",
+      "photoCredit": "WKW at Chinese Wikipedia",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q360256",
+      "name": "Kazuki Tomokawa",
+      "profileUrl": "/concertos/artistas/kazuki-tomokawa-q360256/",
+      "photoUrl": "/assets/artist-showcase/Q360256.jpg",
+      "country": {
+        "pt": "Japão",
+        "es": "Japón",
+        "en": "Japan",
+        "fr": "Japon",
+        "de": "Japan"
+      },
+      "city": {
+        "pt": "Akita",
+        "es": "Prefectura de Akita",
+        "en": "Akita Prefecture",
+        "fr": "préfecture d'Akita",
+        "de": "Präfektur Akita"
+      },
+      "bio": {
+        "pt": "poeta · escritor · guitarrista",
+        "es": "cantautor japonés",
+        "en": "Japanese singer-songwriter (1950-)",
+        "fr": "chanteur d'acid-folk et poète japonais",
+        "de": "japanischer Acid-Folk-Sängers, Dichters, Autors und Künstlers"
+      },
+      "source": "https://www.wikidata.org/wiki/Q360256",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Kazuki_Tomokawa_Bootleg_Theater_Los_Angeles.jpg",
+      "photoCredit": "Downatgreengables",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q939212",
+      "name": "Melhem Zein",
+      "profileUrl": "/concertos/artistas/melhem-zein-q939212/",
+      "photoUrl": "/assets/artist-showcase/Q939212.jpg",
+      "country": {
+        "pt": "Líbano",
+        "es": "Líbano",
+        "en": "Lebanon",
+        "fr": "Liban",
+        "de": "Libanon"
+      },
+      "city": {
+        "pt": "Chmestar",
+        "es": "Chmestar",
+        "en": "Chmestar",
+        "fr": "Chmestar",
+        "de": "Chmestar"
+      },
+      "bio": {
+        "pt": "cantor libanês",
+        "es": "cantante libanés",
+        "en": "Lebanese singer",
+        "fr": "chanteur libanais",
+        "de": "libanesischer Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q939212",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Melhem_Zein,_MTV_Lebanon_-_Jun_27,_2019.jpg",
+      "photoCredit": "MTV Lebanon",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q359849",
+      "name": "Federico Aubele",
+      "profileUrl": "/concertos/artistas/federico-aubele-q359849/",
+      "photoUrl": "/assets/artist-showcase/Q359849.jpg",
+      "country": {
+        "pt": "Argentina",
+        "es": "Argentina",
+        "en": "Argentina",
+        "fr": "Argentine",
+        "de": "Argentinien"
+      },
+      "city": {
+        "pt": "Buenos Aires",
+        "es": "Buenos Aires",
+        "en": "Buenos Aires",
+        "fr": "Buenos Aires",
+        "de": "Buenos Aires"
+      },
+      "bio": {
+        "pt": "cantor argentino",
+        "es": "cantante argentino",
+        "en": "Argentine singer",
+        "fr": "chanteur argentin",
+        "de": "argentinischer Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q359849",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Federico_Aubele.png",
+      "photoCredit": "Uncensored Interview",
+      "photoLicense": "CC BY 3.0 us",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/us/deed.en"
+    },
+    {
+      "id": "Q982832",
+      "name": "Dave Kilminster",
+      "profileUrl": "/concertos/artistas/dave-kilminster-q982832/",
+      "photoUrl": "/assets/artist-showcase/Q982832.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Inglaterra",
+        "es": "Inglaterra",
+        "en": "England",
+        "fr": "Angleterre",
+        "de": "England"
+      },
+      "bio": {
+        "pt": "guitarrista · autor-compositor · cantor",
+        "es": "músico británico",
+        "en": "British musician",
+        "fr": "musicien britannique",
+        "de": "britischer Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q982832",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Dave_Kilminster.jpg",
+      "photoCredit": "Jethro",
+      "photoLicense": "CC BY-SA 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5"
+    },
+    {
+      "id": "Q508747",
+      "name": "Stan Borys",
+      "profileUrl": "/concertos/artistas/stan-borys-q508747/",
+      "photoUrl": "/assets/artist-showcase/Q508747.jpg",
+      "country": {
+        "pt": "Polónia",
+        "es": "Polonia",
+        "en": "Poland",
+        "fr": "Pologne",
+        "de": "Polen"
+      },
+      "city": {
+        "pt": "Rzeszów",
+        "es": "Resovia",
+        "en": "Rzeszów",
+        "fr": "Rzeszów",
+        "de": "Rzeszów"
+      },
+      "bio": {
+        "pt": "cantor polaco",
+        "es": "cantante polaco",
+        "en": "Polish singer",
+        "fr": "acteur polonais",
+        "de": "polnischer Rock-Sänger und Texter"
+      },
+      "source": "https://www.wikidata.org/wiki/Q508747",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Stan_Borys_in_2016.jpg",
+      "photoCredit": "Serecki",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q202434",
+      "name": "Randi Laubek",
+      "profileUrl": "/concertos/artistas/randi-laubek-q202434/",
+      "photoUrl": "/assets/artist-showcase/Q202434.jpg",
+      "country": {
+        "pt": "Reino da Dinamarca",
+        "es": "Reino de Dinamarca",
+        "en": "Kingdom of Denmark",
+        "fr": "royaume de Danemark",
+        "de": "Königreich Dänemark"
+      },
+      "city": {
+        "pt": "Voerså",
+        "es": "Voerså",
+        "en": "Voerså",
+        "fr": "Voerså",
+        "de": "Voerså"
+      },
+      "bio": {
+        "pt": "cantor · autor-compositor",
+        "es": "cantante · compositor de canciones",
+        "en": "Danish singer and songwriter",
+        "fr": "chanteur ou chanteuse · auteur-compositeur ou autrice-compositrice",
+        "de": "dänische Sängerin und Songwriterin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q202434",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Randi_Laubek,_September_2016.jpg",
+      "photoCredit": "Spørg Direkte",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q466796",
+      "name": "Pierdavide Carone",
+      "profileUrl": "/concertos/artistas/pierdavide-carone-q466796/",
+      "photoUrl": "/assets/artist-showcase/Q466796.jpg",
+      "country": {
+        "pt": "Itália",
+        "es": "Italia",
+        "en": "Italy",
+        "fr": "Italie",
+        "de": "Italien"
+      },
+      "city": {
+        "pt": "Roma",
+        "es": "Roma",
+        "en": "Rome",
+        "fr": "Rome",
+        "de": "Rom"
+      },
+      "bio": {
+        "pt": "cantor-compositor · cantor · artista discográfico",
+        "es": "músico italiano",
+        "en": "Italian singer-songwriter (1988-)",
+        "fr": "chanteur italien",
+        "de": "italienischer Singer-Songwriter"
+      },
+      "source": "https://www.wikidata.org/wiki/Q466796",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Pierdavide.jpg",
+      "photoCredit": "AuaRuf",
+      "photoLicense": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+      "id": "Q273575",
+      "name": "Alicja Janosz",
+      "profileUrl": "/concertos/artistas/alicja-janosz-q273575/",
+      "photoUrl": "/assets/artist-showcase/Q273575.jpg",
+      "country": {
+        "pt": "Polónia",
+        "es": "Polonia",
+        "en": "Poland",
+        "fr": "Pologne",
+        "de": "Polen"
+      },
+      "city": {
+        "pt": "Pszczyna",
+        "es": "Pszczyna",
+        "en": "Pszczyna",
+        "fr": "Pszczyna",
+        "de": "Pszczyna"
+      },
+      "bio": {
+        "pt": "cantora polaca",
+        "es": "cantante polaca",
+        "en": "Polish singer",
+        "fr": "chanteuse polonaise",
+        "de": "polnische Popsängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q273575",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Alicja_Janosz2.jpg",
+      "photoCredit": "Slawek",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q328437",
+      "name": "De la Ghetto",
+      "profileUrl": "/concertos/artistas/de-la-ghetto-q328437/",
+      "photoUrl": "/assets/artist-showcase/Q328437.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Bronx",
+        "es": "El Bronx",
+        "en": "The Bronx",
+        "fr": "Bronx",
+        "de": "Bronx"
+      },
+      "bio": {
+        "pt": "rapper · cantor · autor-compositor",
+        "es": "cantante estadounidense",
+        "en": "American singer",
+        "fr": "chanteur américain",
+        "de": "US-amerikanischer Reggaeton-Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q328437",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:De_la_Ghetto,_interview_with_Tony_Dandrades_(2020).png",
+      "photoCredit": "Tony Dandrades",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q282082",
+      "name": "Tove Karoline Knutsen",
+      "profileUrl": "/concertos/artistas/tove-karoline-knutsen-q282082/",
+      "photoUrl": "/assets/artist-showcase/Q282082.jpg",
+      "country": {
+        "pt": "Noruega",
+        "es": "Noruega",
+        "en": "Norway",
+        "fr": "Norvège",
+        "de": "Norwegen"
+      },
+      "city": {
+        "pt": "Torsken",
+        "es": "Torsken",
+        "en": "Torsken",
+        "fr": "Torsken",
+        "de": "Torsken"
+      },
+      "bio": {
+        "pt": "política norueguesa",
+        "es": "política noruega",
+        "en": "Norwegian artist, politician",
+        "fr": "politicien norvégien",
+        "de": "norwegische Politikerin und Musikerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q282082",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Tove_Karoline_Knutsen,_2013_(cropped).jpg",
+      "photoCredit": "Troms Arbeiderparti",
+      "photoLicense": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+      "id": "Q143619",
+      "name": "Edda Dell'Orso",
+      "profileUrl": "/concertos/artistas/edda-dell-orso-q143619/",
+      "photoUrl": "/assets/artist-showcase/Q143619.jpg",
+      "country": {
+        "pt": "Itália",
+        "es": "Italia",
+        "en": "Italy",
+        "fr": "Italie",
+        "de": "Italien"
+      },
+      "city": {
+        "pt": "Génova",
+        "es": "Génova",
+        "en": "Genoa",
+        "fr": "Gênes",
+        "de": "Genua"
+      },
+      "bio": {
+        "pt": "cantora italiana",
+        "es": "cantante italiana",
+        "en": "Italian singer",
+        "fr": "chanteuse italienne",
+        "de": "italienische Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q143619",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Edda_Dell%27Orso_con_Nicola_Samale.jpg",
+      "photoCredit": "Alessandroferri",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q325658",
+      "name": "Adam Bomb",
+      "profileUrl": "/concertos/artistas/adam-bomb-q325658/",
+      "photoUrl": "/assets/artist-showcase/Q325658.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Seattle",
+        "es": "Seattle",
+        "en": "Seattle",
+        "fr": "Seattle",
+        "de": "Seattle"
+      },
+      "bio": {
+        "pt": "cantor · guitarrista",
+        "es": "Guitarrista y cantante estadounidense",
+        "en": "American guitarist and singer",
+        "fr": "musicien",
+        "de": "US-amerikanischer Rockmusiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q325658",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Berlin_2016.jpg",
+      "photoCredit": "Gernotte",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q205834",
+      "name": "Steve Kilbey",
+      "profileUrl": "/concertos/artistas/steve-kilbey-q205834/",
+      "photoUrl": "/assets/artist-showcase/Q205834.jpg",
+      "country": {
+        "pt": "Austrália",
+        "es": "Australia",
+        "en": "Australia",
+        "fr": "Australie",
+        "de": "Australien"
+      },
+      "city": {
+        "pt": "Welwyn Garden City",
+        "es": "Welwyn Garden City",
+        "en": "Welwyn Garden City",
+        "fr": "Welwyn Garden City",
+        "de": "Welwyn Garden City"
+      },
+      "bio": {
+        "pt": "poeta · pintor · cantor",
+        "es": "artista británico",
+        "en": "Anglo-Australian singer, song writer and bass guitarist",
+        "fr": "artiste britannique",
+        "de": "anglo-australischer Musiker, Sänger, Songwriter, Dichter und Maler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q205834",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Steve_Kilbey_Aug_2020_(cropped).jpg",
+      "photoCredit": "Lea23C",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q898290",
+      "name": "Tom Brislin",
+      "profileUrl": "/concertos/artistas/tom-brislin-q898290/",
+      "photoUrl": "/assets/artist-showcase/Q898290.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Nova Jérsia",
+        "es": "Nueva Jersey",
+        "en": "New Jersey",
+        "fr": "New Jersey",
+        "de": "New Jersey"
+      },
+      "bio": {
+        "pt": "cantor · pianista · produtor(a) musical",
+        "es": "músico estadounidense",
+        "en": "American musician",
+        "fr": "musicien américain",
+        "de": "Sänger · Pianist · Musikproduzent"
+      },
+      "source": "https://www.wikidata.org/wiki/Q898290",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Tombrislinliverig.jpg",
+      "photoCredit": "Rich Turner",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q550663",
+      "name": "Lionel Loueke",
+      "profileUrl": "/concertos/artistas/lionel-loueke-q550663/",
+      "photoUrl": "/assets/artist-showcase/Q550663.jpg",
+      "country": {
+        "pt": "Benim",
+        "es": "Benín",
+        "en": "Benin",
+        "fr": "Bénin",
+        "de": "Benin"
+      },
+      "city": {
+        "pt": "Benim",
+        "es": "Benín",
+        "en": "Benin",
+        "fr": "Bénin",
+        "de": "Benin"
+      },
+      "bio": {
+        "pt": "autor-compositor · jazz guitarist · compositor",
+        "es": "compositor de canciones · guitarrista de jazz · compositor",
+        "en": "Beninese guitarist and vocalist",
+        "fr": "compositeur et guitariste de jazz béninois",
+        "de": "beninisch-US-amerikanischer Jazz-Gitarrist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q550663",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Lionel_Loueke.jpg",
+      "photoCredit": "Sheldon (Shelly) Levy Buffalo, NY, USA",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q443478",
+      "name": "Simone Angel",
+      "profileUrl": "/concertos/artistas/simone-angel-q443478/",
+      "photoUrl": "/assets/artist-showcase/Q443478.jpg",
+      "country": {
+        "pt": "Reino dos Países Baixos",
+        "es": "Reino de los Países Bajos",
+        "en": "Kingdom of the Netherlands",
+        "fr": "Royaume des Pays-Bas",
+        "de": "Königreich der Niederlande"
+      },
+      "city": {
+        "pt": "Woerden",
+        "es": "Woerden",
+        "en": "Woerden",
+        "fr": "Woerden",
+        "de": "Woerden"
+      },
+      "bio": {
+        "pt": "cantor · apresentador de televisão · apresentador",
+        "es": "cantante · presentador de televisión · presentador",
+        "en": "Dutch TV host and singer",
+        "fr": "chanteur ou chanteuse · animateur ou animatrice de télévision · animateur ou animatrice",
+        "de": "niederländische Moderatorin und Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q443478",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Simone_Angel.jpg",
+      "photoCredit": "Miriam Engeln",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q89000",
+      "name": "Harald Krassnitzer",
+      "profileUrl": "/concertos/artistas/harald-krassnitzer-q89000/",
+      "photoUrl": "/assets/artist-showcase/Q89000.jpg",
+      "country": {
+        "pt": "Áustria",
+        "es": "Austria",
+        "en": "Austria",
+        "fr": "Autriche",
+        "de": "Österreich"
+      },
+      "city": {
+        "pt": "Salzburgo",
+        "es": "Salzburgo",
+        "en": "Salzburg",
+        "fr": "Salzbourg",
+        "de": "Salzburg"
+      },
+      "bio": {
+        "pt": "ator austríaco",
+        "es": "actor austríaco",
+        "en": "Austrian actor",
+        "fr": "acteur autrichien",
+        "de": "österreichischer Schauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q89000",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Harald_Krassnitzer_ROMY2008.jpg",
+      "photoCredit": "Ann-Kathrin_Kramer_Harald_Krassnitzer_ROMY2008.jpg: Manfred Werner - Tsui\nderivative work: Sir James (talk)",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    {
+      "id": "Q456448",
+      "name": "Rox",
+      "profileUrl": "/concertos/artistas/rox-q456448/",
+      "photoUrl": "/assets/artist-showcase/Q456448.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Norbury",
+        "es": "Norbury",
+        "en": "Norbury",
+        "fr": "Norbury",
+        "de": "Norbury"
+      },
+      "bio": {
+        "pt": "cantora británica",
+        "es": "cantante británica",
+        "en": "British singer (born 1988)",
+        "fr": "chanteuse britannique",
+        "de": "englische Popsängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q456448",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Rox-SWR3-NewPop-Festival-02-gje.jpg",
+      "photoCredit": "Gerd Eichmann",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q731442",
+      "name": "Matthew Santos",
+      "profileUrl": "/concertos/artistas/matthew-santos-q731442/",
+      "photoUrl": "/assets/artist-showcase/Q731442.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Minneapolis",
+        "es": "Minneapolis",
+        "en": "Minneapolis",
+        "fr": "Minneapolis",
+        "de": "Minneapolis"
+      },
+      "bio": {
+        "pt": "músico · cantor · guitarrista",
+        "es": "músico · cantante · guitarrista",
+        "en": "American rock and folk singer-songwriter, musician and painter",
+        "fr": "chanteur américain",
+        "de": "US-amerikanischer Rock- und Folk-Sänger und Songwriter"
+      },
+      "source": "https://www.wikidata.org/wiki/Q731442",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Matthew_Santos.jpg",
+      "photoCredit": "lawrence.sumulong",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q224784",
+      "name": "John K. Samson",
+      "profileUrl": "/concertos/artistas/john-k-samson-q224784/",
+      "photoUrl": "/assets/artist-showcase/Q224784.jpg",
+      "country": {
+        "pt": "Canadá",
+        "es": "Canadá",
+        "en": "Canada",
+        "fr": "Canada",
+        "de": "Kanada"
+      },
+      "city": {
+        "pt": "Winnipeg",
+        "es": "Winnipeg",
+        "en": "Winnipeg",
+        "fr": "Winnipeg",
+        "de": "Winnipeg"
+      },
+      "bio": {
+        "pt": "cantor-compositor · baixista · cantor",
+        "es": "músico canadiense",
+        "en": "Canadian musician",
+        "fr": "compositeur-auteur-interprète canadien",
+        "de": "kanadischer Sänger-Songschreiber und Rock-Bandleader"
+      },
+      "source": "https://www.wikidata.org/wiki/Q224784",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Weakerthans_guy,_by_tao_zhyn.jpg",
+      "photoCredit": "Jeremy Schultz",
+      "photoLicense": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+      "id": "Q273959",
+      "name": "Mira Luoti",
+      "profileUrl": "/concertos/artistas/mira-luoti-q273959/",
+      "photoUrl": "/assets/artist-showcase/Q273959.jpg",
+      "country": {
+        "pt": "Finlândia",
+        "es": "Finlandia",
+        "en": "Finland",
+        "fr": "Finlande",
+        "de": "Finnland"
+      },
+      "city": {
+        "pt": "Pori",
+        "es": "Pori",
+        "en": "Pori",
+        "fr": "Pori",
+        "de": "Pori"
+      },
+      "bio": {
+        "pt": "cantor · ator",
+        "es": "cantante · actor",
+        "en": "Finnish singer and actress",
+        "fr": "chanteuse finlandaise",
+        "de": "finnische Sängerin und Schauspielerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q273959",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Mira_Luoti.jpg",
+      "photoCredit": "Tuomas Vitikainen",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    {
+      "id": "Q446015",
+      "name": "Nina Kinert",
+      "profileUrl": "/concertos/artistas/nina-kinert-q446015/",
+      "photoUrl": "/assets/artist-showcase/Q446015.jpg",
+      "country": {
+        "pt": "Suécia",
+        "es": "Suecia",
+        "en": "Sweden",
+        "fr": "Suède",
+        "de": "Schweden"
+      },
+      "city": {
+        "pt": "Estocolmo",
+        "es": "Estocolmo",
+        "en": "Stockholm",
+        "fr": "Stockholm",
+        "de": "Stockholm"
+      },
+      "bio": {
+        "pt": "Cantora e compositora sueca",
+        "es": "cantautor · cantante",
+        "en": "Swedish singer, songerwriter",
+        "fr": "artiste musicale",
+        "de": "schwedische Musikerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q446015",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Nina_Kinert_@_Centre_culturel_su%C3%A9dois_03-2.jpg",
+      "photoCredit": "Nina_Kinert_@_Centre_culturel_suédois_03.jpg: Benoît Derrier from France",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q282341",
+      "name": "Jason Smith",
+      "profileUrl": "/concertos/artistas/jason-smith-q282341/",
+      "photoUrl": "/assets/artist-showcase/Q282341.jpg",
+      "country": {
+        "pt": "Austrália",
+        "es": "Australia",
+        "en": "Australia",
+        "fr": "Australie",
+        "de": "Australien"
+      },
+      "city": {
+        "pt": "Sydney",
+        "es": "Sídney",
+        "en": "Sydney",
+        "fr": "Sydney",
+        "de": "Sydney"
+      },
+      "bio": {
+        "pt": "ator · cantor · ator de televisão",
+        "es": "actor y cantante australiano",
+        "en": "Australian actor and singer",
+        "fr": "acteur australien",
+        "de": "australischer Schauspieler und Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q282341",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Jason_Smith_Actor_(cropped).jpg",
+      "photoCredit": "Jmsjs08",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q377104",
+      "name": "Dave",
+      "profileUrl": "/concertos/artistas/dave-q377104/",
+      "photoUrl": "/assets/artist-showcase/Q377104.jpg",
+      "country": {
+        "pt": "Reino dos Países Baixos",
+        "es": "Reino de los Países Bajos",
+        "en": "Kingdom of the Netherlands",
+        "fr": "Royaume des Pays-Bas",
+        "de": "Königreich der Niederlande"
+      },
+      "city": {
+        "pt": "Amesterdão",
+        "es": "Ámsterdam",
+        "en": "Amsterdam",
+        "fr": "Amsterdam",
+        "de": "Amsterdam"
+      },
+      "bio": {
+        "pt": "cantor · locutor de rádio · músico",
+        "es": "cantante · personalidad de radio · músico",
+        "en": "Dutch pop/chanson singer and musician",
+        "fr": "chanteur néerlandais",
+        "de": "niederländischer Popsänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q377104",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Nationale_finale_van_het_Eurovisie_Songfestival_in_Scheveningen_nr._17_Dave,_Bestanddeelnr_922-1434.jpg",
+      "photoCredit": "Eric Koch for Anefo",
+      "photoLicense": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+      "id": "Q706148",
+      "name": "Kerry Minnear",
+      "profileUrl": "/concertos/artistas/kerry-minnear-q706148/",
+      "photoUrl": "/assets/artist-showcase/Q706148.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Shaftesbury",
+        "es": "Shaftesbury",
+        "en": "Shaftesbury",
+        "fr": "Shaftesbury",
+        "de": "Shaftesbury"
+      },
+      "bio": {
+        "pt": "autor-compositor · cantor · guitarrista",
+        "es": "músico británico",
+        "en": "British rock musician",
+        "fr": "auteur-compositeur ou autrice-compositrice · chanteur ou chanteuse · guitariste",
+        "de": "englischer Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q706148",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Kerry_Minnear.jpg",
+      "photoCredit": "Richard Aaron; distributed by Capitol Records",
+      "photoLicense": "Public domain",
+      "licenseUrl": ""
+    },
+    {
+      "id": "Q73623",
+      "name": "Cassandra Steen",
+      "profileUrl": "/concertos/artistas/cassandra-steen-q73623/",
+      "photoUrl": "/assets/artist-showcase/Q73623.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Ostfildern",
+        "es": "Ostfildern",
+        "en": "Ostfildern",
+        "fr": "Ostfildern",
+        "de": "Ostfildern"
+      },
+      "bio": {
+        "pt": "cantora alemã",
+        "es": "cantante alemana",
+        "en": "German singer",
+        "fr": "chanteuse allemande",
+        "de": "US-amerikanische, in Deutschland lebende Pop- und R&B-Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q73623",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:2019_Glashaus_-_Cassandra_Steen_-_by_2eight_-_DSC8447.jpg",
+      "photoCredit": "Stefan Brending (2eight)",
+      "photoLicense": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+    },
+    {
+      "id": "Q515533",
+      "name": "Carolina la O",
+      "profileUrl": "/concertos/artistas/carolina-la-o-q515533/",
+      "photoUrl": "/assets/artist-showcase/Q515533.jpg",
+      "country": {
+        "pt": "Colômbia",
+        "es": "Colombia",
+        "en": "Colombia",
+        "fr": "Colombie",
+        "de": "Kolumbien"
+      },
+      "city": {
+        "pt": "Bogotá",
+        "es": "Bogotá",
+        "en": "Bogotá",
+        "fr": "Bogota",
+        "de": "Bogotá"
+      },
+      "bio": {
+        "pt": "cantor · cantor-compositor",
+        "es": "música colombiana",
+        "en": "Colombian musician",
+        "fr": "musicienne colombienne",
+        "de": "kolumbianische Sängerin und Schauspielerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q515533",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Carolina_La_O_1.jpg",
+      "photoCredit": "2010.01.01",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q446072",
+      "name": "Liel Kolet",
+      "profileUrl": "/concertos/artistas/liel-kolet-q446072/",
+      "photoUrl": "/assets/artist-showcase/Q446072.jpg",
+      "country": {
+        "pt": "Israel",
+        "es": "Israel",
+        "en": "Israel",
+        "fr": "Israël",
+        "de": "Israel"
+      },
+      "city": {
+        "pt": "Kvutzat Kinneret",
+        "es": "Kvutzat Kinneret",
+        "en": "Kvutzat Kinneret",
+        "fr": "Kvoutzat Kinneret",
+        "de": "Kvutzat Kinneret"
+      },
+      "bio": {
+        "pt": "cantora israelita",
+        "es": "cantante israelí",
+        "en": "Israeli singer",
+        "fr": "chanteuse israélienne",
+        "de": "israelische Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q446072",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Liel_Kolet_20051120-013121-004212.JPG",
+      "photoCredit": "Gal A. Buki, Switzerland",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    {
+      "id": "Q249794",
+      "name": "Grégori Baquet",
+      "profileUrl": "/concertos/artistas/gregori-baquet-q249794/",
+      "photoUrl": "/assets/artist-showcase/Q249794.jpg",
+      "country": {
+        "pt": "França",
+        "es": "Francia",
+        "en": "France",
+        "fr": "France",
+        "de": "Frankreich"
+      },
+      "city": {
+        "pt": "Paris",
+        "es": "París",
+        "en": "Paris",
+        "fr": "Paris",
+        "de": "Paris"
+      },
+      "bio": {
+        "pt": "ator francês",
+        "es": "actor francés",
+        "en": "French actor",
+        "fr": "acteur français, chanteur, metteur en scène",
+        "de": "Schauspieler · Filmregisseur · Filmschauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q249794",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Gr%C3%A9gori_Baquet_2014.jpg",
+      "photoCredit": "Georges Biard",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q452331",
+      "name": "Dianne Pilkington",
+      "profileUrl": "/concertos/artistas/dianne-pilkington-q452331/",
+      "photoUrl": "/assets/artist-showcase/Q452331.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Wigan",
+        "es": "Wigan",
+        "en": "Wigan",
+        "fr": "Wigan",
+        "de": "Wigan"
+      },
+      "bio": {
+        "pt": "ator · cantor · ator de teatro",
+        "es": "actor · cantante · actor de teatro",
+        "en": "British actor and singer",
+        "fr": "acteur ou actrice · chanteur ou chanteuse · acteur ou actrice de théâtre",
+        "de": "britische Musicaldarstellerin und Schauspielerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q452331",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Dianne.jpg",
+      "photoCredit": "LucieZ",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q745330",
+      "name": "Lutan Fyah",
+      "profileUrl": "/concertos/artistas/lutan-fyah-q745330/",
+      "photoUrl": "/assets/artist-showcase/Q745330.jpg",
+      "country": {
+        "pt": "Jamaica",
+        "es": "Jamaica",
+        "en": "Jamaica",
+        "fr": "Jamaïque",
+        "de": "Jamaika"
+      },
+      "city": {
+        "pt": "Saint Catherine",
+        "es": "Parroquia de Saint Catherine",
+        "en": "Saint Catherine Parish",
+        "fr": "Paroisse de Sainte-Catherine",
+        "de": "Parish Saint Catherine"
+      },
+      "bio": {
+        "pt": "cantor jamaicano",
+        "es": "cantante jamaicano",
+        "en": "Jamaican reggae musician",
+        "fr": "chanteur jamaïcain",
+        "de": "jamaikanischer Reggae-Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q745330",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:LutanFyah_Upsalla_2009.jpg",
+      "photoCredit": "Joakim Westerlund",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q512848",
+      "name": "Imee Ooi",
+      "profileUrl": "/concertos/artistas/imee-ooi-q512848/",
+      "photoUrl": "/assets/artist-showcase/Q512848.jpg",
+      "country": {
+        "pt": "Malásia",
+        "es": "Malasia",
+        "en": "Malaysia",
+        "fr": "Malaisie",
+        "de": "Malaysia"
+      },
+      "city": {
+        "pt": "Taiping",
+        "es": "Taiping",
+        "en": "Taiping",
+        "fr": "Taiping",
+        "de": "Taiping"
+      },
+      "bio": {
+        "pt": "cantor · compositor · DJ producer",
+        "es": "cantante budista malaya/china",
+        "en": "Chinese-Malaysian Buddhist singer",
+        "fr": "compositrice, chanteuse sino-malaisienne",
+        "de": "chinesisch-malayische Sängerin, Komponistin und Produzentin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q512848",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Imee_Ooi.jpg",
+      "photoCredit": "Florenus",
+      "photoLicense": "Public domain",
+      "licenseUrl": ""
+    },
+    {
+      "id": "Q548120",
+      "name": "Ray Lema",
+      "profileUrl": "/concertos/artistas/ray-lema-q548120/",
+      "photoUrl": "/assets/artist-showcase/Q548120.jpg",
+      "country": {
+        "pt": "República Democrática do Congo",
+        "es": "República Democrática del Congo",
+        "en": "Democratic Republic of the Congo",
+        "fr": "République démocratique du Congo",
+        "de": "Demokratische Republik Kongo"
+      },
+      "city": {
+        "pt": "Lufu-Toto",
+        "es": "Lufu-Toto",
+        "en": "Lufu-Toto",
+        "fr": "Lufu-Toto",
+        "de": "Lufu-Toto"
+      },
+      "bio": {
+        "pt": "autor-compositor · percussionista · guitarrista",
+        "es": "músico congoleño",
+        "en": "Congolese musician",
+        "fr": "pianiste congolais",
+        "de": "kongolesischer Jazz- und Rockschlagzeuger, Pianist und Komponist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q548120",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Ray_Lema_%C3%A0_la_Cin%C3%A9math%C3%A8que_fran%C3%A7aise.jpg",
+      "photoCredit": "Romanceor",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q555778",
+      "name": "Babul Supriyo",
+      "profileUrl": "/concertos/artistas/babul-supriyo-q555778/",
+      "photoUrl": "/assets/artist-showcase/Q555778.jpg",
+      "country": {
+        "pt": "Índia",
+        "es": "India",
+        "en": "India",
+        "fr": "Inde",
+        "de": "Indien"
+      },
+      "city": {
+        "pt": "Uttarpara Kotrung",
+        "es": "Uttarpara",
+        "en": "Uttarpara Kotrung",
+        "fr": "Uttarpara Kotrung",
+        "de": "Uttarpara"
+      },
+      "bio": {
+        "pt": "cantor indiano",
+        "es": "cantante indio",
+        "en": "Indian singer",
+        "fr": "chanteur indien",
+        "de": "indischer Schauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q555778",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:BabulSupriyo.jpg",
+      "photoCredit": "Bollywood Hungama",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q984651",
+      "name": "Jay Gordon",
+      "profileUrl": "/concertos/artistas/jay-gordon-q984651/",
+      "photoUrl": "/assets/artist-showcase/Q984651.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "São Francisco",
+        "es": "San Francisco",
+        "en": "San Francisco",
+        "fr": "San Francisco",
+        "de": "San Francisco"
+      },
+      "bio": {
+        "pt": "cantor · produtor(a) musical · compositor",
+        "es": "cantante · productor discográfico · compositor",
+        "en": "producer, journalist, rock singer",
+        "fr": "chanteur ou chanteuse · producteur ou productrice de disques · compositeur ou compositrice",
+        "de": "US-amerikanischer Sänger der Rockband Orgy"
+      },
+      "source": "https://www.wikidata.org/wiki/Q984651",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Orgy_American_band.jpg",
+      "photoCredit": "Jax 0677",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q436586",
+      "name": "Sakari Kukko",
+      "profileUrl": "/concertos/artistas/sakari-kukko-q436586/",
+      "photoUrl": "/assets/artist-showcase/Q436586.jpg",
+      "country": {
+        "pt": "Finlândia",
+        "es": "Finlandia",
+        "en": "Finland",
+        "fr": "Finlande",
+        "de": "Finnland"
+      },
+      "city": {
+        "pt": "Kajaani",
+        "es": "Kajaani",
+        "en": "Kajaani",
+        "fr": "Kajaani",
+        "de": "Kajaani"
+      },
+      "bio": {
+        "pt": "saxofonista · compositor · flautista",
+        "es": "músico finlandés",
+        "en": "Finnish musician",
+        "fr": "musicien finlandais",
+        "de": "finnischer Jazzmusiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q436586",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Sakari_Kukko.jpg",
+      "photoCredit": "Soppakanuuna",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q561843",
+      "name": "Enrico Beruschi",
+      "profileUrl": "/concertos/artistas/enrico-beruschi-q561843/",
+      "photoUrl": "/assets/artist-showcase/Q561843.jpg",
+      "country": {
+        "pt": "Itália",
+        "es": "Italia",
+        "en": "Italy",
+        "fr": "Italie",
+        "de": "Italien"
+      },
+      "city": {
+        "pt": "Milão",
+        "es": "Milán",
+        "en": "Milan",
+        "fr": "Milan",
+        "de": "Mailand"
+      },
+      "bio": {
+        "pt": "ator · cantor · ator de cinema",
+        "es": "actor · cantante · actor de cine",
+        "en": "Italian comedian, actor, singer and television personality",
+        "fr": "acteur ou actrice · chanteur ou chanteuse · acteur ou actrice de cinéma",
+        "de": "italienischer Schauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q561843",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Enrico_beruschi_2008.jpg",
+      "photoCredit": "Antonio G Colombo",
+      "photoLicense": "Public domain",
+      "licenseUrl": ""
+    },
+    {
+      "id": "Q510227",
+      "name": "Louise Portal",
+      "profileUrl": "/concertos/artistas/louise-portal-q510227/",
+      "photoUrl": "/assets/artist-showcase/Q510227.jpg",
+      "country": {
+        "pt": "Canadá",
+        "es": "Canadá",
+        "en": "Canada",
+        "fr": "Canada",
+        "de": "Kanada"
+      },
+      "city": {
+        "pt": "Chicoutimi",
+        "es": "Chicoutimi",
+        "en": "Chicoutimi",
+        "fr": "Chicoutimi",
+        "de": "Chicoutimi"
+      },
+      "bio": {
+        "pt": "ator · poeta · escritor",
+        "es": "actor · poeta · escritor",
+        "en": "Canadian actress, singer and writer (born 1950)",
+        "fr": "chanteuse, comédienne, romancière er auteur d'ouvrages pour la jeunesse canadienne",
+        "de": "kanadische Schauspielerin, Sängerin und Schriftstellerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q510227",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Louise_Portal_en_2026.jpg",
+      "photoCredit": "FriseIntense",
+      "photoLicense": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+      "id": "Q521668",
+      "name": "Angelo Kelly",
+      "profileUrl": "/concertos/artistas/angelo-kelly-q521668/",
+      "photoUrl": "/assets/artist-showcase/Q521668.jpg",
+      "country": {
+        "pt": "Espanha",
+        "es": "España",
+        "en": "Spain",
+        "fr": "Espagne",
+        "de": "Spanien"
+      },
+      "city": {
+        "pt": "Pamplona",
+        "es": "Pamplona",
+        "en": "Pamplona",
+        "fr": "Pampelune",
+        "de": "Pamplona"
+      },
+      "bio": {
+        "pt": "músico · cantor · ator",
+        "es": "músico irlandés",
+        "en": "Irish musician",
+        "fr": "musicien irlandais",
+        "de": "irischer Sänger, Musiker und Komponist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q521668",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:2018-06-03_ZDF_Fernsehgarten_Angelo_Kelly-9617.jpg",
+      "photoCredit": "Olaf Kosinsky",
+      "photoLicense": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en"
+    },
+    {
+      "id": "Q546349",
+      "name": "Lou Ann Barton",
+      "profileUrl": "/concertos/artistas/lou-ann-barton-q546349/",
+      "photoUrl": "/assets/artist-showcase/Q546349.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Fort Worth",
+        "es": "Fort Worth",
+        "en": "Fort Worth",
+        "fr": "Fort Worth",
+        "de": "Fort Worth"
+      },
+      "bio": {
+        "pt": "músico · cantor · autor-compositor",
+        "es": "grupo musical estadounidense",
+        "en": "American blues singer",
+        "fr": "groupe de musique américain",
+        "de": "US-amerikanische Bluessängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q546349",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Lou_Ann_Barton.jpg",
+      "photoCredit": "Louis Ramirez",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q90653",
+      "name": "Magdalena Thora",
+      "profileUrl": "/concertos/artistas/magdalena-thora-q90653/",
+      "photoUrl": "/assets/artist-showcase/Q90653.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Munique",
+        "es": "Múnich",
+        "en": "Munich",
+        "fr": "Munich",
+        "de": "München"
+      },
+      "bio": {
+        "pt": "cantor · músico de jazz · guitarrista",
+        "es": "actriz, guitarrista y cantante de jazz alemana (nacida en 1952)",
+        "en": "German guitarist and singer",
+        "fr": "actrice allemande",
+        "de": "deutsche Jazz-Gitarristin, -Sängerin und -Pianistin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q90653",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Leni_Stern_2009.JPG",
+      "photoCredit": "Svíčková",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q372900",
+      "name": "Rick Roberts",
+      "profileUrl": "/concertos/artistas/rick-roberts-q372900/",
+      "photoUrl": "/assets/artist-showcase/Q372900.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Condado de Pinellas",
+        "es": "Condado de Pinellas",
+        "en": "Pinellas County",
+        "fr": "comté de Pinellas",
+        "de": "Pinellas County"
+      },
+      "bio": {
+        "pt": "cantor · cantor-compositor · autor-compositor",
+        "es": "cantautor estadounidense",
+        "en": "American musician",
+        "fr": "musicien américain",
+        "de": "US-amerikanischer Sänger und Songschreiber"
+      },
+      "source": "https://www.wikidata.org/wiki/Q372900",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Rick_Roberts.jpg",
+      "photoCredit": "Rob Croes / Anefo",
+      "photoLicense": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    },
+    {
+      "id": "Q733050",
+      "name": "Kamagurka",
+      "profileUrl": "/concertos/artistas/kamagurka-q733050/",
+      "photoUrl": "/assets/artist-showcase/Q733050.jpg",
+      "country": {
+        "pt": "Bélgica",
+        "es": "Bélgica",
+        "en": "Belgium",
+        "fr": "Belgique",
+        "de": "Belgien"
+      },
+      "city": {
+        "pt": "Nieuwpoort",
+        "es": "Nieuwpoort",
+        "en": "Nieuwpoort",
+        "fr": "Nieuwpoort",
+        "de": "Nieuwpoort"
+      },
+      "bio": {
+        "pt": "pintor · cantor · artista de cabaré",
+        "es": "dramaturgo, dibujante de cómics, pintor, humorista, comediante y productor televisivo belga",
+        "en": "Belgian cartoonist, playwright, television producer (born 1956)",
+        "fr": "auteur et acteur belge (1956-)",
+        "de": "belgischer Cartoonist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q733050",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Kamabushok675.jpg",
+      "photoCredit": "Michiel Hendryckx",
+      "photoLicense": "Public domain",
+      "licenseUrl": ""
+    },
+    {
+      "id": "Q493676",
+      "name": "Lee Soo-mi",
+      "profileUrl": "/concertos/artistas/lee-soo-mi-q493676/",
+      "photoUrl": "/assets/artist-showcase/Q493676.jpg",
+      "country": {
+        "pt": "Coreia do Sul",
+        "es": "Corea del Sur",
+        "en": "South Korea",
+        "fr": "Corée du Sud",
+        "de": "Südkorea"
+      },
+      "city": {
+        "pt": "Seongnam",
+        "es": "Seongnam",
+        "en": "Seongnam",
+        "fr": "Seongnam",
+        "de": "Seongnam"
+      },
+      "bio": {
+        "pt": "cantor · ator",
+        "es": "cantante y actriz surcoreana",
+        "en": "South Korean singer and actress",
+        "fr": "chanteuse et actrice sud-coréenne",
+        "de": "Sänger · Schauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q493676",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Lee_Soo-mi_2011-7-30.jpg",
+      "photoCredit": "Nick Pettit from Orlando, Florida, United States of America",
+      "photoLicense": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+      "id": "Q1079105",
+      "name": "Christian Burns",
+      "profileUrl": "/concertos/artistas/christian-burns-q1079105/",
+      "photoUrl": "/assets/artist-showcase/Q1079105.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Liverpool",
+        "es": "Liverpool",
+        "en": "Liverpool",
+        "fr": "Liverpool",
+        "de": "Liverpool"
+      },
+      "bio": {
+        "pt": "cantor · cantor-compositor · guitarrista",
+        "es": "cantante · cantautor · guitarrista",
+        "en": "English singer",
+        "fr": "chanteur ou chanteuse · auteur-compositeur-interprète ou auteure-compositrice-interprète · guitariste",
+        "de": "britischer Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q1079105",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Christian_Anthony_Burns.jpg",
+      "photoCredit": "YoelPrieto",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q1028337",
+      "name": "Vilmos Gryllus",
+      "profileUrl": "/concertos/artistas/vilmos-gryllus-q1028337/",
+      "photoUrl": "/assets/artist-showcase/Q1028337.jpg",
+      "country": {
+        "pt": "Hungria",
+        "es": "Hungría",
+        "en": "Hungary",
+        "fr": "Hongrie",
+        "de": "Ungarn"
+      },
+      "city": {
+        "pt": "Budapeste",
+        "es": "Budapest",
+        "en": "Budapest",
+        "fr": "Budapest",
+        "de": "Budapest"
+      },
+      "bio": {
+        "pt": "cantor · compositor",
+        "es": "cantante · compositor",
+        "en": "Hungarian composer, musician",
+        "fr": "chanteur ou chanteuse · compositeur ou compositrice",
+        "de": "Sänger · Komponist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q1028337",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Vilmos_Gryllus_(2013).jpg",
+      "photoCredit": "Fekist",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q600183",
+      "name": "Eric Martsolf",
+      "profileUrl": "/concertos/artistas/eric-martsolf-q600183/",
+      "photoUrl": "/assets/artist-showcase/Q600183.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Harrisburg",
+        "es": "Harrisburg",
+        "en": "Harrisburg",
+        "fr": "Harrisburg",
+        "de": "Harrisburg"
+      },
+      "bio": {
+        "pt": "ator · ator de televisão · ator de cinema",
+        "es": "actor estadounidense",
+        "en": "American actor",
+        "fr": "acteur américain",
+        "de": "US-amerikanischer Schauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q600183",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:EricMartsolfNov08.jpg",
+      "photoCredit": "jfer21 at https://www.flickr.com/photos/jfer21/",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q547097",
+      "name": "Lani Hall",
+      "profileUrl": "/concertos/artistas/lani-hall-q547097/",
+      "photoUrl": "/assets/artist-showcase/Q547097.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Chicago",
+        "es": "Chicago",
+        "en": "Chicago",
+        "fr": "Chicago",
+        "de": "Chicago"
+      },
+      "bio": {
+        "pt": "cantor",
+        "es": "música estadounidense",
+        "en": "American musician",
+        "fr": "chanteuse américaine",
+        "de": "US-amerikanische Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q547097",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Lani-Hall-Alpert_MG_6749-cropped.jpg",
+      "photoCredit": "AlpertAdjani  Adjani",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q301772",
+      "name": "Shruti Sadolikar",
+      "profileUrl": "/concertos/artistas/shruti-sadolikar-q301772/",
+      "photoUrl": "/assets/artist-showcase/Q301772.jpg",
+      "country": {
+        "pt": "Índia",
+        "es": "India",
+        "en": "India",
+        "fr": "Inde",
+        "de": "Indien"
+      },
+      "city": {
+        "pt": "Maarastra",
+        "es": "Maharashtra",
+        "en": "Maharashtra",
+        "fr": "Maharashtra",
+        "de": "Maharashtra"
+      },
+      "bio": {
+        "pt": "cantora indiana",
+        "es": "cantante india",
+        "en": "Indian classical singer",
+        "fr": "chanteuse indienne",
+        "de": "Sänger · Musiker"
+      },
+      "source": "https://www.wikidata.org/wiki/Q301772",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Shruti_Sadolikar_Katkar_06.jpg",
+      "photoCredit": "Joe Mabel",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+    },
+    {
+      "id": "Q522034",
+      "name": "Norma Jean",
+      "profileUrl": "/concertos/artistas/norma-jean-q522034/",
+      "photoUrl": "/assets/artist-showcase/Q522034.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Wellston",
+        "es": "Wellston",
+        "en": "Wellston",
+        "fr": "Wellston",
+        "de": "Wellston"
+      },
+      "bio": {
+        "pt": "country singer · autor-compositor · cantor",
+        "es": "música estadounidense",
+        "en": "American country music singer",
+        "fr": "chanteuse de musique country américaine",
+        "de": "US-amerikanische Country-Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q522034",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Norma_Jean_(1968)_(cropped).png",
+      "photoCredit": "RCA Records",
+      "photoLicense": "Public domain",
+      "licenseUrl": ""
+    },
+    {
+      "id": "Q873539",
+      "name": "Jun Fubuki",
+      "profileUrl": "/concertos/artistas/jun-fubuki-q873539/",
+      "photoUrl": "/assets/artist-showcase/Q873539.jpg",
+      "country": {
+        "pt": "Japão",
+        "es": "Japón",
+        "en": "Japan",
+        "fr": "Japon",
+        "de": "Japan"
+      },
+      "city": {
+        "pt": "Yatsuo",
+        "es": "Yatsuo",
+        "en": "Yatsuo",
+        "fr": "Yatsuo",
+        "de": "Yatsuo"
+      },
+      "bio": {
+        "pt": "ator · seiyū · cantor",
+        "es": "actriz japonesa",
+        "en": "Japanese actress (1952-)",
+        "fr": "actrice japonaise",
+        "de": "japanische Schauspielerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q873539",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Fubuki_Jun_from_%22Spirit_World%22_at_Red_Carpet_of_the_Tokyo_International_Film_Festival_2024_(54578137384).jpg",
+      "photoCredit": "Dick Thomas Johnson from Tokyo, Japan",
+      "photoLicense": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+      "id": "Q431393",
+      "name": "Meital Dohan",
+      "profileUrl": "/concertos/artistas/meital-dohan-q431393/",
+      "photoUrl": "/assets/artist-showcase/Q431393.jpg",
+      "country": {
+        "pt": "Israel",
+        "es": "Israel",
+        "en": "Israel",
+        "fr": "Israël",
+        "de": "Israel"
+      },
+      "city": {
+        "pt": "Givatayim",
+        "es": "Guivatayim",
+        "en": "Givatayim",
+        "fr": "Givatayim",
+        "de": "Giv’atajim"
+      },
+      "bio": {
+        "pt": "ator · cantor · modelo",
+        "es": "Actriz y cantante israelí",
+        "en": "Israeli actress",
+        "fr": "actrice israélienne",
+        "de": "israelische Schauspielerin und Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q431393",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Meital_Dohan.jpg",
+      "photoCredit": "Erik Hansen",
+      "photoLicense": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+      "id": "Q465915",
+      "name": "Joana Zimmer",
+      "profileUrl": "/concertos/artistas/joana-zimmer-q465915/",
+      "photoUrl": "/assets/artist-showcase/Q465915.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Freiburg im Breisgau",
+        "es": "Friburgo de Brisgovia",
+        "en": "Freiburg im Breisgau",
+        "fr": "Fribourg-en-Brisgau",
+        "de": "Freiburg im Breisgau"
+      },
+      "bio": {
+        "pt": "cantora alemã",
+        "es": "cantante alemana",
+        "en": "German singer",
+        "fr": "chanteuse allemande",
+        "de": "deutsche Sängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q465915",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Joana_Zimmer_B_09-13.jpg",
+      "photoCredit": "A.Savin",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q532918",
+      "name": "Freddie McGregor",
+      "profileUrl": "/concertos/artistas/freddie-mcgregor-q532918/",
+      "photoUrl": "/assets/artist-showcase/Q532918.jpg",
+      "country": {
+        "pt": "Jamaica",
+        "es": "Jamaica",
+        "en": "Jamaica",
+        "fr": "Jamaïque",
+        "de": "Jamaika"
+      },
+      "city": {
+        "pt": "Clarendon",
+        "es": "Parroquia de Clarendon",
+        "en": "Clarendon Parish",
+        "fr": "paroisse de Clarendon",
+        "de": "Clarendon Parish"
+      },
+      "bio": {
+        "pt": "cantor · músico · produtor(a) musical",
+        "es": "cantante · músico · productor discográfico",
+        "en": "Jamaican singer, musician and producer",
+        "fr": "chanteur de reggae",
+        "de": "jamaikanischer Reggae-Sänger, Musiker und Produzent"
+      },
+      "source": "https://www.wikidata.org/wiki/Q532918",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Freddie_McGregor,_Ruhr_Reggae_Summer_2009.jpg",
+      "photoCredit": "Thomas Euler from Wermelskirchen, Germany",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q39107",
+      "name": "Róbert Gulya",
+      "profileUrl": "/concertos/artistas/robert-gulya-q39107/",
+      "photoUrl": "/assets/artist-showcase/Q39107.jpg",
+      "country": {
+        "pt": "Hungria",
+        "es": "Hungría",
+        "en": "Hungary",
+        "fr": "Hongrie",
+        "de": "Ungarn"
+      },
+      "city": {
+        "pt": "Gyöngyös",
+        "es": "Gyöngyös",
+        "en": "Gyöngyös",
+        "fr": "Gyöngyös",
+        "de": "Gyöngyös"
+      },
+      "bio": {
+        "pt": "compositor húngaro",
+        "es": "compositor húngaro",
+        "en": "Hungarian composer",
+        "fr": "compositeur hongrois",
+        "de": "ungarischer Komponist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q39107",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Gulya_Robert,_Budapest_24-10-2009_(cropped).jpg",
+      "photoCredit": "Culturawiki",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q195058",
+      "name": "Casey Abrams",
+      "profileUrl": "/concertos/artistas/casey-abrams-q195058/",
+      "photoUrl": "/assets/artist-showcase/Q195058.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Austin",
+        "es": "Austin",
+        "en": "Austin",
+        "fr": "Austin",
+        "de": "Austin"
+      },
+      "bio": {
+        "pt": "cantor · músico de jazz · autor-compositor",
+        "es": "cantante · músico de jazz · compositor de canciones",
+        "en": "American musician and singer",
+        "fr": "chanteur ou chanteuse · musicien ou musicienne de jazz · auteur-compositeur ou autrice-compositrice",
+        "de": "US-amerikanischer Sänger"
+      },
+      "source": "https://www.wikidata.org/wiki/Q195058",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Caseyabrams.jpg",
+      "photoCredit": "mtanne",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q660321",
+      "name": "Mansour",
+      "profileUrl": "/concertos/artistas/mansour-q660321/",
+      "photoUrl": "/assets/artist-showcase/Q660321.jpg",
+      "country": {
+        "pt": "Irão",
+        "es": "Irán",
+        "en": "Iran",
+        "fr": "Iran",
+        "de": "Iran"
+      },
+      "city": {
+        "pt": "Teerão",
+        "es": "Teherán",
+        "en": "Tehran",
+        "fr": "Téhéran",
+        "de": "Teheran"
+      },
+      "bio": {
+        "pt": "cantor · compositor",
+        "es": "cantante · compositor",
+        "en": "Iranian singer and actor",
+        "fr": "chanteur ou chanteuse · compositeur ou compositrice",
+        "de": "iranischer Sänger, Komponist und Schauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q660321",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Mansour_concert_Kuala_lumpur_2009.jpg",
+      "photoCredit": "F. Alinejad",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q546014",
+      "name": "Aşkın Nur Yengi",
+      "profileUrl": "/concertos/artistas/askn-nur-yengi-q546014/",
+      "photoUrl": "/assets/artist-showcase/Q546014.jpg",
+      "country": {
+        "pt": "Turquia",
+        "es": "Turquía",
+        "en": "Turkey",
+        "fr": "Turquie",
+        "de": "Türkei"
+      },
+      "city": {
+        "pt": "Istambul",
+        "es": "Estambul",
+        "en": "Istanbul",
+        "fr": "Istanbul",
+        "de": "Istanbul"
+      },
+      "bio": {
+        "pt": "cantora turca",
+        "es": "cantante turca",
+        "en": "Turkish singer (born 1970)",
+        "fr": "chanteuse turque",
+        "de": "türkische Popsängerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q546014",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:A%C5%9Fkin_Nur_Yengi_(cropped).jpg",
+      "photoCredit": "akustikhane",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q456328",
+      "name": "Jeanne Cherhal",
+      "profileUrl": "/concertos/artistas/jeanne-cherhal-q456328/",
+      "photoUrl": "/assets/artist-showcase/Q456328.jpg",
+      "country": {
+        "pt": "França",
+        "es": "Francia",
+        "en": "France",
+        "fr": "France",
+        "de": "Frankreich"
+      },
+      "city": {
+        "pt": "Nantes",
+        "es": "Nantes",
+        "en": "Nantes",
+        "fr": "Nantes",
+        "de": "Nantes"
+      },
+      "bio": {
+        "pt": "cantor-compositor · ator · cantor",
+        "es": "cantante francesa",
+        "en": "French singer-songwriter",
+        "fr": "chanteuse française",
+        "de": "französische Musikerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q456328",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Jeanne_Cherhal_-_Le_Printemps_des_Fameuses_-_17_mars_2017_-_Nantes.jpg",
+      "photoCredit": "FrimousseRoche",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q491323",
+      "name": "Kim Kang-woo",
+      "profileUrl": "/concertos/artistas/kim-kang-woo-q491323/",
+      "photoUrl": "/assets/artist-showcase/Q491323.jpg",
+      "country": {
+        "pt": "Coreia do Sul",
+        "es": "Corea del Sur",
+        "en": "South Korea",
+        "fr": "Corée du Sud",
+        "de": "Südkorea"
+      },
+      "city": {
+        "pt": "Coreia do Sul",
+        "es": "Corea del Sur",
+        "en": "South Korea",
+        "fr": "Corée du Sud",
+        "de": "Südkorea"
+      },
+      "bio": {
+        "pt": "ator · ator de cinema · cantor",
+        "es": "actor surcoreano",
+        "en": "South Korean actor",
+        "fr": "acteur sud-coréen",
+        "de": "südkoreanischer Schauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q491323",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Kim_Kang-woo_in_Dec_2019_(Revised).png",
+      "photoCredit": "PARKJAEHWAN (kinocine.com)",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q462242",
+      "name": "Tané McClure",
+      "profileUrl": "/concertos/artistas/tane-mcclure-q462242/",
+      "photoUrl": "/assets/artist-showcase/Q462242.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Pacific Palisades",
+        "es": "Pacific Palisades",
+        "en": "Pacific Palisades",
+        "fr": "Pacific Palisades",
+        "de": "Pacific Palisades"
+      },
+      "bio": {
+        "pt": "cantor · produtor cinematográfico · ator de cinema",
+        "es": "actriz estadounidense",
+        "en": "American actress/singer",
+        "fr": "actrice et productrice américaine",
+        "de": "US-amerikanische Schauspielerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q462242",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Tane_McClure_LF.jpg",
+      "photoCredit": "Credit to lukeford.net (permission statement at en:User:Tabercil/Luke Ford permission)",
+      "photoLicense": "CC BY-SA 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5"
+    },
+    {
+      "id": "Q78818",
+      "name": "Eva Lind",
+      "profileUrl": "/concertos/artistas/eva-lind-q78818/",
+      "photoUrl": "/assets/artist-showcase/Q78818.jpg",
+      "country": {
+        "pt": "Áustria",
+        "es": "Austria",
+        "en": "Austria",
+        "fr": "Autriche",
+        "de": "Österreich"
+      },
+      "city": {
+        "pt": "Innsbruck",
+        "es": "Innsbruck",
+        "en": "Innsbruck",
+        "fr": "Innsbruck",
+        "de": "Innsbruck"
+      },
+      "bio": {
+        "pt": "concert singer · cantor lírico · apresentador de televisão",
+        "es": "cantante de concierto · cantante de ópera · presentador de televisión",
+        "en": "Austrian soprano",
+        "fr": "artiste lyrique",
+        "de": "österreichische Sopranistin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q78818",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Eva_Lind_NY.jpg",
+      "photoCredit": "chriscarlton99",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q66236",
+      "name": "Klaus Hoffmann",
+      "profileUrl": "/concertos/artistas/klaus-hoffmann-q66236/",
+      "photoUrl": "/assets/artist-showcase/Q66236.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Berlim",
+        "es": "Berlín",
+        "en": "Berlin",
+        "fr": "Berlin",
+        "de": "Berlin"
+      },
+      "bio": {
+        "pt": "escritor · cantor · ator de teatro",
+        "es": "escritor · cantante · actor de teatro",
+        "en": "German actor and singer (born 1951)",
+        "fr": "chanteur, acteur et compositeur allemand",
+        "de": "deutscher Sänger, Schauspieler und Liedermacher"
+      },
+      "source": "https://www.wikidata.org/wiki/Q66236",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Klaus_hoffmann_portrait.jpg",
+      "photoCredit": "Sven.bomrich",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q443864",
+      "name": "Jodi Albert",
+      "profileUrl": "/concertos/artistas/jodi-albert-q443864/",
+      "photoUrl": "/assets/artist-showcase/Q443864.jpg",
+      "country": {
+        "pt": "Reino Unido",
+        "es": "Reino Unido",
+        "en": "United Kingdom",
+        "fr": "Royaume-Uni",
+        "de": "Vereinigtes Königreich"
+      },
+      "city": {
+        "pt": "Chingford",
+        "es": "Chingford",
+        "en": "Chingford",
+        "fr": "Chingford",
+        "de": "Chingford"
+      },
+      "bio": {
+        "pt": "ator · cantor · ator de teatro",
+        "es": "actor · cantante · actor de teatro",
+        "en": "British singer-songwriter, actress, model",
+        "fr": "actrice britannique",
+        "de": "britische Schauspielerin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q443864",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Kian_Egan_and_Jodi_Albert.jpg",
+      "photoCredit": "Escatarina Zahara",
+      "photoLicense": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    {
+      "id": "Q713925",
+      "name": "Shalim Ortiz",
+      "profileUrl": "/concertos/artistas/shalim-ortiz-q713925/",
+      "photoUrl": "/assets/artist-showcase/Q713925.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "San Juan",
+        "es": "San Juan",
+        "en": "San Juan",
+        "fr": "San Juan",
+        "de": "San Juan"
+      },
+      "bio": {
+        "pt": "ator · cantor · músico",
+        "es": "actor y cantante puertorriqueño",
+        "en": "Puerto Rican actor and singer",
+        "fr": "acteur portoricain",
+        "de": "puerto-ricanischer Sänger und Schauspieler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q713925",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Shalim_Ortiz_in_2012_(cropped).jpg",
+      "photoCredit": "Arkwingsoul",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q445564",
+      "name": "Coki Ramírez",
+      "profileUrl": "/concertos/artistas/coki-ramirez-q445564/",
+      "photoUrl": "/assets/artist-showcase/Q445564.jpg",
+      "country": {
+        "pt": "Argentina",
+        "es": "Argentina",
+        "en": "Argentina",
+        "fr": "Argentine",
+        "de": "Argentinien"
+      },
+      "city": {
+        "pt": "Córdova",
+        "es": "Córdoba",
+        "en": "Córdoba",
+        "fr": "Córdoba",
+        "de": "Córdoba"
+      },
+      "bio": {
+        "pt": "ator · cantor · modelo",
+        "es": "cantante y modelo argentina",
+        "en": "Argentine recording artist; singer and model",
+        "fr": "chanteuse, mannequin et actrice argentine",
+        "de": "argentinische Sängerin und TV-Moderatorin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q445564",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Coki_Ram%C3%ADrez_2023_02.jpg",
+      "photoCredit": "Desayunos Informales",
+      "photoLicense": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    },
+    {
+      "id": "Q69544",
+      "name": "Oliver Hartmann",
+      "profileUrl": "/concertos/artistas/oliver-hartmann-q69544/",
+      "photoUrl": "/assets/artist-showcase/Q69544.jpg",
+      "country": {
+        "pt": "Alemanha",
+        "es": "Alemania",
+        "en": "Germany",
+        "fr": "Allemagne",
+        "de": "Deutschland"
+      },
+      "city": {
+        "pt": "Rüsselsheim",
+        "es": "Rüsselsheim",
+        "en": "Rüsselsheim am Main",
+        "fr": "Rüsselsheim am Main",
+        "de": "Rüsselsheim am Main"
+      },
+      "bio": {
+        "pt": "cantor alemão",
+        "es": "cantante alemán",
+        "en": "German singer",
+        "fr": "chanteur allemand",
+        "de": "deutscher Songwriter, Sänger, Produzent und Gitarrist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q69544",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Avantasia_Rockharz_2016_06.jpg",
+      "photoCredit": "S. Bollmann",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    {
+      "id": "Q375193",
+      "name": "Dub FX",
+      "profileUrl": "/concertos/artistas/dub-fx-q375193/",
+      "photoUrl": "/assets/artist-showcase/Q375193.jpg",
+      "country": {
+        "pt": "Austrália",
+        "es": "Australia",
+        "en": "Australia",
+        "fr": "Australie",
+        "de": "Australien"
+      },
+      "city": {
+        "pt": "Austrália",
+        "es": "Australia",
+        "en": "Australia",
+        "fr": "Australie",
+        "de": "Australien"
+      },
+      "bio": {
+        "pt": "artista de rua · cantor · beatboxer",
+        "es": "músico australiano",
+        "en": "Australian musician",
+        "fr": "musicien australien",
+        "de": "australischer Beatboxer und Live-looping-Künstler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q375193",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Dub_FX.jpg",
+      "photoCredit": "Gatman140",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q45457",
+      "name": "Andy Borg",
+      "profileUrl": "/concertos/artistas/andy-borg-q45457/",
+      "photoUrl": "/assets/artist-showcase/Q45457.jpg",
+      "country": {
+        "pt": "Áustria",
+        "es": "Austria",
+        "en": "Austria",
+        "fr": "Autriche",
+        "de": "Österreich"
+      },
+      "city": {
+        "pt": "Viena",
+        "es": "Viena",
+        "en": "Vienna",
+        "fr": "Vienne",
+        "de": "Wien"
+      },
+      "bio": {
+        "pt": "cantor · apresentador de televisão · compositor",
+        "es": "cantante austríaco",
+        "en": "Austrian Schlager singer (born 1960)",
+        "fr": "chanteur autrichien",
+        "de": "österreichischer Schlagersänger und Fernsehmoderator"
+      },
+      "source": "https://www.wikidata.org/wiki/Q45457",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Musikantenstadl-Tournee_2010,_Wien_(05)_Andy_Borg.jpg",
+      "photoCredit": "Manfred Werner - Tsui",
+      "photoLicense": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    {
+      "id": "Q453390",
+      "name": "Vienna Teng",
+      "profileUrl": "/concertos/artistas/vienna-teng-q453390/",
+      "photoUrl": "/assets/artist-showcase/Q453390.jpg",
+      "country": {
+        "pt": "Estados Unidos",
+        "es": "Estados Unidos",
+        "en": "United States",
+        "fr": "États-Unis",
+        "de": "Vereinigte Staaten"
+      },
+      "city": {
+        "pt": "Palo Alto",
+        "es": "Palo Alto",
+        "en": "Palo Alto",
+        "fr": "Palo Alto",
+        "de": "Palo Alto"
+      },
+      "bio": {
+        "pt": "cantor · cantor-compositor · pianista",
+        "es": "cantante · cantautor · pianista",
+        "en": "Taiwanese-American pianist and singer-songwriter based in Detroit",
+        "fr": "chanteuse américaine",
+        "de": "US-amerikanische Pianistin, Sängerin und Liedermacherin"
+      },
+      "source": "https://www.wikidata.org/wiki/Q453390",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Vienna_Teng_@_McCabe%27s_Guitar_Shop_12_06_2025_(54996984700).jpg",
+      "photoCredit": "Justin Higuchi",
+      "photoLicense": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+      "id": "Q359521",
+      "name": "Matthew Good",
+      "profileUrl": "/concertos/artistas/matthew-good-q359521/",
+      "photoUrl": "/assets/artist-showcase/Q359521.jpg",
+      "country": {
+        "pt": "Canadá",
+        "es": "Canadá",
+        "en": "Canada",
+        "fr": "Canada",
+        "de": "Kanada"
+      },
+      "city": {
+        "pt": "Burnaby",
+        "es": "Burnaby",
+        "en": "Burnaby",
+        "fr": "Burnaby",
+        "de": "Burnaby"
+      },
+      "bio": {
+        "pt": "cantor-compositor · cantor · autor-compositor",
+        "es": "cantautor canadiense",
+        "en": "Canadian musician",
+        "fr": "auteur-compositeur-interprète canadien",
+        "de": "kanadischer Sänger, Komponist und Aktivist"
+      },
+      "source": "https://www.wikidata.org/wiki/Q359521",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Matthew_Good_-_Fredericton.jpg",
+      "photoCredit": "Sean McGrath",
+      "photoLicense": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+    },
+    {
+      "id": "Q711092",
+      "name": "Priscilla Chan",
+      "profileUrl": "/concertos/artistas/priscilla-chan-q711092/",
+      "photoUrl": "/assets/artist-showcase/Q711092.jpg",
+      "country": {
+        "pt": "Hong Kong britânico",
+        "es": "Hong Kong británico",
+        "en": "British Hong Kong",
+        "fr": "Hong Kong britannique",
+        "de": "Britisch-Hongkong"
+      },
+      "city": {
+        "pt": "Hong Kong britânico",
+        "es": "Hong Kong británico",
+        "en": "British Hong Kong",
+        "fr": "Hong Kong britannique",
+        "de": "Britisch-Hongkong"
+      },
+      "bio": {
+        "pt": "cantora de Hong Kong",
+        "es": "cantante hongkonesa",
+        "en": "Hong Kong female pop singer",
+        "fr": "chanteuse hongkongaise",
+        "de": "Sänger · Aufnahmekünstler"
+      },
+      "source": "https://www.wikidata.org/wiki/Q711092",
+      "photoSource": "https://commons.wikimedia.org/wiki/File:Priscilla_Chan_20250124.jpg",
+      "photoCredit": "Tombus20032000",
+      "photoLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
     }
   ]
 }
