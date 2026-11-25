@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-25T17:28:44.388644+00:00",
+  "updated": "2026-11-25T18:18:22.052728+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "CCNVptfDpPo",
+        "title": "Judy Hopps & Nick Wilde | Zootopia 2 Booth to Screen",
+        "source": "Disney",
+        "published": "2026-11-25T17:30:20Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=CCNVptfDpPo"
+      },
       {
         "youtubeId": "PmNkepu1Nnk",
         "title": "Disney Stars Share​ Holiday Memories | Make the Holidays Magic",
@@ -89,17 +97,25 @@
         "published": "2026-11-19T17:00:11Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=e67Qtn_3hkc"
-      },
-      {
-        "youtubeId": "9gdKV8NAvYk",
-        "title": "Happy Birthday Mickey Mouse 🎂🎉",
-        "source": "Disney",
-        "published": "2026-11-18T22:00:23Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=9gdKV8NAvYk"
       }
     ],
     "warner": [
+      {
+        "youtubeId": "Rs3xKiooLls",
+        "title": "The Lord of the Rings: The Hunt for Gollum | That’s a wrap! Well, almost.",
+        "source": "Warner Bros.",
+        "published": "2026-11-25T18:02:21Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=Rs3xKiooLls"
+      },
+      {
+        "youtubeId": "-LW5NZ7rrhQ",
+        "title": "Off to Arrakis. Get tickets now for Dune: Part Three only in theaters and IMAX December 18.",
+        "source": "Warner Bros.",
+        "published": "2026-11-25T17:30:12Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=-LW5NZ7rrhQ"
+      },
       {
         "youtubeId": "LW4spUIxgBk",
         "title": "Dune: Part Three | \"Family\" | Get Tickets Now",
@@ -179,22 +195,6 @@
         "published": "2026-11-18T17:00:23Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=OAUnScp6fYA"
-      },
-      {
-        "youtubeId": "rw7sMwwnNuk",
-        "title": "Each step brings us closer to the end.",
-        "source": "Warner Bros.",
-        "published": "2026-11-17T19:00:19Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=rw7sMwwnNuk"
-      },
-      {
-        "youtubeId": "d6Yq6ZUGKWI",
-        "title": "One last time. Zendaya returns as Chani in Dune: Part Three, only in theaters and IMAX December 18",
-        "source": "Warner Bros.",
-        "published": "2026-11-17T18:00:02Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=d6Yq6ZUGKWI"
       }
     ]
   }
