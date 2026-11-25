@@ -39,3 +39,16 @@ test('opportunity endpoint enforces auth, opt-in, feature flag and all three ser
  feed=await(await worker.fetch(req('/api/profiles/opportunities'),env)).json();assert.equal(feed.items.length,0);
  assert.equal((await worker.fetch(req('/api/profiles/opportunities'),{...env,STOP_SERVICE:'true'})).status,503);
 });
+
+test('only MFA admin ingests configured authorized sources; invalid origins and duplicate batches are rejected',async()=>{
+ const {sql,env}=setup();env.PROFESSIONAL_OPPORTUNITIES_ENABLED='true';env.PROFESSIONAL_SOURCE_REGISTRY=JSON.stringify({approved:{authorized:true,allowedOrigins:['https://example.com']}});
+ const record={id:'one',type:'request',public:true,status:'verified',title:'Vocalista procurado',url:'https://example.com/offer',expiresAt:Date.now()+60000,sectors:['singer'],services:['singing'],country:'PT'};
+ const payload={sourceId:'approved',records:[record]};
+ assert.equal((await worker.fetch(req('/api/profiles/admin/ingest',payload),env)).status,403);
+ assert.equal((await worker.fetch(req('/api/profiles/admin/ingest',{...payload,sourceId:'unknown'},ownerToken),env)).status,403);
+ assert.equal((await worker.fetch(req('/api/profiles/admin/ingest',{...payload,records:[{...record,url:'https://evil.example/x'}]},ownerToken),env)).status,400);
+ assert.equal((await worker.fetch(req('/api/profiles/admin/ingest',{...payload,records:[record,record]},ownerToken),env)).status,400);
+ let response=await worker.fetch(req('/api/profiles/admin/ingest',payload,ownerToken),env);assert.equal(response.status,200);assert.equal((await response.json()).imported,1);
+ response=await worker.fetch(req('/api/profiles/admin/ingest',payload,ownerToken),env);assert.equal(response.status,200);assert.equal(sql.prepare('SELECT COUNT(*) n FROM verified_professional_opportunities').get().n,1);
+ assert.equal(sql.prepare("SELECT COUNT(*) n FROM professional_review_log WHERE decision='ingest:1'").get().n,2);
+});

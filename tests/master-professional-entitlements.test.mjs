@@ -31,3 +31,14 @@ test('migration preserves PRO records and constraints while adding MASTER; trans
  assert.throws(()=>db.prepare('UPDATE professional_entitlements SET plan=?').run('master_pro_annual'));
  db.close();
 });
+
+test('directional matching distinguishes offers and requests; commercial information is MASTER-only',async()=>{
+ const {commercialOpportunitySummary}=await import('../cloudflare/professional-opportunity-delivery.mjs');
+ const profile={kind:'singer',country:'PT',matchingConsent:true,services:['singing'],seeking:['mixing']};
+ const record=(id,patch={})=>({id,type:'offer',sourceAuthorized:true,public:true,status:'verified',url:'https://example.com/x',expiresAt:2000,sectors:['singer'],country:'PT',...patch});
+ const rows=[record('offer',{services:['mixing']}),record('wrong-offer',{services:['singing']}),record('request',{type:'request',services:['singing']}),record('wrong-request',{type:'request',services:['mixing']}),record('commercial',{type:'news',general:true,commercial:true})];
+ assert.deepEqual(selectProfessionalOpportunities(profile,rows,null,now).map(r=>r.id),['offer','request']);
+ const summary=commercialOpportunitySummary(profile,rows,master,now);assert.equal(summary.total,3);assert.equal(summary.commercial,1);assert.equal(summary.offers,1);assert.equal(summary.requests,1);
+ assert.equal(commercialOpportunitySummary(profile,rows,null,now),null);
+ assert.equal(selectProfessionalOpportunities(profile,rows,{...master,plan:'pro_monthly'},now).length,2);
+});
