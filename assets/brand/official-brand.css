@@ -1,0 +1,7 @@
+/* One approved asset, shared by platform pages. Never recolour or redraw. */
+a.brand.official-brand-link{display:inline-flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.official-brand-badge{display:block;flex:0 0 auto;width:58px;height:58px;object-fit:contain;background:#fff;border:1px solid #d9b97866;border-radius:8px;padding:3px}
+.official-brand-wordmark{display:block}
+.official-founder-brand{box-sizing:border-box;margin:20px 0 0;padding:18px;background:#fff;border:1px solid #d9b97880;border-radius:12px;text-align:center}
+.official-founder-brand img{display:block;width:min(100%,360px);height:auto;margin:auto}
+@media(max-width:760px){.official-brand-badge{width:44px;height:44px}.official-founder-brand{padding:12px}}

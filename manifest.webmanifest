@@ -11,9 +11,15 @@
   "lang": "pt",
   "icons": [
     {
-      "src": "/b6l-icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/assets/brand/studiosb6l-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/brand/studiosb6l-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any"
     }
   ]
