@@ -1,3 +1,4 @@
+import {SECTORS} from './professional-profile-schema.mjs';
 import {payhipConfigured,payhipCheckout} from './payhip-admission.mjs';
 import {emailConfigured,reserveEmail,sendVerificationEmail} from './registration-email.mjs';
 import {trustedAuthOrigin,authResponseOrigin} from './auth-origins.mjs';
@@ -76,7 +77,7 @@ export async function accountRegistration(request,env={}){
   }
   reservation=reservation||await reserveEmail(env,id,now);
   if(!reservation.allowed)return reply(503,{success:false,error:'Email temporarily unavailable'});
-  const delivered=await sendVerificationEmail(env,{to:email,verificationUrl:'https://www.studiosb6l.com/conta/#verify='+token});
+  const delivered=await sendVerificationEmail(env,{to:email,verificationUrl:'https://www.studiosb6l.com/conta/'+(Object.hasOwn(SECTORS,data.area)?'?area='+encodeURIComponent(data.area):'')+'#verify='+token});
   if(!delivered){
    await env.DB.prepare('DELETE FROM account_email_send_locks WHERE account_id=? AND available_after=?').bind(id,reservation.until).run();
    return reply(503,{success:false,error:'Email delivery unavailable'});

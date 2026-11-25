@@ -1,3 +1,7 @@
+import {professionalProfilesApi} from './professional-profiles-api.mjs';
+import {professionalProfilePortal} from './professional-profile-portal.mjs';
+import {SECTORS} from './professional-profile-schema.mjs';
+import {authorize} from './authorization-policy.mjs';
 import {ownerAuth} from './owner-auth.mjs';
 import {ownerPortal} from './owner-portal.mjs';
 import {supportApi} from './support-api.mjs';
@@ -34,15 +38,23 @@ async function dispatch(request,env={},ctx){
   const origin=request.headers.get('Origin');
   if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});
+  if(path.startsWith('/api/profiles/'))return professionalProfilesApi(request,env,ctx);
+  if(['/perfis/editar/','/perfis/revisao/'].includes(path)&&request.method==='GET'){
+    if(env.PROFESSIONAL_PROFILES_ENABLED!=='true')return reply(503,{error:'Perfis profissionais em preparação.'});
+    const session=await resolveSession(request,env),admin=path==='/perfis/revisao/';
+    if(!session)return Response.redirect(new URL('/conta/'+new URL(request.url).search,request.url).href,302);
+    if(!authorize(session,admin?'applications:review':'profile:edit'))return reply(403,{error:'Forbidden'});
+    return professionalProfilePortal({admin});
+  }
   if(['/conta','/conta/'].includes(path)&&request.method==='GET'){
     const readiness=await authReadiness(env);
-    return accountPortal({...env,RUNTIME_READY:readiness.enabled,REGISTRATION_READY:readiness.enabled&&registrationConfigured(env)});
+    return accountPortal({...env,RUNTIME_READY:readiness.enabled,REGISTRATION_READY:readiness.enabled&&registrationConfigured(env),PROFILE_AREA:Object.hasOwn(SECTORS,new URL(request.url).searchParams.get('area'))?new URL(request.url).searchParams.get('area'):''});
   }
   if(path==='/api/auth/status'&&request.method==='GET'){
     const limited=await checkAuthRate(request,env);
     if(limited)return reply(limited,{success:false,error:'Service unavailable'});
     const readiness=await authReadiness(env);
-    return reply(200,{success:true,...readiness,registrationEnabled:readiness.enabled&&registrationConfigured(env)});
+    return reply(200,{success:true,...readiness,registrationEnabled:readiness.enabled&&registrationConfigured(env),profilesEnabled:env.PROFESSIONAL_PROFILES_ENABLED==='true'});
   }
   if(path==='/api/auth/session'&&request.method==='GET'){
     const session=await resolveSession(request,env);

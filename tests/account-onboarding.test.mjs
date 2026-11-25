@@ -7,7 +7,7 @@ const flush=()=>new Promise(resolve=>setImmediate(resolve));
 async function page({hash='',reply=()=>Response.json({success:true,registrationEnabled:true})}={}){
  const nodes=new Map(),calls=[],historyCalls=[];
  function node(id){if(!nodes.has(id))nodes.set(id,{id,hidden:['registration-panel','verification-panel','verification-recovery','admission-checkout','after-checkout','retry-registration'].includes(id),disabled:false,value:'',checked:false,textContent:'',events:{},addEventListener(event,fn){this.events[event]=fn;},querySelector(){return node(id+'-button');}});return nodes.get(id);}
- const context={window:{addEventListener(){}},document:{getElementById:node},location:{hash,pathname:'/conta/',search:''},history:{replaceState(...args){historyCalls.push(args);}},URL,fetch:async(url,options)=>{calls.push({path:new URL(url).pathname,options});return reply(new URL(url).pathname,options);}};
+ const context={window:{addEventListener(){}},document:{getElementById:node},location:{hash,pathname:'/conta/',search:''},history:{replaceState(...args){historyCalls.push(args);}},URL,URLSearchParams,fetch:async(url,options)=>{calls.push({path:new URL(url).pathname,options});return reply(new URL(url).pathname,options);}};
  vm.runInNewContext(source,context);await flush();
  return{node,calls,historyCalls,click:async id=>{const button=node(id);await button.events.click({target:button});await flush();}};
 }

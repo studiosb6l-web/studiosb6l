@@ -74,9 +74,11 @@
   async function read(path) {
     try { const r = await fetch(path); return r.ok ? await r.json() : {}; } catch { return {}; }
   }
-  Promise.all([read('/assets/approved-marketplace.json'), read('/assets/artist-showcase.json?v=2')]).then(([approved, editorial]) => {
-    const community = (Array.isArray(approved.artists) ? approved.artists : [])
-      .filter(a => a?.approved === true && eligible(a)).map(a => ({...a, community:true}));
+  Promise.all([read('https://studiosb6l-artists-api.studiosb6l.workers.dev/api/profiles/public?showcase=1'), read('/assets/approved-marketplace.json'), read('/assets/artist-showcase.json?v=2')]).then(([live, approved, editorial]) => {
+    const liveArtists=Array.isArray(live.artists)?live.artists:[];
+    const seen=new Set();
+    const community = [...liveArtists,...(Array.isArray(approved.artists) ? approved.artists : [])]
+      .filter(a => {if(a?.approved!==true||!eligible(a))return false;const key=a.id||a.profileUrl;if(seen.has(key))return false;seen.add(key);return true;}).map(a => ({...a, community:true}));
     const registered = new Set(community.map(a => String(a.name).trim().toLocaleLowerCase()));
     const fallback = (Array.isArray(editorial.artists) ? editorial.artists : [])
       .filter(a => eligible(a) && !registered.has(String(a.name).trim().toLocaleLowerCase()));
