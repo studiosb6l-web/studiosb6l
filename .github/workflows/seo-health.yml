@@ -1,6 +1,11 @@
 name: SEO health monitoring
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/seo_health.py
+      - .github/workflows/seo-health.yml
   schedule:
     - cron: '17 7 * * *'
 permissions:
@@ -14,6 +19,23 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Wait for the public feedback canonical after Pages publication
+        run: |
+          python - <<'PYWAIT'
+          import time, urllib.request
+          expected='<link rel="canonical" href="https://www.studiosb6l.com/beta.html">'
+          for attempt in range(12):
+              try:
+                  with urllib.request.urlopen('https://www.studiosb6l.com/beta.html', timeout=15) as response:
+                      if expected in response.read(100000).decode('utf-8'):
+                          print('Published canonical confirmed')
+                          break
+              except Exception:
+                  pass
+              if attempt == 11:
+                  raise SystemExit('Public canonical was not confirmed; audit stopped')
+              time.sleep(10)
+          PYWAIT
       - name: Audit site discovery and indexing readiness
         run: python scripts/seo_health.py
       - uses: actions/upload-artifact@v4
