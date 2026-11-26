@@ -23,7 +23,7 @@ jobs:
         run: python3 scripts/master-automation-audit.py
       - name: Upload audit
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: master-automation-audit
           path: master-automation-audit.json

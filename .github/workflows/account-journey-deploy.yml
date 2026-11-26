@@ -52,7 +52,7 @@ jobs:
           console.log(JSON.stringify({quotaCheckPassed:true,usage,rollbackVersions:previous.previousVersions.length}));
           JS
       - name: Preserve rollback evidence before deployment
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: account-journey-rollback-${{ github.run_id }}
           path: .wrangler/account-journey/rollback.json
