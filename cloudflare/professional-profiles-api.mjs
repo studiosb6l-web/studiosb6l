@@ -3,7 +3,14 @@ import {authorize} from './authorization-policy.mjs';
 import {checkAuthRate} from './auth-readiness.mjs';
 import {trustedAuthOrigin,authResponseOrigin} from './auth-origins.mjs';
 import {validateProfile,publicProfile,SECTORS} from './professional-profile-schema.mjs';
-import {effectiveProfilePlan,rankProfessionalProfiles,countryKey} from './professional-profile-matching.mjs';
+import {loadProfessionalMembership} from './professional-membership.mjs';
+import {effectivePlan} from './ambassador-session-policy.mjs';
+import {rankProfessionalProfiles,countryKey} from './professional-profile-matching.mjs';
+// Preserve the existing matching API's basic/pro contract for every sector.
+async function matchingPlan(accountId,env){
+ const plan=effectivePlan(await loadProfessionalMembership(accountId,env));
+ return plan==='PRO'||plan==='PRO_BUSINESS'?'pro':'basic';
+}
 const validId=id=>typeof id==='string'&&/^[a-f0-9-]{36}$/i.test(id);
 function response(request,body,status=200,publicRead=false){return new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':publicRead&&status===200?'public, max-age=60':'no-store','X-Content-Type-Options':'nosniff','Access-Control-Allow-Origin':authResponseOrigin(request),'Vary':'Origin','Access-Control-Allow-Methods':'GET, POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'}});}
 async function input(request){if(!/^application\/json(?:\s*;|$)/i.test(request.headers.get('Content-Type')||''))return null;const reader=request.body?.getReader();if(!reader)return null;const chunks=[];let length=0;for(;;){const {value,done}=await reader.read();if(done)break;length+=value.byteLength;if(length>9000){await reader.cancel();return null;}chunks.push(value);}const bytes=new Uint8Array(length);let at=0;for(const v of chunks){bytes.set(v,at);at+=v.length;}try{return JSON.parse(new TextDecoder().decode(bytes));}catch{return null;}}
@@ -36,8 +43,8 @@ export async function professionalProfilesApi(request,env={},ctx){
  try{
   if(path==='/api/profiles/me'&&request.method==='GET'){
    const row=await db.prepare('SELECT id,data,revision,status,blocked FROM professional_profiles WHERE account_id=?').bind(session.userId).first();
-   const entitlement=await db.prepare('SELECT plan,provider_reference,verified_at,expires_at,revoked_at FROM professional_entitlements WHERE account_id=?').bind(session.userId).first();
-   return reply({success:true,plan:effectiveProfilePlan(entitlement),profile:row?{id:row.id,...JSON.parse(row.data),revision:row.revision,status:row.status,blocked:row.blocked===1}:null});
+   const plan=await matchingPlan(session.userId,env);
+   return reply({success:true,plan,profile:row?{id:row.id,...JSON.parse(row.data),revision:row.revision,status:row.status,blocked:row.blocked===1}:null});
   }
   if(path==='/api/profiles/me'&&request.method==='POST'){
    if(!authorize(session,'profile:edit'))return reply({error:'Forbidden'},403);
@@ -61,7 +68,7 @@ export async function professionalProfilesApi(request,env={},ctx){
   if(path==='/api/profiles/matches'&&request.method==='GET'){
    const own=await db.prepare(publicQuery+' AND p.account_id=? LIMIT 1').bind(session.userId).first();const viewer=own&&decoded(own);
    if(!viewer?.matchingConsent)return reply({success:true,items:[],message:'Publica uma ficha aprovada e autoriza os cruzamentos para receber correspondências.'});
-   const entitlement=await db.prepare('SELECT plan,provider_reference,verified_at,expires_at,revoked_at FROM professional_entitlements WHERE account_id=?').bind(session.userId).first();const plan=effectiveProfilePlan(entitlement);
+   const plan=await matchingPlan(session.userId,env);
    // All approved sectors participate. Bounded reads, no background robot or automatic messages.
    const rows=plan==='pro'?await db.prepare(publicQuery+' AND p.account_id!=? AND p.matching=1 ORDER BY p.approved_at DESC LIMIT 200').bind(session.userId).all():await db.prepare(publicQuery+' AND p.account_id!=? AND p.matching=1 AND p.country=? ORDER BY p.approved_at DESC LIMIT 200').bind(session.userId,countryKey(viewer.country)).all();
    const candidates=(rows.results||[]).map(decoded).filter(Boolean);return reply({success:true,plan,items:rankProfessionalProfiles(viewer,candidates,{plan})});
