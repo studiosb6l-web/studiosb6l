@@ -14,6 +14,9 @@ test('verified subscription persistence rejects duplicates and older renewal aft
  const save=x=>persistRecurringEntitlement(db,x,mapping,1000);
  assert.equal(await save(s),false);
  sql.exec("INSERT INTO payhip_admission_payments VALUES('a',NULL)");
+ assert.equal(await save({...s,subscriptionId:'early',status:'canceled',observedAt:950}),true);
+ assert.equal(await save({...s,subscriptionId:'early',observedAt:940}),false);
+ assert.equal(sql.prepare('SELECT COUNT(*) AS n FROM paid_subscription_entitlements').get().n,0);
  assert.equal(await save(s),true);
  assert.equal(await save(s),false);
  assert.equal(await save({...s,status:'canceled',observedAt:950}),true);
