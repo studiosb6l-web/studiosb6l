@@ -34,6 +34,8 @@ jobs:
         run: node --check cloudflare/artists-registration-worker.js
       - name: Run security and authorization tests
         run: npm test
+      - name: Validate Cloudflare Worker bundle without deployment
+        run: npm run check:worker
       - name: Verify test suite coverage and module syntax
         run: |
           count=$(grep -hEc '^test\(' tests/*.test.mjs | awk '{s+=$1} END {print s+0}')
