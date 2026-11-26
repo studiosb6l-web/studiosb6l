@@ -21,7 +21,11 @@ export function sessionPhase(startedAt,now=Date.now()){
  return elapsed>=LIMITS.durationMs?'ended':elapsed>=LIMITS.warningMs?'warning':'live';
 }
 // Call inside an atomic reservation transaction; no client supplied state.
+export function attendanceLimits(membership,now=Date.now()){
+ const plan=effectivePlan(membership,now);
+ return plan==='PRO_BUSINESS'?{monthly:8,weekly:2}:plan==='PRO'?{monthly:4,weekly:1}:{monthly:0,weekly:0};
+}
 export function canJoin({membership,invited,activeElsewhere,cooldownUntil,participantCount,startedAt,stop,metrics,monthlyLessonsUsed,weeklyLessonsUsed},now=Date.now()){
- return Number.isInteger(monthlyLessonsUsed)&&monthlyLessonsUsed>=0&&monthlyLessonsUsed<LIMITS.monthlyLessons&&Number.isInteger(weeklyLessonsUsed)&&weeklyLessonsUsed>=0&&weeklyLessonsUsed<LIMITS.weeklyLessons&&stop===false&&invited===true&&activeElsewhere===false&&Number.isFinite(cooldownUntil)&&cooldownUntil<=now&&Number.isInteger(participantCount)&&participantCount>=0&&participantCount<LIMITS.participants&&['live','warning'].includes(sessionPhase(startedAt,now))&&canAttend(membership,now)&&canReserveQuota(metrics);
+ return Number.isInteger(monthlyLessonsUsed)&&monthlyLessonsUsed>=0&&monthlyLessonsUsed<attendanceLimits(membership,now).monthly&&Number.isInteger(weeklyLessonsUsed)&&weeklyLessonsUsed>=0&&weeklyLessonsUsed<attendanceLimits(membership,now).weekly&&stop===false&&invited===true&&activeElsewhere===false&&Number.isFinite(cooldownUntil)&&cooldownUntil<=now&&Number.isInteger(participantCount)&&participantCount>=0&&participantCount<LIMITS.participants&&['live','warning'].includes(sessionPhase(startedAt,now))&&canAttend(membership,now)&&canReserveQuota(metrics);
 }
 export function cooldownAfter(endedAt){if(!Number.isFinite(endedAt))throw new TypeError('Invalid end time');return endedAt+LIMITS.cooldownMs;}
