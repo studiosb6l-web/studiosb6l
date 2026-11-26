@@ -6,10 +6,10 @@ import {validateProfile,publicProfile,SECTORS} from './professional-profile-sche
 import {loadProfessionalMembership} from './professional-membership.mjs';
 import {effectivePlan} from './ambassador-session-policy.mjs';
 import {rankProfessionalProfiles,countryKey} from './professional-profile-matching.mjs';
-// Preserve the existing matching API's basic/pro contract for every sector.
+// Preserve the existing matching API's free/pro contract for every sector.
 async function matchingPlan(accountId,env){
  const plan=effectivePlan(await loadProfessionalMembership(accountId,env));
- return plan==='PRO'||plan==='PRO_BUSINESS'?'pro':'basic';
+ return plan==='PRO'||plan==='PRO_BUSINESS'?'pro':'free';
 }
 const validId=id=>typeof id==='string'&&/^[a-f0-9-]{36}$/i.test(id);
 function response(request,body,status=200,publicRead=false){return new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':publicRead&&status===200?'public, max-age=60':'no-store','X-Content-Type-Options':'nosniff','Access-Control-Allow-Origin':authResponseOrigin(request),'Vary':'Origin','Access-Control-Allow-Methods':'GET, POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type'}});}
