@@ -1,3 +1,4 @@
+import {loadActiveAmbassadorGrant} from './ambassador-entitlement-store.mjs';
 import {resolveSession} from './session-guard.mjs';
 import {checkAuthRate} from './auth-readiness.mjs';
 import {trustedAuthOrigin} from './auth-origins.mjs';
@@ -16,7 +17,11 @@ export async function transmissionStatusApi(request,env,{loadMembership,loadAvai
  const session=await resolveSession(request,env);if(!session)return reply(401,{error:'Authentication required'});
  const account=await env.DB.prepare('SELECT id,role,verified,disabled FROM accounts WHERE id=?').bind(session.userId).first();
  if(!account||account.disabled!==0||account.verified!==1||account.role!==session.role)return reply(403,{error:'Forbidden'});
- const now=Date.now(),membership=await loadMembership(account.id,env),plan=effectivePlan(membership,now);
+ const now=Date.now();
+ const ambassadorActive=await loadActiveAmbassadorGrant(env,account.id);
+ const paid=ambassadorActive?null:await loadMembership(account.id,env);
+ const membership={...paid,disabled:false,ambassadorActive};
+ const plan=effectivePlan(membership,now);
  if(!plan)return reply(200,{canAttend:false,canHost:false});
  const date=new Date(now),from=Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),1),periodEnd=Date.UTC(date.getUTCFullYear(),date.getUTCMonth()+1,1);
  const usage=await transmissionUsage(env.DB,account.id,from,now,attendanceLimits(membership,now).monthly*LIMITS.durationMs/60000);
