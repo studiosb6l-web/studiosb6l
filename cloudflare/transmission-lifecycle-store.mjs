@@ -11,7 +11,8 @@ export function transmissionLifecycleStore(db){
  if(typeof id!=='string'||!Number.isSafeInteger(now))throw new TypeError('Invalid closure');
  await db.batch([
  db.prepare("UPDATE transmission_rooms SET closed_at=? WHERE id=? AND closed_at IS NULL AND expires_at<=?").bind(now,id,now),
- db.prepare("UPDATE transmission_attendance SET left_at=MAX(joined_at,(SELECT MIN(expires_at,closed_at) FROM transmission_rooms WHERE id=?)) WHERE transmission_id=? AND left_at IS NULL AND EXISTS(SELECT 1 FROM transmission_rooms WHERE id=? AND closed_at IS NOT NULL)").bind(id,id,id)
+ db.prepare("UPDATE transmission_attendance SET left_at=MAX(joined_at,(SELECT MIN(expires_at,closed_at) FROM transmission_rooms WHERE id=?)) WHERE transmission_id=? AND left_at IS NULL AND EXISTS(SELECT 1 FROM transmission_rooms WHERE id=? AND closed_at IS NOT NULL)").bind(id,id,id),
+ db.prepare("UPDATE transmission_quota_reservations SET released_at=? WHERE transmission_id=? AND released_at IS NULL AND created_at<=? AND EXISTS(SELECT 1 FROM transmission_rooms WHERE id=? AND closed_at IS NOT NULL)").bind(now,id,now,id)
  ]);
  }
  };
