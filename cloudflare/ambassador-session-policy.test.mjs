@@ -31,7 +31,19 @@ test('server time boundaries',()=>{
  assert.equal(cooldownAfter(now),now+20*3600000);
 });
 test('admission rejects unauthorized and over-capacity participants',()=>{
- const input={membership:pro,invited:true,activeElsewhere:false,cooldownUntil:now,participantCount:19,startedAt:now,stop:false,metrics};
+ const input={membership:pro,invited:true,activeElsewhere:false,cooldownUntil:now,participantCount:19,startedAt:now,stop:false,metrics,monthlyLessonsUsed:0,weeklyLessonsUsed:0};
  assert.equal(canJoin(input,now),true);
- for(const patch of [{participantCount:20},{invited:false},{activeElsewhere:true},{cooldownUntil:now+1},{stop:true},{metrics:[]},{startedAt:now-LIMITS.durationMs},{membership:{...pro,plan:'BASIC'}}])assert.equal(canJoin({...input,...patch},now),false);
+ for(const patch of [{monthlyLessonsUsed:4},{weeklyLessonsUsed:1},{monthlyLessonsUsed:undefined},{participantCount:20},{invited:false},{activeElsewhere:true},{cooldownUntil:now+1},{stop:true},{metrics:[]},{startedAt:now-LIMITS.durationMs},{membership:{...pro,plan:'BASIC'}}])assert.equal(canJoin({...input,...patch},now),false);
+});
+
+test('universal sector access and revised limits',()=>{
+ assert.equal(LIMITS.durationMs,45*60000);
+ assert.equal(LIMITS.warningMs,35*60000);
+ assert.equal(LIMITS.monthlyLessons,4);
+ assert.equal(LIMITS.weeklyLessons,1);
+ for(const sector of ['teacher','musician','singer','composer','producer','audio_engineer','mastering','school','conservatory','promoter','venue','company','future_sector']){
+ assert.equal(canHost({...ambassador,sector},now),true);
+ assert.equal(canHost({...pro,plan:'PRO_BUSINESS',sector},now),true);
+ assert.equal(canAttend({...pro,sector},now),true);
+ }
 });
