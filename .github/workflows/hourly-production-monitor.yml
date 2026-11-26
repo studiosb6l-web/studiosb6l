@@ -47,6 +47,7 @@ jobs:
           print('Worker health response validated; this does not prove D1 writes or marketplace payments')
           PY
       - name: Offline API regression tests
+        if: ${{ !cancelled() }}
         run: node tests/artists-worker.test.mjs && node tests/music-connect.test.mjs
       - name: Open incident issue on failure
         if: failure()
