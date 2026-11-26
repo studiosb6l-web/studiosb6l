@@ -47,3 +47,15 @@ test('universal sector access and revised limits',()=>{
  assert.equal(canAttend({...pro,sector},now),true);
  }
 });
+
+test('PRO BUSINESS extended attendance applies across sectors',()=>{
+ const input={membership:{...pro,plan:'PRO_BUSINESS'},invited:true,activeElsewhere:false,cooldownUntil:now,participantCount:19,startedAt:now,stop:false,metrics,monthlyLessonsUsed:7,weeklyLessonsUsed:1};
+ for(const sector of ['teacher','musician','company','audio_engineer','future_sector']){
+ assert.equal(canJoin({...input,membership:{...input.membership,sector}},now),true);
+ }
+ assert.equal(canJoin({...input,monthlyLessonsUsed:8},now),false);
+ assert.equal(canJoin({...input,weeklyLessonsUsed:2},now),false);
+ assert.equal(canJoin({...input,membership:pro},now),false);
+ assert.equal(canJoin({...input,membership:ambassador},now),true);
+ assert.equal(canJoin({...input,metrics:[{used:70,reserved:0,requested:1,freeLimit:100}]},now),false);
+});
