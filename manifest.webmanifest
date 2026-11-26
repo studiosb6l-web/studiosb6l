@@ -3,7 +3,7 @@
   "name": "STUDIOSB6L",
   "short_name": "STUDIOSB6L",
   "description": "Música, artistas, bandas, concertos, bilhetes e oportunidades profissionais internacionais.",
-  "start_url": "/?source=app",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#0a1019",
