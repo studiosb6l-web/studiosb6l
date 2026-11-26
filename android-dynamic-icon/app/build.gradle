@@ -1,0 +1,2 @@
+plugins { id 'com.android.application' version '8.7.3' }
+android { namespace 'com.studiosb6l.dynamicicon'; compileSdk 35; defaultConfig { applicationId 'com.studiosb6l.dynamicicon'; minSdk 26; targetSdk 35; versionCode 1; versionName '0.1' } }
