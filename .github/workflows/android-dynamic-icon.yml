@@ -1,0 +1,33 @@
+name: Android Dynamic Icon prototype
+on:
+  pull_request:
+    paths:
+      - 'android-dynamic-icon/**'
+      - '.github/workflows/android-dynamic-icon.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Verify brand asset
+        run: test -s assets/brand/studiosb6l-icon-192.png
+      - name: Build debug APK
+        working-directory: android-dynamic-icon
+        run: gradle --no-daemon :app:assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: STUDIOSB6L-Dynamic-Icon-debug
+          path: android-dynamic-icon/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 3

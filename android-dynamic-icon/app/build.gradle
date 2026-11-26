@@ -1,0 +1,6 @@
+plugins { id 'com.android.application' version '8.7.3' }
+android { namespace 'com.studiosb6l.dynamicicon'; compileSdk 35; defaultConfig { applicationId 'com.studiosb6l.dynamicicon'; minSdk 26; targetSdk 35; versionCode 1; versionName '0.1' } }
+
+def brandAssets = tasks.register('copyOfficialBrand', Copy) { from rootProject.file('../assets/brand/studiosb6l-icon-192.png'); into layout.buildDirectory.dir('generated/brandAssets'); rename { 'official.png' } }
+android.sourceSets.main.assets.srcDir(layout.buildDirectory.dir('generated/brandAssets'))
+tasks.named('preBuild').configure { dependsOn brandAssets }
