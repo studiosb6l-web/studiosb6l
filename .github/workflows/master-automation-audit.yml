@@ -18,7 +18,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Audit registered automations and recent failures
         run: python3 scripts/master-automation-audit.py
       - name: Upload audit
