@@ -1,6 +1,6 @@
 // Server-only policy foundation for issue #64. Not wired to production.
 import {authorize} from './authorization-policy.mjs';
-export const LIMITS=Object.freeze({participants:20,durationMs:70*60000,warningMs:60*60000,cooldownMs:20*3600000,videos:3,quotaFraction:0.7});
+export const LIMITS=Object.freeze({participants:20,durationMs:45*60000,warningMs:35*60000,monthlyLessons:4,weeklyLessons:1,cooldownMs:20*3600000,videos:3,quotaFraction:0.7});
 export function canIssueAmbassadorInvite(session){return session?.role==='owner'&&authorize(session,'admin:read');}
 // membership must be loaded from trusted persistence, never request JSON.
 export function effectivePlan(membership,now=Date.now()){
@@ -21,7 +21,7 @@ export function sessionPhase(startedAt,now=Date.now()){
  return elapsed>=LIMITS.durationMs?'ended':elapsed>=LIMITS.warningMs?'warning':'live';
 }
 // Call inside an atomic reservation transaction; no client supplied state.
-export function canJoin({membership,invited,activeElsewhere,cooldownUntil,participantCount,startedAt,stop,metrics},now=Date.now()){
- return stop===false&&invited===true&&activeElsewhere===false&&Number.isFinite(cooldownUntil)&&cooldownUntil<=now&&Number.isInteger(participantCount)&&participantCount>=0&&participantCount<LIMITS.participants&&['live','warning'].includes(sessionPhase(startedAt,now))&&canAttend(membership,now)&&canReserveQuota(metrics);
+export function canJoin({membership,invited,activeElsewhere,cooldownUntil,participantCount,startedAt,stop,metrics,monthlyLessonsUsed,weeklyLessonsUsed},now=Date.now()){
+ return Number.isInteger(monthlyLessonsUsed)&&monthlyLessonsUsed>=0&&monthlyLessonsUsed<LIMITS.monthlyLessons&&Number.isInteger(weeklyLessonsUsed)&&weeklyLessonsUsed>=0&&weeklyLessonsUsed<LIMITS.weeklyLessons&&stop===false&&invited===true&&activeElsewhere===false&&Number.isFinite(cooldownUntil)&&cooldownUntil<=now&&Number.isInteger(participantCount)&&participantCount>=0&&participantCount<LIMITS.participants&&['live','warning'].includes(sessionPhase(startedAt,now))&&canAttend(membership,now)&&canReserveQuota(metrics);
 }
 export function cooldownAfter(endedAt){if(!Number.isFinite(endedAt))throw new TypeError('Invalid end time');return endedAt+LIMITS.cooldownMs;}
