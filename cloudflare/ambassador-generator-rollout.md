@@ -19,3 +19,13 @@ Before enabling: inspect the current D1 schema and account-wide free quotas (70%
 New-account admission exemption is not yet integrated with email verification and onboarding. The recipient page states this and tells invited users not to pay to accept. Complete and test that path before inviting someone without an active account. Professional plan consumers must also recognize active server-side grants before PRO BUSINESS benefits can be described as available. Video sessions and persistent transmission counters remain separate pending work.
 
 Rollback: set `AMBASSADOR_ENABLED=false` and restore the previous Worker version if necessary. Leave additive tables and audit records intact; do not drop user data. Disable the flag before rollback if deploying a version without these routes. No billing or paid infrastructure is enabled here.
+
+## Subsequent staged work (not deployed)
+
+The email verification path now accepts an optional invitation and the account portal supports invitation registration. Validate the full new-account flow, including failed redemption recovery, revocation and cross-tab verification, before enabling. The earlier description above refers to the original generator change.
+
+Transmission modules now include usage calculation, public status projection, authenticated status handler, reusable view and polling client, admission policy, lifecycle reconciliation, staged room/attendance/reservation/invitation schema and a staged quota trigger. These are not an integrated production service. The status handler still needs trusted membership and availability loaders and routing; the UI needs mounting and translations. Atomic admission, provider-side expiry, actual provider metrics and migration ordering remain required. Apply schema before quota guard in a reviewed migration, never directly from these staged files without validation.
+
+Current approved session cap: 45 minutes; warning at 35 minutes. PRO monthly allowance 180 minutes, PRO BUSINESS and AMBASSADOR 360 minutes; preserve weekly and monthly session limits. Validate renewal period and host accounting before release. Never expose internal quota metrics or provider costs in customer responses.
+
+Keep transmission and ambassador flags disabled until integration tests, account-wide quota review, provider hard-stop verification and rollback checkpoints pass. Referral attribution remains separate from invitation exemptions and must use verified payment events, not browser claims.
