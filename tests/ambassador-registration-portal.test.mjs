@@ -21,3 +21,21 @@ test('ambassador form uses a fresh CSP script nonce and verification endpoint',a
  assert.doesNotMatch(directive,/unsafe-inline/);
  assert.equal(a.headers.get('Cache-Control'),'no-store');
 });
+
+import {ambassadorPortal} from '../cloudflare/ambassador-portal.mjs';
+test('recipient portal offers private registration and existing-account redemption',async()=>{
+ const response=await ambassadorPortal();
+ const html=await response.text();
+ assert.match(html,/id="register-invite" hidden/);
+ assert.ok(html.includes("register.href='/conta/#invite='+token"));
+ assert.ok(html.includes('/api/ambassador/redeem'));
+ assert.equal(response.headers.get('Referrer-Policy'),'no-referrer');
+ assert.equal(response.headers.get('Cache-Control'),'no-store');
+});
+test('registration preserves invitation during same-tab verification and clears it on success',async()=>{
+ const html=await accountPortal(ready).text();
+ assert.ok(html.includes("sessionStorage.setItem('b6lInvite'"));
+ assert.ok(html.includes("sessionStorage.getItem('b6lInvite')"));
+ assert.ok(html.includes("sessionStorage.removeItem('b6lInvite')"));
+ assert.ok(html.includes("history.replaceState(null,'',location.pathname+location.search)"));
+});
