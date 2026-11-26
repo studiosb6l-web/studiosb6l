@@ -31,8 +31,10 @@ jobs:
               assert all(u and u.startswith('https://www.studiosb6l.com/') for u in urls), f'Invalid URL: {sitemap}'
               print(f'{sitemap}: {len(urls)} URLs validated')
           robots=Path('robots.txt').read_text()
-          assert 'Sitemap:' in robots, 'Missing sitemap declaration'
-          assert 'sitemap-artistas.xml' in robots, 'Artist sitemap missing from robots.txt'
+          declarations = [line.split(':', 1)[1].strip() for line in robots.splitlines() if line.strip().lower().startswith('sitemap:')]
+          assert 'https://www.studiosb6l.com/sitemap.xml' in declarations, 'Public sitemap missing from robots.txt'
+          assert 'https://www.studiosb6l.com/sitemap-artistas.xml' not in declarations, 'Artist sitemap must remain excluded pending consent and provenance verification'
+          print('Artist sitemap exclusion policy verified; artist indexing is not certified')
           PY
       - name: Audit SEO sitemap quality
         run: python3 scripts/audit-seo.py
