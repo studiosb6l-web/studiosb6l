@@ -9,7 +9,10 @@ export function transmissionLifecycleStore(db){
  },
  async confirmClosed(id,now){
  if(typeof id!=='string'||!Number.isSafeInteger(now))throw new TypeError('Invalid closure');
- await db.prepare("UPDATE transmission_rooms SET closed_at=? WHERE id=? AND closed_at IS NULL AND expires_at<=?").bind(now,id,now).run();
+ await db.batch([
+ db.prepare("UPDATE transmission_rooms SET closed_at=? WHERE id=? AND closed_at IS NULL AND expires_at<=?").bind(now,id,now),
+ db.prepare("UPDATE transmission_attendance SET left_at=MAX(joined_at,(SELECT MIN(expires_at,closed_at) FROM transmission_rooms WHERE id=?)) WHERE transmission_id=? AND left_at IS NULL AND EXISTS(SELECT 1 FROM transmission_rooms WHERE id=? AND closed_at IS NOT NULL)").bind(id,id,id)
+ ]);
  }
  };
 }
