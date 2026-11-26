@@ -4,17 +4,12 @@ const root=document.getElementById('b6l-studio-news');if(!root)return;
 const restore=document.getElementById('b6l-tv-restore');
 const categories=[{key:'disney',name:'Disney',symbol:'✦'},{key:'warner',name:'Warner Bros. Discovery',symbol:'◈'}];
 const grid=root.querySelector('.b6l-tv-grid');
-const dialog=document.createElement('dialog');dialog.id='b6l-media-dialog';
-dialog.setAttribute('aria-labelledby','b6l-media-heading');
-root.querySelector('h2').id='b6l-media-heading';
-root.before(dialog);dialog.append(root);root.hidden=false;
-restore.classList.add('is-visible');restore.setAttribute('aria-haspopup','dialog');
-restore.setAttribute('aria-controls',dialog.id);restore.setAttribute('aria-expanded','false');
-function hide(){if(dialog.open)dialog.close();}
-function show(){if(!dialog.open)dialog.showModal();restore.setAttribute('aria-expanded','true');refresh();for(const frame of root.querySelectorAll('.b6l-tv-screen iframe'))sendPlayer(frame,'playVideo');}
-root.querySelector('[data-hide-all]').addEventListener('click',hide);restore.addEventListener('click',show);
-dialog.addEventListener('close',()=>{setTvAudio(null);for(const frame of root.querySelectorAll('.b6l-tv-screen iframe'))sendPlayer(frame,'pauseVideo');restore.setAttribute('aria-expanded','false');window.dispatchEvent(new CustomEvent('b6l-media-close'));restore.focus();});
-dialog.addEventListener('click',e=>{if(e.target===dialog)hide();});
+const newsletter=document.getElementById('newsletter-entry');
+if(newsletter)newsletter.after(root);
+root.hidden=false;
+root.classList.remove('b6l-tv-floating');
+root.querySelector('[data-hide-all]').hidden=true;
+if(restore){restore.hidden=true;restore.classList.remove('is-visible');}
 function node(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt)e.textContent=txt;return e}
 const channelLabel=node('div','b6l-tv-channel-label','CANAL DE TV · STUDIOS B6L');channelLabel.setAttribute('aria-label','Canal de TV STUDIOS B6L');root.append(channelLabel);
 const translations={
@@ -53,7 +48,6 @@ function setTvAudio(key){
 let latestItems=[],latestVideos={channels:{}},liveConfig={channels:{}};
 
 function draw(items,videos){
- if(!dialog.open)return;
  for(const c of categories){
   const p=panels[c.key];
   const clips=(videos.channels&&videos.channels[c.key]||[]).filter(x=>x.videoVerified===true&&/^[A-Za-z0-9_-]{11}$/.test(x.youtubeId||''));
@@ -101,7 +95,7 @@ async function refresh(){
 }
 function updateLanguage(){
  const t=words();channelLabel.textContent=t[0];
- root.querySelector('[data-hide-all]').textContent=({pt:'Fechar',es:'Cerrar',fr:'Fermer',de:'Schließen'})[document.documentElement.lang]||'Close';restore.textContent='TV · Radio';
+ root.querySelector('[data-hide-all]').textContent=({pt:'Fechar',es:'Cerrar',fr:'Fermer',de:'Schließen'})[document.documentElement.lang]||'Close';if(restore)restore.textContent='TV · Radio';
  for(const c of categories){const p=panels[c.key];const top=p.card.querySelector('.b6l-tv-top button');if(top){top.textContent=t[1];top.setAttribute('aria-label',t[1]+' '+c.name)}
  const restoreButton=root.querySelector('[data-restore-'+c.key+']');if(restoreButton)restoreButton.textContent=t[2]+' '+c.name;
  p.sound.textContent=activeChannel===c.key?t[4]:t[3];
@@ -110,5 +104,5 @@ function updateLanguage(){
 }
 document.getElementById('language')?.addEventListener('change',updateLanguage);
 window.addEventListener('pageshow',updateLanguage);
-updateLanguage();setInterval(()=>{if(dialog.open)refresh();},300000);
+updateLanguage();refresh();setInterval(refresh,300000);
 })();
