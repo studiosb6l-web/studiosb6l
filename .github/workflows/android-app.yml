@@ -26,7 +26,7 @@ jobs:
         run: gradle --no-daemon assembleDebug
       - name: Rename APK
         run: cp android-app/app/build/outputs/apk/debug/app-debug.apk STUDIOSB6L-Android.apk
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: STUDIOSB6L-Android
           path: STUDIOSB6L-Android.apk

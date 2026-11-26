@@ -52,7 +52,7 @@ jobs:
           console.log(JSON.stringify({quotaCheckPassed:true,usage,rollbackVersions:previous.previousVersions.length}));
           JS
       - name: Preserve rollback and current quota evidence before publication
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: paused-rollout-${{ github.run_id }}
           path: .wrangler/access-check/paused-rollout.json
@@ -65,7 +65,7 @@ jobs:
           WRANGLER_SEND_METRICS: 'false'
         run: npx --no-install wrangler d1 time-travel info DB --json > .wrangler/access-check/support-restore.json
       - name: Save support recovery metadata
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: support-recovery-${{ github.run_id }}
           path: .wrangler/access-check/support-restore.json
