@@ -24,8 +24,9 @@ export async function transmissionStatusApi(request,env,{loadMembership,loadAvai
  const plan=effectivePlan(membership,now);
  if(!plan)return reply(200,{canAttend:false,canHost:false});
  const date=new Date(now),from=Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),1),periodEnd=Date.UTC(date.getUTCFullYear(),date.getUTCMonth()+1,1);
- const usage=await transmissionUsage(env.DB,account.id,from,now,attendanceLimits(membership,now).monthly*LIMITS.durationMs/60000);
- const room=await env.DB.prepare('SELECT r.started_at AS startedAt,r.expires_at AS expiresAt FROM transmission_rooms r WHERE r.closed_at IS NULL AND r.expires_at>? AND (r.host_account_id=? OR EXISTS(SELECT 1 FROM transmission_attendance a WHERE a.transmission_id=r.id AND a.account_id=? AND a.left_at IS NULL)) LIMIT 1').bind(now,account.id,account.id).first();
+ const budget=attendanceLimits(membership,now).monthly*LIMITS.durationMs/60000;
+ const usage=now===from?{usedMs:0,usedMinutes:0,remainingMs:budget*60000,remainingMinutes:budget}:await transmissionUsage(env.DB,account.id,from,now,budget);
+ const room=await env.DB.prepare('SELECT r.started_at AS startedAt,r.expires_at AS expiresAt FROM transmission_rooms r WHERE r.closed_at IS NULL AND r.started_at<=? AND r.expires_at>? AND (r.host_account_id=? OR EXISTS(SELECT 1 FROM transmission_attendance a WHERE a.transmission_id=r.id AND a.account_id=? AND a.left_at IS NULL)) LIMIT 1').bind(now,now,account.id,account.id).first();
  return reply(200,publicTransmissionStatus({plan,usage,periodEnd,session:room,available:env.STOP_SERVICE!=='true'&&usage.remainingMs>0&&await loadAvailability(env)===true},now));
  }catch{return unavailable();}
 }
