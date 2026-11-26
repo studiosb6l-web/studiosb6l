@@ -1,4 +1,5 @@
 import {professionalProfilesApi} from './professional-profiles-api.mjs';
+import {transmissionStatusApi} from './transmission-status-api.mjs';
 import {ambassadorApi} from './ambassador-api.mjs';
 import {ambassadorPortal} from './ambassador-portal.mjs';
 import {professionalProfilePortal} from './professional-profile-portal.mjs';
@@ -40,6 +41,8 @@ async function dispatch(request,env={},ctx){
   const origin=request.headers.get('Origin');
   if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});
+  // Fail closed until trusted paid membership and provider availability adapters are wired.
+  if(path==='/api/transmissions/status')return transmissionStatusApi(request,env);
   if(path.startsWith('/api/ambassador/'))return ambassadorApi(request,env);
   if(['/administracao/convites/','/ambassador/'].includes(path)&&request.method==='GET'){
     if(env.AMBASSADOR_ENABLED!=='true')return reply(503,{error:'Convites em preparação.'});
