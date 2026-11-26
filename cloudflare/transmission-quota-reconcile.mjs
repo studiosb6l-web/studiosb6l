@@ -1,0 +1,8 @@
+// Call only from a trusted provider adapter with confirmed cumulative usage.
+// A snapshot must explicitly cover the closed reservations before release.
+export async function reconcileTransmissionQuota(db,{metric,freeLimit,usedUnits,observedAt,validUntil,coveredRoomIds},now=Date.now()){
+ if(!db?.batch||typeof metric!=='string'||!metric||![freeLimit,usedUnits,observedAt,validUntil,now].every(Number.isSafeInteger)||freeLimit<=0||freeLimit>900719925474099||usedUnits<0||observedAt<0||observedAt>now||validUntil<=now||!Array.isArray(coveredRoomIds)||coveredRoomIds.length>20||coveredRoomIds.some(id=>typeof id!=='string'||!id))throw new TypeError('Invalid quota snapshot');
+ const statements=[db.prepare(`INSERT INTO transmission_quota_metrics(metric,free_limit,used_units,observed_at,valid_until) VALUES(?,?,?,?,?) ON CONFLICT(metric) DO UPDATE SET free_limit=excluded.free_limit,used_units=excluded.used_units,observed_at=excluded.observed_at,valid_until=excluded.valid_until WHERE excluded.observed_at>transmission_quota_metrics.observed_at`).bind(metric,freeLimit,usedUnits,observedAt,validUntil)];
+ for(const id of new Set(coveredRoomIds))statements.push(db.prepare(`UPDATE transmission_quota_reservations SET released_at=? WHERE metric=? AND transmission_id=? AND released_at IS NULL AND created_at<=? AND EXISTS(SELECT 1 FROM transmission_rooms WHERE id=? AND closed_at IS NOT NULL AND closed_at<=?) AND EXISTS(SELECT 1 FROM transmission_quota_metrics WHERE metric=? AND observed_at=? AND used_units=? AND free_limit=? AND valid_until=?)`).bind(now,metric,id,observedAt,id,observedAt,metric,observedAt,usedUnits,freeLimit,validUntil));
+ await db.batch(statements);
+}

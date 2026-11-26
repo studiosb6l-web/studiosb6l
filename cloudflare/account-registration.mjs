@@ -1,3 +1,4 @@
+import {redeemAmbassadorInvite} from './ambassador-redemption.mjs';
 import {SECTORS} from './professional-profile-schema.mjs';
 import {payhipConfigured,payhipCheckout} from './payhip-admission.mjs';
 import {emailConfigured,reserveEmail,sendVerificationEmail} from './registration-email.mjs';
@@ -43,8 +44,12 @@ export async function accountRegistration(request,env={}){
     env.DB.prepare('UPDATE account_onboarding SET email_verified_at=COALESCE(email_verified_at,?) WHERE account_id=? AND EXISTS(SELECT 1 FROM account_email_verifications WHERE token_hash=? AND consumed_at=?)').bind(now,token.account_id,hash,now)
    ]);
    if(Number(results[0]?.meta?.changes)!==1)return reply(400,{success:false,error:'Invalid or expired verification'});
+   if(env.AMBASSADOR_ENABLED==='true'&&typeof data.inviteToken==='string'&&/^[a-f0-9]{64}$/.test(data.inviteToken)){
+    const redeemed=await redeemAmbassadorInvite(env,token.account_id,data.inviteToken);
+    if(redeemed)return reply(200,{success:true,emailVerified:true,ambassadorActive:true,amount:0});
+   }
    const url=payhipCheckout(env);
-   return reply(200,{success:true,emailVerified:true,checkoutUrl:url.href,amount:299,currency:'eur',paymentProvider:'payhip',sameEmailRequired:true});
+   return reply(200,{success:true,emailVerified:true,checkoutUrl:url.href,amount:299,currency:'eur',paymentProvider:'payhip',sameEmailRequired:true,...(data.inviteToken!==undefined?{invitationAccepted:false}:{})});
   }catch{return reply(503,{success:false,error:'Verification unavailable'});}
  }
  if(path!=='/api/auth/register')return reply(404,{success:false,error:'Not found'});

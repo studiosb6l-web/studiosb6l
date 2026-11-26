@@ -17,9 +17,10 @@ export async function redeemAmbassadorInvite(env,accountId,token){
  env.DB.prepare(`INSERT INTO ambassador_grants(account_id,invite_id,granted_at)
  SELECT actor_id,target_id,created_at FROM ambassador_audit WHERE id=?`).bind(attempt),
  env.DB.prepare(`UPDATE ambassador_invites SET redeemed_at=?,redeemed_by=?
- WHERE id=(SELECT target_id FROM ambassador_audit WHERE id=?)`).bind(now,accountId,attempt)
+ WHERE id=(SELECT target_id FROM ambassador_audit WHERE id=?)`).bind(now,accountId,attempt),
+ env.DB.prepare(`UPDATE accounts SET verified=1 WHERE id=? AND disabled=0 AND role<>'owner' AND EXISTS(SELECT 1 FROM ambassador_audit WHERE id=? AND actor_id=accounts.id)`).bind(accountId,attempt)
  ]);
  return results[0]?.meta?.changes===1;
 }
 // Existing login/onboarding gates must explicitly recognize an active grant.
-// This service does not activate accounts or change payment records by itself.
+// Successful redemption activates the email-verified account atomically without changing payment records.
