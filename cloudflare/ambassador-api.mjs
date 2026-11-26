@@ -54,7 +54,9 @@ export async function ambassadorApi(request,env={}){
    const results=await env.DB.batch([
     env.DB.prepare("INSERT INTO ambassador_audit(id,actor_id,event_type,target_id,created_at) SELECT ?,?,'invite_revoked',id,? FROM ambassador_invites WHERE id=? AND revoked_at IS NULL").bind(nonce,session.userId,now,data.id),
     env.DB.prepare('UPDATE ambassador_invites SET revoked_at=? WHERE id=? AND EXISTS(SELECT 1 FROM ambassador_audit WHERE id=?)').bind(now,data.id,nonce),
-    env.DB.prepare('UPDATE ambassador_grants SET revoked_at=COALESCE(revoked_at,?) WHERE invite_id=? AND EXISTS(SELECT 1 FROM ambassador_audit WHERE id=?)').bind(now,data.id,nonce)
+    env.DB.prepare('UPDATE ambassador_grants SET revoked_at=COALESCE(revoked_at,?) WHERE invite_id=? AND EXISTS(SELECT 1 FROM ambassador_audit WHERE id=?)').bind(now,data.id,nonce),
+    env.DB.prepare("UPDATE accounts SET verified=0 WHERE id IN (SELECT g.account_id FROM ambassador_grants g JOIN account_onboarding o ON o.account_id=g.account_id WHERE g.invite_id=? AND g.revoked_at IS NOT NULL AND o.paid_at IS NULL) AND EXISTS(SELECT 1 FROM ambassador_audit WHERE id=?)").bind(data.id,nonce),
+    env.DB.prepare("UPDATE sessions SET disabled=1 WHERE user_id IN (SELECT g.account_id FROM ambassador_grants g JOIN accounts a ON a.id=g.account_id WHERE g.invite_id=? AND a.verified=0) AND EXISTS(SELECT 1 FROM ambassador_audit WHERE id=?)").bind(data.id,nonce)
    ]);
    return reply(200,{success:true,revoked:results[0]?.meta?.changes===1});
   }
