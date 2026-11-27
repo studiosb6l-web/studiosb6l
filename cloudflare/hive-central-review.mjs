@@ -28,3 +28,10 @@ export function reviewHive(input={}){
  language:translationPlan({...input.language,stopped:false}),
  market:marketGaps(input.market,input.now)};
 }
+
+// Internal operational gateway: only explicitly supported free operations.
+export async function authorizeHiveDiscovery(env, now=Date.now()) {
+ if (!env?.DB || env.STOP_SERVICE !== 'false' || env.PREVIEW_ISOLATED === 'true' || env.DISCOVERY_ENABLED !== 'true') return false;
+ const {reserveHiveQuota}=await import('./hive-quota-reservation.mjs');
+ return reserveHiveQuota(env.DB,{service:'discovery-feed-requests',windowId:env.DISCOVERY_QUOTA_WINDOW,units:1,now});
+}
