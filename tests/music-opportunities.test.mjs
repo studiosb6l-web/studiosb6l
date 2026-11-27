@@ -13,3 +13,5 @@ test('only approved current unique entries pass',()=>{
  assert.throws(()=>validateFeed({...feed,items:[{...item,verified:false}]},[source],now));
  assert.throws(()=>validateFeed({...feed,items:[{...item,expiresAt:'2020-01-01'}]},[source],now));
 });
+
+test('duplicate source URLs with distinct IDs or fragments are rejected',()=>assert.throws(()=>validateFeed({enabled:true,items:[item,{...item,id:'2',sourceUrl:item.sourceUrl+'#details'}]},[source],now),/Duplicate opportunity source URL/));
