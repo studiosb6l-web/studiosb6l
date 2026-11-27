@@ -1,9 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {reviewHive} from '../cloudflare/hive-central-review.mjs';
+import {reviewHive,authorizeHiveDiscovery} from '../cloudflare/hive-central-review.mjs';
 test('unverified or stopped central review blocks all engines',()=>{assert.equal(reviewHive().status,'blocked');assert.equal(reviewHive({verified:true,stopped:true,now:1}).status,'blocked');});
 test('unknown health prevents downstream processing',()=>{const r=reviewHive({verified:true,stopped:false,now:1});assert.equal(r.status,'review_required');assert.equal(r.executionAuthorized,false);assert.equal(r.opportunities,undefined);});
 
 test('verified healthy snapshot reaches advisory engines',()=>{const r=reviewHive({verified:true,stopped:false,now:1,health:{verified:true,checks:[{id:'site',kind:'availability',status:'healthy'}]},assessment:{ledger:{verified:true,stopped:false,netRevenueCents:0,freeCashCents:0,committedCents:0,spentCents:0},quota:{verified:true,stopped:false,used:0,limit:100},jobs:[]}});assert.equal(r.status,'advisory');assert.equal(r.executionAuthorized,false);assert.deepEqual(r.opportunities,[]);});
 
 test('invalid ledger or quota blocks downstream engines',()=>{const ledger={verified:true,stopped:false,netRevenueCents:0,freeCashCents:0,committedCents:0,spentCents:0};const quota={verified:true,stopped:false,used:0,limit:100};for(const assessment of [{ledger:{...ledger,spentCents:-1},quota},{ledger,quota:{...quota,used:71}},{ledger,quota:{...quota,limit:0}}]){const r=reviewHive({verified:true,stopped:false,now:1,health:{verified:true,checks:[{id:'site',kind:'availability',status:'healthy'}]},assessment});assert.equal(r.status,'review_required');assert.equal(r.opportunities,undefined);}});
+
+test('central discovery requires explicit enablement and atomic quota reservation',async()=>{let calls=0;const DB={prepare(sql){calls++;assert.match(sql,/used\+reserved/);return {bind(){return {run:async()=>({meta:{changes:1}})}}}}};const env={DB,STOP_SERVICE:'false',DISCOVERY_ENABLED:'true',DISCOVERY_QUOTA_WINDOW:'test'};for(const override of [{STOP_SERVICE:'true'},{STOP_SERVICE:undefined},{DISCOVERY_ENABLED:undefined},{PREVIEW_ISOLATED:'true'},{DISCOVERY_QUOTA_WINDOW:undefined}])assert.equal(await authorizeHiveDiscovery({...env,...override},1000),false);assert.equal(calls,0);assert.equal(await authorizeHiveDiscovery(env,1000),true);assert.equal(calls,1);assert.equal(await authorizeHiveDiscovery({...env,DB:{prepare(){throw Error('offline')}}},1000),false);});
