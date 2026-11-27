@@ -2,13 +2,13 @@
   "id": "/",
   "name": "STUDIOSB6L",
   "short_name": "STUDIOSB6L",
-  "description": "Música, artistas, bandas, concertos, bilhetes e oportunidades profissionais internacionais.",
+  "description": "Music, artists, bands, concerts, tickets and international professional opportunities.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#0a1019",
   "theme_color": "#0a1019",
-  "lang": "pt",
+  "lang": "en",
   "icons": [
     {
       "src": "/assets/brand/studiosb6l-icon-192.png",
