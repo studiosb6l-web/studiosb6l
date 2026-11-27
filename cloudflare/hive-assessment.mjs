@@ -5,5 +5,5 @@ import {evaluateEngine} from './hive-evaluation.mjs';
 export function assessHive({ledger,quota,jobs,metrics}={}) {
  const budget=financePolicy(ledger);
  const ready=ledger?.verified===true && ledger?.stopped===false && quota?.verified===true && quota?.stopped===false;
- return {budget, candidates:ready?planHiveJobs({...quota,jobs}):[], evaluation:evaluateEngine(metrics), executionAuthorized:false};
+ return {ready,budget, candidates:ready?planHiveJobs({...quota,jobs}):[], evaluation:evaluateEngine(metrics), executionAuthorized:false};
 }
