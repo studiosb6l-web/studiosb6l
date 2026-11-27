@@ -8,6 +8,7 @@ compatibility_date = "2026-11-19"
 # database_id = "YOUR_REAL_DATABASE_ID"
 [vars]
 STOP_SERVICE = "true"
+DISCOVERY_ENABLED = "false"
 ALLOWED_FEED_HOSTS = ""
 DISCOVERY_QUOTA_WINDOW = ""
 # Set real approved values only after D1 migrations and verified quota provisioning.
