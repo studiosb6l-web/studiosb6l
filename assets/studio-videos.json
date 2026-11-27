@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-27T19:49:14.995717+00:00",
+  "updated": "2026-11-27T20:42:17.360737+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "u5xwg6WW7i8",
+        "title": "Nick & Judy Sneak into the Zootennial Gala 🐰🦊",
+        "source": "Disney",
+        "published": "2026-11-27T20:00:16Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=u5xwg6WW7i8"
+      },
       {
         "youtubeId": "3QbmlKctcJE",
         "title": "The Magic of the Holidays With Disney | Official Compilation",
@@ -89,14 +97,6 @@
         "published": "2026-11-20T21:30:29Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=dYrsjt5Tr3Q"
-      },
-      {
-        "youtubeId": "t9B-NRvnokk",
-        "title": "Talent Announcement | The Wonderful World of Disney: Holiday Spectacular",
-        "source": "Disney",
-        "published": "2026-11-19T17:03:15Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=t9B-NRvnokk"
       }
     ],
     "warner": [
