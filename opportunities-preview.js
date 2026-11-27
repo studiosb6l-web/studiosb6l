@@ -1,0 +1,10 @@
+(()=>{'use strict';
+const demo=new URLSearchParams(location.search).get('opportunities-preview')==='1';
+if(!demo)return;
+const entries=[['United Kingdom','Orchestra conductor'],['Japan','Piano teacher'],['United States','Film music composer'],['Portugal','Choir vocalist'],['France','Sound engineer'],['Brazil','Music producer']];
+const panel=document.createElement('aside');panel.setAttribute('aria-label','Music opportunities demonstration');panel.style.cssText='position:fixed;right:16px;bottom:110px;width:min(300px,38vw);z-index:1200;display:grid;gap:8px;font:14px Arial,sans-serif;pointer-events:none';
+const stop=document.createElement('button');stop.textContent='Pause preview';stop.style.cssText='pointer-events:auto;justify-self:end;background:#142335;color:#f5deb0;border:1px solid #d9b978;border-radius:6px;padding:8px;cursor:pointer';panel.append(stop);
+const stack=document.createElement('div');stack.style.cssText='display:grid;gap:8px';panel.append(stack);document.body.append(panel);
+let i=0,timer=null;function next(){if(document.hidden)return;const [country,role]=entries[i++%entries.length];const card=document.createElement('div');card.style.cssText='background:#142335;color:#fff;border:1px solid #d9b978;border-radius:10px;padding:12px;box-shadow:0 4px 14px #0005';const label=document.createElement('small');label.style.color='#f5deb0';label.textContent='DEMO — NOT A LIVE VACANCY';const title=document.createElement('strong');title.style.cssText='display:block;margin:6px 0';title.textContent=role;const place=document.createElement('span');place.textContent=country;card.append(label,title,place);if(stack.children.length>=3)stack.firstElementChild.remove();stack.append(card);}
+function start(){next();timer=setInterval(next,3000);}stop.addEventListener('click',()=>{if(timer!==null){clearInterval(timer);timer=null;stop.textContent='Resume preview';}else{start();stop.textContent='Pause preview';}});start();
+})();
