@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27T17:00:02.002678+00:00",
+  "updated": "2026-11-27T17:55:56.387286+00:00",
   "channels": {
     "disney": [
       {
@@ -101,6 +101,14 @@
     ],
     "warner": [
       {
+        "youtubeId": "CZNYo-Itvf8",
+        "title": "Real friends talk about Dune with you.",
+        "source": "Warner Bros.",
+        "published": "2026-11-27T17:00:05Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=CZNYo-Itvf8"
+      },
+      {
         "youtubeId": "Rs3xKiooLls",
         "title": "The Lord of the Rings: The Hunt for Gollum | That’s a wrap! Well, almost.",
         "source": "Warner Bros.",
@@ -187,14 +195,6 @@
         "published": "2026-11-18T18:00:18Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=zQu3_wkIKC4"
-      },
-      {
-        "youtubeId": "OAUnScp6fYA",
-        "title": "ONE. MONTH. LEFT. #DuneMovie",
-        "source": "Warner Bros.",
-        "published": "2026-11-18T17:00:23Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=OAUnScp6fYA"
       }
     ]
   }
