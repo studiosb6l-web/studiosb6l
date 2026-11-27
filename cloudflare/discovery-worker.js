@@ -1,4 +1,4 @@
-import {reserveHiveQuota} from './hive-quota-reservation.mjs';
+import {authorizeHiveDiscovery} from './hive-central-review.mjs';
 // B6L Discovery Worker. Separate from the artists registration Worker.
 // Set D1 binding DB, deploy, migrate schema, then enable approved RSS/Atom sources.
 // Cloudflare Cron runs scheduled() even when no user is browsing.
@@ -7,14 +7,14 @@ const json=(v,s=200)=>new Response(JSON.stringify(v),{status:s,headers:{'Content
 const strip=s=>String(s||'').replace(/<[^>]*>/g,' ').replace(/&(?:amp|lt|gt|quot|apos);/g,' ').replace(/\s+/g,' ').trim();
 const field=(s,tag)=>{const m=s.match(new RegExp('<(?:[\\w-]+:)?'+tag+'(?:\\s[^>]*)?>([\\s\\S]*?)<\\/(?:[\\w-]+:)?'+tag+'>','i'));return strip(m?.[1]||'')};
 async function ingest(env){
- if(!env.DB||env.STOP_SERVICE==='true'||env.PREVIEW_ISOLATED==='true')return;
+ if(!env.DB||env.STOP_SERVICE!=='false'||env.PREVIEW_ISOLATED==='true'||env.DISCOVERY_ENABLED!=='true')return;
  const sources=await env.DB.prepare('SELECT id,name,feed_url,category FROM discovery_sources WHERE enabled=1 LIMIT 30').all();
  for(const source of sources.results||[]){
   try{
    const u=new URL(source.feed_url);
    if(u.protocol!=='https:'||!env.ALLOWED_FEED_HOSTS?.split(',').map(x=>x.trim()).includes(u.hostname))throw Error('Host not allowlisted');
    // Require a verified provider quota window before each outbound feed request.
-   if(!await reserveHiveQuota(env.DB,{service:'discovery-feed-requests',windowId:env.DISCOVERY_QUOTA_WINDOW,units:1,now:Date.now()}))return;
+   if(!await authorizeHiveDiscovery(env))return;
    const ctrl=new AbortController();const timeout=setTimeout(()=>ctrl.abort(),8000);
    let response;try{response=await fetch(u.toString(),{signal:ctrl.signal,redirect:'error',headers:{Accept:'application/rss+xml, application/atom+xml, application/xml, text/xml'}})}finally{clearTimeout(timeout)}
    if(!response.ok)throw Error('Feed HTTP '+response.status);
