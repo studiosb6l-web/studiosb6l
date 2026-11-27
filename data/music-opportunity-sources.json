@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "name": "Arbetsförmedlingen JobSearch",
+    "country": "SE",
+    "origin": "https://arbetsformedlingen.se",
+    "apiOrigin": "https://jobsearch.api.jobtechdev.se",
+    "documentation": "https://data.arbetsformedlingen.se/dataservice/jobsearch/",
+    "authorized": false,
+    "enabled": false,
+    "license": "CC0",
+    "activationRequirements": [
+      "Verify canonical announcement origin",
+      "Confirm request budget",
+      "Integrate atomic quota reservation",
+      "Validate feed normalization and expiry"
+    ]
+  }
+]
