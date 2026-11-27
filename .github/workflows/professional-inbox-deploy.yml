@@ -1,0 +1,114 @@
+name: Publish PRO BUSINESS display name
+on:
+  push:
+    branches: [release/58-60-inbox-20261125]
+    paths:
+      - '.github/workflows/professional-inbox-deploy.yml'
+      - 'cloudflare/**'
+      - 'tests/**'
+
+permissions:
+  contents: read
+concurrency:
+  group: studiosb6l-cloudflare-production
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Validate security and account journey
+        run: npm test
+      - name: Build without publishing
+        env:
+          WRANGLER_SEND_METRICS: 'false'
+        run: npm run check:worker
+      - name: Verify target, rollback versions and seventy-percent quota margin
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs';
+          import {verifyCloudflareAccess} from './scripts/cloudflare-api-access.mjs';
+          const previous=await verifyCloudflareAccess();
+          if(previous.previousVersions.length!==1)throw Error('Automatic rollback requires one production version');
+          if(previous.productionRegistrationEnabled!==true)throw Error('The existing registration state changed; code-only publication stopped');
+          const now=new Date(),day=now.toISOString().slice(0,10);
+          const query='query Usage($accountTag: string, $start: string, $end: string, $day: Date!) { viewer { accounts(filter: {accountTag: $accountTag}) { workersInvocationsAdaptive(limit: 1, filter: {datetime_geq: $start, datetime_leq: $end}) { sum { requests } } d1AnalyticsAdaptiveGroups(limit: 1, filter: {date_geq: $day, date_leq: $day}) { sum { rowsRead rowsWritten } } } } }';
+          const r=await fetch('https://api.cloudflare.com/client/v4/graphql',{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN,'Content-Type':'application/json'},body:JSON.stringify({query,variables:{accountTag:previous.account,start:day+'T00:00:00Z',end:now.toISOString(),day}})});
+          const d=await r.json().catch(()=>null),accounts=d?.data?.viewer?.accounts;
+          if(!r.ok||d?.errors?.length||!Array.isArray(accounts)||accounts.length!==1)throw Error('Account-wide quota measurements unavailable; nothing published');
+          function sum(rows,field){if(!Array.isArray(rows))throw Error('Quota dataset unavailable');return rows.reduce((n,row)=>{const value=row.sum?.[field];if(!Number.isSafeInteger(value)||value<0)throw Error('Invalid quota measurement');return n+value;},0);}
+          const metadataResponse=await fetch('https://api.cloudflare.com/client/v4/accounts/'+previous.account+'/d1/database/'+previous.database,{headers:{Authorization:'Bearer '+process.env.CLOUDFLARE_API_TOKEN},redirect:'error',signal:AbortSignal.timeout(15000)});
+          const metadata=await metadataResponse.json().catch(()=>null);
+          if(!metadataResponse.ok||metadata?.success!==true||!Number.isSafeInteger(metadata.result?.file_size)||metadata.result.file_size+16*1024*1024>350*1024*1024)throw Error('D1 storage margin unavailable; no schema changes or deployment');
+          const usage={databaseBytes:metadata.result.file_size,checkedAt:now.toISOString(),requests:sum(accounts[0].workersInvocationsAdaptive,'requests'),rowsRead:sum(accounts[0].d1AnalyticsAdaptiveGroups,'rowsRead'),rowsWritten:sum(accounts[0].d1AnalyticsAdaptiveGroups,'rowsWritten')};
+          if(usage.requests+1000>70000||usage.rowsRead+100000>3500000||usage.rowsWritten+50000>70000)throw Error('Insufficient seventy-percent quota margin; nothing published');
+          fs.mkdirSync('.wrangler/professional-profiles',{recursive:true});
+          fs.writeFileSync('.wrangler/professional-profiles/rollback.json',JSON.stringify({sourceCommit:process.env.GITHUB_SHA,previous,usage,scope:'Private opt-in inbox, opportunity delivery, server-only MASTER matching; no billing, outgoing email, source fetch or scheduler'},null,2));
+          console.log(JSON.stringify({quotaCheckPassed:true,usage,rollbackVersions:previous.previousVersions.length}));
+          JS
+      - name: Preserve rollback evidence before deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: professional-profiles-rollback-${{ github.run_id }}
+          path: .wrangler/professional-profiles/rollback.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Preserve D1 recovery bookmark before additive profile tables
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
+          WRANGLER_SEND_METRICS: 'false'
+        run: npx --no-install wrangler d1 time-travel info DB --json > .wrangler/professional-profiles/database-recovery.json
+      - name: Preserve database recovery metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: professional-profiles-d1-recovery-${{ github.run_id }}
+          path: .wrangler/professional-profiles/database-recovery.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Publish code with existing settings and bindings
+        id: publish
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
+          WRANGLER_SEND_METRICS: 'false'
+        run: npx --no-install wrangler deploy
+      - name: Verify production without registering, emailing or charging anyone
+        run: |
+          node --input-type=module - <<'JS'
+          const base='https://studiosb6l-artists-api.studiosb6l.workers.dev';
+          async function get(path){const r=await fetch(base+path,{redirect:'error',signal:AbortSignal.timeout(15000)});if(!r.ok)throw Error('Production check failed: '+path+' HTTP '+r.status);return r;}
+          const health=await(await get('/health')).json();if(health.ok!==true||health.service!=='studiosb6l-artists-api')throw Error('Incorrect Worker');
+          const status=await(await get('/api/auth/status')).json();if(status.enabled!==true||status.registrationEnabled!==true||status.profilesEnabled!==true)throw Error('Existing account readiness changed');
+          const html=await(await get('/conta/')).text();if(!html.includes('Criar conta · acesso único de 2,99 €')||!html.includes('Criar ou atualizar a minha ficha')||html.includes('Novas inscrições ainda indisponíveis'))throw Error('Account guidance was not published');
+          const privateSession=await fetch(base+'/api/auth/session',{redirect:'error',signal:AbortSignal.timeout(15000)});if(privateSession.status!==401)throw Error('Unauthenticated account access must remain blocked');
+          const publicProfiles=await(await get('/api/profiles/public?showcase=1')).json();if(publicProfiles.success!==true||!Array.isArray(publicProfiles.artists))throw Error('Public profile feed unavailable');
+          const anonymousProfile=await fetch(base+'/api/profiles/me',{redirect:'error',signal:AbortSignal.timeout(15000)});if(anonymousProfile.status!==401)throw Error('Private profile endpoint must reject anonymous visitors');
+          const inboxHtml=await(await get('/conta/')).text();if(!inboxHtml.includes('Mensagens privadas e avisos'))throw Error('Private inbox link missing');
+          for(const path of ['/api/inbox/messages','/api/inbox/preferences','/api/profiles/opportunities']){const response=await fetch(base+path,{redirect:'error',signal:AbortSignal.timeout(15000)});if(response.status!==401)throw Error('Private endpoint must reject visitors: '+path);}
+          const inboxPage=await fetch(base+'/mensagens/',{redirect:'manual',signal:AbortSignal.timeout(15000)});if(inboxPage.status!==302)throw Error('Private inbox page must require login');
+          console.log(JSON.stringify({productionVerified:true,profilesEnabled:status.profilesEnabled,registrationEnabled:status.registrationEnabled,anonymousSessionBlocked:true}));
+          JS
+      - name: Roll back Worker if post-deployment verification fails
+        if: ${{ failure() && steps.publish.outcome == 'success' }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: '8ada1c4a636906c35b369d4d682f6d4e'
+          WRANGLER_SEND_METRICS: 'false'
+        run: |
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs';import {spawnSync} from 'node:child_process';
+          const evidence=JSON.parse(fs.readFileSync('.wrangler/professional-profiles/rollback.json','utf8'));
+          const id=evidence.previous.previousVersions[0]?.id;if(!/^[a-f0-9-]{36}$/.test(id))throw Error('Rollback version missing');
+          const r=spawnSync('npx',['--no-install','wrangler','rollback',id,'--yes','--message','Private inbox production smoke check failed'],{stdio:'inherit'});if(r.status!==0)throw Error('Rollback failed');
+          JS

@@ -1,3 +1,5 @@
+import {normalizeAuthorizedFeed} from './professional-opportunity-ingestion.mjs';
+import {selectProfessionalOpportunities,commercialOpportunitySummary} from './professional-opportunity-delivery.mjs';
 import {resolveSession} from './session-guard.mjs';
 import {authorize} from './authorization-policy.mjs';
 import {checkAuthRate} from './auth-readiness.mjs';
@@ -58,16 +60,53 @@ export async function professionalProfilesApi(request,env={},ctx){
    return reply({success:true,id,revision,status:data.publishConsent?'approved':'pending',published:data.publishConsent,message:data.publishConsent?'Ficha validada e publicada automaticamente.':'Ficha guardada em privado. Autoriza a publicação quando estiver pronta.'});
   }
 
+  if(path==='/api/profiles/opportunities/page'&&request.method==='GET'){
+   if(env.PROFESSIONAL_OPPORTUNITIES_ENABLED!=='true')return reply({error:'Serviço em preparação.'},503);
+   const feed=await professionalProfilesApi(new Request(new URL('/api/profiles/opportunities',request.url),{headers:request.headers}),env,ctx);
+   if(!feed.ok)return feed;
+   const data=await feed.json();
+   const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+   const items=(data.items||[]).map(item=>'<li><strong>'+esc(item.title||'Oportunidade')+'</strong> · '+esc(({offer:'Oferta',request:'Procura',news:'Notícia'})[item.type]||'')+'</li>').join('');
+   return new Response('<!doctype html><html lang="pt"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Oportunidades | STUDIOSB6L</title><style>body{background:#0a1019;color:#f4f0e8;font:17px/1.6 system-ui;margin:0;padding:24px}main{max-width:720px;margin:auto}a,h1{color:#e1bf78}li{padding:12px;border-bottom:1px solid #75623b}</style><main><a href="/conta/">Voltar à minha conta</a><h1>Oportunidades personalizadas</h1><p>Plano: '+esc(data.plan==='master_pro'?'PRO BUSINESS':data.plan==='pro'?'PRO':'Básico')+'</p>'+(items?'<ul>'+items+'</ul>':'<p>Não existem oportunidades verificadas disponíveis para o teu perfil neste momento.</p>')+'</main></html>',{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'"}});
+  }
+  if(['/api/profiles/opportunities','/api/profiles/intelligence'].includes(path)&&request.method==='GET'){
+   if(env.PROFESSIONAL_OPPORTUNITIES_ENABLED!=='true')return reply({error:'Serviço em preparação.'},503);
+   const own=await db.prepare(publicQuery+' AND p.account_id=? LIMIT 1').bind(session.userId).first();
+   const viewer=own&&decoded(own);
+   if(!viewer?.matchingConsent)return reply({success:true,items:[]});
+   const entitlement=await db.prepare('SELECT plan,provider_reference,verified_at,expires_at,revoked_at FROM professional_entitlements WHERE account_id=?').bind(session.userId).first();
+   const now=Date.now();
+   if(path==='/api/profiles/intelligence'&&effectiveProfilePlan(entitlement,now)!=='master_pro')return reply({error:'Disponível no PRO BUSINESS.'},403);
+   const rows=await db.prepare('SELECT data FROM verified_professional_opportunities WHERE expires_at>? ORDER BY expires_at ASC LIMIT 500').bind(now).all();
+   const records=(rows.results||[]).flatMap(row=>{try{return [JSON.parse(row.data)];}catch{return [];}});
+   if(path==='/api/profiles/intelligence')return reply({success:true,summary:commercialOpportunitySummary(viewer,records,entitlement,now)});
+   const selected=selectProfessionalOpportunities(viewer,records,entitlement,now);
+   return reply({success:true,plan:effectiveProfilePlan(entitlement,now),items:selected.map(item=>{const record=records.find(r=>r.id===item.id);return {...item,title:String(record.title||'').slice(0,200)};})});
+  }
   if(path==='/api/profiles/matches'&&request.method==='GET'){
    const own=await db.prepare(publicQuery+' AND p.account_id=? LIMIT 1').bind(session.userId).first();const viewer=own&&decoded(own);
    if(!viewer?.matchingConsent)return reply({success:true,items:[],message:'Publica uma ficha aprovada e autoriza os cruzamentos para receber correspondências.'});
    const entitlement=await db.prepare('SELECT plan,provider_reference,verified_at,expires_at,revoked_at FROM professional_entitlements WHERE account_id=?').bind(session.userId).first();const plan=effectiveProfilePlan(entitlement);
    // All approved sectors participate. Bounded reads, no background robot or automatic messages.
-   const rows=plan==='pro'?await db.prepare(publicQuery+' AND p.account_id!=? AND p.matching=1 ORDER BY p.approved_at DESC LIMIT 200').bind(session.userId).all():await db.prepare(publicQuery+' AND p.account_id!=? AND p.matching=1 AND p.country=? ORDER BY p.approved_at DESC LIMIT 200').bind(session.userId,countryKey(viewer.country)).all();
+   const rows=['pro','master_pro'].includes(plan)?await db.prepare(publicQuery+' AND p.account_id!=? AND p.matching=1 ORDER BY p.approved_at DESC LIMIT 200').bind(session.userId).all():await db.prepare(publicQuery+' AND p.account_id!=? AND p.matching=1 AND p.country=? ORDER BY p.approved_at DESC LIMIT 200').bind(session.userId,countryKey(viewer.country)).all();
    const candidates=(rows.results||[]).map(decoded).filter(Boolean);return reply({success:true,plan,items:rankProfessionalProfiles(viewer,candidates,{plan})});
   }
   if(path.startsWith('/api/profiles/admin/')){
    if(!authorize(session,'applications:review'))return reply({error:'Moderação reservada ao administrador autenticado com MFA.'},403);
+   if(path==='/api/profiles/admin/ingest'&&request.method==='POST'){
+    if(env.PROFESSIONAL_OPPORTUNITIES_ENABLED!=='true')return reply({error:'Fontes em preparação.'},503);
+    const body=await input(request);if(typeof body?.sourceId!=='string'||!Array.isArray(body.records)||body.records.length>20)return reply({error:'Fonte ou lote inválido (máximo 20).'},400);
+    let registry;try{registry=JSON.parse(env.PROFESSIONAL_SOURCE_REGISTRY||'null');}catch{return reply({error:'Fontes autorizadas não configuradas.'},503);}
+    if(!registry||!Object.hasOwn(registry,body.sourceId))return reply({error:'Fonte não autorizada.'},403);
+    const source={...registry[body.sourceId],id:body.sourceId};
+    const records=normalizeAuthorizedFeed(body.records,source);if(!records.length||records.length!==body.records.length)return reply({error:'O lote contém registos inválidos ou duplicados.'},400);
+    if(!await reserve(db))return reply({error:'Limite diário atingido.'},429);
+    const statements=[db.prepare('DELETE FROM verified_professional_opportunities WHERE id IN (SELECT id FROM verified_professional_opportunities WHERE expires_at<=? LIMIT 100)').bind(Date.now())];
+    for(const record of records)statements.push(db.prepare('INSERT INTO verified_professional_opportunities(id,data,expires_at) SELECT ?,?,? WHERE (SELECT COUNT(*) FROM verified_professional_opportunities)<5000 OR EXISTS(SELECT 1 FROM verified_professional_opportunities WHERE id=?) ON CONFLICT(id) DO UPDATE SET data=excluded.data,expires_at=excluded.expires_at').bind(record.id,JSON.stringify(record),record.expiresAt,record.id));
+    statements.push(db.prepare('INSERT INTO professional_review_log VALUES(?,?,?,?,?,?)').bind(crypto.randomUUID(),'source:'+body.sourceId,1,session.userId,'ingest:'+records.length,Date.now()));
+    const results=await db.batch(statements),imported=results.slice(1,-1).reduce((n,r)=>n+Number(r?.meta?.changes||0),0);
+    return reply({success:true,imported,capacityReached:imported<records.length});
+   }
    if(path==='/api/profiles/admin/list'&&request.method==='GET'){
     const rows=await db.prepare("SELECT id,data,revision,status,blocked,updated_at FROM professional_profiles ORDER BY updated_at DESC LIMIT 50").all();return reply({success:true,profiles:(rows.results||[]).map(r=>({id:r.id,profile:JSON.parse(r.data),revision:r.revision,status:r.status,blocked:r.blocked===1,updatedAt:r.updated_at}))});
    }
