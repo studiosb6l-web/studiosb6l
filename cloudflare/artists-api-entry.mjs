@@ -30,6 +30,13 @@ async function dispatch(request,env={},ctx){
     return reply(503,{success:false,error:'Preview operations are disabled'});
   }
   if(['/administracao','/administracao/'].includes(path)&&request.method==='GET')return ownerPortal();
+  if(['/administracao/painel','/administracao/painel/'].includes(path)&&request.method==='GET'){
+    const session=await resolveSession(request,env);
+    if(!authorize(session,'admin:read'))return reply(403,{error:'Forbidden'});
+    const stopped=env.STOP_SERVICE==='true';
+    const html='<!doctype html><html lang="pt"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STUDIOSB6L | Centro de comando</title><style>body{background:#0a1019;color:#f4f0e8;font:17px system-ui;margin:24px}main{max-width:1000px;margin:auto}h1,h2,a{color:#e1bf78}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}article{background:#142337;border:1px solid #75623b;border-radius:12px;padding:18px}</style><main><h1>STUDIOSB6L — Centro de comando</h1><p>Sessão administrativa verificada. Indicadores não integrados são apresentados como indisponíveis.</p><section><article><h2>STOP_SERVICE</h2><p>'+ (stopped?'Ativo':'Inativo') +'</p><p>Estado da configuração; não representa todas as automações.</p></article><article><h2>Visitas</h2><p>Dados indisponíveis</p></article><article><h2>Utilizadores</h2><p>Dados indisponíveis</p></article><article><h2>Receitas</h2><p>Dados indisponíveis</p></article><article><h2>Quotas</h2><p>Dados indisponíveis — limite operacional 70%</p></article><article><h2>Suporte e perfis</h2><p><a href="/ajuda/">Suporte</a> · <a href="/perfis/revisao/">Moderação</a></p></article></section><p><a href="/administracao/">Voltar à administração</a></p></main></html>';
+    return new Response(html,{headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'"}});
+  }
   if(path.startsWith('/api/admin/'))return ownerAuth(request,env,ctx);
   if(['/ajuda','/ajuda/'].includes(path)&&request.method==='GET')return supportPortal();
   if(path.startsWith('/api/support/'))return supportApi(request,env,ctx);
