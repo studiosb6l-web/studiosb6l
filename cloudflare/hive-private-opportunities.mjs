@@ -8,7 +8,8 @@ export async function privateOpportunityApi(request,env={}){
  if(request.method!=='GET')return reply(405,{success:false});
  if(env.HIVE_PRIVATE_OPPORTUNITIES!=='true'||env.STOP_SERVICE==='true'||env.PREVIEW_ISOLATED==='true'||!env.DB)return reply(503,{success:false});
  const now=Date.now(),db=env.DB;
- if(!await reserveHiveQuota(db,{service:'private-opportunity-reads',windowId:env.HIVE_PRIVATE_QUOTA_WINDOW,units:1,now}))return reply(503,{success:false});
+ // Reserve a conservative upper bound for the bounded read workload.
+ if(!await reserveHiveQuota(db,{service:'private-opportunity-reads',windowId:env.HIVE_PRIVATE_QUOTA_WINDOW,units:110,now}))return reply(503,{success:false});
  const session=await resolveSession(request,env);
  if(!session)return reply(401,{success:false});
  try{
