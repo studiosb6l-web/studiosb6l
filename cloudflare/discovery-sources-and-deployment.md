@@ -19,3 +19,6 @@ Estas páginas foram identificadas como diretórios de oportunidades musicais. *
 8. Implementar autenticação antes de permitir mensagens ou notificações privadas; nunca confiar num ID de utilizador fornecido pelo browser.
 
 O cron previsto é de 6 em 6 horas, 24/7. Não significa pesquisa contínua a cada segundo. A execução depende dos limites e disponibilidade Cloudflare.
+
+## Mandatory quota gate (#83)
+Apply hive-quota-schema.sql after backup, leaving global STOP enabled. Provision a verified discovery-feed-requests quota window from actual provider limits and usage, with ceiling no greater than 70%, expiry and observation timestamps in milliseconds. Set DISCOVERY_QUOTA_WINDOW to its real identifier. Refresh telemetry within five minutes; reconcile reservations conservatively, never reset blindly. Verify database and outbound request budgets separately before enabling cron. Only the authorized owner may release STOP after validation. Missing or stale windows block outbound requests. No paid upgrade or live test charge.
