@@ -11,3 +11,13 @@ test('login preflight allows credentialed official requests',async()=>{const r=a
 test('auth routes use POST and unknown routes fail',async()=>{assert.equal((await call('/api/auth/login')).status,405);assert.equal((await call('/api/auth/unknown')).status,404)});
 test('root retains the applications service response',async()=>{const r=await call('/');assert.equal(r.status,200);assert.equal((await r.json()).publication,'manual approval required')});
 test('isolated Preview exposes health but blocks auth, applications and payment webhooks before binding access',async()=>{let used=false;const env={PREVIEW_ISOLATED:'true',DB:{prepare(){used=true;throw Error('Must not access any database')}}};for(const p of ['/api/auth/register','/api/auth/login','/api/auth/verify-email','/api/applications','/api/billing/stripe/webhook'])assert.equal((await call(p,env,'POST')).status,503);assert.equal(used,false);const r=await call('/health',env);assert.equal(r.status,200);assert.deepEqual(await r.json(),{ok:true,service:'studiosb6l-artists-api',environment:'preview',operationsEnabled:false});});
+
+test('owner dashboard rejects anonymous access and never reads metrics',async()=>{
+ let used=false;const env={DB:{prepare(){used=true;throw Error('unexpected database access')}}};
+ const r=await call('/administracao/painel/',env);
+ assert.equal(r.status,403);assert.equal(used,false);assert.equal(r.headers.get('Cache-Control'),'no-store');
+});
+test('owner dashboard remains blocked in isolated preview',async()=>{
+ const r=await call('/administracao/painel/',{PREVIEW_ISOLATED:'true'});
+ assert.equal(r.status,503);
+});
