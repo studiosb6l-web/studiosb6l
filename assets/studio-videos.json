@@ -1,7 +1,15 @@
 {
-  "updated": "2026-11-27T17:55:56.387286+00:00",
+  "updated": "2026-11-27T18:51:59.579802+00:00",
   "channels": {
     "disney": [
+      {
+        "youtubeId": "3QbmlKctcJE",
+        "title": "The Magic of the Holidays With Disney | Official Compilation",
+        "source": "Disney",
+        "published": "2026-11-27T18:00:38Z",
+        "videoVerified": true,
+        "url": "https://www.youtube.com/watch?v=3QbmlKctcJE"
+      },
       {
         "youtubeId": "CCNVptfDpPo",
         "title": "Judy Hopps & Nick Wilde | Zootopia 2 Booth to Screen",
@@ -89,14 +97,6 @@
         "published": "2026-11-19T17:03:15Z",
         "videoVerified": true,
         "url": "https://www.youtube.com/watch?v=t9B-NRvnokk"
-      },
-      {
-        "youtubeId": "e67Qtn_3hkc",
-        "title": "Ice Age: Boiling Point | Official Trailer | In Theaters February 5, 2027",
-        "source": "Disney",
-        "published": "2026-11-19T17:00:11Z",
-        "videoVerified": true,
-        "url": "https://www.youtube.com/watch?v=e67Qtn_3hkc"
       }
     ],
     "warner": [
