@@ -6,7 +6,10 @@ compatibility_date = "2026-11-19"
 # binding = "DB"
 # database_name = "YOUR_EXISTING_D1_NAME"
 # database_id = "YOUR_REAL_DATABASE_ID"
-# [vars]
-# ALLOWED_FEED_HOSTS = "approved-source.example"
+[vars]
+STOP_SERVICE = "true"
+ALLOWED_FEED_HOSTS = ""
+DISCOVERY_QUOTA_WINDOW = ""
+# Set real approved values only after D1 migrations and verified quota provisioning.
 [triggers]
 crons = ["0 */6 * * *"]
