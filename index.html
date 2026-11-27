@@ -321,8 +321,10 @@ const b6lSupportedLanguages=['es','en','fr','de','pt','ja','zh','ar','ru','uk'];
 function b6lDetectLanguage(){return 'en';}
 let preferred=b6lDetectLanguage();
 try{const saved=localStorage.getItem('b6l-language-manual');if(saved&&b6lSupportedLanguages.includes(saved))preferred=saved}catch(e){}
+const explicitLanguage=new URLSearchParams(window.location.search).get('lang');
+if(b6lSupportedLanguages.includes(explicitLanguage))preferred=explicitLanguage;
 if(['ja','zh','ar','ru','uk'].includes(preferred)){
-  window.location.replace(preferred+'.html');
+  const target=new URL('/'+preferred+'.html',window.location.origin);target.search=window.location.search;target.hash=window.location.hash;window.location.replace(target.href);
 }else{
   setLanguage(translations[preferred]?preferred:'en');
 }
