@@ -46,10 +46,10 @@ async function dispatch(request,env={},ctx){
     let admission={status:'unavailable'};
     if(env.DB&&env.PAYHIP_ACTIVATION_VERIFIED==='true'){
       try{
-        const row=await env.DB.prepare('SELECT COUNT(*) AS paid_count FROM payhip_admission_payments WHERE paid_at>=? AND paid_at<=? AND revoked_at IS NULL').bind(monthStart,now).first();
+        const row=await env.DB.prepare('SELECT COUNT(*) AS total_count, COUNT(CASE WHEN revoked_at IS NULL THEN 1 END) AS paid_count, COUNT(CASE WHEN revoked_at IS NOT NULL THEN 1 END) AS revoked_count FROM payhip_admission_payments WHERE paid_at>=? AND paid_at<=?').bind(monthStart,now).first();
         const count=row?.paid_count;
-        if(Number.isSafeInteger(count)&&count>=0&&Number.isSafeInteger(count*299))
-          admission={status:'recorded',currency:'EUR',periodStart:monthStart,observedAt:now,activeAdmissionCount:count,grossAdmissionCents:count*299,scope:'recorded non-revoked admission payments only; excludes fees, other sales and settlement'};
+        if([count,row?.total_count,row?.revoked_count].every(v=>Number.isSafeInteger(v)&&v>=0&&Number.isSafeInteger(v*299))&&count+row.revoked_count===row.total_count)
+          admission={status:'recorded',currency:'EUR',periodStart:monthStart,observedAt:now,activeAdmissionCount:count,recordedAdmissionCount:row.total_count,revokedAdmissionCount:row.revoked_count,revokedAdmissionCents:row.revoked_count*299,grossAdmissionCents:count*299,scope:'recorded admission cohort by payment month; revocations may occur later; excludes fees, other sales and settlement'};
       }catch{/* Missing database or schema must not be reported as zero. */}
     }
     // Read existing verified quota windows; ceiling is a policy cap, not the provider limit.
