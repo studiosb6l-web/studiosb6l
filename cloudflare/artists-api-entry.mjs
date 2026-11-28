@@ -1,3 +1,4 @@
+import {financeOwnerPanel} from './finance-owner-panel.mjs';
 import {privateFinanceSnapshot} from './hive-finance-dashboard.mjs';
 import {privateOpportunityApi} from './hive-private-opportunities.mjs';
 import {professionalProfilesApi} from './professional-profiles-api.mjs';
@@ -32,7 +33,7 @@ async function dispatch(request,env={},ctx){
     return reply(503,{success:false,error:'Preview operations are disabled'});
   }
   if(['/administracao','/administracao/'].includes(path)&&request.method==='GET')return ownerPortal();
-  if(path==='/api/admin/finance'){
+  if(['/api/admin/finance','/administracao/financas/'].includes(path)){
     if(request.method!=='GET')return reply(405,{error:'Method not allowed'});
     const origin=request.headers.get('Origin');
     if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
@@ -50,7 +51,8 @@ async function dispatch(request,env={},ctx){
           admission={status:'recorded',currency:'EUR',periodStart:monthStart,observedAt:now,activeAdmissionCount:count,grossAdmissionCents:count*299,scope:'recorded non-revoked admission payments only; excludes fees, other sales and settlement'};
       }catch{/* Missing database or schema must not be reported as zero. */}
     }
-    return reply(200,{...privateFinanceSnapshot(session,{now}),admission,stopService:env.STOP_SERVICE==='true'});
+    const snapshot={...privateFinanceSnapshot(session,{now}),admission,stopService:env.STOP_SERVICE==='true'};
+    return path==='/administracao/financas/'?financeOwnerPanel(snapshot):reply(200,snapshot);
   }
   if(path.startsWith('/api/admin/'))return ownerAuth(request,env,ctx);
   if(['/ajuda','/ajuda/'].includes(path)&&request.method==='GET')return supportPortal();
