@@ -11,3 +11,11 @@ export async function readVerifiedFinanceLedger(db,now){
  return ledger;
  }catch{return undefined;}
 }
+
+export async function readFinanceHistory(db,now){
+ if(!db||!Number.isSafeInteger(now))return [];
+ try{
+ const result=await db.prepare("SELECT period_start, observed_at, net_revenue_cents, spent_cents FROM hive_finance_monthly AS m WHERE verified=1 AND observed_at<=? AND observed_at=(SELECT MAX(n.observed_at) FROM hive_finance_monthly n WHERE n.period_start=m.period_start AND n.verified=1 AND n.observed_at<=?) ORDER BY period_start DESC LIMIT 12").bind(now,now).all();
+ return (result.results||[]).filter(r=>[r.period_start,r.observed_at,r.net_revenue_cents,r.spent_cents].every(v=>Number.isSafeInteger(v)&&v>=0)).reverse();
+ }catch{return [];}
+}
