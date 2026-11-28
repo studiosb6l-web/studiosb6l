@@ -51,7 +51,16 @@ async function dispatch(request,env={},ctx){
           admission={status:'recorded',currency:'EUR',periodStart:monthStart,observedAt:now,activeAdmissionCount:count,grossAdmissionCents:count*299,scope:'recorded non-revoked admission payments only; excludes fees, other sales and settlement'};
       }catch{/* Missing database or schema must not be reported as zero. */}
     }
-    const snapshot={...privateFinanceSnapshot(session,{now}),admission,stopService:env.STOP_SERVICE==='true'};
+    // Read existing verified quota windows; ceiling is a policy cap, not the provider limit.
+    let quotaWindows=[];
+    try{
+      const result=await env.DB.prepare('SELECT service, window_id, used, reserved, ceiling, observed_at, expires_at, verified, stopped FROM hive_quota_windows WHERE expires_at>? ORDER BY service, window_id LIMIT 100').bind(now).all();
+      quotaWindows=(result.results||[]).map(q=>{
+        const valid=q.verified===1&&Number.isSafeInteger(q.observed_at)&&q.observed_at<=now&&now-q.observed_at<=300000&&[q.used,q.reserved,q.ceiling].every(v=>Number.isSafeInteger(v)&&v>=0)&&q.ceiling>0&&Number.isSafeInteger(q.used+q.reserved);
+        return {service:q.service,windowId:q.window_id,status:valid?'verified':'unavailable',...(valid?{used:q.used,reserved:q.reserved,ceiling:q.ceiling,observedAt:q.observed_at,stopped:q.stopped!==0}:{})};
+      });
+    }catch{/* No verified quota windows available. */}
+    const snapshot={...privateFinanceSnapshot(session,{now}),admission,quotaWindows,stopService:env.STOP_SERVICE==='true'};
     return path==='/administracao/financas/'?financeOwnerPanel(snapshot):reply(200,snapshot);
   }
   if(path.startsWith('/api/admin/'))return ownerAuth(request,env,ctx);
