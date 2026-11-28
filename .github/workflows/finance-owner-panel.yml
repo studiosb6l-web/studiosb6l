@@ -1,0 +1,16 @@
+name: Finance owner panel tests
+on:
+  pull_request:
+    paths:
+      - 'cloudflare/finance-*.mjs'
+      - 'cloudflare/artists-api-entry.mjs'
+      - '.github/workflows/finance-owner-panel.yml'
+permissions:
+  contents: read
+jobs:
+  finance-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - run: node --test cloudflare/finance-owner-panel.test.mjs
