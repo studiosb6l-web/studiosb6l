@@ -1,3 +1,4 @@
+import {privateOpportunityApi} from './hive-private-opportunities.mjs';
 import {professionalProfilesApi} from './professional-profiles-api.mjs';
 import {professionalProfilePortal} from './professional-profile-portal.mjs';
 import {SECTORS} from './professional-profile-schema.mjs';
@@ -38,6 +39,7 @@ async function dispatch(request,env={},ctx){
   const origin=request.headers.get('Origin');
   if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
   if(env.STOP_SERVICE==='true')return reply(503,{error:'Serviço suspenso'});
+  if(path==='/api/hive/opportunities')return privateOpportunityApi(request,env);
   if(path.startsWith('/api/profiles/'))return professionalProfilesApi(request,env,ctx);
   if(['/perfis/editar/','/perfis/revisao/'].includes(path)&&request.method==='GET'){
     if(env.PROFESSIONAL_PROFILES_ENABLED!=='true')return reply(503,{error:'Perfis profissionais em preparação.'});

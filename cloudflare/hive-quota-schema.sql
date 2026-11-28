@@ -1,0 +1,4 @@
+-- Apply only after backup and review. Default STOP is enabled.
+CREATE TABLE IF NOT EXISTS hive_operational_control(id INTEGER PRIMARY KEY CHECK(id=1),stopped INTEGER NOT NULL DEFAULT 1 CHECK(stopped IN(0,1)));
+INSERT OR IGNORE INTO hive_operational_control(id,stopped) VALUES(1,1);
+CREATE TABLE IF NOT EXISTS hive_quota_windows(service TEXT NOT NULL,window_id TEXT NOT NULL,used INTEGER NOT NULL CHECK(used>=0),reserved INTEGER NOT NULL DEFAULT 0 CHECK(reserved>=0),quota_limit INTEGER NOT NULL CHECK(quota_limit>0),ceiling INTEGER NOT NULL CHECK(ceiling>=0 AND ceiling<=CAST(quota_limit*0.7 AS INTEGER)),verified INTEGER NOT NULL DEFAULT 0 CHECK(verified IN(0,1)),stopped INTEGER NOT NULL DEFAULT 1 CHECK(stopped IN(0,1)),observed_at INTEGER NOT NULL,expires_at INTEGER NOT NULL,PRIMARY KEY(service,window_id));

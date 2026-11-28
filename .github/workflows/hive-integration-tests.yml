@@ -1,0 +1,18 @@
+name: Hive integration tests
+on:
+  pull_request:
+    paths:
+      - 'cloudflare/**'
+      - 'tests/**'
+      - '.github/workflows/hive-integration-tests.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  hive-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run hive and finance unit and integration tests
+        run: node --test tests/hive-*.test.mjs tests/finance-policy.test.mjs

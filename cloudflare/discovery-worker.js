@@ -1,3 +1,4 @@
+import {authorizeHiveDiscovery} from './hive-central-review.mjs';
 // B6L Discovery Worker. Separate from the artists registration Worker.
 // Set D1 binding DB, deploy, migrate schema, then enable approved RSS/Atom sources.
 // Cloudflare Cron runs scheduled() even when no user is browsing.
@@ -6,14 +7,16 @@ const json=(v,s=200)=>new Response(JSON.stringify(v),{status:s,headers:{'Content
 const strip=s=>String(s||'').replace(/<[^>]*>/g,' ').replace(/&(?:amp|lt|gt|quot|apos);/g,' ').replace(/\s+/g,' ').trim();
 const field=(s,tag)=>{const m=s.match(new RegExp('<(?:[\\w-]+:)?'+tag+'(?:\\s[^>]*)?>([\\s\\S]*?)<\\/(?:[\\w-]+:)?'+tag+'>','i'));return strip(m?.[1]||'')};
 async function ingest(env){
- if(!env.DB)return;
+ if(!env.DB||env.STOP_SERVICE!=='false'||env.PREVIEW_ISOLATED==='true'||env.DISCOVERY_ENABLED!=='true')return;
  const sources=await env.DB.prepare('SELECT id,name,feed_url,category FROM discovery_sources WHERE enabled=1 LIMIT 30').all();
  for(const source of sources.results||[]){
   try{
    const u=new URL(source.feed_url);
    if(u.protocol!=='https:'||!env.ALLOWED_FEED_HOSTS?.split(',').map(x=>x.trim()).includes(u.hostname))throw Error('Host not allowlisted');
+   // Require a verified provider quota window before each outbound feed request.
+   if(!await authorizeHiveDiscovery(env))return;
    const ctrl=new AbortController();const timeout=setTimeout(()=>ctrl.abort(),8000);
-   let response;try{response=await fetch(u.toString(),{signal:ctrl.signal,headers:{Accept:'application/rss+xml, application/atom+xml, application/xml, text/xml'}})}finally{clearTimeout(timeout)}
+   let response;try{response=await fetch(u.toString(),{signal:ctrl.signal,redirect:'error',headers:{Accept:'application/rss+xml, application/atom+xml, application/xml, text/xml'}})}finally{clearTimeout(timeout)}
    if(!response.ok)throw Error('Feed HTTP '+response.status);
    if(Number(response.headers.get('content-length')||0)>1000000)throw Error('Feed too large');
    const xml=(await response.text()).slice(0,1000000);
@@ -38,7 +41,7 @@ export default {
   if(!env.DB)return json({error:'D1 binding missing'},503);
   if(u.pathname==='/health')return json({service:'B6L Discovery',database:'configured'});
   if(u.pathname==='/api/opportunities'&&request.method==='GET'){
-   const data=await env.DB.prepare("SELECT o.id,o.title,o.summary,o.url,o.category,o.verified_at,s.name AS source FROM opportunities o JOIN discovery_sources s ON s.id=o.source_id WHERE o.status='verified' AND (o.expires_at IS NULL OR o.expires_at > CURRENT_TIMESTAMP) ORDER BY o.verified_at DESC LIMIT 100").all();
+   const data=await env.DB.prepare("SELECT o.id,o.title,o.summary,o.url,o.category,o.verified_at,s.name AS source FROM opportunities o JOIN discovery_sources s ON s.id=o.source_id WHERE s.enabled=1 AND o.status='verified' AND o.verified_at IS NOT NULL AND o.expires_at > CURRENT_TIMESTAMP ORDER BY o.verified_at DESC LIMIT 100").all();
    return json(data.results||[]);
   }
   // No anonymous messaging or notification endpoints: identity verification must be implemented first.
