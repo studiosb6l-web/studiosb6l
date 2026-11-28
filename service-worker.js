@@ -1,4 +1,4 @@
-const CACHE='b6l-shell-v4-recovery';
+const CACHE='b6l-shell-v5-homepage';
 const SHELL=['/','/manifest.webmanifest','/b6l-icon.svg?v=20261126','/assets/brand/official-brand.css?v=20261126','/assets/brand/studiosb6l-logo-navy.png','/assets/brand/studiosb6l-icon-192.png','/assets/brand/studiosb6l-icon-512.png'];
 async function boundedFetch(request, timeout=6000) {
   const controller=new AbortController();
@@ -9,7 +9,7 @@ async function boundedFetch(request, timeout=6000) {
 self.addEventListener('install',event=>event.waitUntil((async()=>{
   const cache=await caches.open(CACHE);
   await Promise.allSettled(SHELL.map(async url=>{
-    const response=await boundedFetch(url);
+    const response=await boundedFetch(new Request(url,{cache:'reload'}));
     if(response.ok) await cache.put(url,response);
   }));
   await self.skipWaiting();
@@ -23,7 +23,7 @@ self.addEventListener('fetch',event=>{
   if(req.method!=='GET'||new URL(req.url).origin!==self.location.origin)return;
   if(req.mode==='navigate'){
     event.respondWith((async()=>{
-      try { return await boundedFetch(req); }
+      try { const response=await boundedFetch(new Request(req,{cache:'reload'})); if(response.ok&&new URL(req.url).pathname==='/'){const cache=await caches.open(CACHE);await cache.put('/',response.clone()).catch(()=>{});} return response; }
       catch {
         if(new URL(req.url).pathname==='/'){
           const cached=await caches.match('/');
