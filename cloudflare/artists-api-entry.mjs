@@ -1,3 +1,4 @@
+import {privateFinanceSnapshot} from './hive-finance-dashboard.mjs';
 import {privateOpportunityApi} from './hive-private-opportunities.mjs';
 import {professionalProfilesApi} from './professional-profiles-api.mjs';
 import {professionalProfilePortal} from './professional-profile-portal.mjs';
@@ -31,6 +32,15 @@ async function dispatch(request,env={},ctx){
     return reply(503,{success:false,error:'Preview operations are disabled'});
   }
   if(['/administracao','/administracao/'].includes(path)&&request.method==='GET')return ownerPortal();
+  if(path==='/api/admin/finance'){
+    if(request.method!=='GET')return reply(405,{error:'Method not allowed'});
+    const origin=request.headers.get('Origin');
+    if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
+    const session=await resolveSession(request,env);
+    if(!authorize(session,'admin:read'))return reply(403,{error:'Forbidden'});
+    // No trusted live ledger adapter yet: never fabricate financial figures.
+    return reply(200,{...privateFinanceSnapshot(session,{now:Date.now()}),stopService:env.STOP_SERVICE==='true'});
+  }
   if(path.startsWith('/api/admin/'))return ownerAuth(request,env,ctx);
   if(['/ajuda','/ajuda/'].includes(path)&&request.method==='GET')return supportPortal();
   if(path.startsWith('/api/support/'))return supportApi(request,env,ctx);
