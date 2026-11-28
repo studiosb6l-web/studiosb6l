@@ -17,3 +17,13 @@ export function reconcileSettlements(records){
  }
  return {status:'reconciled',...totals,recordCount:seen.size,executionAuthorized:false};
 }
+
+export async function readRecordedSettlements(db,period){
+ if(!db||!Number.isSafeInteger(period)||period<0)return {status:'unavailable'};
+ try{
+ const result=await db.prepare('SELECT provider, settlement_id, currency, gross_cents, refund_cents, fee_cents, verified FROM hive_finance_settlements WHERE period_start=? LIMIT 1001').bind(period).all();
+ const rows=result.results;
+ if(!Array.isArray(rows)||rows.length>1000)return {status:'unavailable'};
+ return reconcileSettlements(rows.map(r=>({provider:r.provider,id:r.settlement_id,currency:r.currency,grossCents:r.gross_cents,refundCents:r.refund_cents,feeCents:r.fee_cents,verified:r.verified===1})));
+ }catch{return {status:'unavailable'};}
+}
