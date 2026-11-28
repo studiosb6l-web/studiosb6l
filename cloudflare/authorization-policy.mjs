@@ -1,7 +1,8 @@
 // STUDIOSB6L — shared server-side authorization policy.
 // Import only into trusted Workers. Never use client-provided role or account state.
-export const ROLES=Object.freeze(['artist','producer','promoter','venue','company','student','owner']);
+export const ROLES=Object.freeze(['artist','producer','promoter','venue','company','student','visitor','owner']);
 const CAPABILITIES=Object.freeze({
+  visitor:['opportunities:read'],
   artist:['profile:read','profile:edit','support:create'],
   producer:['profile:read','profile:edit','support:create'],
   promoter:['profile:read','profile:edit','support:create'],
