@@ -21,9 +21,11 @@ export function reconcileSettlements(records){
 export async function readRecordedSettlements(db,period){
  if(!db||!Number.isSafeInteger(period)||period<0)return {status:'unavailable'};
  try{
- const result=await db.prepare('SELECT provider, settlement_id, currency, gross_cents, refund_cents, fee_cents, verified FROM hive_finance_settlements WHERE period_start=? LIMIT 1001').bind(period).all();
- const rows=result.results;
- if(!Array.isArray(rows)||rows.length>1000)return {status:'unavailable'};
- return reconcileSettlements(rows.map(r=>({provider:r.provider,id:r.settlement_id,currency:r.currency,grossCents:r.gross_cents,refundCents:r.refund_cents,feeCents:r.fee_cents,verified:r.verified===1})));
+ // One atomic aggregate query avoids pagination gaps and unbounded result transfers.
+ const r=await db.prepare("SELECT COUNT(*) AS n, SUM(CASE WHEN verified=1 AND currency='EUR' THEN 0 ELSE 1 END) AS invalid, SUM(gross_cents) AS gross, SUM(refund_cents) AS refunds, SUM(fee_cents) AS fees FROM hive_finance_settlements WHERE period_start=?").bind(period).first();
+ if(!r||!Number.isSafeInteger(r.n)||r.n<=0||r.invalid!==0||![r.gross,r.refunds,r.fees].every(v=>Number.isSafeInteger(v)&&v>=0))return {status:'unavailable'};
+ const net=r.gross-r.refunds-r.fees;
+ if(!Number.isSafeInteger(net))return {status:'unavailable'};
+ return {status:'reconciled',grossCents:r.gross,refundCents:r.refunds,feeCents:r.fees,netCents:net,recordCount:r.n,executionAuthorized:false};
  }catch{return {status:'unavailable'};}
 }
