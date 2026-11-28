@@ -1,3 +1,4 @@
+import {readVerifiedFinanceLedger} from './finance-ledger-read.mjs';
 import {financeOwnerPanel} from './finance-owner-panel.mjs';
 import {privateFinanceSnapshot} from './hive-finance-dashboard.mjs';
 import {privateOpportunityApi} from './hive-private-opportunities.mjs';
@@ -60,7 +61,9 @@ async function dispatch(request,env={},ctx){
         return {service:q.service,windowId:q.window_id,status:valid?'verified':'unavailable',...(valid?{used:q.used,reserved:q.reserved,ceiling:q.ceiling,observedAt:q.observed_at,stopped:q.stopped!==0}:{})};
       });
     }catch{/* No verified quota windows available. */}
-    const snapshot={...privateFinanceSnapshot(session,{now}),admission,quotaWindows,stopService:env.STOP_SERVICE==='true'};
+    const ledger=await readVerifiedFinanceLedger(env.DB,now);
+    if(ledger&&env.STOP_SERVICE==='true')ledger.stopped=true;
+    const snapshot={...privateFinanceSnapshot(session,{now,ledger}),admission,quotaWindows,stopService:env.STOP_SERVICE==='true'};
     return path==='/administracao/financas/'?financeOwnerPanel(snapshot):reply(200,snapshot);
   }
   if(path.startsWith('/api/admin/'))return ownerAuth(request,env,ctx);
