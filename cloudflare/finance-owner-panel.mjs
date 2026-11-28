@@ -1,9 +1,10 @@
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money=v=>Number.isSafeInteger(v)&&v>=0?new Intl.NumberFormat('pt-PT',{style:'currency',currency:'EUR'}).format(v/100):'Indisponível';
+const money=v=>Number.isSafeInteger(v)?new Intl.NumberFormat('pt-PT',{style:'currency',currency:'EUR'}).format(v/100):'Indisponível';
 export function financeOwnerPanel(snapshot={}){
  const f=snapshot.finance?.status==='verified'?snapshot.finance:{};
  const a=snapshot.admission?.status==='recorded'?snapshot.admission:{};
- const cards=[['Adesões brutas válidas do mês',a.grossAdmissionCents],['Adesões revogadas do mês de origem',a.revokedAdmissionCents],['Receita líquida',f.netRevenueCents],['Despesas',f.spentCents],['Compromissos',f.committedCents],['Limite disponível',f.availableCents]];
+ const s=snapshot.settlements?.status==='reconciled'?snapshot.settlements:{};
+ const cards=[['Liquidações brutas registadas',s.grossCents],['Reembolsos registados',s.refundCents],['Taxas registadas',s.feeCents],['Líquido das liquidações registadas',s.netCents],['Adesões brutas válidas do mês',a.grossAdmissionCents],['Adesões revogadas do mês de origem',a.revokedAdmissionCents],['Receita líquida',f.netRevenueCents],['Despesas',f.spentCents],['Compromissos',f.committedCents],['Limite disponível',f.availableCents]];
  const rows=(snapshot.services||[]).map(q=>{
  const valid=q.status==='verified'&&Number.isSafeInteger(q.used)&&Number.isSafeInteger(q.limit)&&q.limit>0;
  const pct=valid?Math.round(q.used/q.limit*100):null;

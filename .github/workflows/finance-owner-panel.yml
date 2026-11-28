@@ -13,4 +13,4 @@ jobs:
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
-      - run: node --test cloudflare/finance-owner-panel.test.mjs
+      - run: node --test cloudflare/finance-owner-panel.test.mjs cloudflare/finance-reconciliation.test.mjs
