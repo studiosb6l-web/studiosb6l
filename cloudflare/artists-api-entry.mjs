@@ -1,3 +1,4 @@
+import {privateFinanceSnapshot} from './hive-finance-dashboard.mjs';
 import {privateOpportunityApi} from './hive-private-opportunities.mjs';
 import {professionalProfilesApi} from './professional-profiles-api.mjs';
 import {professionalProfilePortal} from './professional-profile-portal.mjs';
@@ -31,6 +32,26 @@ async function dispatch(request,env={},ctx){
     return reply(503,{success:false,error:'Preview operations are disabled'});
   }
   if(['/administracao','/administracao/'].includes(path)&&request.method==='GET')return ownerPortal();
+  if(path==='/api/admin/finance'){
+    if(request.method!=='GET')return reply(405,{error:'Method not allowed'});
+    const origin=request.headers.get('Origin');
+    if(origin&&!trustedAuthOrigin(origin))return reply(403,{error:'Forbidden'});
+    const session=await resolveSession(request,env);
+    if(!authorize(session,'admin:read'))return reply(403,{error:'Forbidden'});
+    // No trusted live ledger adapter yet: never fabricate financial figures.
+    const now=Date.now();
+    const monthStart=Date.UTC(new Date(now).getUTCFullYear(),new Date(now).getUTCMonth(),1);
+    let admission={status:'unavailable'};
+    if(env.DB&&env.PAYHIP_ACTIVATION_VERIFIED==='true'){
+      try{
+        const row=await env.DB.prepare('SELECT COUNT(*) AS paid_count FROM payhip_admission_payments WHERE paid_at>=? AND paid_at<=? AND revoked_at IS NULL').bind(monthStart,now).first();
+        const count=row?.paid_count;
+        if(Number.isSafeInteger(count)&&count>=0&&Number.isSafeInteger(count*299))
+          admission={status:'recorded',currency:'EUR',periodStart:monthStart,observedAt:now,activeAdmissionCount:count,grossAdmissionCents:count*299,scope:'recorded non-revoked admission payments only; excludes fees, other sales and settlement'};
+      }catch{/* Missing database or schema must not be reported as zero. */}
+    }
+    return reply(200,{...privateFinanceSnapshot(session,{now}),admission,stopService:env.STOP_SERVICE==='true'});
+  }
   if(path.startsWith('/api/admin/'))return ownerAuth(request,env,ctx);
   if(['/ajuda','/ajuda/'].includes(path)&&request.method==='GET')return supportPortal();
   if(path.startsWith('/api/support/'))return supportApi(request,env,ctx);
